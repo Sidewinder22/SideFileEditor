@@ -24,6 +24,12 @@
 *.lib
 
 # Executables
+build
 *.exe
 *.out
 *.app
+
+# Eclipse configuration files
+.cproject
+.project
+.settings
