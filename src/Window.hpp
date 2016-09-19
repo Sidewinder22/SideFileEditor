@@ -10,6 +10,8 @@
 
 class Window : public QMainWindow
 {
+	Q_OBJECT
+
 public:
 	Window(QMainWindow *parent = 0);
 	~Window() = default;
