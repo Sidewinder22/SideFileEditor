@@ -9,15 +9,14 @@
 
 int main(int argc, char *argv[])
 {
-//    std::cout << "Hello, World!" << std::endl;
 	QApplication app(argc, argv);
 
 	Window window;
+	window.init();
 
 	window.resize(600, 400);
 	window.setWindowTitle("MIDI Analyzer");
 	window.show();
-
 
     return app.exec();
 }
