@@ -22,6 +22,7 @@ public:
 
 private:
 	void connectSignalsToSlots();
+	void getFileName();
 
 	QMenu *menu_;
 };
