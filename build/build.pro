@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = build
+TARGET = MidiAnalyzer
 INCLUDEPATH += .
 
 # Input

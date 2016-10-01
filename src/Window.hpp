@@ -9,6 +9,8 @@
 #include <memory>
 #include <QMenu>
 #include <QWidget>
+#include <QToolBar>
+#include <QTextEdit>
 #include <QMainWindow>
 
 class Window : public QMainWindow
@@ -22,9 +24,14 @@ public:
 
 private:
 	void connectSignalsToSlots();
+	void buildToolBar();
 	void getFileName();
 
 	QMenu *menu_;
+	QAction *toolBQuit_;
+	QAction *toolBNew_;
+	QToolBar *toolBar_;
+	QTextEdit *textEdit_;
 };
 
 #endif /* SRC_WINDOW_HPP_ */
