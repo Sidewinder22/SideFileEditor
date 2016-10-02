@@ -11,12 +11,15 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QFileDialog>
 #include "Window.hpp"
 
 Window::Window(QWidget *parent)
 	: QMainWindow(parent)
-	, toolBQuit_(nullptr)
 	, toolBNew_(nullptr)
+	, toolBOpen_(nullptr)
+	, toolBQuit_(nullptr)
+    , fileDialog_(nullptr)
 {
 	menu_ = menuBar()->addMenu("File");
 	toolBar_ = addToolBar("Main toolbar");
@@ -36,7 +39,7 @@ void Window::init()
 void Window::buildToolBar()
 {
 	toolBNew_ = toolBar_->addAction(QIcon("icons/new.png"), "New File");
-	toolBar_->addAction(QIcon("icons/open.png"), "Open File");
+	toolBOpen_ = toolBar_->addAction(QIcon("icons/open.png"), "Open File");
 	toolBar_->addSeparator();
 
 	toolBQuit_ = toolBar_->addAction(QIcon("icons/quit.png"),
@@ -45,25 +48,46 @@ void Window::buildToolBar()
 
 void Window::connectSignalsToSlots()
 {
-	QAction *getFileName = new QAction("&New", this);
-	menu_->addAction(getFileName);
-
+	QAction *newFile = new QAction("&New", this);
+	menu_->addAction(newFile);
+	QAction *openFile = new QAction("&Open", this);
+	menu_->addAction(openFile);
 	QAction *quit = new QAction("&Quit", this);
 	menu_->addAction(quit);
 
-	connect(getFileName, &QAction::triggered, this, &Window::getFileName);
+	connect(newFile, &QAction::triggered, this, &Window::selectFileName);
+	connect(openFile, &QAction::triggered, this, &Window::openFile);
 	connect(quit, &QAction::triggered, qApp, QApplication::quit);
+	connect(toolBNew_, &QAction::triggered, this, &Window::selectFileName);
+	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
 	connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
-	connect(toolBNew_, &QAction::triggered, this, &Window::getFileName);
 }
 
-void Window::getFileName()
+void Window::openFile()
 {
 	std::cout << __FUNCTION__ << std::endl;
 
-	auto fileName = QInputDialog::getText(this, "Type name of a file", "File");
-	textEdit_->setText(QString(fileName));
+	QString filter = "File Description (*.mid)";
+	fileDialog_ = new QFileDialog(
+        this,
+        "Select a file to open...",
+        QDir::homePath(),
+        filter);
 
-	std::cout << fileName.toStdString() << std::endl;
+	auto fileName = fileDialog_->getOpenFileName();
 
+	std::cout << "FileName = " << fileName.toStdString() << std::endl;
+}
+
+void Window::selectFileName()
+{
+	std::cout << __FUNCTION__ << std::endl;
+
+	QString fileName = QFileDialog::getSaveFileName(
+	        this,
+	        tr("Save File"),
+            QDir::homePath(),
+            tr("MIDI Files (*.mid, *.kar)"));
+
+	std::cout << "FileName = " << fileName.toStdString() << std::endl;
 }

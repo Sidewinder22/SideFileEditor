@@ -8,9 +8,11 @@
 
 #include <memory>
 #include <QMenu>
+//#include <QString>
 #include <QWidget>
 #include <QToolBar>
 #include <QTextEdit>
+#include <QFileDialog>
 #include <QMainWindow>
 
 class Window : public QMainWindow
@@ -25,13 +27,17 @@ public:
 private:
 	void connectSignalsToSlots();
 	void buildToolBar();
-	void getFileName();
+	void openFile();
+	void selectFileName();
 
 	QMenu *menu_;
-	QAction *toolBQuit_;
+//	QString *fileName_;
 	QAction *toolBNew_;
+	QAction *toolBOpen_;
+	QAction *toolBQuit_;
 	QToolBar *toolBar_;
 	QTextEdit *textEdit_;
+	QFileDialog *fileDialog_;
 };
 
 #endif /* SRC_WINDOW_HPP_ */
