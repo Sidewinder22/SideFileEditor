@@ -49,8 +49,12 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../src/Window.cpp \
+		../src/File.cpp \
+		../src/FileContainer.cpp \
 		../src/main.cpp moc_Window.cpp
 OBJECTS       = Window.o \
+		File.o \
+		FileContainer.o \
 		main.o \
 		moc_Window.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -231,7 +235,11 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		build.pro ../src/Window.hpp ../src/Window.cpp \
+		build.pro ../src/Window.hpp \
+		../src/File.hpp \
+		../src/FileContainer.hpp ../src/Window.cpp \
+		../src/File.cpp \
+		../src/FileContainer.cpp \
 		../src/main.cpp
 QMAKE_TARGET  = MidiAnalyzer
 DESTDIR       = 
@@ -623,8 +631,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/Window.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../src/Window.cpp ../src/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/Window.hpp ../src/File.hpp ../src/FileContainer.hpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../src/Window.cpp ../src/File.cpp ../src/FileContainer.cpp ../src/main.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -673,6 +681,13 @@ compiler_clean: compiler_moc_header_clean
 
 Window.o: ../src/Window.cpp ../src/Window.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Window.o ../src/Window.cpp
+
+File.o: ../src/File.cpp ../src/File.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o File.o ../src/File.cpp
+
+FileContainer.o: ../src/FileContainer.cpp ../src/FileContainer.hpp \
+		../src/File.hpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o FileContainer.o ../src/FileContainer.cpp
 
 main.o: ../src/main.cpp ../src/Window.hpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../src/main.cpp

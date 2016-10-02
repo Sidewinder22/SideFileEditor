@@ -8,19 +8,19 @@
 
 #include <memory>
 #include <QMenu>
-//#include <QString>
 #include <QWidget>
 #include <QToolBar>
 #include <QTextEdit>
 #include <QFileDialog>
 #include <QMainWindow>
+#include "FileContainer.hpp"
 
 class Window : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	Window(QWidget *parent = 0);
+	Window(std::shared_ptr<FileContainer> fileContainger, QWidget *parent = 0);
 	~Window() = default;
 	void init();
 
@@ -31,13 +31,13 @@ private:
 	void selectFileName();
 
 	QMenu *menu_;
-//	QString *fileName_;
 	QAction *toolBNew_;
 	QAction *toolBOpen_;
 	QAction *toolBQuit_;
 	QToolBar *toolBar_;
 	QTextEdit *textEdit_;
 	QFileDialog *fileDialog_;
+	std::shared_ptr<FileContainer> fileContainer_;
 };
 
 #endif /* SRC_WINDOW_HPP_ */

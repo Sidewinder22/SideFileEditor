@@ -14,12 +14,13 @@
 #include <QFileDialog>
 #include "Window.hpp"
 
-Window::Window(QWidget *parent)
+Window::Window(std::shared_ptr<FileContainer> fileContainger, QWidget *parent)
 	: QMainWindow(parent)
 	, toolBNew_(nullptr)
 	, toolBOpen_(nullptr)
 	, toolBQuit_(nullptr)
     , fileDialog_(nullptr)
+    , fileContainer_(fileContainger)
 {
 	menu_ = menuBar()->addMenu("File");
 	toolBar_ = addToolBar("Main toolbar");
@@ -76,7 +77,9 @@ void Window::openFile()
 
 	auto fileName = fileDialog_->getOpenFileName();
 
-	std::cout << "FileName = " << fileName.toStdString() << std::endl;
+	fileContainer_->addFile(std::make_shared<File>(fileName.toStdString()));
+
+	std::cout << __FUNCTION__ << "FileName = " << fileName.toStdString() << std::endl;
 }
 
 void Window::selectFileName()
