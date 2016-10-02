@@ -84,10 +84,10 @@ void Window::selectFileName()
 	std::cout << __FUNCTION__ << std::endl;
 
 	QString fileName = QFileDialog::getSaveFileName(
-	        this,
-	        tr("Save File"),
-            QDir::homePath(),
-            tr("MIDI Files (*.mid, *.kar)"));
+        this,
+        tr("Save File"),
+        QDir::homePath(),
+        tr("MIDI Files (*.mid, *.kar)"));
 
 	std::cout << "FileName = " << fileName.toStdString() << std::endl;
 }
