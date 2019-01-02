@@ -24,11 +24,13 @@ public:
 	~Window() = default;
 	void init();
 
+public slots:
+	void openFile();
+	void selectFileName();
+
 private:
 	void connectSignalsToSlots();
 	void buildToolBar();
-	void openFile();
-	void selectFileName();
 
 	QMenu *menu_;
 	QAction *toolBNew_;

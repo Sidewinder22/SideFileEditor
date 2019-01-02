@@ -56,30 +56,30 @@ void Window::connectSignalsToSlots()
 	QAction *quit = new QAction("&Quit", this);
 	menu_->addAction(quit);
 
+
 	connect(newFile, &QAction::triggered, this, &Window::selectFileName);
 	connect(openFile, &QAction::triggered, this, &Window::openFile);
 	connect(quit, &QAction::triggered, qApp, QApplication::quit);
 	connect(toolBNew_, &QAction::triggered, this, &Window::selectFileName);
 	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
-	connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
+    connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
 }
 
 void Window::openFile()
 {
 	std::cout << __FUNCTION__ << std::endl;
 
-	QString filter = "File Description (*.mid)";
-	fileDialog_ = new QFileDialog(
+    QString fileName = QFileDialog::getOpenFileName(
         this,
-        "Select a file to open...",
+        tr("Select file to open..."),
         QDir::homePath(),
-        filter);
+        tr("Text files (*.txt)"));
 
-	auto fileName = fileDialog_->getOpenFileName();
-
-	fileContainer_->addFile(std::make_shared<File>(fileName.toStdString()));
-
-	std::cout << __FUNCTION__ << "FileName = " << fileName.toStdString() << std::endl;
+    if (!fileName.isEmpty())
+    {
+        fileContainer_->addFile(std::make_shared<File>(fileName.toStdString()));
+        std::cout << __FUNCTION__ << "FileName = " << fileName.toStdString() << std::endl;
+    }
 }
 
 void Window::selectFileName()
@@ -92,5 +92,8 @@ void Window::selectFileName()
         QDir::homePath(),
         tr("MIDI Files (*.mid, *.kar)"));
 
-	std::cout << "FileName = " << fileName.toStdString() << std::endl;
+    if (!fileName.isEmpty())
+    {
+	    std::cout << "FileName = " << fileName.toStdString() << std::endl;
+    }
 }
