@@ -27,6 +27,7 @@ Target of this project is creation analyzer of MIDI files (*.mid).
 
 3. Build the source:
 
+  * $ qmake
   * $ make
 
 4. Run project:

@@ -56,12 +56,12 @@ void Window::connectSignalsToSlots()
 	QAction *quit = new QAction("&Quit", this);
 	menu_->addAction(quit);
 
-	connect(newFile, &QAction::triggered, this, &Window::selectFileName);
-	connect(openFile, &QAction::triggered, this, &Window::openFile);
-	connect(quit, &QAction::triggered, qApp, QApplication::quit);
-	connect(toolBNew_, &QAction::triggered, this, &Window::selectFileName);
-	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
-	connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
+	connect(newFile, SIGNAL(triggered()), this, SLOT(selectFileName()));
+	connect(openFile, SIGNAL(triggered()), this, SLOT(openFile()));
+	connect(quit, SIGNAL(triggered()), qApp, SLOT(quit()));
+	connect(toolBNew_, SIGNAL(triggered()), this, SLOT(selectFileName()));
+	connect(toolBOpen_, SIGNAL(triggered()), this, SLOT(openFile()));
+	connect(toolBQuit_, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 
 void Window::openFile()
