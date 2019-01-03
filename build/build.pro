@@ -10,13 +10,18 @@ INCLUDEPATH += .
 
 QT      += widgets
 
-HEADERS += 	../src/Window.hpp \
+DEFINES +=  "DEBUG=1"
+
+HEADERS += 	../src/utils/Logger.hpp \
+            ../src/Window.hpp \
             ../src/File.hpp \
             ../src/FileContainer.hpp
 
-SOURCES	+= 	../src/Window.cpp \
+SOURCES	+= 	../src/utils/Logger.cpp \
+            ../src/Window.cpp \
             ../src/File.cpp \
             ../src/FileContainer.cpp \
 			../src/main.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
+

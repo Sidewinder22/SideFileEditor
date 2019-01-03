@@ -14,6 +14,7 @@
 #include <QFileDialog>
 #include <QMainWindow>
 #include "FileContainer.hpp"
+#include "utils/Logger.hpp"
 
 class Window : public QMainWindow
 {
@@ -31,6 +32,8 @@ public slots:
 private:
 	void connectSignalsToSlots();
 	void buildToolBar();
+
+    log::Logger log_;
 
 	QMenu *menu_;
 	QAction *toolBNew_;

@@ -16,6 +16,7 @@
 
 Window::Window(std::shared_ptr<FileContainer> fileContainger, QWidget *parent)
 	: QMainWindow(parent)
+    , log_("Window")
 	, toolBNew_(nullptr)
 	, toolBOpen_(nullptr)
 	, toolBQuit_(nullptr)
@@ -66,7 +67,7 @@ void Window::connectSignalsToSlots()
 
 void Window::openFile()
 {
-	std::cout << __FUNCTION__ << std::endl;
+    log_.debug(__FUNCTION__);
 
     QString fileName = QFileDialog::getOpenFileName(
         this,
@@ -77,13 +78,19 @@ void Window::openFile()
     if (!fileName.isEmpty())
     {
         fileContainer_->addFile(std::make_shared<File>(fileName.toStdString()));
-        std::cout << __FUNCTION__ << "FileName = " << fileName.toStdString() << std::endl;
+        std::string log;
+        log += __FUNCTION__;
+        log += ", fileName = ";
+        log += fileName.toStdString();
+
+        log_.info(log);
+        //std::cout << __FUNCTION__ << "FileName = " << fileName.toStdString() << std::endl;
     }
 }
 
 void Window::selectFileName()
 {
-	std::cout << __FUNCTION__ << std::endl;
+    log_.debug(__FUNCTION__);
 
 	QString fileName = QFileDialog::getSaveFileName(
         this,
