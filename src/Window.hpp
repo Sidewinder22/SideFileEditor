@@ -1,6 +1,8 @@
 /**
  * @author Damian Stępień
  * @date 20.09.2016
+ *
+ * @brief Main Window class
  */
 
 #ifndef SRC_WINDOW_HPP_

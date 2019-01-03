@@ -8,15 +8,15 @@
 #ifndef SRC_UTILS_LOGGER_H_
 #define SRC_UTILS_LOGGER_H_
 
-#include <iostream>
 #include <string>
-#include "ILogger.hpp"
 
 namespace log
 {
 
+static std::string END_LOG("\n");
+#define MY_FUNC std::string(__FUNCTION__)
+
 class Logger
-    : public ILogger
 {
     public:
         Logger(std::string prefix);
@@ -24,26 +24,9 @@ class Logger
         Logger(const Logger&) = delete;
         Logger &operator=(const Logger&) = delete;
 
-        /******************************************************
-         *                  ILogger
-         *****************************************************/
-        /**
-         * @brief Info level logs
-         * @param log
-         */
-        void info(std::string log) override;
+        friend Logger& operator<<(Logger& log, std::string str);
 
-        /**
-         * @brief Info level logs
-         * @param log
-         */
-        void debug(std::string log) override;
-
-        /**
-         * @brief Info level logs
-         * @param log
-         */
-        void error(std::string log) override;
+        std::string endLog();
 
     private:
         std::string prefix_;

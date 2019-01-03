@@ -5,6 +5,7 @@
  * @brief Class responsible for application logging.
  */
 
+#include <iostream>
 #include "Logger.hpp"
 
 namespace log
@@ -14,21 +15,16 @@ Logger::Logger(std::string prefix)
     : prefix_(prefix)
 { }
 
-void Logger::info(std::string log)
+Logger& operator<<(Logger& log, std::string str)
 {
-    std::cout << "[" << prefix_ << "] " << log << std::endl;
+
+    std::cout << str;
+    return log;
 }
 
-void Logger::debug(std::string log)
+std::string Logger::endLog()
 {
-#ifdef DEBUG
-    std::cout << "[" << prefix_ << "] " << log << std::endl;
-#endif
-}
-
-void Logger::error(std::string log)
-{
-    std::cout << "[" << prefix_ << "] " << log << "!!!" << std::endl;
+    return "\n";
 }
 
 } // ::log

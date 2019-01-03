@@ -1,9 +1,10 @@
 /**
  * @author Damian Stępień
  * @date 20.09.2016
+ *
+ * @brief Main Window class
  */
 
-#include <iostream>
 #include <QIcon>
 #include <QAction>
 #include <QMenuBar>
@@ -67,7 +68,7 @@ void Window::connectSignalsToSlots()
 
 void Window::openFile()
 {
-    log_.debug(__FUNCTION__);
+    log_ << MY_FUNC << log::END_LOG;
 
     QString fileName = QFileDialog::getOpenFileName(
         this,
@@ -83,14 +84,13 @@ void Window::openFile()
         log += ", fileName = ";
         log += fileName.toStdString();
 
-        log_.info(log);
-        //std::cout << __FUNCTION__ << "FileName = " << fileName.toStdString() << std::endl;
+        //log_.info(log);
     }
 }
 
 void Window::selectFileName()
 {
-    log_.debug(__FUNCTION__);
+    //log_.debug(__FUNCTION__);
 
 	QString fileName = QFileDialog::getSaveFileName(
         this,
@@ -100,6 +100,6 @@ void Window::selectFileName()
 
     if (!fileName.isEmpty())
     {
-	    std::cout << "FileName = " << fileName.toStdString() << std::endl;
+	    //std::cout << "FileName = " << fileName.toStdString() << std::endl;
     }
 }

@@ -17,8 +17,7 @@ public:
     bool addFile(std::shared_ptr<File> file);
 
 private:
-    // temporary container of File objects
-    std::vector<std::shared_ptr<File>> container_;
+    std::vector<std::shared_ptr<File>> container_;  //!< Temporary container of File objects
 
 
 };

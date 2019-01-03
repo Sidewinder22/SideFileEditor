@@ -3,7 +3,6 @@
  * @date 03.10.2016
  */
 
-#include <iostream>
 #include "File.hpp"
 
 File::File(std::string fileName)
