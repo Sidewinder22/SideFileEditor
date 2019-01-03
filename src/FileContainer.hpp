@@ -9,6 +9,7 @@
 #include <vector>
 #include <memory>
 #include "File.hpp"
+#include "utils/Logger.hpp"
 
 class FileContainer
 {
@@ -17,10 +18,8 @@ public:
     bool addFile(std::shared_ptr<File> file);
 
 private:
-    // temporary container of File objects
-    std::vector<std::shared_ptr<File>> container_;
-
-
+    log::Logger log_;
+    std::vector<std::shared_ptr<File>> container_;  //!< Temporary container of File objects
 };
 
 #endif /* SRC_FILECONTAINER_HPP_ */

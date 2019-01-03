@@ -1,9 +1,10 @@
 /**
  * @author Damian Stępień
  * @date 20.09.2016
+ *
+ * @brief Main Window class
  */
 
-#include <iostream>
 #include <QIcon>
 #include <QAction>
 #include <QMenuBar>
@@ -16,6 +17,7 @@
 
 Window::Window(std::shared_ptr<FileContainer> fileContainger, QWidget *parent)
 	: QMainWindow(parent)
+    , log_("Window")
 	, toolBNew_(nullptr)
 	, toolBOpen_(nullptr)
 	, toolBQuit_(nullptr)
@@ -66,7 +68,7 @@ void Window::connectSignalsToSlots()
 
 void Window::openFile()
 {
-	std::cout << __FUNCTION__ << std::endl;
+    log_ << MY_FUNC << log::END;
 
     QString fileName = QFileDialog::getOpenFileName(
         this,
@@ -77,13 +79,18 @@ void Window::openFile()
     if (!fileName.isEmpty())
     {
         fileContainer_->addFile(std::make_shared<File>(fileName.toStdString()));
-        std::cout << __FUNCTION__ << "FileName = " << fileName.toStdString() << std::endl;
+        std::string log;
+        log += __FUNCTION__;
+        log += ", fileName = ";
+        log += fileName.toStdString();
+
+        log_  << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
     }
 }
 
 void Window::selectFileName()
 {
-	std::cout << __FUNCTION__ << std::endl;
+    log_ << MY_FUNC << log::END;
 
 	QString fileName = QFileDialog::getSaveFileName(
         this,
@@ -93,6 +100,6 @@ void Window::selectFileName()
 
     if (!fileName.isEmpty())
     {
-	    std::cout << "FileName = " << fileName.toStdString() << std::endl;
+        log_  << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
     }
 }
