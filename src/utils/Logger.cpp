@@ -13,18 +13,25 @@ namespace log
 
 Logger::Logger(std::string prefix)
     : prefix_(prefix)
+    , beginLine_(true)
 { }
 
 Logger& operator<<(Logger& log, std::string str)
 {
+    if (log.beginLine_)
+    {
+        std::cout << "[" << log.prefix_ << "] ";
+        log.beginLine_ = false;
+    }
 
     std::cout << str;
-    return log;
-}
 
-std::string Logger::endLog()
-{
-    return "\n";
+    if (str == "\n")
+    {
+        log.beginLine_ = true;
+    }
+
+    return log;
 }
 
 } // ::log

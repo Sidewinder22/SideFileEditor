@@ -10,7 +10,7 @@ INCLUDEPATH += .
 
 QT      += widgets
 
-DEFINES +=  "DEBUG=1"
+# DEFINES +=  "DEBUG=1"
 
 HEADERS += 	../src/utils/Logger.hpp \
             ../src/Window.hpp \

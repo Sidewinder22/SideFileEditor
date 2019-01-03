@@ -7,19 +7,13 @@
 #include "FileContainer.hpp"
 
 FileContainer::FileContainer()
-{
-    std::cout << "Ctor of FileContainer" << std::endl;
-}
+    : log_("FileContainer")
+{ }
 
 bool FileContainer::addFile(std::shared_ptr<File> file)
 {
-    std::cout << "FileName = " << file->getFileName() << std::endl;
-
-    std::cout << "Size = " << container_.size() << std::endl;
-
     container_.push_back(file);
 
-    std::cout << "Size = " << container_.size() << std::endl;
-
-    return false;
+    log_ << MY_FUNC << ": size = " << std::to_string(container_.size()) << log::END;
+    return true;
 }

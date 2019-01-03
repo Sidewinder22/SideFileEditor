@@ -33,3 +33,7 @@ MidiAnalyzer
 .cproject
 .project
 .settings
+
+# QT files
+moc_Window.cpp
+Makefile

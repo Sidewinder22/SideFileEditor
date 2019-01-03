@@ -10,11 +10,15 @@
 
 #include <string>
 
+#define MY_FUNC std::string(__FUNCTION__ + std::string("()"))
+
 namespace log
 {
 
-static std::string END_LOG("\n");
-#define MY_FUNC std::string(__FUNCTION__)
+/**
+ * @brief Static defines controlling the operation of the logger
+ */
+static std::string END("\n");
 
 class Logger
 {
@@ -26,10 +30,9 @@ class Logger
 
         friend Logger& operator<<(Logger& log, std::string str);
 
-        std::string endLog();
-
     private:
-        std::string prefix_;
+        std::string prefix_;    //!< Prefix contains class name
+        bool beginLine_;        //!< Flag determining whether the line has been started
 };
 
 } // ::log
