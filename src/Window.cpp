@@ -9,10 +9,12 @@
 #include <QAction>
 #include <QMenuBar>
 #include <QStatusBar>
+#include <QIODevice>
 #include <QApplication>
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QFileDialog>
+#include <QTextStream>
 #include "Window.hpp"
 
 Window::Window(std::shared_ptr<FileContainer> fileContainger, QWidget *parent)
@@ -78,13 +80,28 @@ void Window::openFile()
 
     if (!fileName.isEmpty())
     {
+        log_ << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
         fileContainer_->addFile(std::make_shared<File>(fileName.toStdString()));
-        std::string log;
-        log += __FUNCTION__;
-        log += ", fileName = ";
-        log += fileName.toStdString();
 
-        log_  << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
+        /**
+         * @brief Reading from file
+         */
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            log_ << MY_FUNC << "Cannot open file or file isn't text type!" << log::END;
+            return;
+        }
+
+        QTextStream in(&file);
+        while (!in.atEnd())
+        {
+            QString line = in.readLine();
+            textEdit_->append(line);
+        }
+        /*******/
+
+        statusBar()->showMessage("Open file: " + fileName);
     }
 }
 
@@ -101,5 +118,6 @@ void Window::selectFileName()
     if (!fileName.isEmpty())
     {
         log_  << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
+        statusBar()->showMessage("Open file: " + fileName);
     }
 }
