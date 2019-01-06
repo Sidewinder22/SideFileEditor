@@ -30,6 +30,7 @@ public:
 public slots:
 	void openFile();
 	void selectFileName();
+    void saveFile();
 
 private:
 	void connectSignalsToSlots();
@@ -40,6 +41,7 @@ private:
 	QMenu *menu_;
 	QAction *toolBNew_;
 	QAction *toolBOpen_;
+	QAction *toolBSave_;
 	QAction *toolBQuit_;
 	QToolBar *toolBar_;
 	QTextEdit *textEdit_;

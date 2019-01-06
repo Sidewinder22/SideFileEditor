@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	Window window(fileContainer);
 	window.init();
 
-	window.resize(600, 400);
+	window.resize(1000, 600);
 	window.setWindowTitle("MIDI Analyzer");
 	window.show();
 

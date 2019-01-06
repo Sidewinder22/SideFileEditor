@@ -45,6 +45,7 @@ void Window::buildToolBar()
 {
 	toolBNew_ = toolBar_->addAction(QIcon("icons/new.png"), "New File");
 	toolBOpen_ = toolBar_->addAction(QIcon("icons/open.png"), "Open File");
+	toolBSave_ = toolBar_->addAction(QIcon("icons/save.png"), "Save File");
 	toolBar_->addSeparator();
 
 	toolBQuit_ = toolBar_->addAction(QIcon("icons/quit.png"),
@@ -57,14 +58,20 @@ void Window::connectSignalsToSlots()
 	menu_->addAction(newFile);
 	QAction *openFile = new QAction("&Open", this);
 	menu_->addAction(openFile);
+	QAction *saveFile = new QAction("&Save", this);
+	menu_->addAction(saveFile);
+    menu_->addSeparator();
+
 	QAction *quit = new QAction("&Quit", this);
 	menu_->addAction(quit);
 
 	connect(newFile, &QAction::triggered, this, &Window::selectFileName);
 	connect(openFile, &QAction::triggered, this, &Window::openFile);
+    connect(saveFile, &QAction::triggered, this, &Window::saveFile);
 	connect(quit, &QAction::triggered, qApp, QApplication::quit);
 	connect(toolBNew_, &QAction::triggered, this, &Window::selectFileName);
 	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
+	connect(toolBSave_, &QAction::triggered, this, &Window::saveFile);
     connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
 }
 
@@ -101,6 +108,8 @@ void Window::openFile()
         }
         /*******/
 
+        QMessageBox::information(this, "INFO", "Example of information");
+
         statusBar()->showMessage("Open file: " + fileName);
     }
 }
@@ -111,9 +120,9 @@ void Window::selectFileName()
 
 	QString fileName = QFileDialog::getSaveFileName(
         this,
-        tr("Save File"),
+        tr("Select loction to save a file"),
         QDir::homePath(),
-        tr("MIDI Files (*.mid, *.kar)"));
+        tr("Text files (*.txt)"));
 
     if (!fileName.isEmpty())
     {
@@ -121,3 +130,11 @@ void Window::selectFileName()
         statusBar()->showMessage("Open file: " + fileName);
     }
 }
+
+void Window::saveFile()
+{
+    log_ << MY_FUNC << log::END;
+
+    statusBar()->showMessage("File saved");
+}
+
