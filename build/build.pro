@@ -4,7 +4,7 @@
 
 TEMPLATE = app
 TARGET = MidiAnalyzer
-INCLUDEPATH += .
+INCLUDEPATH += ../src
 
 # Input
 
@@ -13,15 +13,15 @@ QT      += widgets
 # DEFINES +=  "DEBUG=1"
 
 HEADERS += 	../src/utils/Logger.hpp \
-            ../src/Window.hpp \
-            ../src/File.hpp \
-            ../src/FileContainer.hpp
+            ../src/window/Window.hpp \
+            ../src/file/File.hpp \
+            ../src/file/FileContainer.hpp
 
 SOURCES	+= 	../src/utils/Logger.cpp \
-            ../src/Window.cpp \
-            ../src/File.cpp \
-            ../src/FileContainer.cpp \
-			../src/main.cpp
+            ../src/window/Window.cpp \
+            ../src/file/File.cpp \
+            ../src/file/FileContainer.cpp \
+			../src/application/main.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 

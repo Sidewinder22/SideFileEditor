@@ -5,6 +5,9 @@
  * @brief Main Window class
  */
 
+//---------------------------------------------------------
+//                      Includes
+//---------------------------------------------------------
 #include <QIcon>
 #include <QAction>
 #include <QMenuBar>

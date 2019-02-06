@@ -1,13 +1,15 @@
 /**
  * @author Damian Stępień
  * @date 17.09.2016
+ *
+ * @brief Main application file.
  */
 
 #include <iostream>
 #include <memory>
 #include <QApplication>
-#include "Window.hpp"
-#include "FileContainer.hpp"
+#include "window/Window.hpp"
+#include "file/FileContainer.hpp"
 
 int main(int argc, char *argv[])
 {

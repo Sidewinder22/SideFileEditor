@@ -1,8 +1,13 @@
 /**
  * @author Damian Stępień
  * @date 03.10.2016
+ *
+ * @brief Container for File objects
  */
 
+//---------------------------------------------------------
+//                      Includes
+//---------------------------------------------------------
 #include <iostream>
 #include "FileContainer.hpp"
 
