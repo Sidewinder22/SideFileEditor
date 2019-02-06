@@ -1,13 +1,15 @@
 /**
  * @author Damian Stępień
  * @date 17.09.2016
+ *
+ * @brief Main application file.
  */
 
 #include <iostream>
 #include <memory>
 #include <QApplication>
-#include "Window.hpp"
-#include "FileContainer.hpp"
+#include "window/Window.hpp"
+#include "file/FileContainer.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +20,7 @@ int main(int argc, char *argv[])
 	Window window(fileContainer);
 	window.init();
 
-	window.resize(600, 400);
+	window.resize(1000, 600);
 	window.setWindowTitle("MIDI Analyzer");
 	window.show();
 

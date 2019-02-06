@@ -1,9 +1,13 @@
 /**
  * @author Damian Stępień
  * @date 03.10.2016
+ *
+ * @brief Class wrapping a file.
  */
 
-#include <iostream>
+//---------------------------------------------------------
+//                      Includes
+//---------------------------------------------------------
 #include "File.hpp"
 
 File::File(std::string fileName)
