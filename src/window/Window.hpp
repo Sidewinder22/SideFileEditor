@@ -89,6 +89,8 @@ private:
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
 	std::shared_ptr<FileContainer> fileContainer_;      //!< Pointer to the file container
+
+    QString fileName_;
 };
 
 #endif /* SRC_WINDOW_HPP_ */

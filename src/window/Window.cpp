@@ -28,6 +28,7 @@ Window::Window(std::shared_ptr<FileContainer> fileContainger, QWidget *parent)
 	, toolBQuit_(nullptr)
     , fileDialog_(nullptr)
     , fileContainer_(fileContainger)
+    , fileName_("")
 {
 	menu_ = menuBar()->addMenu("File");
 	toolBar_ = addToolBar("Main toolbar");
@@ -127,6 +128,8 @@ void Window::selectFileName()
         QDir::homePath(),
         tr("Text files (*.txt)"));
 
+    fileName_ = fileName;
+
     if (!fileName.isEmpty())
     {
         log_  << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
@@ -138,6 +141,30 @@ void Window::saveFile()
 {
     log_ << MY_FUNC << log::END;
 
+
+    if (!fileName_.isEmpty())
+    {
+        QFile file(fileName_);
+        if(!file.open(QFile::WriteOnly | QFile::Text))
+        {
+            log_ << " Could not open file for writing" << MY_FUNC << log::END;
+            return;
+        }
+
+        // To write text, we use operator<<(),
+        // which is overloaded to take
+        // a QTextStream on the left
+        // and data types (including QString) on the right
+
+        auto text = textEdit_->toPlainText();
+
+        QTextStream out(&file);
+        out << text << "\n";
+        file.flush();
+        file.close();
+    }
+
     statusBar()->showMessage("File saved");
+    QMessageBox::information(this, "INFO", "File saved!");
 }
 
