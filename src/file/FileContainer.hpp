@@ -26,6 +26,7 @@ class FileContainer
 //---------------------------------------------------------
 public:
     FileContainer();
+    virtual ~FileContainer() = default;
 
     /**
      * @brief Add file to the container

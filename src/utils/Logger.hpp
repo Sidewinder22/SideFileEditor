@@ -38,6 +38,7 @@ class Logger
 //---------------------------------------------------------
     public:
         Logger(std::string prefix);
+        virtual ~Logger() = default;
 
         Logger(const Logger&) = delete;
         Logger &operator=(const Logger&) = delete;

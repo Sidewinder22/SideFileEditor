@@ -12,16 +12,18 @@ QT      += widgets
 
 # DEFINES +=  "DEBUG=1"
 
-HEADERS += 	../src/utils/Logger.hpp \
-            ../src/window/Window.hpp \
-            ../src/file/File.hpp \
-            ../src/file/FileContainer.hpp
+HEADERS += 	../src/file/File.hpp \
+            ../src/file/FileContainer.hpp \
+            ../src/file/FileManager.hpp \
+            ../src/utils/Logger.hpp \
+            ../src/window/Window.hpp
 
-SOURCES	+= 	../src/utils/Logger.cpp \
-            ../src/window/Window.cpp \
+SOURCES	+= 	../src/application/main.cpp \
             ../src/file/File.cpp \
             ../src/file/FileContainer.cpp \
-			../src/application/main.cpp
+            ../src/file/FileManager.cpp \
+            ../src/utils/Logger.cpp \
+            ../src/window/Window.cpp
 
 QMAKE_CXXFLAGS += -std=c++11
 

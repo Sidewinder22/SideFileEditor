@@ -1,35 +1,45 @@
 /**
  * @author Damian Stępień
- * @date 03.10.2016
+ * @date 11.02.2019
  *
- * @brief Class wrapping a file.
+ * @brief FileManager Manager class
  */
 
-#ifndef SRC_FILE_HPP_
-#define SRC_FILE_HPP_
+#ifndef SRC_FILEMANAGER_HPP_
+#define SRC_FILEMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <string>
+#include <memory>
+#include <QString>
+#include "File.hpp"
+#include "utils/Logger.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class File
+class FileManager
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-    File(std::string fileName);
-    virtual ~File() = default;
+    FileManager();
+    virtual ~FileManager() = default;
+
+    /**
+     * @brief Open file
+     * @param fileName path for file
+     * @return True if successfull, Fale otherwise
+     */
+    bool openFile(const std::string& fileName);
 
     /**
      * @brief Get file name
      * @return String representing file name
      */
-    std::string getFileName();
+    QString getFileName();
 
 //---------------------------------------------------------
 //                  Protected
@@ -40,7 +50,8 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    std::string fileName_;                  //!< File name
+    log::Logger log_;                       //!< Logger object
+    std::shared_ptr<File> file_;             //!< File object
 };
 
-#endif /* SRC_FILE_HPP_ */
+#endif /* SRC_FILEMANAGER_HPP_ */

@@ -18,7 +18,7 @@
 #include <QTextEdit>
 #include <QFileDialog>
 #include <QMainWindow>
-#include "file/FileContainer.hpp"
+#include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
 
 //---------------------------------------------------------
@@ -32,8 +32,8 @@ class Window : public QMainWindow
 //                  Public
 //---------------------------------------------------------
 public:
-	Window(std::shared_ptr<FileContainer> fileContainger, QWidget *parent = 0);
-	~Window() = default;
+	Window(QWidget *parent = 0);
+	virtual ~Window() = default;
 
     /**
      * @brief Prepare class behaviour
@@ -50,9 +50,9 @@ public slots:
 	void openFile();
 
     /**
-     * @brief Select saved file name
+     * @brief Select file name for new file
      */
-	void selectFileName();
+	void newFile();
 
     /**
      * @brief Save file
@@ -88,9 +88,8 @@ private:
 	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
-	std::shared_ptr<FileContainer> fileContainer_;      //!< Pointer to the file container
 
-    QString fileName_;
+    FileManager fileManager_;                           //!< FileManager object
 };
 
 #endif /* SRC_WINDOW_HPP_ */
