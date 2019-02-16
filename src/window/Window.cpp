@@ -91,31 +91,20 @@ void Window::openFile()
     {
         log_ << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
 
-        if (!fileManager_.openFile(fileName.toStdString()))
+        if (!fileManager_.openFile(fileName))
         {
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
-        }
-
-        /**
-         * @brief Reading from file
-         */
-        QFile file(fileName);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            log_ << MY_FUNC << "Cannot open file or file isn't text type!" << log::END;
             return;
         }
 
-        QTextStream in(&file);
-        while (!in.atEnd())
+        auto fileContent = fileManager_.read();
+
+        for (auto&& line : fileContent)
         {
-            QString line = in.readLine();
             textEdit_->append(line);
         }
-        /*******/
 
         QMessageBox::information(this, "INFO", "Example of information");
-
         statusBar()->showMessage("Open file: " + fileName);
     }
 }
@@ -132,7 +121,7 @@ void Window::newFile()
 
     if (!fileName.isEmpty())
     {
-        if (!fileManager_.openFile(fileName.toStdString()))
+        if (!fileManager_.openFile(fileName))
         {
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
         }

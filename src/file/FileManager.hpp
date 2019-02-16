@@ -33,13 +33,20 @@ public:
      * @param fileName path for file
      * @return True if successfull, Fale otherwise
      */
-    bool openFile(const std::string& fileName);
+    bool openFile(const QString& fileName);
 
     /**
      * @brief Get file name
      * @return String representing file name
      */
     QString getFileName();
+
+    /**
+     * @brief Read data from file
+     * @return Vector contains file's data
+     */
+    std::vector<QString> read();
+
 
 //---------------------------------------------------------
 //                  Protected

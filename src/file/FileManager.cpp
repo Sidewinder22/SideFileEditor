@@ -14,9 +14,9 @@ FileManager::FileManager()
     : log_("FileManager")
 { }
 
-bool FileManager::openFile(const std::string& fileName)
+bool FileManager::openFile(const QString& fileName)
 {
-    log_ << MY_FUNC << "fileName = " << fileName << log::END;
+    log_ << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
     bool result = false;
 
     if (file_)
@@ -44,8 +44,18 @@ QString FileManager::getFileName()
 
     if (file_)
     {
-        fileName = file_->getFileName().c_str();
+        fileName = file_->getFileName();
     }
 
     return fileName;
+}
+
+std::vector<QString> FileManager::read()
+{
+    if (file_)
+    {
+        return file_->read();
+    }
+
+    return {};
 }
