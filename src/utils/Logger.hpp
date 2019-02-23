@@ -16,7 +16,7 @@
 //---------------------------------------------------------
 //                  Global context
 //---------------------------------------------------------
-#define MY_FUNC std::string(__FUNCTION__ + std::string("()"))
+#define MY_FUNC std::string(__FUNCTION__ + std::string("() "))
 
 //---------------------------------------------------------
 //                      Namespace
@@ -38,6 +38,7 @@ class Logger
 //---------------------------------------------------------
     public:
         Logger(std::string prefix);
+        virtual ~Logger() = default;
 
         Logger(const Logger&) = delete;
         Logger &operator=(const Logger&) = delete;

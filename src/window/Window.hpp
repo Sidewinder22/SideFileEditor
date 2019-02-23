@@ -18,7 +18,7 @@
 #include <QTextEdit>
 #include <QFileDialog>
 #include <QMainWindow>
-#include "file/FileContainer.hpp"
+#include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
 
 //---------------------------------------------------------
@@ -32,8 +32,8 @@ class Window : public QMainWindow
 //                  Public
 //---------------------------------------------------------
 public:
-	Window(std::shared_ptr<FileContainer> fileContainger, QWidget *parent = 0);
-	~Window() = default;
+	Window(QWidget *parent = 0);
+	virtual ~Window() = default;
 
     /**
      * @brief Prepare class behaviour
@@ -50,9 +50,9 @@ public slots:
 	void openFile();
 
     /**
-     * @brief Select saved file name
+     * @brief Select file name for new file
      */
-	void selectFileName();
+	void newFile();
 
     /**
      * @brief Save file
@@ -79,8 +79,14 @@ private:
      */
 	void buildToolBar();
 
+    /**
+     * @brief Show window with about description
+     */
+    void showAboutWindow();
+
     log::Logger log_;                                   //!< Logger object
-	QMenu *menu_;                                       //!< Pointer to menu object
+	QMenu *fileMenu_;                                   //!< Pointer to file menu object
+	QMenu *helpMenu_;                                   //!< Pointer to help menu object
 	QAction *toolBNew_;                                 //!< Pointer to the tool bar new file command
 	QAction *toolBOpen_;                                //!< Pointer to the tool bar open file command
 	QAction *toolBSave_;                                //!< Pointer to the tool bar save file command
@@ -88,7 +94,8 @@ private:
 	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
-	std::shared_ptr<FileContainer> fileContainer_;      //!< Pointer to the file container
+
+    FileManager fileManager_;                           //!< FileManager object
 };
 
 #endif /* SRC_WINDOW_HPP_ */
