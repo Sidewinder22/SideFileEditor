@@ -19,16 +19,17 @@ Target of this project is creation of simple file editor
 
 1. Clone this project:
 
-  * $ git clone https://github.com/Sidewinder22/MidiAnalyzer.git
+  * $ git clone git@gitlab.com:Sidewinder22/SideFileEditor.git 
 
 2. Get into *build* folder in cloned project:
 
-  * $ cd MidiAnalyzer/build
+  * $ cd SideFileEditor/build
 
 3. Build the source:
+  * * Remember to use qmake for QT5!
   * $ qmake 
-  * * $ make
+  * $ make
 
 4. Run project:
 
-  * $ ./MidiAnalyzer
+  * $ ./SideFileEditor
