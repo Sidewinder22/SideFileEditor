@@ -1,12 +1,12 @@
-# MidiAnalyzer
+# Sidewinder File Editor (sfe)
 
 Hi everyone!
 
 This is simple program type of "proof of concept".
 
-This program will be show my progress with learning and understanding MIDI interface and QT library.
+This program will be show my progress with learning and understanding C++ and QT library.
 
-Target of this project is creation analyzer of MIDI files (*.mid).
+Target of this project is creation of simple file editor
 
 
 
@@ -26,9 +26,8 @@ Target of this project is creation analyzer of MIDI files (*.mid).
   * $ cd MidiAnalyzer/build
 
 3. Build the source:
-
-  * $ qmake
-  * $ make
+  * $ qmake 
+  * * $ make
 
 4. Run project:
 
