@@ -25,7 +25,15 @@ bool FileManager::openFile(const QString& fileName)
         file_.reset();
     }
 
-    file_ = std::make_shared<File>(fileName);
+    try
+    {
+        file_ = std::make_shared<File>(fileName);
+    }
+    catch (const std::runtime_error& e)
+    {
+        log_ << MY_FUNC << "Cannot open file, error = " << e.what() << log::END;
+    }
+
     if (file_)
     {
         result = true;
@@ -58,4 +66,17 @@ std::vector<QString> FileManager::read()
     }
 
     return {};
+}
+
+bool FileManager::write(const QString& text)
+{
+    bool result = false;
+
+    if (file_)
+    {
+        file_->write(text);
+        result = true;
+    }
+
+    return result;
 }

@@ -15,45 +15,44 @@
 
 File::File(QString fileName)
     : log_("File")
-    , good_(false)
     , file_(fileName)
 {
-    if (file_.open(QIODevice::ReadOnly | QIODevice::Text))
+    if (!file_.open(QIODevice::ReadWrite | QIODevice::Text))
     {
-        good_ = true;
+        throw std::runtime_error("Cannot open file or file isn't text type!");
     }
-    else
-    {
-        log_ << MY_FUNC << "Cannot open file or file isn't text type!" << log::END;
-    }
+
+    log_ << MY_FUNC << "File opened succesfully." << log::END;
+}
+
+File::~File()
+{
+    file_.close();
 }
 
 QString File::getFileName()
 {
-    QString fileName;
-
-    if (good_)
-    {
-        fileName = file_.fileName();
-    }
-
-    return fileName;
+    return file_.fileName();
 }
 
 std::vector<QString> File::read()
 {
     std::vector<QString> fileContent;
 
-    if (good_)
+    QTextStream in(&file_);
+    while (!in.atEnd())
     {
-        QTextStream in(&file_);
-        while (!in.atEnd())
-        {
-            QString line = in.readLine();
-            fileContent.push_back(line);
-        }
+        QString line = in.readLine();
+        fileContent.push_back(line);
     }
 
     return std::move(fileContent);
 }
 
+void File::write(const QString& text)
+{
+    QTextStream out(&file_);
+    out << text << "\n";
+
+    file_.flush();
+}

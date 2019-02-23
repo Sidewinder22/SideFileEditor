@@ -25,7 +25,7 @@ class File
 //---------------------------------------------------------
 public:
     File(QString fileName);
-    virtual ~File() = default;
+    virtual ~File();
 
     /**
      * @brief Get file name
@@ -39,6 +39,19 @@ public:
      */
     std::vector<QString> read();
 
+    /**
+     * @brief Write data to file
+     * @param data Vector contains data to write
+     * @return True if successfull, False otherwise
+     */
+    bool write(std::vector<QString>& data);
+
+    /**
+     * @brief Write data to file
+     * @param text Text to write to file
+     */
+    void write(const QString& text);
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -49,9 +62,7 @@ protected:
 //---------------------------------------------------------
 private:
     log::Logger log_;                       //!< Logger object
-    bool good_;                             //!< File open successfull
     QFile file_;                            //!< QFile object
-
 };
 
 #endif /* SRC_FILE_HPP_ */

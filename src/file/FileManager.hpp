@@ -47,6 +47,12 @@ public:
      */
     std::vector<QString> read();
 
+    /**
+     * @brief Write data to file
+     * @param text Text to write to file
+     * @return True if successful, False otherwise
+     */
+    bool write(const QString& text);
 
 //---------------------------------------------------------
 //                  Protected

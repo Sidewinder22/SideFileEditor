@@ -103,8 +103,7 @@ void Window::openFile()
 
     if (!fileName.isEmpty())
     {
-        log_ << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
-
+        log_ << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
         if (!fileManager_.openFile(fileName))
         {
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
@@ -112,7 +111,6 @@ void Window::openFile()
         }
 
         auto fileContent = fileManager_.read();
-
         for (auto&& line : fileContent)
         {
             textEdit_->append(line);
@@ -140,7 +138,7 @@ void Window::newFile()
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
         }
 
-        log_  << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
+        log_  << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
         statusBar()->showMessage("Open file: " + fileName);
     }
 }
@@ -149,26 +147,16 @@ void Window::saveFile()
 {
     log_ << MY_FUNC << log::END;
 
-    auto fileName = fileManager_.getFileName();
-    if (!fileName.isEmpty())
+    auto text = textEdit_->toPlainText();
+    if (fileManager_.write(text))
     {
-        QFile file(fileName);
-        if(!file.open(QFile::WriteOnly | QFile::Text))
-        {
-            log_ << " Could not open file for writing" << MY_FUNC << log::END;
-            return;
-        }
-
-        auto text = textEdit_->toPlainText();
-        QTextStream out(&file);
-
-        out << text << "\n";
-
-        file.flush();
-        file.close();
+        statusBar()->showMessage("File saved");
+        QMessageBox::information(this, "INFO", "File saved!");
     }
-
-    statusBar()->showMessage("File saved");
-    QMessageBox::information(this, "INFO", "File saved!");
+    else
+    {
+        statusBar()->showMessage("Cannot save file!");
+        QMessageBox::warning(this, "INFO", "Cannot save file!");
+    }
 }
 
