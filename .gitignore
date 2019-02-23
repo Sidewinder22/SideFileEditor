@@ -24,7 +24,7 @@
 *.lib
 
 # Executables
-MidiAnalyzer
+SideFileEditor
 *.exe
 *.out
 *.app

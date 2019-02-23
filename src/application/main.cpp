@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	window.init();
 
 	window.resize(1000, 600);
-	window.setWindowTitle("MIDI Analyzer");
+	window.setWindowTitle("{\\_Sidewinder_/} File Editor");
 	window.show();
 
     return app.exec();

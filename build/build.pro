@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = MidiAnalyzer
+TARGET = SideFileEditor
 INCLUDEPATH += ../src
 
 # Input
