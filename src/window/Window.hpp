@@ -79,8 +79,14 @@ private:
      */
 	void buildToolBar();
 
+    /**
+     * @brief Show window with about description
+     */
+    void showAboutWindow();
+
     log::Logger log_;                                   //!< Logger object
-	QMenu *menu_;                                       //!< Pointer to menu object
+	QMenu *fileMenu_;                                   //!< Pointer to file menu object
+	QMenu *helpMenu_;                                   //!< Pointer to help menu object
 	QAction *toolBNew_;                                 //!< Pointer to the tool bar new file command
 	QAction *toolBOpen_;                                //!< Pointer to the tool bar open file command
 	QAction *toolBSave_;                                //!< Pointer to the tool bar save file command

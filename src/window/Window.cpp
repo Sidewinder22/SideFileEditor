@@ -28,7 +28,8 @@ Window::Window(QWidget *parent)
 	, toolBQuit_(nullptr)
     , fileDialog_(nullptr)
 {
-	menu_ = menuBar()->addMenu("File");
+	fileMenu_ = menuBar()->addMenu("File");
+    helpMenu_ = menuBar()->addMenu("Help");
 	toolBar_ = addToolBar("Main toolbar");
 	textEdit_ = new QTextEdit(this);
 }
@@ -57,24 +58,37 @@ void Window::buildToolBar()
 void Window::connectSignalsToSlots()
 {
 	QAction *newFile = new QAction("&New", this);
-	menu_->addAction(newFile);
+	fileMenu_->addAction(newFile);
 	QAction *openFile = new QAction("&Open", this);
-	menu_->addAction(openFile);
+	fileMenu_->addAction(openFile);
 	QAction *saveFile = new QAction("&Save", this);
-	menu_->addAction(saveFile);
-    menu_->addSeparator();
+	fileMenu_->addAction(saveFile);
+    fileMenu_->addSeparator();
 
 	QAction *quit = new QAction("&Quit", this);
-	menu_->addAction(quit);
+	fileMenu_->addAction(quit);
+
+    QAction *about = new QAction("&About", this);
+    helpMenu_->addAction(about);
 
 	connect(newFile, &QAction::triggered, this, &Window::newFile);
 	connect(openFile, &QAction::triggered, this, &Window::openFile);
     connect(saveFile, &QAction::triggered, this, &Window::saveFile);
-	connect(quit, &QAction::triggered, qApp, QApplication::quit);
+	connect(about, &QAction::triggered, this, &Window::showAboutWindow);
 	connect(toolBNew_, &QAction::triggered, this, &Window::newFile);
 	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
 	connect(toolBSave_, &QAction::triggered, this, &Window::saveFile);
+	connect(quit, &QAction::triggered, qApp, QApplication::quit);
     connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
+}
+
+void Window::showAboutWindow()
+{
+    QString description;
+    description.append("##################################\n");
+    description.append("SFileEditor by {\\_Sidewinder22_/}");
+    description.append("##################################");
+    QMessageBox::information(this, "INFO", description);
 }
 
 void Window::openFile()
