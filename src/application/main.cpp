@@ -9,15 +9,12 @@
 #include <memory>
 #include <QApplication>
 #include "window/Window.hpp"
-#include "file/FileContainer.hpp"
 
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 
-	auto fileContainer = std::make_shared<FileContainer>();
-
-	Window window(fileContainer);
+	Window window;
 	window.init();
 
 	window.resize(1000, 600);

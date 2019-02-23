@@ -20,16 +20,16 @@
 #include <QTextStream>
 #include "Window.hpp"
 
-Window::Window(std::shared_ptr<FileContainer> fileContainger, QWidget *parent)
+Window::Window(QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
 	, toolBNew_(nullptr)
 	, toolBOpen_(nullptr)
 	, toolBQuit_(nullptr)
     , fileDialog_(nullptr)
-    , fileContainer_(fileContainger)
 {
-	menu_ = menuBar()->addMenu("File");
+	fileMenu_ = menuBar()->addMenu("File");
+    helpMenu_ = menuBar()->addMenu("Help");
 	toolBar_ = addToolBar("Main toolbar");
 	textEdit_ = new QTextEdit(this);
 }
@@ -58,24 +58,37 @@ void Window::buildToolBar()
 void Window::connectSignalsToSlots()
 {
 	QAction *newFile = new QAction("&New", this);
-	menu_->addAction(newFile);
+	fileMenu_->addAction(newFile);
 	QAction *openFile = new QAction("&Open", this);
-	menu_->addAction(openFile);
+	fileMenu_->addAction(openFile);
 	QAction *saveFile = new QAction("&Save", this);
-	menu_->addAction(saveFile);
-    menu_->addSeparator();
+	fileMenu_->addAction(saveFile);
+    fileMenu_->addSeparator();
 
 	QAction *quit = new QAction("&Quit", this);
-	menu_->addAction(quit);
+	fileMenu_->addAction(quit);
 
-	connect(newFile, &QAction::triggered, this, &Window::selectFileName);
+    QAction *about = new QAction("&About", this);
+    helpMenu_->addAction(about);
+
+	connect(newFile, &QAction::triggered, this, &Window::newFile);
 	connect(openFile, &QAction::triggered, this, &Window::openFile);
     connect(saveFile, &QAction::triggered, this, &Window::saveFile);
-	connect(quit, &QAction::triggered, qApp, QApplication::quit);
-	connect(toolBNew_, &QAction::triggered, this, &Window::selectFileName);
+	connect(about, &QAction::triggered, this, &Window::showAboutWindow);
+	connect(toolBNew_, &QAction::triggered, this, &Window::newFile);
 	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
 	connect(toolBSave_, &QAction::triggered, this, &Window::saveFile);
+	connect(quit, &QAction::triggered, qApp, QApplication::quit);
     connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
+}
+
+void Window::showAboutWindow()
+{
+    QString description;
+    description.append("##################################\n");
+    description.append("SFileEditor by {\\_Sidewinder22_/}");
+    description.append("##################################");
+    QMessageBox::information(this, "INFO", description);
 }
 
 void Window::openFile()
@@ -90,34 +103,25 @@ void Window::openFile()
 
     if (!fileName.isEmpty())
     {
-        log_ << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
-        fileContainer_->addFile(std::make_shared<File>(fileName.toStdString()));
-
-        /**
-         * @brief Reading from file
-         */
-        QFile file(fileName);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        log_ << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
+        if (!fileManager_.openFile(fileName))
         {
-            log_ << MY_FUNC << "Cannot open file or file isn't text type!" << log::END;
+            log_ << MY_FUNC << "Cannot open file!!!" << log::END;
             return;
         }
 
-        QTextStream in(&file);
-        while (!in.atEnd())
+        auto fileContent = fileManager_.read();
+        for (auto&& line : fileContent)
         {
-            QString line = in.readLine();
             textEdit_->append(line);
         }
-        /*******/
 
         QMessageBox::information(this, "INFO", "Example of information");
-
         statusBar()->showMessage("Open file: " + fileName);
     }
 }
 
-void Window::selectFileName()
+void Window::newFile()
 {
     log_ << MY_FUNC << log::END;
 
@@ -129,7 +133,12 @@ void Window::selectFileName()
 
     if (!fileName.isEmpty())
     {
-        log_  << MY_FUNC << ": fileName = " << fileName.toStdString() << log::END;
+        if (!fileManager_.openFile(fileName))
+        {
+            log_ << MY_FUNC << "Cannot open file!!!" << log::END;
+        }
+
+        log_  << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
         statusBar()->showMessage("Open file: " + fileName);
     }
 }
@@ -138,6 +147,16 @@ void Window::saveFile()
 {
     log_ << MY_FUNC << log::END;
 
-    statusBar()->showMessage("File saved");
+    auto text = textEdit_->toPlainText();
+    if (fileManager_.write(text))
+    {
+        statusBar()->showMessage("File saved");
+        QMessageBox::information(this, "INFO", "File saved!");
+    }
+    else
+    {
+        statusBar()->showMessage("Cannot save file!");
+        QMessageBox::warning(this, "INFO", "Cannot save file!");
+    }
 }
 

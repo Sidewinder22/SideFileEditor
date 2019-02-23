@@ -8,13 +8,51 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include <memory>
+#include <vector>
+#include <QTextStream>
 #include "File.hpp"
 
-File::File(std::string fileName)
-    : fileName_(fileName)
-{ }
-
-std::string File::getFileName()
+File::File(QString fileName)
+    : log_("File")
+    , file_(fileName)
 {
-    return fileName_;
+    if (!file_.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        throw std::runtime_error("Cannot open file or file isn't text type!");
+    }
+
+    log_ << MY_FUNC << "File opened succesfully." << log::END;
+}
+
+File::~File()
+{
+    file_.close();
+}
+
+QString File::getFileName()
+{
+    return file_.fileName();
+}
+
+std::vector<QString> File::read()
+{
+    std::vector<QString> fileContent;
+
+    QTextStream in(&file_);
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+        fileContent.push_back(line);
+    }
+
+    return std::move(fileContent);
+}
+
+void File::write(const QString& text)
+{
+    QTextStream out(&file_);
+    out << text << "\n";
+
+    file_.flush();
 }

@@ -1,31 +1,39 @@
 /**
  * @author Damian Stępień
- * @date 03.10.2016
+ * @date 11.02.2019
  *
- * @brief Class wrapping a file.
+ * @brief FileManager Manager class
  */
 
-#ifndef SRC_FILE_HPP_
-#define SRC_FILE_HPP_
+#ifndef SRC_FILEMANAGER_HPP_
+#define SRC_FILEMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <QFile>
+#include <memory>
 #include <QString>
+#include "File.hpp"
 #include "utils/Logger.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class File
+class FileManager
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-    File(QString fileName);
-    virtual ~File();
+    FileManager();
+    virtual ~FileManager() = default;
+
+    /**
+     * @brief Open file
+     * @param fileName path for file
+     * @return True if successfull, Fale otherwise
+     */
+    bool openFile(const QString& fileName);
 
     /**
      * @brief Get file name
@@ -41,16 +49,10 @@ public:
 
     /**
      * @brief Write data to file
-     * @param data Vector contains data to write
-     * @return True if successfull, False otherwise
-     */
-    bool write(std::vector<QString>& data);
-
-    /**
-     * @brief Write data to file
      * @param text Text to write to file
+     * @return True if successful, False otherwise
      */
-    void write(const QString& text);
+    bool write(const QString& text);
 
 //---------------------------------------------------------
 //                  Protected
@@ -62,7 +64,7 @@ protected:
 //---------------------------------------------------------
 private:
     log::Logger log_;                       //!< Logger object
-    QFile file_;                            //!< QFile object
+    std::shared_ptr<File> file_;             //!< File object
 };
 
-#endif /* SRC_FILE_HPP_ */
+#endif /* SRC_FILEMANAGER_HPP_ */
