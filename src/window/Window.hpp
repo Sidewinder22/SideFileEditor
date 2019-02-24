@@ -13,6 +13,7 @@
 //---------------------------------------------------------
 #include <memory>
 #include <QMenu>
+#include <QLabel>
 #include <QWidget>
 #include <QToolBar>
 #include <QTextEdit>
@@ -84,14 +85,23 @@ private:
      */
     void showAboutWindow();
 
+    /**
+     * @brief Set fileName on the fileName label on the tool bar
+     * @param filePath Path to the file
+     */
+    void fillFileNameLabel(QString filePath);
+
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object
 	QMenu *helpMenu_;                                   //!< Pointer to help menu object
+
 	QAction *toolBNew_;                                 //!< Pointer to the tool bar new file command
 	QAction *toolBOpen_;                                //!< Pointer to the tool bar open file command
 	QAction *toolBSave_;                                //!< Pointer to the tool bar save file command
 	QAction *toolBQuit_;                                //!< Pointer to the tool bar quit command
+    QLabel *fileNameLabel_;                             //!< Pointer to the tool bar fileName label
 	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
+
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
 

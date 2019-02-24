@@ -26,12 +26,15 @@ Window::Window(QWidget *parent)
 	, toolBNew_(nullptr)
 	, toolBOpen_(nullptr)
 	, toolBQuit_(nullptr)
+    , fileNameLabel_(new QLabel(this))
     , fileDialog_(nullptr)
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
 	toolBar_ = addToolBar("Main toolbar");
 	textEdit_ = new QTextEdit(this);
+
+    fileNameLabel_->setText("--------");
 }
 
 void Window::init()
@@ -53,6 +56,13 @@ void Window::buildToolBar()
 
 	toolBQuit_ = toolBar_->addAction(QIcon("icons/quit.png"),
 		"Quit Application");
+	toolBar_->addSeparator();
+
+    QLabel* fileNameDescription(new QLabel(this));
+    fileNameDescription->setText("FileName: ");
+    toolBar_->addWidget(fileNameDescription);
+    toolBar_->addWidget(fileNameLabel_);
+	toolBar_->addSeparator();
 }
 
 void Window::connectSignalsToSlots()
@@ -109,6 +119,7 @@ void Window::openFile()
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
             return;
         }
+        fillFileNameLabel(fileName);
 
         auto fileContent = fileManager_.read();
         for (auto&& line : fileContent)
@@ -137,6 +148,7 @@ void Window::newFile()
         {
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
         }
+        fillFileNameLabel(fileName);
 
         log_  << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
         statusBar()->showMessage("Open file: " + fileName);
@@ -160,3 +172,12 @@ void Window::saveFile()
     }
 }
 
+void Window::fillFileNameLabel(QString filePath)
+{
+    std::string filePathString(filePath.toStdString());
+
+    auto const position = filePathString.find_last_of('/');
+    const auto fileName = filePathString.substr(position + 1);
+
+    fileNameLabel_->setText(QString(fileName.c_str()));
+}
