@@ -5,6 +5,7 @@
  * @brief Class responsible for application logging.
  */
 
+#include <cstring>
 #include <iostream>
 #include "Logger.hpp"
 
@@ -21,11 +22,7 @@ Logger::Logger(std::string prefix)
 
 Logger& operator<<(Logger& log, std::string str)
 {
-    if (log.beginLine_)
-    {
-        std::cout << "[" << log.prefix_ << "] ";
-        log.beginLine_ = false;
-    }
+    log.writeIndex();
 
     std::cout << str;
 
@@ -37,4 +34,45 @@ Logger& operator<<(Logger& log, std::string str)
     return log;
 }
 
+Logger& operator<<(Logger& log, QString info)
+{
+    log.writeIndex();
+
+    std::string str = info.toStdString();
+    std::cout << str;
+
+    if (str == "\n")
+    {
+        log.beginLine_ = true;
+    }
+
+    return log;
+}
+
+Logger& operator<<(Logger& log, const char* str)
+{
+    log.writeIndex();
+
+    std::cout << str;
+
+    int result = std::strcmp(str, "\n");
+    if (result == 0)
+    {
+        log.beginLine_ = true;
+    }
+
+    return log;
+
+}
+
+void Logger::writeIndex()
+{
+    if (beginLine_)
+    {
+        std::cout << "[" << prefix_ << "] ";
+        beginLine_ = false;
+    }
+}
+
 } // ::log
+

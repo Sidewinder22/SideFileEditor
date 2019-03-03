@@ -74,7 +74,27 @@ bool FileManager::write(const QString& text)
 
     if (file_)
     {
-        file_->write(text);
+        auto currentFileName = file_->getFileName();
+        auto tempFile = std::make_shared<File>(currentFileName + ".bcp");
+
+        tempFile->write(text);
+
+        if (file_->remove())
+        {
+            file_.reset();
+            file_ = tempFile;
+        }
+        else
+        {
+            log_ << MY_FUNC << "Cannot remove file: " << file_->getFileName() << log::END;
+        }
+
+
+        if (!tempFile->rename(currentFileName))
+        {
+            log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
+        }
+
         result = true;
     }
 

@@ -35,6 +35,11 @@ QString File::getFileName()
     return file_.fileName();
 }
 
+bool File::rename(const QString& newFileName)
+{
+    return file_.rename(newFileName);
+}
+
 std::vector<QString> File::read()
 {
     std::vector<QString> fileContent;
@@ -55,4 +60,9 @@ void File::write(const QString& text)
     out << text << "\n";
 
     file_.flush();
+}
+
+bool File::remove()
+{
+    return file_.remove();
 }

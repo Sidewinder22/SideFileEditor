@@ -34,6 +34,13 @@ public:
     QString getFileName();
 
     /**
+     * @brief Rename the file
+     * @param newFileName New file name
+     * @return True if successful, False otherwise
+     */
+    bool rename(const QString& newFileName);
+
+    /**
      * @brief Read data from file
      * @return Vector contains file's data
      */
@@ -51,6 +58,12 @@ public:
      * @param text Text to write to file
      */
     void write(const QString& text);
+
+    /**
+     * @brief Remove file from filesystem
+     * @return True if successful, False otherwise
+     */
+    bool remove();
 
 //---------------------------------------------------------
 //                  Protected
