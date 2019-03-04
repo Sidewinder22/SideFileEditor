@@ -16,7 +16,7 @@ FileManager::FileManager()
 
 bool FileManager::openFile(const QString& fileName)
 {
-    log_ << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
+    log_ << MY_FUNC << "fileName = " << fileName << log::END;
     bool result = false;
 
     if (file_)

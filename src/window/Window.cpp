@@ -113,7 +113,7 @@ void Window::openFile()
 
     if (!fileName.isEmpty())
     {
-        log_ << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
+        log_ << MY_FUNC << "fileName = " << fileName << log::END;
         if (!fileManager_.openFile(fileName))
         {
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
@@ -150,7 +150,7 @@ void Window::newFile()
         }
         fillFileNameLabel(fileName);
 
-        log_  << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
+        log_  << MY_FUNC << "fileName = " << fileName << log::END;
         statusBar()->showMessage("Open file: " + fileName);
     }
 }
