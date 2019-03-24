@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 
 	window.resize(1000, 600);
 	window.setWindowTitle("{\\_Sidewinder_/} File Editor");
-	window.show();
+    window.showMaximized();
 
     return app.exec();
 }

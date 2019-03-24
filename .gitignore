@@ -37,3 +37,4 @@ SideFileEditor
 # QT files
 moc_Window.cpp
 Makefile
+moc_predefs.h
