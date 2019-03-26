@@ -25,6 +25,10 @@ Window::Window(QWidget *parent)
     , log_("Window")
 	, toolBNew_(nullptr)
 	, toolBOpen_(nullptr)
+    , toolBSave_(nullptr)
+    , toolBClear_(nullptr)
+    , toolBClose_(nullptr)
+    , toolBTrash_(nullptr)
 	, toolBQuit_(nullptr)
     , fileNameLabel_(new QLabel(this))
     , fileDialog_(nullptr)
@@ -52,6 +56,10 @@ void Window::buildToolBar()
 	toolBNew_ = toolBar_->addAction(QIcon("icons/new.png"), "New File");
 	toolBOpen_ = toolBar_->addAction(QIcon("icons/open.png"), "Open File");
 	toolBSave_ = toolBar_->addAction(QIcon("icons/save.png"), "Save File");
+	toolBClear_ = toolBar_->addAction(QIcon("icons/clear.png"), "Clear Screen");
+	toolBClose_ = toolBar_->addAction(QIcon("icons/close.png"), "Close File");
+    toolBTrash_ = toolBar_->addAction(QIcon("icons/trash.png"), "Remove File");
+
 	toolBar_->addSeparator();
 
 	toolBQuit_ = toolBar_->addAction(QIcon("icons/quit.png"),
@@ -73,6 +81,12 @@ void Window::connectSignalsToSlots()
 	fileMenu_->addAction(openFile);
 	QAction *saveFile = new QAction("&Save", this);
 	fileMenu_->addAction(saveFile);
+	QAction *clearScreen = new QAction("&Clear screen", this);
+	fileMenu_->addAction(clearScreen);
+	QAction *closeFile = new QAction("&Close", this);
+	fileMenu_->addAction(closeFile);
+	QAction *removeFile = new QAction("&Remove", this);
+	fileMenu_->addAction(removeFile);
     fileMenu_->addSeparator();
 
 	QAction *quit = new QAction("&Quit", this);
@@ -84,10 +98,16 @@ void Window::connectSignalsToSlots()
 	connect(newFile, &QAction::triggered, this, &Window::newFile);
 	connect(openFile, &QAction::triggered, this, &Window::openFile);
     connect(saveFile, &QAction::triggered, this, &Window::saveFile);
+    connect(clearScreen, &QAction::triggered, this, &Window::clearScreen);
+    connect(closeFile, &QAction::triggered, this, &Window::closeFile);
+    connect(removeFile, &QAction::triggered, this, &Window::removeFile);
 	connect(about, &QAction::triggered, this, &Window::showAboutWindow);
 	connect(toolBNew_, &QAction::triggered, this, &Window::newFile);
 	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
 	connect(toolBSave_, &QAction::triggered, this, &Window::saveFile);
+	connect(toolBClear_, &QAction::triggered, this, &Window::clearScreen);
+	connect(toolBClose_, &QAction::triggered, this, &Window::closeFile);
+	connect(toolBTrash_, &QAction::triggered, this, &Window::removeFile);
 	connect(quit, &QAction::triggered, qApp, QApplication::quit);
     connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
 }
@@ -95,9 +115,9 @@ void Window::connectSignalsToSlots()
 void Window::showAboutWindow()
 {
     QString description;
-    description.append("##################################\n");
+    description.append("########################\n");
     description.append("SFileEditor by {\\_Sidewinder22_/}");
-    description.append("##################################");
+    description.append("########################");
     QMessageBox::information(this, "INFO", description);
 }
 
@@ -129,6 +149,7 @@ void Window::openFile()
 
         QMessageBox::information(this, "INFO", "Example of information");
         statusBar()->showMessage("Open file: " + fileName);
+        setWindowTitle(fileName);
     }
 }
 
@@ -147,11 +168,14 @@ void Window::newFile()
         if (!fileManager_.openFile(fileName))
         {
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
+            QMessageBox::information(this, "ERROR", "Can't open file!!!");
+            return;
         }
         fillFileNameLabel(fileName);
 
         log_  << MY_FUNC << "fileName = " << fileName << log::END;
         statusBar()->showMessage("Open file: " + fileName);
+        setWindowTitle(fileName);
     }
 }
 
@@ -170,6 +194,38 @@ void Window::saveFile()
         statusBar()->showMessage("Cannot save file!");
         QMessageBox::warning(this, "INFO", "Cannot save file!");
     }
+}
+
+//void Window::clearScreen()
+void Window::closeFile()
+{
+    log_ << MY_FUNC << log::END;
+
+    textEdit_->clear();
+
+    if (fileManager_.exists())
+    {
+        fileManager_.close();
+    }
+}
+
+void Window::removeFile()
+{
+    log_ << MY_FUNC << log::END;
+
+    textEdit_->clear();
+
+    if (fileManager_.exists())
+    {
+        fileManager_.remove();
+    }
+}
+
+void Window::clearScreen()
+{
+    log_ << MY_FUNC << log::END;
+
+    textEdit_->clear();
 }
 
 void Window::fillFileNameLabel(QString filePath)

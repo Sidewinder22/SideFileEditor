@@ -54,6 +54,22 @@ public:
      */
     bool write(const QString& text);
 
+    /**
+     * @brief Check if file exists
+     * @return True if file exists, False otherwise
+     */
+    bool exists();
+
+    /**
+     * @brief Close open file
+     */
+    void close();
+
+    /**
+     * @brief Remove file
+     */
+    void remove();
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
