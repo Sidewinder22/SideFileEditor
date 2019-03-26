@@ -100,3 +100,32 @@ bool FileManager::write(const QString& text)
 
     return result;
 }
+
+bool FileManager::exists()
+{
+    bool result = false;
+
+    if (file_)
+    {
+        result = true;
+    }
+
+    return result;
+}
+
+void FileManager::close()
+{
+    if (file_)
+    {
+        file_.reset();
+    }
+}
+
+void FileManager::remove()
+{
+    if (file_)
+    {
+        file_->remove();
+        file_.reset();
+    }
+}

@@ -57,9 +57,23 @@ public slots:
 
     /**
      * @brief Save file
-     * @note TODO: To implement!!!
      */
     void saveFile();
+
+    /**
+     * @brief Close file
+     */
+    void closeFile();
+
+    /**
+     * @brief Remove file
+     */
+    void removeFile();
+
+    /**
+     * @brief Clear screen
+     */
+    void clearScreen();
 
 //---------------------------------------------------------
 //                  Protected
@@ -98,6 +112,9 @@ private:
 	QAction *toolBNew_;                                 //!< Pointer to the tool bar new file command
 	QAction *toolBOpen_;                                //!< Pointer to the tool bar open file command
 	QAction *toolBSave_;                                //!< Pointer to the tool bar save file command
+	QAction *toolBClear_;                               //!< Pointer to the tool bar clear screen command
+	QAction *toolBClose_;                               //!< Pointer to the tool bar close file command
+	QAction *toolBTrash_;                               //!< Pointer to the tool bar trash file command
 	QAction *toolBQuit_;                                //!< Pointer to the tool bar quit command
     QLabel *fileNameLabel_;                             //!< Pointer to the tool bar fileName label
 	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
