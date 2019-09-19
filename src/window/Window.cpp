@@ -1,5 +1,5 @@
 /**
- * @author Damian Stępień
+ * @author Sidewinder22
  * @date 20.09.2016
  *
  * @brief Main Window class
@@ -46,7 +46,7 @@ void Window::init()
 	buildToolBar();
 	connectSignalsToSlots();
 
-	setCentralWidget(textEdit_);
+    setCentralWidget(textEdit_);
 
 	statusBar()->showMessage("Ready!");
 }
@@ -115,9 +115,10 @@ void Window::connectSignalsToSlots()
 void Window::showAboutWindow()
 {
     QString description;
-    description.append("########################\n");
-    description.append("SFileEditor by {\\_Sidewinder22_/}");
-    description.append("########################");
+    description.append("       SFileEditor\n");
+    description.append("             by\n");
+    description.append("{\\_Sidewinder22_/}");
+
     QMessageBox::information(this, "INFO", description);
 }
 
@@ -196,12 +197,21 @@ void Window::saveFile()
     }
 }
 
-//void Window::clearScreen()
 void Window::closeFile()
 {
     log_ << MY_FUNC << log::END;
 
     textEdit_->clear();
+    fileNameLabel_->setText("--------");
+
+    if (fileManager_.exists())
+    {
+        statusBar()->showMessage("File: " + fileManager_.getFileName() + " closed.");
+    }
+    else
+    {
+        statusBar()->clearMessage();
+    }
 
     if (fileManager_.exists())
     {
@@ -214,6 +224,16 @@ void Window::removeFile()
     log_ << MY_FUNC << log::END;
 
     textEdit_->clear();
+    fileNameLabel_->setText("--------");
+
+    if (fileManager_.exists())
+    {
+        statusBar()->showMessage("File: " + fileManager_.getFileName() + " removed.");
+    }
+    else
+    {
+        statusBar()->clearMessage();
+    }
 
     if (fileManager_.exists())
     {

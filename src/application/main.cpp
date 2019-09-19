@@ -1,5 +1,5 @@
 /**
- * @author Damian Stępień
+ * @author Sidewinder22
  * @date 17.09.2016
  *
  * @brief Main application file.

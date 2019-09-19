@@ -1,5 +1,5 @@
 /**
- * @author Damian Stępień
+ * @author Sidewinder22
  * @date 03.10.2016
  *
  * @brief Class wrapping a file.

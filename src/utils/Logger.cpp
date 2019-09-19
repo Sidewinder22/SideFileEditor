@@ -1,5 +1,5 @@
 /**
- * @author Damian Stepień
+ * @author Sidewinder22
  * @date 02.01.2019
  *
  * @brief Class responsible for application logging.

@@ -1,5 +1,5 @@
 /**
- * @author Damian Stępień
+ * @author Sidewinder22
  * @date 11.02.2019
  *
  * @brief FileManager Manager class

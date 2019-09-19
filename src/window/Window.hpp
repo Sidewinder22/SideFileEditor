@@ -1,5 +1,5 @@
 /**
- * @author Damian Stępień
+ * @author Sidewinder22
  * @date 20.09.2016
  *
  * @brief Main Window class
@@ -17,6 +17,7 @@
 #include <QWidget>
 #include <QToolBar>
 #include <QTextEdit>
+#include <QVBoxLayout>
 #include <QFileDialog>
 #include <QMainWindow>
 #include "file/FileManager.hpp"
