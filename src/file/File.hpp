@@ -5,8 +5,8 @@
  * @brief Class wrapping a file.
  */
 
-#ifndef SRC_FILE_HPP_
-#define SRC_FILE_HPP_
+#ifndef SRC_FILE_FILE_HPP_
+#define SRC_FILE_FILE_HPP_
 
 //---------------------------------------------------------
 //                      Includes
@@ -78,4 +78,4 @@ private:
     QFile file_;                            //!< QFile object
 };
 
-#endif /* SRC_FILE_HPP_ */
+#endif /* SRC_FILE_FILE_HPP_ */

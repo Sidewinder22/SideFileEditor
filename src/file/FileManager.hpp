@@ -5,8 +5,8 @@
  * @brief FileManager Manager class
  */
 
-#ifndef SRC_FILEMANAGER_HPP_
-#define SRC_FILEMANAGER_HPP_
+#ifndef SRC_FILEMANAGER_FILEMANAGER_HPP_
+#define SRC_FILEMANAGER_FILEMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
@@ -83,4 +83,4 @@ private:
     std::shared_ptr<File> file_;             //!< File object
 };
 
-#endif /* SRC_FILEMANAGER_HPP_ */
+#endif /* SRC_FILEMANAGER_FILEMANAGER_HPP_ */

@@ -32,11 +32,22 @@ Window::Window(QWidget *parent)
 	, toolBQuit_(nullptr)
     , fileNameLabel_(new QLabel(this))
     , fileDialog_(nullptr)
+    , dock_(new QDockWidget(tr("Files"), this))
+    //, fileList_(new QListWidget())
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
 	toolBar_ = addToolBar("Main toolbar");
+
+    // dock
+    dock_->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
+    setDockOptions(dockOptions() | QMainWindow::GroupedDragging | QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks);
+    //dock_->setWidget(fileList_);
+    addDockWidget(Qt::TopDockWidgetArea, dock_);
+
+
 	textEdit_ = new QTextEdit(this);
+
 
     fileNameLabel_->setText("--------");
 }
@@ -108,8 +119,8 @@ void Window::connectSignalsToSlots()
 	connect(toolBClear_, &QAction::triggered, this, &Window::clearScreen);
 	connect(toolBClose_, &QAction::triggered, this, &Window::closeFile);
 	connect(toolBTrash_, &QAction::triggered, this, &Window::removeFile);
-	connect(quit, &QAction::triggered, qApp, QApplication::quit);
     connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
+	connect(quit, &QAction::triggered, qApp, QApplication::quit);
 }
 
 void Window::showAboutWindow()
@@ -141,6 +152,10 @@ void Window::openFile()
             return;
         }
         fillFileNameLabel(fileName);
+
+        //fileList_->addItem(fileName);
+        QLabel *label = new QLabel(fileName);
+        dock_->setWidget(label);
 
         auto fileContent = fileManager_.read();
         for (auto&& line : fileContent)
@@ -217,6 +232,10 @@ void Window::closeFile()
     {
         fileManager_.close();
     }
+
+
+    QLabel *emptyLabel = new QLabel("");
+    dock_->setWidget(emptyLabel);
 }
 
 void Window::removeFile()

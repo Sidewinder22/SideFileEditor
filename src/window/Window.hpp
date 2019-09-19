@@ -20,6 +20,9 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 #include <QMainWindow>
+#include <QVBoxLayout>
+#include <QDockWidget>
+//#include <QListWidget>
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
 
@@ -122,6 +125,9 @@ private:
 
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
+
+    QDockWidget *dock_;
+//    QListWidget *fileList_;
 
     FileManager fileManager_;                           //!< FileManager object
 };

@@ -51,7 +51,7 @@ std::vector<QString> File::read()
         fileContent.push_back(line);
     }
 
-    return std::move(fileContent);
+    return fileContent;
 }
 
 void File::write(const QString& text)
