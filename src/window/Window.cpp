@@ -30,26 +30,28 @@ Window::Window(QWidget *parent)
     , toolBClose_(nullptr)
     , toolBTrash_(nullptr)
 	, toolBQuit_(nullptr)
-    , fileNameLabel_(new QLabel(this))
     , fileDialog_(nullptr)
-    , dock_(new QDockWidget(tr("Files"), this))
-    //, fileList_(new QListWidget())
+    , dock_(new QDockWidget(tr("Open files"), this))
+    , fileList_(new QListWidget())
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
 	toolBar_ = addToolBar("Main toolbar");
 
+    // file list
+    fileList_->setFlow(QListView::LeftToRight);
+    fileList_->setLayoutMode(QListView::SinglePass);
+    fileList_->setWrapping(true);
+
     // dock
+    dock_->setMaximumHeight(60);
     dock_->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
     setDockOptions(dockOptions() | QMainWindow::GroupedDragging | QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks);
-    //dock_->setWidget(fileList_);
+    dock_->setWidget(fileList_);
+
     addDockWidget(Qt::TopDockWidgetArea, dock_);
 
-
 	textEdit_ = new QTextEdit(this);
-
-
-    fileNameLabel_->setText("--------");
 }
 
 void Window::init()
@@ -75,12 +77,7 @@ void Window::buildToolBar()
 
 	toolBQuit_ = toolBar_->addAction(QIcon("icons/quit.png"),
 		"Quit Application");
-	toolBar_->addSeparator();
 
-    QLabel* fileNameDescription(new QLabel(this));
-    fileNameDescription->setText("FileName: ");
-    toolBar_->addWidget(fileNameDescription);
-    toolBar_->addWidget(fileNameLabel_);
 	toolBar_->addSeparator();
 }
 
@@ -151,11 +148,7 @@ void Window::openFile()
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
             return;
         }
-        fillFileNameLabel(fileName);
-
-        //fileList_->addItem(fileName);
-        QLabel *label = new QLabel(fileName);
-        dock_->setWidget(label);
+        addFileNameToTheDock(fileName);
 
         auto fileContent = fileManager_.read();
         for (auto&& line : fileContent)
@@ -164,7 +157,7 @@ void Window::openFile()
         }
 
         QMessageBox::information(this, "INFO", "Example of information");
-        statusBar()->showMessage("Open file: " + fileName);
+        statusBar()->showMessage("Path [open file]: " + fileName);
         setWindowTitle(fileName);
     }
 }
@@ -187,10 +180,10 @@ void Window::newFile()
             QMessageBox::information(this, "ERROR", "Can't open file!!!");
             return;
         }
-        fillFileNameLabel(fileName);
+        addFileNameToTheDock(fileName);
 
         log_  << MY_FUNC << "fileName = " << fileName << log::END;
-        statusBar()->showMessage("Open file: " + fileName);
+        statusBar()->showMessage("Path [new file]: " + fileName);
         setWindowTitle(fileName);
     }
 }
@@ -207,7 +200,7 @@ void Window::saveFile()
     }
     else
     {
-        statusBar()->showMessage("Cannot save file!");
+        statusBar()->showMessage("Can't save file!");
         QMessageBox::warning(this, "INFO", "Cannot save file!");
     }
 }
@@ -217,7 +210,6 @@ void Window::closeFile()
     log_ << MY_FUNC << log::END;
 
     textEdit_->clear();
-    fileNameLabel_->setText("--------");
 
     if (fileManager_.exists())
     {
@@ -243,7 +235,6 @@ void Window::removeFile()
     log_ << MY_FUNC << log::END;
 
     textEdit_->clear();
-    fileNameLabel_->setText("--------");
 
     if (fileManager_.exists())
     {
@@ -267,12 +258,12 @@ void Window::clearScreen()
     textEdit_->clear();
 }
 
-void Window::fillFileNameLabel(QString filePath)
+void Window::addFileNameToTheDock(QString filePath)
 {
     std::string filePathString(filePath.toStdString());
 
     auto const position = filePathString.find_last_of('/');
     const auto fileName = filePathString.substr(position + 1);
 
-    fileNameLabel_->setText(QString(fileName.c_str()));
+    fileList_->addItem(fileName.c_str());
 }
