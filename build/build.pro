@@ -23,5 +23,5 @@ SOURCES	+= 	../src/application/main.cpp \
             ../src/utils/Logger.cpp \
             ../src/window/Window.cpp
 
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++14
 

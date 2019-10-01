@@ -20,6 +20,9 @@
 #include <QVBoxLayout>
 #include <QFileDialog>
 #include <QMainWindow>
+#include <QVBoxLayout>
+#include <QDockWidget>
+#include <QListWidget>
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
 
@@ -101,10 +104,10 @@ private:
     void showAboutWindow();
 
     /**
-     * @brief Set fileName on the fileName label on the tool bar
+     * @brief Add fileName to the top dock open files list
      * @param filePath Path to the file
      */
-    void fillFileNameLabel(QString filePath);
+    void addFileNameToTheDock(QString filePath);
 
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object
@@ -117,11 +120,13 @@ private:
 	QAction *toolBClose_;                               //!< Pointer to the tool bar close file command
 	QAction *toolBTrash_;                               //!< Pointer to the tool bar trash file command
 	QAction *toolBQuit_;                                //!< Pointer to the tool bar quit command
-    QLabel *fileNameLabel_;                             //!< Pointer to the tool bar fileName label
 	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
 
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
+
+    QDockWidget *dock_;
+    QListWidget *fileList_;
 
     FileManager fileManager_;                           //!< FileManager object
 };
