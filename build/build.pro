@@ -15,12 +15,14 @@ QT      += widgets
 HEADERS += 	../src/file/File.hpp \
             ../src/file/FileManager.hpp \
             ../src/utils/Logger.hpp \
+            ../src/window/OpenFilesDock.hpp \
             ../src/window/Window.hpp
 
 SOURCES	+= 	../src/application/main.cpp \
             ../src/file/File.cpp \
             ../src/file/FileManager.cpp \
             ../src/utils/Logger.cpp \
+            ../src/window/OpenFilesDock.cpp \
             ../src/window/Window.cpp
 
 QMAKE_CXXFLAGS += -std=c++14

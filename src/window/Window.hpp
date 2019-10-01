@@ -5,8 +5,8 @@
  * @brief Main Window class
  */
 
-#ifndef SRC_WINDOW_HPP_
-#define SRC_WINDOW_HPP_
+#ifndef SRC_WINDOW_WINDOW_HPP_
+#define SRC_WINDOW_WINDOW_HPP_
 
 //---------------------------------------------------------
 //                      Includes
@@ -21,10 +21,9 @@
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QVBoxLayout>
-#include <QDockWidget>
-#include <QListWidget>
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
+#include "OpenFilesDock.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -104,10 +103,11 @@ private:
     void showAboutWindow();
 
     /**
-     * @brief Add fileName to the top dock open files list
-     * @param filePath Path to the file
+     * @brief Extract filename from the given path
+     * @param path Path to the file
+     * @return File name
      */
-    void addFileNameToTheDock(QString filePath);
+    QString extractFileNameFromPath(QString path);
 
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object
@@ -125,10 +125,8 @@ private:
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
 
-    QDockWidget *dock_;
-    QListWidget *fileList_;
-
+    OpenFilesDock *openFileDock_;                       //!< Open files dock
     FileManager fileManager_;                           //!< FileManager object
 };
 
-#endif /* SRC_WINDOW_HPP_ */
+#endif /* SRC_WINDOW_WINDOW_HPP_ */
