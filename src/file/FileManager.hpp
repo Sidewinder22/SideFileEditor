@@ -13,7 +13,7 @@
 //---------------------------------------------------------
 #include <memory>
 #include <QString>
-#include "File.hpp"
+#include "IFile.hpp"
 #include "utils/Logger.hpp"
 
 //---------------------------------------------------------
@@ -39,7 +39,7 @@ public:
      * @brief Get file name
      * @return String representing file name
      */
-    QString getFileName();
+    QString fileName() const;
 
     /**
      * @brief Read data from file
@@ -79,8 +79,8 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    log::Logger log_;                       //!< Logger object
-    std::shared_ptr<File> file_;             //!< File object
+    log::Logger log_;                           //!< Logger object
+    std::shared_ptr<IFile> file_;               //!< Interface to file object
 };
 
 #endif /* SRC_FILEMANAGER_FILEMANAGER_HPP_ */

@@ -30,7 +30,7 @@ File::~File()
     file_.close();
 }
 
-QString File::getFileName()
+QString File::fileName() const
 {
     return file_.fileName();
 }

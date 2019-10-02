@@ -66,7 +66,7 @@ void Window::buildToolBar()
 
 	toolBar_->addSeparator();
 
-	toolBQuit_ = toolBar_->addAction(QIcon("icons/quit.png"),
+	toolBQuit_ = toolBar_->addAction(QIcon("../icons/quit.png"),
 		"Quit Application");
 
 	toolBar_->addSeparator();
@@ -209,7 +209,7 @@ void Window::closeFile()
 
     if (fileManager_.exists())
     {
-        statusBar()->showMessage("File: " + fileManager_.getFileName() + " closed.");
+        statusBar()->showMessage("File: " + fileManager_.fileName() + " closed.");
     }
     else
     {
@@ -233,7 +233,7 @@ void Window::removeFile()
 
     if (fileManager_.exists())
     {
-        statusBar()->showMessage("File: " + fileManager_.getFileName() + " removed.");
+        statusBar()->showMessage("File: " + fileManager_.fileName() + " removed.");
     }
     else
     {

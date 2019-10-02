@@ -14,14 +14,13 @@ Target of this project is creation of simple file editor
 
 *This project require: Qt library, make and gcc tool.*
 
-*This program has been tested on ArchLinux (x86_64).*
+*This program has been tested on ArchLinux (x86_64) and Debian 10.*
 
 
 1. Prepare source:
   ```bash
   $ git clone https://gitlab.com/Sidewinder22/SideFileEditor.git
   $ cd SideFileEditor
-  $ git checkout preint/dev_sop
   ```
 
 2. Build the source:

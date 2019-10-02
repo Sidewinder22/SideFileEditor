@@ -8,6 +8,7 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include "File.hpp"
 #include "FileManager.hpp"
 
 FileManager::FileManager()
@@ -46,13 +47,13 @@ bool FileManager::openFile(const QString& fileName)
     return result;
 }
 
-QString FileManager::getFileName()
+QString FileManager::fileName() const
 {
     QString fileName;
 
     if (file_)
     {
-        fileName = file_->getFileName();
+        fileName = file_->fileName();
     }
 
     return fileName;
@@ -74,7 +75,7 @@ bool FileManager::write(const QString& text)
 
     if (file_)
     {
-        auto currentFileName = file_->getFileName();
+        auto currentFileName = file_->fileName();
         auto tempFile = std::make_shared<File>(currentFileName + ".bcp");
 
         tempFile->write(text);
@@ -86,7 +87,7 @@ bool FileManager::write(const QString& text)
         }
         else
         {
-            log_ << MY_FUNC << "Cannot remove file: " << file_->getFileName() << log::END;
+            log_ << MY_FUNC << "Cannot remove file: " << file_->fileName() << log::END;
         }
 
 
