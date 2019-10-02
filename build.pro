@@ -15,6 +15,7 @@ QT      += widgets
 HEADERS += 	../src/file/File.hpp \
             ../src/file/FileManager.hpp \
             ../src/utils/Logger.hpp \
+            ../src/utils/Utils.hpp \
             ../src/window/OpenFilesDock.hpp \
             ../src/window/Window.hpp
 
@@ -22,6 +23,7 @@ SOURCES	+= 	../src/application/main.cpp \
             ../src/file/File.cpp \
             ../src/file/FileManager.cpp \
             ../src/utils/Logger.cpp \
+            ../src/utils/Utils.cpp \
             ../src/window/OpenFilesDock.cpp \
             ../src/window/Window.cpp
 

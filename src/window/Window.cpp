@@ -32,6 +32,7 @@ Window::Window(QWidget *parent)
 	, toolBQuit_(nullptr)
     , fileDialog_(nullptr)
     , openFileDock_(new OpenFilesDock(this))
+    , utils_(std::make_unique<utils::Utils>())
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -140,7 +141,7 @@ void Window::openFile()
             return;
         }
 
-        openFileDock_->addFileName(extractFileNameFromPath(fileName));
+        openFileDock_->addFileName(utils_->extractFileNameFromPath(fileName));
 
         auto fileContent = fileManager_.read();
         for (auto&& line : fileContent)
@@ -173,7 +174,7 @@ void Window::newFile()
             return;
         }
 
-        openFileDock_->addFileName(extractFileNameFromPath(fileName));
+        openFileDock_->addFileName(utils_->extractFileNameFromPath(fileName));
 
         log_  << MY_FUNC << "fileName = " << fileName << log::END;
         statusBar()->showMessage("Path [new file]: " + fileName);
@@ -251,18 +252,5 @@ void Window::clearScreen()
     log_ << MY_FUNC << log::END;
 
     textEdit_->clear();
-}
-
-// TODO: move to the utils
-QString Window::extractFileNameFromPath(QString path)
-{
-    log_ << MY_FUNC << log::END;
-
-    std::string filePathString(path.toStdString());
-
-    auto const position = filePathString.find_last_of('/');
-    const auto fileName = filePathString.substr(position + 1);
-
-    return fileName.c_str();
 }
 

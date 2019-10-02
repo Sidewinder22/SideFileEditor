@@ -23,6 +23,7 @@
 #include <QVBoxLayout>
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
+#include "utils/Utils.hpp"
 #include "OpenFilesDock.hpp"
 
 //---------------------------------------------------------
@@ -102,13 +103,6 @@ private:
      */
     void showAboutWindow();
 
-    /**
-     * @brief Extract filename from the given path
-     * @param path Path to the file
-     * @return File name
-     */
-    QString extractFileNameFromPath(QString path);
-
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object
 	QMenu *helpMenu_;                                   //!< Pointer to help menu object
@@ -127,6 +121,7 @@ private:
 
     OpenFilesDock *openFileDock_;                       //!< Open files dock
     FileManager fileManager_;                           //!< FileManager object
+    std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
 };
 
 #endif /* SRC_WINDOW_WINDOW_HPP_ */
