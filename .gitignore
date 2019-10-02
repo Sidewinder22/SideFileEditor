@@ -38,3 +38,5 @@ SideFileEditor
 moc_Window.cpp
 Makefile
 moc_predefs.h
+
+build

@@ -57,12 +57,12 @@ void Window::init()
 
 void Window::buildToolBar()
 {
-	toolBNew_ = toolBar_->addAction(QIcon("icons/new.png"), "New File");
-	toolBOpen_ = toolBar_->addAction(QIcon("icons/open.png"), "Open File");
-	toolBSave_ = toolBar_->addAction(QIcon("icons/save.png"), "Save File");
-	toolBClear_ = toolBar_->addAction(QIcon("icons/clear.png"), "Clear Screen");
-	toolBClose_ = toolBar_->addAction(QIcon("icons/close.png"), "Close File");
-    toolBTrash_ = toolBar_->addAction(QIcon("icons/trash.png"), "Remove File");
+	toolBNew_ = toolBar_->addAction(QIcon("../icons/new.png"), "New File");
+	toolBOpen_ = toolBar_->addAction(QIcon("../icons/open.png"), "Open File");
+	toolBSave_ = toolBar_->addAction(QIcon("../icons/save.png"), "Save File");
+	toolBClear_ = toolBar_->addAction(QIcon("../icons/clear.png"), "Clear Screen");
+	toolBClose_ = toolBar_->addAction(QIcon("../icons/close.png"), "Close File");
+    toolBTrash_ = toolBar_->addAction(QIcon("../icons/trash.png"), "Remove File");
 
 	toolBar_->addSeparator();
 
@@ -227,6 +227,9 @@ void Window::removeFile()
     log_ << MY_FUNC << log::END;
 
     textEdit_->clear();
+
+    int row = 0;
+    openFileDock_->removeFileName(row);
 
     if (fileManager_.exists())
     {
