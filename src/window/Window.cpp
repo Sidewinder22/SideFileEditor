@@ -130,7 +130,7 @@ void Window::openFile()
         this,
         tr("Select file to open..."),
         QDir::homePath(),
-        tr("Text files (*.txt)"));
+        tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
 
     if (!fileName.isEmpty())
     {
@@ -149,7 +149,6 @@ void Window::openFile()
             textEdit_->append(line);
         }
 
-        QMessageBox::information(this, "INFO", "Example of information");
         statusBar()->showMessage("Path [open file]: " + fileName);
         setWindowTitle(fileName);
     }
@@ -163,7 +162,7 @@ void Window::newFile()
         this,
         tr("Select loction to save a file"),
         QDir::homePath(),
-        tr("Text files (*.txt)"));
+        tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
 
     if (!fileName.isEmpty())
     {
