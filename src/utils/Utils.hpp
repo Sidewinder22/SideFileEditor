@@ -37,10 +37,10 @@ class Utils
 
         /**
          * @brief Extract filename from the given path
-         * @param path Path to the file
+         * @param filePath Path to the file
          * @return File name
          */
-        QString extractFileNameFromPath(QString path);
+        QString extractFileName(QString filePath);
 
 //---------------------------------------------------------
 //                  Protected

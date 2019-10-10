@@ -6,6 +6,7 @@
  */
 
 #include <string>
+#include <filesystem>
 #include "Utils.hpp"
 
 //---------------------------------------------------------
@@ -14,14 +15,9 @@
 namespace utils
 {
 
-QString Utils::extractFileNameFromPath(QString path)
+QString Utils::extractFileName(QString filePath)
 {
-    std::string filePathString(path.toStdString());
-
-    auto const position = filePathString.find_last_of('/');
-    const auto fileName = filePathString.substr(position + 1);
-
-    return fileName.c_str();
+    return std::filesystem::path(filePath.toStdString()).filename().c_str();
 }
 
 } // ::utils

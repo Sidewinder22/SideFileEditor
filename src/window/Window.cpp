@@ -141,7 +141,7 @@ void Window::openFile()
             return;
         }
 
-        openFileDock_->addFileName(utils_->extractFileNameFromPath(fileName));
+        openFileDock_->addFileName(utils_->extractFileName(fileName));
 
         auto fileContent = fileManager_.read();
         for (auto&& line : fileContent)
@@ -173,7 +173,7 @@ void Window::newFile()
             return;
         }
 
-        openFileDock_->addFileName(utils_->extractFileNameFromPath(fileName));
+        openFileDock_->addFileName(utils_->extractFileName(fileName));
 
         log_  << MY_FUNC << "fileName = " << fileName << log::END;
         statusBar()->showMessage("Path [new file]: " + fileName);
