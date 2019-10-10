@@ -46,10 +46,16 @@ public:
      * @param row Row to remove filename
      */
     void removeFileName(int row);
+
 //---------------------------------------------------------
 //              Public slots
 //---------------------------------------------------------
 public slots:
+    /**
+     * @brief Current row changed
+     * @param currentRow row number
+     */
+    void rowChanged(int currentRow);
 
 //---------------------------------------------------------
 //                  Protected

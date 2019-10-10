@@ -15,7 +15,7 @@ OpenFilesDock::OpenFilesDock(QWidget *parent)
     , log_("OpenFilesDock")
     , fileList_(new QListWidget())
 {
-    // Nothing
+    connect(fileList_, &QListWidget::currentRowChanged, this, &OpenFilesDock::rowChanged);
 }
 
 void OpenFilesDock::createDock()
@@ -37,6 +37,8 @@ void OpenFilesDock::addFileName(QString fileName)
     log_ << MY_FUNC << log::END;
 
     fileList_->addItem(fileName);
+
+    log_ << MY_FUNC << ", currentRow = " << std::to_string(currentRow) << log::END;
 }
 
 void OpenFilesDock::removeFileName(int row)
@@ -46,3 +48,7 @@ void OpenFilesDock::removeFileName(int row)
     fileList_->takeItem(row);     // Remove widget from the given row
 }
 
+void OpenFilesDock::rowChanged(int currentRow)
+{
+    log_ << MY_FUNC << ", currentRow = " << std::to_string(currentRow) << log::END;
+}

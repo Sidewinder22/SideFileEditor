@@ -58,6 +58,7 @@ class Logger
          * @param info Data to log
         */
         friend Logger& operator<<(Logger& log, QString info);
+
         /**
          * @brief Function used to write const char* to stdout.
          * @param log Reference to logger instance
