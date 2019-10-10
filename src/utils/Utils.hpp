@@ -1,5 +1,5 @@
 /**
- * @author  Sidewinder22
+ * @author  {\_Sidewinder22_/}
  * @date    02.10.2019
  *
  * @brief   Set of useful utils

@@ -1,24 +1,22 @@
 /**
- * @author Sidewinder22
- * @date 17.09.2016
+ * @author  {\_{\_Sidewinder22_/}_/}
+ * @date    17.09.2016
  *
- * @brief Main application file.
+ * @brief   Main application file.
  */
 
 #include <iostream>
 #include <memory>
 #include <QApplication>
 #include "window/Window.hpp"
+#include "MainController.hpp"
 
 int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 
-	Window window;
-	window.init();
-
-	window.setWindowTitle("{\\_Sidewinder_/} File Editor");
-    window.showMaximized();
+    MainController mainController;
+    mainController.start();
 
     return app.exec();
 }

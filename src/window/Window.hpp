@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date 20.09.2016
+ * @author  {\_Sidewinder22_/}
+ * @date    20.09.2016
  *
- * @brief Main Window class
+ * @brief   Main Window class
  */
 
 #ifndef SRC_WINDOW_WINDOW_HPP_
@@ -24,12 +24,16 @@
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
 #include "utils/Utils.hpp"
+#include "IWindow.hpp"
 #include "OpenFilesDock.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class Window : public QMainWindow
+class Window
+    : public QMainWindow
+    , public IWindow
+
 {
 	Q_OBJECT
 
@@ -43,7 +47,7 @@ public:
     /**
      * @brief Prepare class behaviour
      */
-	void init();
+	void init() override;
 
 //---------------------------------------------------------
 //              Public slots

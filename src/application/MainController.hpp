@@ -1,25 +1,26 @@
 /**
  * @author  {\_Sidewinder22_/}
- * @date    01.10.2019
+ * @date    10.10.2019
  *
- * @brief   Dock class for open files
+ * @brief   Main Controller class
  */
 
-#ifndef SRC_WINDOW_OPENFILESDOCK_HPP_
-#define SRC_WINDOW_OPENFILESDOCK_HPP_
+#ifndef SRC_APPLICATION_MAINCONTROLLER_HPP_
+#define SRC_APPLICATION_MAINCONTROLLER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <QString>
-#include <QDockWidget>
-#include <QListWidget>
+#include <memory>
+#include <QObject>
+#include "file/IFileManager.hpp"
 #include "utils/Logger.hpp"
+#include "window/IWindow.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class OpenFilesDock : public QDockWidget
+class MainController : QObject
 {
 	Q_OBJECT
 
@@ -27,35 +28,17 @@ class OpenFilesDock : public QDockWidget
 //                  Public
 //---------------------------------------------------------
 public:
-    OpenFilesDock(QWidget *parent);
-    virtual ~OpenFilesDock() = default;
+    MainController();
 
     /**
-     * @brief Create the dock
+     * @brief Start app
      */
-    void createDock();
-
-    /**
-     * @brief Add filename to the dock
-     * @param fileName File name
-     */
-    void addFileName(QString fileName);
-
-    /**
-     * @brief Remove filename from the dock
-     * @param row Row to remove filename
-     */
-    void removeFileName(int row);
+    void start();
 
 //---------------------------------------------------------
 //              Public slots
 //---------------------------------------------------------
 public slots:
-    /**
-     * @brief Current row changed
-     * @param currentRow row number
-     */
-    void rowChanged(int currentRow);
 
 //---------------------------------------------------------
 //                  Protected
@@ -67,7 +50,8 @@ protected:
 //---------------------------------------------------------
 private:
     log::Logger log_;                                   //!< Logger object
-    QListWidget *fileList_;                             //!< List widget for open files
+    std::unique_ptr<IWindow> window_;                   //!< Window unique pointer
+    std::unique_ptr<IFileManager> fileManager_;         //!< File manager unique pointer
 };
 
-#endif /* SRC_WINDOW_OPENFILESDOCK_HPP_ */
+#endif /* SRC_APPLICATION_MAINCONTROLLER_HPP_ */

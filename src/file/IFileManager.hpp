@@ -1,88 +1,71 @@
 /**
  * @author  {\_Sidewinder22_/}
- * @date    11.02.2019
+ * @date    10.10.2019
  *
- * @brief   FileManager Manager class
+ * @brief   File operations interface
  */
 
-#ifndef SRC_FILE_FILEMANAGER_HPP_
-#define SRC_FILE_FILEMANAGER_HPP_
+#ifndef SRC_FILE_IFILEMANAGER_HPP_
+#define SRC_FILE_IFILEMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <memory>
+#include <vector>
 #include <QString>
-#include "IFile.hpp"
-#include "IFileManager.hpp"
-#include "utils/Logger.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class FileManager
-    : public IFileManager
+class IFileManager
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-    FileManager();
-    virtual ~FileManager() = default;
+    virtual ~IFileManager() = default;
 
     /**
      * @brief Open file
      * @param fileName path for file
      * @return True if successfull, Fale otherwise
      */
-    bool openFile(const QString& fileName) override;
+    virtual bool openFile(const QString& fileName) = 0;
 
     /**
      * @brief Get file name
      * @return String representing file name
      */
-    QString fileName() const override;
+    virtual QString fileName() const = 0;
 
     /**
      * @brief Read data from file
      * @return Vector contains file's data
      */
-    std::vector<QString> read() override;
+    virtual std::vector<QString> read() = 0;
 
     /**
      * @brief Write data to file
      * @param text Text to write to file
      * @return True if successful, False otherwise
      */
-    bool write(const QString& text) override;
+    virtual bool write(const QString& text) = 0;
 
     /**
      * @brief Check if file exists
      * @return True if file exists, False otherwise
      */
-    bool exists() override;
+    virtual bool exists() = 0;
 
     /**
      * @brief Close open file
      */
-    void close() override;
+    virtual void close() = 0;
 
     /**
      * @brief Remove file
      */
-    void remove() override;
-
-//---------------------------------------------------------
-//                  Protected
-//---------------------------------------------------------
-protected:
-
-//---------------------------------------------------------
-//                  Private
-//---------------------------------------------------------
-private:
-    log::Logger log_;                           //!< Logger object
-    std::shared_ptr<IFile> file_;               //!< Interface to file object
+    virtual void remove() = 0;
 };
 
-#endif /* SRC_FILE_FILEMANAGER_HPP_ */
+#endif /* SRC_FILE_IFILEMANAGER_HPP_ */

@@ -4,7 +4,7 @@
 
 TEMPLATE = app
 TARGET = SideFileEditor
-INCLUDEPATH += ../src
+INCLUDEPATH += src
 
 # Input
 
@@ -12,14 +12,19 @@ QT      += widgets
 
 # DEFINES +=  "DEBUG=1"
 
-HEADERS += 	../src/file/File.hpp \
+HEADERS += 	../src/application/MainController.hpp \
+            ../src/file/File.hpp \
             ../src/file/FileManager.hpp \
+            ../src/file/IFile.hpp \
+            ../src/file/IFileManager.hpp \
             ../src/utils/Logger.hpp \
             ../src/utils/Utils.hpp \
+            ../src/window/IWindow.hpp \
             ../src/window/OpenFilesDock.hpp \
             ../src/window/Window.hpp
 
 SOURCES	+= 	../src/application/main.cpp \
+            ../src/application/MainController.cpp \
             ../src/file/File.cpp \
             ../src/file/FileManager.cpp \
             ../src/utils/Logger.cpp \

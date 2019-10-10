@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date 11.02.2019
+ * @author  {\_Sidewinder22_/}
+ * @date    11.02.2019
  *
- * @brief FileManager Manager class
+ * @brief   FileManager Manager class
  */
 
 //---------------------------------------------------------

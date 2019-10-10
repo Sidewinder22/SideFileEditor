@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date   01.10.2019
+ * @author  {\_Sidewinder22_/}
+ * @date    01.10.2019
  *
- * @brief Dock class for open files
+ * @brief   Dock class for open files
  */
 
 //---------------------------------------------------------
@@ -38,7 +38,7 @@ void OpenFilesDock::addFileName(QString fileName)
 
     fileList_->addItem(fileName);
 
-    log_ << MY_FUNC << ", currentRow = " << std::to_string(currentRow) << log::END;
+    //log_ << MY_FUNC << ", currentRow = " << std::to_string(currentRow) << log::END;
 }
 
 void OpenFilesDock::removeFileName(int row)

@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date 20.09.2016
+ * @author  {\_Sidewinder22_/}
+ * @date    20.09.2016
  *
- * @brief Main Window class
+ * @brief   Main Window class
  */
 
 //---------------------------------------------------------
@@ -34,6 +34,7 @@ Window::Window(QWidget *parent)
     , openFileDock_(new OpenFilesDock(this))
     , utils_(std::make_unique<utils::Utils>())
 {
+
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
 	toolBar_ = addToolBar("Main toolbar");
@@ -44,6 +45,7 @@ Window::Window(QWidget *parent)
     addDockWidget(Qt::TopDockWidgetArea, openFileDock_);
 
 	textEdit_ = new QTextEdit(this);
+
 }
 
 void Window::init()
@@ -54,6 +56,9 @@ void Window::init()
     setCentralWidget(textEdit_);
 
 	statusBar()->showMessage("Ready!");
+
+	setWindowTitle("{\\_Sidewinder_/} File Editor");
+    showMaximized();
 }
 
 void Window::buildToolBar()
