@@ -1,5 +1,5 @@
 /**
- * @author Damian Stepień
+ * @author Sidewinder22
  * @date 02.01.2019
  *
  * @brief Class responsible for application logging.
@@ -12,6 +12,7 @@
 //                      Includes
 //---------------------------------------------------------
 #include <string>
+#include <QString>
 
 //---------------------------------------------------------
 //                  Global context
@@ -43,12 +44,26 @@ class Logger
         Logger(const Logger&) = delete;
         Logger &operator=(const Logger&) = delete;
 
+
         /**
-         * @brief Function used to write data to stdout.
+         * @brief Function used to write string to stdout.
          * @param log Reference to logger instance
          * @param str Data to log
         */
         friend Logger& operator<<(Logger& log, std::string str);
+
+        /**
+         * @brief Function used to write QString to stdout.
+         * @param log Reference to logger instance
+         * @param info Data to log
+        */
+        friend Logger& operator<<(Logger& log, QString info);
+        /**
+         * @brief Function used to write const char* to stdout.
+         * @param log Reference to logger instance
+         * @param str Data to log
+        */
+        friend Logger& operator<<(Logger& log, const char* str);
 
 //---------------------------------------------------------
 //                  Protected
@@ -59,6 +74,11 @@ class Logger
 //                  Private
 //---------------------------------------------------------
     private:
+        /**
+         * @brief Write index at the beggining of the line
+         */
+        void writeIndex();
+
         std::string prefix_;    //!< Prefix contains class name
         bool beginLine_;        //!< Flag determining whether the line has been started
 };

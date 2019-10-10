@@ -1,5 +1,5 @@
 /**
- * @author Damian Stępień
+ * @author Sidewinder22
  * @date 17.09.2016
  *
  * @brief Main application file.
@@ -17,9 +17,8 @@ int main(int argc, char *argv[])
 	Window window;
 	window.init();
 
-	window.resize(1000, 600);
-	window.setWindowTitle("MIDI Analyzer");
-	window.show();
+	window.setWindowTitle("{\\_Sidewinder_/} File Editor");
+    window.showMaximized();
 
     return app.exec();
 }

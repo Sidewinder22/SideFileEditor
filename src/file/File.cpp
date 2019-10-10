@@ -1,5 +1,5 @@
 /**
- * @author Damian Stępień
+ * @author Sidewinder22
  * @date 03.10.2016
  *
  * @brief Class wrapping a file.
@@ -30,9 +30,14 @@ File::~File()
     file_.close();
 }
 
-QString File::getFileName()
+QString File::fileName() const
 {
     return file_.fileName();
+}
+
+bool File::rename(const QString& newFileName)
+{
+    return file_.rename(newFileName);
 }
 
 std::vector<QString> File::read()
@@ -46,7 +51,7 @@ std::vector<QString> File::read()
         fileContent.push_back(line);
     }
 
-    return std::move(fileContent);
+    return fileContent;
 }
 
 void File::write(const QString& text)
@@ -55,4 +60,9 @@ void File::write(const QString& text)
     out << text << "\n";
 
     file_.flush();
+}
+
+bool File::remove()
+{
+    return file_.remove();
 }

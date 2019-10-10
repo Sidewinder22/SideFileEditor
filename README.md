@@ -14,21 +14,25 @@ Target of this project is creation of simple file editor
 
 *This project require: Qt library, make and gcc tool.*
 
-*This program has been tested on ArchLinux (x86_64).*
+*This program has been tested on ArchLinux (x86_64) and Debian 10.*
 
 
-1. Clone this project:
+1. Prepare source:
+  ```bash
+  $ git clone https://gitlab.com/Sidewinder22/SideFileEditor.git
+  $ cd SideFileEditor
+  ```
 
-  * $ git clone https://github.com/Sidewinder22/MidiAnalyzer.git
+2. Build the source:
 
-2. Get into *build* folder in cloned project:
+  Remember to use qmake for QT5!
+  ```bash
+  $ mkdir build && cd build
+  $ qmake ..         // qmake-qt5
+  $ make
+  ```
 
-  * $ cd MidiAnalyzer/build
-
-3. Build the source:
-  * $ qmake 
-  * * $ make
-
-4. Run project:
-
-  * $ ./MidiAnalyzer
+3. Run project:
+  ```bash
+  $ ./SideFileEditor
+  ```

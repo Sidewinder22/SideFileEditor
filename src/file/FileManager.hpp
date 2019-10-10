@@ -1,19 +1,19 @@
 /**
- * @author Damian Stępień
+ * @author Sidewinder22
  * @date 11.02.2019
  *
  * @brief FileManager Manager class
  */
 
-#ifndef SRC_FILEMANAGER_HPP_
-#define SRC_FILEMANAGER_HPP_
+#ifndef SRC_FILEMANAGER_FILEMANAGER_HPP_
+#define SRC_FILEMANAGER_FILEMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
 #include <memory>
 #include <QString>
-#include "File.hpp"
+#include "IFile.hpp"
 #include "utils/Logger.hpp"
 
 //---------------------------------------------------------
@@ -39,7 +39,7 @@ public:
      * @brief Get file name
      * @return String representing file name
      */
-    QString getFileName();
+    QString fileName() const;
 
     /**
      * @brief Read data from file
@@ -54,6 +54,22 @@ public:
      */
     bool write(const QString& text);
 
+    /**
+     * @brief Check if file exists
+     * @return True if file exists, False otherwise
+     */
+    bool exists();
+
+    /**
+     * @brief Close open file
+     */
+    void close();
+
+    /**
+     * @brief Remove file
+     */
+    void remove();
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -63,8 +79,8 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    log::Logger log_;                       //!< Logger object
-    std::shared_ptr<File> file_;             //!< File object
+    log::Logger log_;                           //!< Logger object
+    std::shared_ptr<IFile> file_;               //!< Interface to file object
 };
 
-#endif /* SRC_FILEMANAGER_HPP_ */
+#endif /* SRC_FILEMANAGER_FILEMANAGER_HPP_ */

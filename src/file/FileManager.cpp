@@ -1,5 +1,5 @@
 /**
- * @author Damian Stępień
+ * @author Sidewinder22
  * @date 11.02.2019
  *
  * @brief FileManager Manager class
@@ -8,6 +8,7 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include "File.hpp"
 #include "FileManager.hpp"
 
 FileManager::FileManager()
@@ -16,7 +17,7 @@ FileManager::FileManager()
 
 bool FileManager::openFile(const QString& fileName)
 {
-    log_ << MY_FUNC << "fileName = " << fileName.toStdString() << log::END;
+    log_ << MY_FUNC << "fileName = " << fileName << log::END;
     bool result = false;
 
     if (file_)
@@ -46,13 +47,13 @@ bool FileManager::openFile(const QString& fileName)
     return result;
 }
 
-QString FileManager::getFileName()
+QString FileManager::fileName() const
 {
     QString fileName;
 
     if (file_)
     {
-        fileName = file_->getFileName();
+        fileName = file_->fileName();
     }
 
     return fileName;
@@ -74,9 +75,58 @@ bool FileManager::write(const QString& text)
 
     if (file_)
     {
-        file_->write(text);
+        auto currentFileName = file_->fileName();
+        auto tempFile = std::make_shared<File>(currentFileName + ".bcp");
+
+        tempFile->write(text);
+
+        if (file_->remove())
+        {
+            file_.reset();
+            file_ = tempFile;
+        }
+        else
+        {
+            log_ << MY_FUNC << "Cannot remove file: " << file_->fileName() << log::END;
+        }
+
+
+        if (!tempFile->rename(currentFileName))
+        {
+            log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
+        }
+
         result = true;
     }
 
     return result;
+}
+
+bool FileManager::exists()
+{
+    bool result = false;
+
+    if (file_)
+    {
+        result = true;
+    }
+
+    return result;
+}
+
+void FileManager::close()
+{
+    if (file_)
+    {
+        file_.reset();
+    }
+}
+
+void FileManager::remove()
+{
+    if (file_)
+    {
+        file_->remove();
+        file_.reset();
+    }
 }

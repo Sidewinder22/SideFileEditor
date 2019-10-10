@@ -1,76 +1,61 @@
 /**
  * @author Sidewinder22
- * @date 03.10.2016
+ * @date   02.10.2019
  *
- * @brief Class wrapping a file.
+ * @brief Interface for class wrapping a file.
  */
 
-#ifndef SRC_FILE_FILE_HPP_
-#define SRC_FILE_FILE_HPP_
+#ifndef SRC_IFILE_IFILE_HPP_
+#define SRC_IFILE_IFILE_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <QFile>
+#include <vector>
 #include <QString>
 #include "utils/Logger.hpp"
-#include "IFile.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class File
-    : public IFile
+class IFile
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-    File(QString fileName);
-    virtual ~File();
+    virtual ~IFile() = default;
 
     /**
      * @brief Get file name
      * @return String representing file name
      */
-    QString fileName() const override;
+    virtual QString fileName() const = 0;
 
     /**
      * @brief Rename the file
      * @param newFileName New file name
      * @return True if successful, False otherwise
      */
-    bool rename(const QString& newFileName) override;
+    virtual bool rename(const QString& newFileName) = 0;
 
     /**
      * @brief Read data from file
      * @return Vector contains file's data
      */
-    std::vector<QString> read() override;
+    virtual std::vector<QString> read() = 0;
 
     /**
      * @brief Write data to file
      * @param text Text to write to file
      */
-    void write(const QString& text) override;
+    virtual void write(const QString& text) = 0;
 
     /**
      * @brief Remove file from filesystem
      * @return True if successful, False otherwise
      */
-    bool remove() override;
-
-//---------------------------------------------------------
-//                  Protected
-//---------------------------------------------------------
-protected:
-
-//---------------------------------------------------------
-//                  Private
-//---------------------------------------------------------
-private:
-    log::Logger log_;                       //!< Logger object
-    QFile file_;                            //!< QFile object
+    virtual bool remove() = 0;
 };
 
-#endif /* SRC_FILE_FILE_HPP_ */
+#endif /* SRC_IFILE_IFILE_HPP_ */
