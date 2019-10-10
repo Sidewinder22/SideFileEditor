@@ -31,25 +31,17 @@ Window::Window(QWidget *parent)
     , toolBTrash_(nullptr)
 	, toolBQuit_(nullptr)
     , fileDialog_(nullptr)
-    , dock_(new QDockWidget(tr("Open files"), this))
-    , fileList_(new QListWidget())
+    , openFileDock_(new OpenFilesDock(this))
+    , utils_(std::make_unique<utils::Utils>())
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
 	toolBar_ = addToolBar("Main toolbar");
 
-    // file list
-    fileList_->setFlow(QListView::LeftToRight);
-    fileList_->setLayoutMode(QListView::SinglePass);
-    fileList_->setWrapping(true);
+    openFileDock_->createDock();
 
-    // dock
-    dock_->setMaximumHeight(60);
-    dock_->setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
     setDockOptions(dockOptions() | QMainWindow::GroupedDragging | QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks);
-    dock_->setWidget(fileList_);
-
-    addDockWidget(Qt::TopDockWidgetArea, dock_);
+    addDockWidget(Qt::TopDockWidgetArea, openFileDock_);
 
 	textEdit_ = new QTextEdit(this);
 }
@@ -66,16 +58,16 @@ void Window::init()
 
 void Window::buildToolBar()
 {
-	toolBNew_ = toolBar_->addAction(QIcon("icons/new.png"), "New File");
-	toolBOpen_ = toolBar_->addAction(QIcon("icons/open.png"), "Open File");
-	toolBSave_ = toolBar_->addAction(QIcon("icons/save.png"), "Save File");
-	toolBClear_ = toolBar_->addAction(QIcon("icons/clear.png"), "Clear Screen");
-	toolBClose_ = toolBar_->addAction(QIcon("icons/close.png"), "Close File");
-    toolBTrash_ = toolBar_->addAction(QIcon("icons/trash.png"), "Remove File");
+	toolBNew_ = toolBar_->addAction(QIcon("../icons/new.png"), "New File");
+	toolBOpen_ = toolBar_->addAction(QIcon("../icons/open.png"), "Open File");
+	toolBSave_ = toolBar_->addAction(QIcon("../icons/save.png"), "Save File");
+	toolBClear_ = toolBar_->addAction(QIcon("../icons/clear.png"), "Clear Screen");
+	toolBClose_ = toolBar_->addAction(QIcon("../icons/close.png"), "Close File");
+    toolBTrash_ = toolBar_->addAction(QIcon("../icons/trash.png"), "Remove File");
 
 	toolBar_->addSeparator();
 
-	toolBQuit_ = toolBar_->addAction(QIcon("icons/quit.png"),
+	toolBQuit_ = toolBar_->addAction(QIcon("../icons/quit.png"),
 		"Quit Application");
 
 	toolBar_->addSeparator();
@@ -138,7 +130,7 @@ void Window::openFile()
         this,
         tr("Select file to open..."),
         QDir::homePath(),
-        tr("Text files (*.txt)"));
+        tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
 
     if (!fileName.isEmpty())
     {
@@ -148,7 +140,8 @@ void Window::openFile()
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
             return;
         }
-        addFileNameToTheDock(fileName);
+
+        openFileDock_->addFileName(utils_->extractFileName(fileName));
 
         auto fileContent = fileManager_.read();
         for (auto&& line : fileContent)
@@ -156,7 +149,6 @@ void Window::openFile()
             textEdit_->append(line);
         }
 
-        QMessageBox::information(this, "INFO", "Example of information");
         statusBar()->showMessage("Path [open file]: " + fileName);
         setWindowTitle(fileName);
     }
@@ -170,7 +162,7 @@ void Window::newFile()
         this,
         tr("Select loction to save a file"),
         QDir::homePath(),
-        tr("Text files (*.txt)"));
+        tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
 
     if (!fileName.isEmpty())
     {
@@ -180,7 +172,8 @@ void Window::newFile()
             QMessageBox::information(this, "ERROR", "Can't open file!!!");
             return;
         }
-        addFileNameToTheDock(fileName);
+
+        openFileDock_->addFileName(utils_->extractFileName(fileName));
 
         log_  << MY_FUNC << "fileName = " << fileName << log::END;
         statusBar()->showMessage("Path [new file]: " + fileName);
@@ -211,9 +204,12 @@ void Window::closeFile()
 
     textEdit_->clear();
 
+    int row = 0;
+    openFileDock_->removeFileName(row);
+
     if (fileManager_.exists())
     {
-        statusBar()->showMessage("File: " + fileManager_.getFileName() + " closed.");
+        statusBar()->showMessage("File: " + fileManager_.fileName() + " closed.");
     }
     else
     {
@@ -224,10 +220,6 @@ void Window::closeFile()
     {
         fileManager_.close();
     }
-
-
-    QLabel *emptyLabel = new QLabel("");
-    dock_->setWidget(emptyLabel);
 }
 
 void Window::removeFile()
@@ -236,9 +228,12 @@ void Window::removeFile()
 
     textEdit_->clear();
 
+    int row = 0;
+    openFileDock_->removeFileName(row);
+
     if (fileManager_.exists())
     {
-        statusBar()->showMessage("File: " + fileManager_.getFileName() + " removed.");
+        statusBar()->showMessage("File: " + fileManager_.fileName() + " removed.");
     }
     else
     {
@@ -258,12 +253,3 @@ void Window::clearScreen()
     textEdit_->clear();
 }
 
-void Window::addFileNameToTheDock(QString filePath)
-{
-    std::string filePathString(filePath.toStdString());
-
-    auto const position = filePathString.find_last_of('/');
-    const auto fileName = filePathString.substr(position + 1);
-
-    fileList_->addItem(fileName.c_str());
-}
