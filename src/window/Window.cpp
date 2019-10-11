@@ -20,7 +20,7 @@
 #include <QTextStream>
 #include "Window.hpp"
 
-Window::Window(QWidget *parent)
+Window::Window(IWindowObserver* observer, QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
 	, toolBNew_(nullptr)
@@ -33,8 +33,8 @@ Window::Window(QWidget *parent)
     , fileDialog_(nullptr)
     , openFileDock_(new OpenFilesDock(this))
     , utils_(std::make_unique<utils::Utils>())
+    , observer_(observer)
 {
-
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
 	toolBar_ = addToolBar("Main toolbar");
@@ -45,7 +45,6 @@ Window::Window(QWidget *parent)
     addDockWidget(Qt::TopDockWidgetArea, openFileDock_);
 
 	textEdit_ = new QTextEdit(this);
-
 }
 
 void Window::init()
@@ -139,16 +138,17 @@ void Window::openFile()
 
     if (!fileName.isEmpty())
     {
-        log_ << MY_FUNC << "fileName = " << fileName << log::END;
-        if (!fileManager_.openFile(fileName))
+        if (!observer_->openFile(fileName))
         {
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
             return;
         }
 
+        fileName_ = fileName;
+
         openFileDock_->addFileName(utils_->extractFileName(fileName));
 
-        auto fileContent = fileManager_.read();
+        auto fileContent = observer_->read();
         for (auto&& line : fileContent)
         {
             textEdit_->append(line);
@@ -171,16 +171,16 @@ void Window::newFile()
 
     if (!fileName.isEmpty())
     {
-        if (!fileManager_.openFile(fileName))
+        if (!observer_->openFile(fileName))
         {
             log_ << MY_FUNC << "Cannot open file!!!" << log::END;
             QMessageBox::information(this, "ERROR", "Can't open file!!!");
             return;
         }
 
+        fileName_ = fileName;
         openFileDock_->addFileName(utils_->extractFileName(fileName));
 
-        log_  << MY_FUNC << "fileName = " << fileName << log::END;
         statusBar()->showMessage("Path [new file]: " + fileName);
         setWindowTitle(fileName);
     }
@@ -191,15 +191,16 @@ void Window::saveFile()
     log_ << MY_FUNC << log::END;
 
     auto text = textEdit_->toPlainText();
-    if (fileManager_.write(text))
+
+    if (observer_->write(text))
     {
         statusBar()->showMessage("File saved");
-        QMessageBox::information(this, "INFO", "File saved!");
+        //QMessageBox::information(this, "INFO", "File saved!");
     }
     else
     {
         statusBar()->showMessage("Can't save file!");
-        QMessageBox::warning(this, "INFO", "Cannot save file!");
+        //QMessageBox::warning(this, "INFO", "Cannot save file!");
     }
 }
 
@@ -212,18 +213,15 @@ void Window::closeFile()
     int row = 0;
     openFileDock_->removeFileName(row);
 
-    if (fileManager_.exists())
+    if (!fileName_.isEmpty())
     {
-        statusBar()->showMessage("File: " + fileManager_.fileName() + " closed.");
+        statusBar()->showMessage("File: " + fileName_ + " closed.");
+        observer_->close();
+        fileName_.clear();
     }
     else
     {
         statusBar()->clearMessage();
-    }
-
-    if (fileManager_.exists())
-    {
-        fileManager_.close();
     }
 }
 
@@ -236,18 +234,15 @@ void Window::removeFile()
     int row = 0;
     openFileDock_->removeFileName(row);
 
-    if (fileManager_.exists())
+    if (!fileName_.isEmpty())
     {
-        statusBar()->showMessage("File: " + fileManager_.fileName() + " removed.");
+        statusBar()->showMessage("File: " + fileName_ + " removed.");
+        observer_->remove();
+        fileName_.clear();
     }
     else
     {
         statusBar()->clearMessage();
-    }
-
-    if (fileManager_.exists())
-    {
-        fileManager_.remove();
     }
 }
 

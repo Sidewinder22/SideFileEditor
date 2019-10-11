@@ -13,14 +13,17 @@
 //---------------------------------------------------------
 #include <memory>
 #include <QObject>
-#include "file/IFileManager.hpp"
+#include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
-#include "window/IWindow.hpp"
+#include "window/Window.hpp"
+#include "window/IWindowObserver.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class MainController : QObject
+class MainController
+    : public QObject
+    , public IWindowObserver
 {
 	Q_OBJECT
 
@@ -36,22 +39,50 @@ public:
     void start();
 
 //---------------------------------------------------------
-//              Public slots
-//---------------------------------------------------------
-public slots:
-
-//---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
 protected:
+    //-----------------------------------------------------
+    //                  IWindowObserver
+    //-----------------------------------------------------
+    /**
+     * @brief Open file
+     * @param fileName path for file
+     * @return True if successfull, Fale otherwise
+     */
+    bool openFile(const QString& fileName) override;
+
+    /**
+     * @brief Read data from file
+     * @return Vector contains file's data
+     */
+    std::vector<QString> read() override;
+
+    /**
+     * @brief Write data to file
+     * @param text Text to write to file
+     * @return True if successful, False otherwise
+     */
+    bool write(const QString& text) override;
+
+    /**
+     * @brief Close open file
+     */
+    void close() override;
+
+    /**
+     * @brief Remove file
+     */
+    void remove() override;
 
 //---------------------------------------------------------
 //                  Private
 //---------------------------------------------------------
 private:
     log::Logger log_;                                   //!< Logger object
-    std::unique_ptr<IWindow> window_;                   //!< Window unique pointer
-    std::unique_ptr<IFileManager> fileManager_;         //!< File manager unique pointer
+    std::shared_ptr<Window> window_;                    //!< Window unique pointer
+    std::shared_ptr<FileManager> fileManager_;          //!< File manager unique pointer
+
 };
 
 #endif /* SRC_APPLICATION_MAINCONTROLLER_HPP_ */

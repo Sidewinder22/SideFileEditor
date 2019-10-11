@@ -21,7 +21,6 @@
 //                  Class declaration
 //---------------------------------------------------------
 class FileManager
-    : public IFileManager
 {
 //---------------------------------------------------------
 //                  Public
@@ -35,42 +34,42 @@ public:
      * @param fileName path for file
      * @return True if successfull, Fale otherwise
      */
-    bool openFile(const QString& fileName) override;
+    bool openFile(const QString& fileName);
 
     /**
      * @brief Get file name
      * @return String representing file name
      */
-    QString fileName() const override;
+    QString fileName() const;
 
     /**
      * @brief Read data from file
      * @return Vector contains file's data
      */
-    std::vector<QString> read() override;
+    std::vector<QString> read();
 
     /**
      * @brief Write data to file
      * @param text Text to write to file
      * @return True if successful, False otherwise
      */
-    bool write(const QString& text) override;
+    bool write(const QString& text);
 
     /**
      * @brief Check if file exists
      * @return True if file exists, False otherwise
      */
-    bool exists() override;
+    bool exists();
 
     /**
      * @brief Close open file
      */
-    void close() override;
+    void close();
 
     /**
      * @brief Remove file
      */
-    void remove() override;
+    void remove();
 
 //---------------------------------------------------------
 //                  Protected

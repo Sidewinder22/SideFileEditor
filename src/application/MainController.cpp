@@ -8,8 +8,6 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include "file/FileManager.hpp"
-#include "window/Window.hpp"
 #include "MainController.hpp"
 
 //---------------------------------------------------------
@@ -17,13 +15,41 @@
 //---------------------------------------------------------
 MainController::MainController()
     : log_("MainController")
-    , window_(std::make_unique<Window>())
-    , fileManager_(std::make_unique<FileManager>())
+    , window_(std::make_shared<Window>(this))
+    , fileManager_(std::make_shared<FileManager>())
 {
-    // TODO: Connect slots and signals
+    // Nothing
 }
 
 void MainController::start()
 {
 	window_->init();
+}
+
+//-----------------------------------------------------
+//                  IWindowObserver
+//-----------------------------------------------------
+bool MainController::openFile(const QString& fileName)
+{
+    return fileManager_->openFile(fileName);
+}
+
+std::vector<QString> MainController::read()
+{
+    return fileManager_->read();
+}
+
+bool MainController::write(const QString& text)
+{
+    return fileManager_->write(text);
+}
+
+void MainController::close()
+{
+    fileManager_->close();
+}
+
+void MainController::remove()
+{
+    fileManager_->remove();
 }

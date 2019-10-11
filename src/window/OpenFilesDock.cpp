@@ -37,8 +37,6 @@ void OpenFilesDock::addFileName(QString fileName)
     log_ << MY_FUNC << log::END;
 
     fileList_->addItem(fileName);
-
-    //log_ << MY_FUNC << ", currentRow = " << std::to_string(currentRow) << log::END;
 }
 
 void OpenFilesDock::removeFileName(int row)

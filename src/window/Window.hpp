@@ -24,7 +24,7 @@
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
 #include "utils/Utils.hpp"
-#include "IWindow.hpp"
+#include "IWindowObserver.hpp"
 #include "OpenFilesDock.hpp"
 
 //---------------------------------------------------------
@@ -32,8 +32,6 @@
 //---------------------------------------------------------
 class Window
     : public QMainWindow
-    , public IWindow
-
 {
 	Q_OBJECT
 
@@ -41,13 +39,13 @@ class Window
 //                  Public
 //---------------------------------------------------------
 public:
-	Window(QWidget *parent = 0);
+	Window(IWindowObserver* observer, QWidget *parent = 0);
 	virtual ~Window() = default;
 
     /**
      * @brief Prepare class behaviour
      */
-	void init() override;
+	void init();
 
 //---------------------------------------------------------
 //              Public slots
@@ -124,8 +122,10 @@ private:
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
 
     OpenFilesDock *openFileDock_;                       //!< Open files dock
-    FileManager fileManager_;                           //!< FileManager object
+
+    QString fileName_;                                  //!< Filename
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
+    IWindowObserver* observer_;                         //!< Pointer to the observer
 };
 
 #endif /* SRC_WINDOW_WINDOW_HPP_ */
