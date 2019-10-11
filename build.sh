@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 RED='\e[0;31m'
 YELLOW='\e[0;33m'
@@ -16,21 +16,27 @@ NC='\e[0m'
 
 echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}->>>- Starting build -<<<-${NC}"
 
-if [ -d build ]; then
-    echo -e "${LIGHT_MAGENDA}${BOLD}${REVERSE}-!- Build directory exists! -!-${NC}"
-else
-    mkdir build
+if [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
+    echo -e "${YELLOW}${BOLD}${REVERSE}-*- Removed build directory. -*-${NC}"
+    rm -rf build
 fi
 
-cd build
+if [ -d build ]; then
+    echo -e "${LIGHT_MAGENDA}${BOLD}${REVERSE}-!- Build directory exists! -!-${NC}"
+    cd build
+else
+    mkdir build && cd build
 
-echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}-+- Invoking qmake -+-${NC}"
-qmake-qt5 ..
+    echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}-+- Invoking qmake -+-${NC}"
+    #qmake-qt5 ..
+    qmake ..
+fi
 
 echo -e "${CYAN}${BOLD}${REVERSE}-+- Build started... -+-${NC}"
 make
+
 if [ -f SideFileEditor ]; then
-    echo -e "${GREEN}${BOLD}${REVERSE}-<<<- Application SFE is ready. Bye! ->>>-${NC}"
+    echo -e "${CYAN}${BOLD}${REVERSE}-<<<- Application SFE is ready. Bye! ->>>-${NC}"
 else
     echo -e "${RED}${BOLD}${REVERSE}${BLINK}-!!!- Error occured -!!!-${NC}"
 fi
