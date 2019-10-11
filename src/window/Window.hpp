@@ -24,6 +24,7 @@
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
 #include "utils/Utils.hpp"
+#include "IWindow.hpp"
 #include "IWindowObserver.hpp"
 #include "OpenFilesDock.hpp"
 
@@ -32,6 +33,7 @@
 //---------------------------------------------------------
 class Window
     : public QMainWindow
+    , public IWindow
 {
 	Q_OBJECT
 
@@ -42,10 +44,27 @@ public:
 	Window(IWindowObserver* observer, QWidget *parent = 0);
 	virtual ~Window() = default;
 
+    //-----------------------------------------------------
+    //                  IWindow
+    //-----------------------------------------------------
     /**
      * @brief Prepare class behaviour
      */
-	void init();
+	void init() override;
+
+    /**
+     * @brief openFile() response
+     * @param status Status of operation
+     */
+    void fileOpened(bool status, const QString& fileName) override;
+
+    /**
+     * @brief createFile() response
+     * @param status Status of operation
+     * @param fileName fileName of the created file
+     */
+    void fileCreated(bool status, const QString& fileName) override;
+
 
 //---------------------------------------------------------
 //              Public slots

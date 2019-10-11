@@ -8,6 +8,7 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include "window/Window.hpp"
 #include "MainController.hpp"
 
 //---------------------------------------------------------
@@ -29,11 +30,19 @@ void MainController::start()
 //-----------------------------------------------------
 //                  IWindowObserver
 //-----------------------------------------------------
-bool MainController::openFile(const QString& fileName)
+void MainController::openFile(const QString& fileName)
 {
-    return fileManager_->openFile(fileName);
+    bool status = fileManager_->openFile(fileName);
+
+    window_->fileOpened(status, fileName);
 }
 
+void MainController::createFile(const QString& fileName)
+{
+    bool status = fileManager_->openFile(fileName);
+
+    window_->fileCreated(status, fileName);
+}
 std::vector<QString> MainController::read()
 {
     return fileManager_->read();

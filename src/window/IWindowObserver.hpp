@@ -28,9 +28,14 @@ public:
     /**
      * @brief Open file
      * @param fileName path for file
-     * @return True if successfull, Fale otherwise
      */
-    virtual bool openFile(const QString& fileName) = 0;
+    virtual void openFile(const QString& fileName) = 0;
+
+    /**
+     * @brief Create new file
+     * @param fileName path for file
+     */
+    virtual void createFile(const QString& fileName) = 0;
 
     /**
      * @brief Read data from file

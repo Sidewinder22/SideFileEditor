@@ -15,7 +15,7 @@
 #include <QObject>
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
-#include "window/Window.hpp"
+#include "window/IWindow.hpp"
 #include "window/IWindowObserver.hpp"
 
 //---------------------------------------------------------
@@ -48,9 +48,14 @@ protected:
     /**
      * @brief Open file
      * @param fileName path for file
-     * @return True if successfull, Fale otherwise
      */
-    bool openFile(const QString& fileName) override;
+    void openFile(const QString& fileName) override;
+
+    /**
+     * @brief Create new file
+     * @param fileName path for file
+     */
+    void createFile(const QString& fileName) override;
 
     /**
      * @brief Read data from file
@@ -80,7 +85,7 @@ protected:
 //---------------------------------------------------------
 private:
     log::Logger log_;                                   //!< Logger object
-    std::shared_ptr<Window> window_;                    //!< Window unique pointer
+    std::shared_ptr<IWindow> window_;                    //!< Window unique pointer
     std::shared_ptr<FileManager> fileManager_;          //!< File manager unique pointer
 
 };

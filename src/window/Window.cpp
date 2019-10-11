@@ -136,27 +136,7 @@ void Window::openFile()
         QDir::homePath(),
         tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
 
-    if (!fileName.isEmpty())
-    {
-        if (!observer_->openFile(fileName))
-        {
-            log_ << MY_FUNC << "Cannot open file!!!" << log::END;
-            return;
-        }
-
-        fileName_ = fileName;
-
-        openFileDock_->addFileName(utils_->extractFileName(fileName));
-
-        auto fileContent = observer_->read();
-        for (auto&& line : fileContent)
-        {
-            textEdit_->append(line);
-        }
-
-        statusBar()->showMessage("Path [open file]: " + fileName);
-        setWindowTitle(fileName);
-    }
+    observer_->openFile(fileName);
 }
 
 void Window::newFile()
@@ -169,21 +149,7 @@ void Window::newFile()
         QDir::homePath(),
         tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
 
-    if (!fileName.isEmpty())
-    {
-        if (!observer_->openFile(fileName))
-        {
-            log_ << MY_FUNC << "Cannot open file!!!" << log::END;
-            QMessageBox::information(this, "ERROR", "Can't open file!!!");
-            return;
-        }
-
-        fileName_ = fileName;
-        openFileDock_->addFileName(utils_->extractFileName(fileName));
-
-        statusBar()->showMessage("Path [new file]: " + fileName);
-        setWindowTitle(fileName);
-    }
+    observer_->createFile(fileName);
 }
 
 void Window::saveFile()
@@ -195,12 +161,11 @@ void Window::saveFile()
     if (observer_->write(text))
     {
         statusBar()->showMessage("File saved");
-        //QMessageBox::information(this, "INFO", "File saved!");
     }
     else
     {
         statusBar()->showMessage("Can't save file!");
-        //QMessageBox::warning(this, "INFO", "Cannot save file!");
+        QMessageBox::warning(this, "INFO", "Cannot save file!");
     }
 }
 
@@ -253,3 +218,50 @@ void Window::clearScreen()
     textEdit_->clear();
 }
 
+void Window::fileOpened(bool status, const QString& fileName)
+{
+    log_ << MY_FUNC << log::END;
+
+    if (status)
+    {
+        fileName_ = fileName;
+        openFileDock_->addFileName(utils_->extractFileName(fileName));
+
+
+        auto fileContent = observer_->read();   // TODO: Refactor
+        for (auto&& line : fileContent)
+        {
+            textEdit_->append(line);
+        }
+
+        statusBar()->showMessage("Path [open file]: " + fileName);
+        setWindowTitle(fileName);
+
+    }
+    else
+    {
+        log_ << MY_FUNC << "Cannot open file!!!" << log::END;
+
+        QMessageBox::information(this, "ERROR", "Can't open file!!!");
+        statusBar()->showMessage("Cannot open file!!!" + fileName);
+    }
+}
+
+void Window::fileCreated(bool status, const QString& fileName)
+{
+    log_ << MY_FUNC << log::END;
+
+    if (status)
+    {
+        fileName_ = fileName;
+        openFileDock_->addFileName(utils_->extractFileName(fileName));
+
+        statusBar()->showMessage("Path [new file]: " + fileName);
+        setWindowTitle(fileName);
+    }
+    else
+    {
+        log_ << MY_FUNC << "Cannot open file!!!" << log::END;
+        QMessageBox::information(this, "ERROR", "Can't open file!!!");
+    }
+}
