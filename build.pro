@@ -19,6 +19,7 @@ HEADERS += 	../src/application/MainController.hpp \
             ../src/file/IFileManager.hpp \
             ../src/utils/Logger.hpp \
             ../src/utils/Utils.hpp \
+            ../src/window/IWindow.hpp \
             ../src/window/IWindowObserver.hpp \
             ../src/window/OpenFilesDock.hpp \
             ../src/window/Window.hpp
