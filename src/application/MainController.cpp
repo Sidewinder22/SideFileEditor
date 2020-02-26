@@ -1,5 +1,5 @@
 /**
- * @author  {\_{\_Sidewinder22_/}_/}
+ * @author  {\_Sidewinder22_/}
  * @date    10.10.2019
  *
  * @brief   Main Controller class

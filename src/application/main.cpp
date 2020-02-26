@@ -1,5 +1,5 @@
 /**
- * @author  {\_{\_Sidewinder22_/}_/}
+ * @author  {\_Sidewinder22_/}
  * @date    17.09.2016
  *
  * @brief   Main application file.
