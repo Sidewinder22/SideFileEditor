@@ -157,8 +157,9 @@ void Window::saveFile()
     log_ << MY_FUNC << log::END;
 
     auto text = textEdit_->toPlainText();
+    auto currentOpenFileName = openFileDock_->getCurrentOpenFile();
 
-    if (observer_->write(text))
+    if (observer_->write(currentOpenFileName, text))
     {
         statusBar()->showMessage("File saved");
     }
@@ -175,14 +176,15 @@ void Window::closeFile()
 
     textEdit_->clear();
 
-    int row = 0;
+    int row = openFileDock_->getCurrentRow();
+    auto fileName = openFileDock_->getCurrentOpenFile();
+
     openFileDock_->removeFileName(row);
 
-    if (!fileName_.isEmpty())
+    if (!fileName.isEmpty())
     {
-        statusBar()->showMessage("File: " + fileName_ + " closed.");
-        observer_->close();
-        fileName_.clear();
+        statusBar()->showMessage("File: " + fileName + " closed.");
+        observer_->close(fileName);
     }
     else
     {
@@ -196,14 +198,16 @@ void Window::removeFile()
 
     textEdit_->clear();
 
-    int row = 0;
+    int row = openFileDock_->getCurrentRow();
+    auto fileName = openFileDock_->getCurrentOpenFile();
+
     openFileDock_->removeFileName(row);
 
-    if (!fileName_.isEmpty())
+    if (!fileName.isEmpty())
     {
         statusBar()->showMessage("File: " + fileName_ + " removed.");
-        observer_->remove();
-        fileName_.clear();
+        observer_->remove(fileName);
+        //fileName_.clear();
     }
     else
     {
@@ -227,8 +231,7 @@ void Window::fileOpened(bool status, const QString& fileName)
         fileName_ = fileName;
         openFileDock_->addFileName(utils_->extractFileName(fileName));
 
-
-        auto fileContent = observer_->read();   // TODO: Refactor
+        auto fileContent = observer_->read(fileName);   // TODO: Refactor
         for (auto&& line : fileContent)
         {
             textEdit_->append(line);

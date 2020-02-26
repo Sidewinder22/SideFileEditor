@@ -39,26 +39,30 @@ public:
 
     /**
      * @brief Read data from file
+     * @param fileName file name
      * @return Vector contains file's data
      */
-    virtual std::vector<QString> read() = 0;
+    virtual std::vector<QString> read(const QString& fileName) = 0;
 
     /**
      * @brief Write data to file
+     * @param fileName file name
      * @param text Text to write to file
      * @return True if successful, False otherwise
      */
-    virtual bool write(const QString& text) = 0;
+    virtual bool write(const QString& fileName, const QString& text) = 0;
 
     /**
      * @brief Close open file
+     * @param fileName file name
      */
-    virtual void close() = 0;
+    virtual void close(const QString& fileName) = 0;
 
     /**
      * @brief Remove file
+     * @param fileName file name
      */
-    virtual void remove() = 0;
+    virtual void remove(const QString& fileName) = 0;
 };
 
 #endif /* SRC_WINDOW_IWINDOWOBSERVER_HPP_ */

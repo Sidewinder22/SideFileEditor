@@ -33,39 +33,31 @@ public:
     virtual bool openFile(const QString& fileName) = 0;
 
     /**
-     * @brief Get file name
-     * @return String representing file name
-     */
-    virtual QString fileName() const = 0;
-
-    /**
      * @brief Read data from file
+     * @param fileName Filename of open file
      * @return Vector contains file's data
      */
-    virtual std::vector<QString> read() = 0;
+    virtual std::vector<QString> read(const QString& fileName) = 0;
 
     /**
      * @brief Write data to file
+     * @param fileName Filename of open file
      * @param text Text to write to file
      * @return True if successful, False otherwise
      */
-    virtual bool write(const QString& text) = 0;
-
-    /**
-     * @brief Check if file exists
-     * @return True if file exists, False otherwise
-     */
-    virtual bool exists() = 0;
+    virtual bool write(const QString& fileName, const QString& text) = 0;
 
     /**
      * @brief Close open file
+     * @param fileName file name
      */
-    virtual void close() = 0;
+    virtual void close(const QString& fileName) = 0;
 
     /**
      * @brief Remove file
+     * @param fileName file name
      */
-    virtual void remove() = 0;
+    virtual void remove(const QString& fileName) = 0;
 };
 
 #endif /* SRC_FILE_IFILEMANAGER_HPP_ */

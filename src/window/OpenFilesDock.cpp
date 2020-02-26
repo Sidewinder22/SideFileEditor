@@ -34,16 +34,22 @@ void OpenFilesDock::createDock()
 
 void OpenFilesDock::addFileName(QString fileName)
 {
-    log_ << MY_FUNC << log::END;
-
     fileList_->addItem(fileName);
 }
 
 void OpenFilesDock::removeFileName(int row)
 {
-    log_ << MY_FUNC << log::END;
-
     fileList_->takeItem(row);     // Remove widget from the given row
+}
+
+QString OpenFilesDock::getCurrentOpenFile()
+{
+    return fileList_->currentItem()->text();
+}
+
+int OpenFilesDock::getCurrentRow()
+{
+    return fileList_->currentRow();
 }
 
 void OpenFilesDock::rowChanged(int currentRow)

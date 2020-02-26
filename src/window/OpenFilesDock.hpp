@@ -38,6 +38,7 @@ public:
     /**
      * @brief Add filename to the dock
      * @param fileName File name
+     * @return Current row number
      */
     void addFileName(QString fileName);
 
@@ -46,6 +47,16 @@ public:
      * @param row Row to remove filename
      */
     void removeFileName(int row);
+
+    /**
+     *
+     */
+    QString getCurrentOpenFile();
+
+    /**
+     *
+     */
+    int getCurrentRow();
 
 //---------------------------------------------------------
 //              Public slots

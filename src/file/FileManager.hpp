@@ -12,15 +12,18 @@
 //                      Includes
 //---------------------------------------------------------
 #include <memory>
+#include <vector>
 #include <QString>
+#include "utils/Logger.hpp"
+#include "utils/Utils.hpp"
 #include "IFile.hpp"
 #include "IFileManager.hpp"
-#include "utils/Logger.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
 class FileManager
+    : public IFileManager
 {
 //---------------------------------------------------------
 //                  Public
@@ -34,42 +37,34 @@ public:
      * @param fileName path for file
      * @return True if successfull, Fale otherwise
      */
-    bool openFile(const QString& fileName);
-
-    /**
-     * @brief Get file name
-     * @return String representing file name
-     */
-    QString fileName() const;
+    bool openFile(const QString& fileName) override;
 
     /**
      * @brief Read data from file
+     * @param fileName Filename of open file
      * @return Vector contains file's data
      */
-    std::vector<QString> read();
+    std::vector<QString> read(const QString& fileName) override;
 
     /**
      * @brief Write data to file
+     * @param fileName file name
      * @param text Text to write to file
      * @return True if successful, False otherwise
      */
-    bool write(const QString& text);
-
-    /**
-     * @brief Check if file exists
-     * @return True if file exists, False otherwise
-     */
-    bool exists();
+    bool write(const QString& fileName, const QString& text) override;
 
     /**
      * @brief Close open file
+     * @param fileName file name
      */
-    void close();
+    void close(const QString& fileName) override;
 
     /**
      * @brief Remove file
+     * @param fileName file name
      */
-    void remove();
+    void remove(const QString& fileName) override;
 
 //---------------------------------------------------------
 //                  Protected
@@ -80,8 +75,11 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    log::Logger log_;                           //!< Logger object
-    std::shared_ptr<IFile> file_;               //!< Interface to file object
+    std::vector<std::shared_ptr<IFile>>::iterator getCurrentFile(const QString& fileName);
+
+    log::Logger log_;                                   //!< Logger object
+    std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
+    std::vector<std::shared_ptr<IFile>> openFiles_;     //!< Vector for open files
 };
 
 #endif /* SRC_FILE_FILEMANAGER_HPP_ */

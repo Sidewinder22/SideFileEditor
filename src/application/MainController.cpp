@@ -8,6 +8,7 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include "file/FileManager.hpp"
 #include "window/Window.hpp"
 #include "MainController.hpp"
 
@@ -43,22 +44,22 @@ void MainController::createFile(const QString& fileName)
 
     window_->fileCreated(status, fileName);
 }
-std::vector<QString> MainController::read()
+std::vector<QString> MainController::read(const QString& fileName)
 {
-    return fileManager_->read();
+    return fileManager_->read(fileName);
 }
 
-bool MainController::write(const QString& text)
+bool MainController::write(const QString& fileName, const QString& text)
 {
-    return fileManager_->write(text);
+    return fileManager_->write(fileName, text);
 }
 
-void MainController::close()
+void MainController::close(const QString& fileName)
 {
-    fileManager_->close();
+    fileManager_->close(fileName);
 }
 
-void MainController::remove()
+void MainController::remove(const QString& fileName)
 {
-    fileManager_->remove();
+    fileManager_->remove(fileName);
 }
