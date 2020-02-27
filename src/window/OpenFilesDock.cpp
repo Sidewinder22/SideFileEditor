@@ -8,20 +8,20 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include <QListWidgetItem>
 #include "OpenFilesDock.hpp"
 
-OpenFilesDock::OpenFilesDock(QWidget *parent)
+OpenFilesDock::OpenFilesDock(IOpenFilesDockObserver* observer, QWidget *parent)
 	: QDockWidget(tr("Open files"), parent)
     , log_("OpenFilesDock")
     , fileList_(new QListWidget())
+    , observer_(observer)
 {
     connect(fileList_, &QListWidget::currentRowChanged, this, &OpenFilesDock::rowChanged);
 }
 
 void OpenFilesDock::createDock()
 {
-    log_ << MY_FUNC << log::END;
-
     fileList_->setFlow(QListView::LeftToRight);
     fileList_->setLayoutMode(QListView::SinglePass);
     fileList_->setWrapping(true);
@@ -34,17 +34,27 @@ void OpenFilesDock::createDock()
 
 void OpenFilesDock::addFileName(QString fileName)
 {
-    fileList_->addItem(fileName);
+    auto item = new QListWidgetItem(fileName);
+    fileList_->addItem(item);
+    fileList_->setCurrentItem(item);
 }
 
 void OpenFilesDock::removeFileName(int row)
 {
-    fileList_->takeItem(row);     // Remove widget from the given row
+    // Remove widget from the given row
+    fileList_->takeItem(row);
 }
 
-QString OpenFilesDock::getCurrentOpenFile()
+QString OpenFilesDock::getCurrentFileName()
 {
-    return fileList_->currentItem()->text();
+    QString fileName;
+
+    if (fileList_->currentRow() > -1)
+    {
+        fileName = fileList_->currentItem()->text();
+    }
+
+    return fileName;
 }
 
 int OpenFilesDock::getCurrentRow()
@@ -54,5 +64,5 @@ int OpenFilesDock::getCurrentRow()
 
 void OpenFilesDock::rowChanged(int currentRow)
 {
-    log_ << MY_FUNC << ", currentRow = " << std::to_string(currentRow) << log::END;
+    observer_->anotherFileSelected(getCurrentFileName());
 }

@@ -75,6 +75,11 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
+    /**
+     * @brief Get iterator to the currently open file
+     * @param fileName file name
+     * @return Iterator to the currently open file
+     */
     std::vector<std::shared_ptr<IFile>>::iterator getCurrentFile(const QString& fileName);
 
     log::Logger log_;                                   //!< Logger object

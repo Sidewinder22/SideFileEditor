@@ -2,7 +2,7 @@
  * @author  {\_Sidewinder22_/}
  * @date    24.01.2020
  *
- * @brief   Window class interface
+ * @brief   Window observer interface
  */
 
 #ifndef SRC_WINDOW_IWINDOW_HPP_

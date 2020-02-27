@@ -15,6 +15,7 @@
 #include <QDockWidget>
 #include <QListWidget>
 #include "utils/Logger.hpp"
+#include "IOpenFilesDockObserver.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -27,7 +28,7 @@ class OpenFilesDock : public QDockWidget
 //                  Public
 //---------------------------------------------------------
 public:
-    OpenFilesDock(QWidget *parent);
+    OpenFilesDock(IOpenFilesDockObserver* observer, QWidget *parent);
     virtual ~OpenFilesDock() = default;
 
     /**
@@ -49,12 +50,14 @@ public:
     void removeFileName(int row);
 
     /**
-     *
+     * @brief Get fileName of currently selected file
+     * @return FileName
      */
-    QString getCurrentOpenFile();
+    QString getCurrentFileName();
 
     /**
-     *
+     * @brief Get row of the currently selected file
+     * @return Row number
      */
     int getCurrentRow();
 
@@ -79,6 +82,7 @@ protected:
 private:
     log::Logger log_;                                   //!< Logger object
     QListWidget *fileList_;                             //!< List widget for open files
+    IOpenFilesDockObserver* observer_;                  //!< Pointer to the observer
 };
 
 #endif /* SRC_WINDOW_OPENFILESDOCK_HPP_ */

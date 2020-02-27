@@ -51,6 +51,9 @@ std::vector<QString> File::read()
         fileContent.push_back(line);
     }
 
+    // Set file ptr to the beginning of the file for the future readings
+    file_.seek(0);
+
     return fileContent;
 }
 

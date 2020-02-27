@@ -46,12 +46,11 @@ bool FileManager::openFile(const QString& fileName)
 
 std::vector<QString> FileManager::read(const QString& fileName)
 {
-    for (auto& file : openFiles_)
+    auto it = getCurrentFile(fileName);
+
+    if (it != openFiles_.end())
     {
-        if (file->fileName() == fileName)
-        {
-            return file->read();
-        }
+        return (*it)->read();
     }
 
     return {};
@@ -64,30 +63,27 @@ bool FileManager::write(const QString& fileName, const QString& text)
 
     if (it != openFiles_.end())
     {
-        if (utils_->extractFileName((*it)->fileName()) == fileName)
+        auto currentFileName = (*it)->fileName();
+        auto tempFile = std::make_shared<File>(currentFileName + ".bcp");
+
+        tempFile->write(text);
+
+        if ((*it)->remove())
         {
-            auto currentFileName = (*it)->fileName();
-            auto tempFile = std::make_shared<File>(currentFileName + ".bcp");
-
-            tempFile->write(text);
-
-            if ((*it)->remove())
-            {
-                (*it).reset();
-                (*it) = tempFile;
-            }
-            else
-            {
-                log_ << MY_FUNC << "Cannot remove file: " << (*it)->fileName() << log::END;
-            }
-
-            if (!(*it)->rename(currentFileName))
-            {
-                log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
-            }
-
-            result = true;
+            (*it).reset();
+            (*it) = tempFile;
         }
+        else
+        {
+            log_ << MY_FUNC << "Cannot remove file: " << (*it)->fileName() << log::END;
+        }
+
+        if (!(*it)->rename(currentFileName))
+        {
+            log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
+        }
+
+        result = true;
     }
 
     return result;

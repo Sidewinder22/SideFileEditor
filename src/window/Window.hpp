@@ -24,6 +24,7 @@
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
 #include "utils/Utils.hpp"
+#include "IOpenFilesDockObserver.hpp"
 #include "IWindow.hpp"
 #include "IWindowObserver.hpp"
 #include "OpenFilesDock.hpp"
@@ -34,6 +35,7 @@
 class Window
     : public QMainWindow
     , public IWindow
+    , public IOpenFilesDockObserver
 {
 	Q_OBJECT
 
@@ -64,6 +66,15 @@ public:
      * @param fileName fileName of the created file
      */
     void fileCreated(bool status, const QString& fileName) override;
+
+    //-----------------------------------------------------
+    //              IOpenFilesDockObserver
+    //-----------------------------------------------------
+    /**
+     * @brief Notification that another file has been selected
+     * @param fileName fileName of the created file
+     */
+    void anotherFileSelected(const QString& fileName) override;
 
 
 //---------------------------------------------------------
@@ -142,7 +153,6 @@ private:
 
     OpenFilesDock *openFileDock_;                       //!< Open files dock
 
-    QString fileName_;                                  //!< Filename
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
     IWindowObserver* observer_;                         //!< Pointer to the observer
 };
