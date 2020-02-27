@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date 20.09.2016
+ * @author  {\_Sidewinder22_/}
+ * @date    20.09.2016
  *
- * @brief Main Window class
+ * @brief   Main Window class
  */
 
 #ifndef SRC_WINDOW_WINDOW_HPP_
@@ -24,12 +24,18 @@
 #include "file/FileManager.hpp"
 #include "utils/Logger.hpp"
 #include "utils/Utils.hpp"
+#include "IOpenFilesDockObserver.hpp"
+#include "IWindow.hpp"
+#include "IWindowObserver.hpp"
 #include "OpenFilesDock.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class Window : public QMainWindow
+class Window
+    : public QMainWindow
+    , public IWindow
+    , public IOpenFilesDockObserver
 {
 	Q_OBJECT
 
@@ -37,13 +43,39 @@ class Window : public QMainWindow
 //                  Public
 //---------------------------------------------------------
 public:
-	Window(QWidget *parent = 0);
+	Window(IWindowObserver* observer, QWidget *parent = 0);
 	virtual ~Window() = default;
 
+    //-----------------------------------------------------
+    //                  IWindow
+    //-----------------------------------------------------
     /**
      * @brief Prepare class behaviour
      */
-	void init();
+	void init() override;
+
+    /**
+     * @brief openFile() response
+     * @param status Status of operation
+     */
+    void fileOpened(bool status, const QString& fileName) override;
+
+    /**
+     * @brief createFile() response
+     * @param status Status of operation
+     * @param fileName fileName of the created file
+     */
+    void fileCreated(bool status, const QString& fileName) override;
+
+    //-----------------------------------------------------
+    //              IOpenFilesDockObserver
+    //-----------------------------------------------------
+    /**
+     * @brief Notification that another file has been selected
+     * @param fileName fileName of the created file
+     */
+    void anotherFileSelected(const QString& fileName) override;
+
 
 //---------------------------------------------------------
 //              Public slots
@@ -120,8 +152,9 @@ private:
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
 
     OpenFilesDock *openFileDock_;                       //!< Open files dock
-    FileManager fileManager_;                           //!< FileManager object
+
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
+    IWindowObserver* observer_;                         //!< Pointer to the observer
 };
 
 #endif /* SRC_WINDOW_WINDOW_HPP_ */

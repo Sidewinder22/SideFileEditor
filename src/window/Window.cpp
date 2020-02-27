@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date 20.09.2016
+ * @author  {\_Sidewinder22_/}
+ * @date    20.09.2016
  *
- * @brief Main Window class
+ * @brief   Main Window class
  */
 
 //---------------------------------------------------------
@@ -20,7 +20,7 @@
 #include <QTextStream>
 #include "Window.hpp"
 
-Window::Window(QWidget *parent)
+Window::Window(IWindowObserver* observer, QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
 	, toolBNew_(nullptr)
@@ -31,8 +31,9 @@ Window::Window(QWidget *parent)
     , toolBTrash_(nullptr)
 	, toolBQuit_(nullptr)
     , fileDialog_(nullptr)
-    , openFileDock_(new OpenFilesDock(this))
+    , openFileDock_(new OpenFilesDock(this, this))
     , utils_(std::make_unique<utils::Utils>())
+    , observer_(observer)
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -54,6 +55,9 @@ void Window::init()
     setCentralWidget(textEdit_);
 
 	statusBar()->showMessage("Ready!");
+
+	setWindowTitle("{\\_Sidewinder_/} File Editor");
+    showMaximized();
 }
 
 void Window::buildToolBar()
@@ -132,26 +136,7 @@ void Window::openFile()
         QDir::homePath(),
         tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
 
-    if (!fileName.isEmpty())
-    {
-        log_ << MY_FUNC << "fileName = " << fileName << log::END;
-        if (!fileManager_.openFile(fileName))
-        {
-            log_ << MY_FUNC << "Cannot open file!!!" << log::END;
-            return;
-        }
-
-        openFileDock_->addFileName(utils_->extractFileName(fileName));
-
-        auto fileContent = fileManager_.read();
-        for (auto&& line : fileContent)
-        {
-            textEdit_->append(line);
-        }
-
-        statusBar()->showMessage("Path [open file]: " + fileName);
-        setWindowTitle(fileName);
-    }
+    observer_->openFile(fileName);
 }
 
 void Window::newFile()
@@ -164,21 +149,7 @@ void Window::newFile()
         QDir::homePath(),
         tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
 
-    if (!fileName.isEmpty())
-    {
-        if (!fileManager_.openFile(fileName))
-        {
-            log_ << MY_FUNC << "Cannot open file!!!" << log::END;
-            QMessageBox::information(this, "ERROR", "Can't open file!!!");
-            return;
-        }
-
-        openFileDock_->addFileName(utils_->extractFileName(fileName));
-
-        log_  << MY_FUNC << "fileName = " << fileName << log::END;
-        statusBar()->showMessage("Path [new file]: " + fileName);
-        setWindowTitle(fileName);
-    }
+    observer_->createFile(fileName);
 }
 
 void Window::saveFile()
@@ -186,10 +157,11 @@ void Window::saveFile()
     log_ << MY_FUNC << log::END;
 
     auto text = textEdit_->toPlainText();
-    if (fileManager_.write(text))
+    auto fileName = openFileDock_->getCurrentFileName();
+
+    if (observer_->write(fileName, text))
     {
-        statusBar()->showMessage("File saved");
-        QMessageBox::information(this, "INFO", "File saved!");
+        statusBar()->showMessage("[File saved]: " + fileName);
     }
     else
     {
@@ -204,21 +176,18 @@ void Window::closeFile()
 
     textEdit_->clear();
 
-    int row = 0;
-    openFileDock_->removeFileName(row);
+    int row = openFileDock_->getCurrentRow();
+    auto fileName = openFileDock_->getCurrentFileName();
 
-    if (fileManager_.exists())
+    openFileDock_->removeFileName(row);
+    if (!fileName.isEmpty())
     {
-        statusBar()->showMessage("File: " + fileManager_.fileName() + " closed.");
+        statusBar()->showMessage("File: " + fileName + " closed.");
+        observer_->close(fileName);
     }
     else
     {
         statusBar()->clearMessage();
-    }
-
-    if (fileManager_.exists())
-    {
-        fileManager_.close();
     }
 }
 
@@ -228,21 +197,19 @@ void Window::removeFile()
 
     textEdit_->clear();
 
-    int row = 0;
+    int row = openFileDock_->getCurrentRow();
+    auto fileName = openFileDock_->getCurrentFileName();
+
     openFileDock_->removeFileName(row);
 
-    if (fileManager_.exists())
+    if (!fileName.isEmpty())
     {
-        statusBar()->showMessage("File: " + fileManager_.fileName() + " removed.");
+        statusBar()->showMessage("File: " + fileName + " removed.");
+        observer_->remove(fileName);
     }
     else
     {
         statusBar()->clearMessage();
-    }
-
-    if (fileManager_.exists())
-    {
-        fileManager_.remove();
     }
 }
 
@@ -253,3 +220,69 @@ void Window::clearScreen()
     textEdit_->clear();
 }
 
+void Window::fileOpened(bool status, const QString& filePath)
+{
+    log_ << MY_FUNC << log::END;
+
+    if (!filePath.isEmpty())
+    {
+        if (status)
+        {
+            auto fileName = utils_->extractFileName(filePath);
+            openFileDock_->addFileName(fileName);
+
+            textEdit_->clear();
+
+            auto fileContent = observer_->read(fileName);
+            for (auto&& line : fileContent)
+            {
+                textEdit_->append(line);
+            }
+
+            statusBar()->showMessage("[Open file]: " + filePath);
+            setWindowTitle(fileName);
+
+        }
+        else
+        {
+            log_ << MY_FUNC << "Cannot open file!!!" << log::END;
+
+            QMessageBox::information(this, "ERROR", "Can't open file!!!");
+            statusBar()->showMessage("Cannot open file!!!" + filePath);
+        }
+    }
+}
+
+void Window::fileCreated(bool status, const QString& fileName)
+{
+    log_ << MY_FUNC << log::END;
+
+    if (status)
+    {
+        openFileDock_->addFileName(utils_->extractFileName(fileName));
+
+        statusBar()->showMessage("[New file]: " + fileName);
+        setWindowTitle(fileName);
+    }
+    else
+    {
+        log_ << MY_FUNC << "Cannot open file!!!" << log::END;
+        QMessageBox::information(this, "ERROR", "Can't open file!!!");
+    }
+}
+
+void Window::anotherFileSelected(const QString& fileName)
+{
+    log_ << MY_FUNC << log::END;
+
+    statusBar()->showMessage("[Current file]: " + fileName);
+    setWindowTitle(fileName);
+
+    textEdit_->clear();
+
+    auto fileContent = observer_->read(utils_->extractFileName(fileName));
+    for (auto&& line : fileContent)
+    {
+        textEdit_->append(line);
+    }
+}

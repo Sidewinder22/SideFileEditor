@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date 11.02.2019
+ * @author  {\_Sidewinder22_/}
+ * @date    11.02.2019
  *
- * @brief FileManager Manager class
+ * @brief   FileManager Manager class
  */
 
 //---------------------------------------------------------
@@ -13,6 +13,7 @@
 
 FileManager::FileManager()
     : log_("FileManager")
+    , utils_(std::make_unique<utils::Utils>())
 { }
 
 bool FileManager::openFile(const QString& fileName)
@@ -20,23 +21,19 @@ bool FileManager::openFile(const QString& fileName)
     log_ << MY_FUNC << "fileName = " << fileName << log::END;
     bool result = false;
 
-    if (file_)
-    {
-        // TODO: Currently class can operate only on one file at a time
-        file_.reset();
-    }
-
+    std::shared_ptr<IFile> file;
     try
     {
-        file_ = std::make_shared<File>(fileName);
+        file = std::make_shared<File>(fileName);
     }
     catch (const std::runtime_error& e)
     {
         log_ << MY_FUNC << "Cannot open file, error = " << e.what() << log::END;
     }
 
-    if (file_)
+    if (file)
     {
+        openFiles_.push_back(file);
         result = true;
     }
     else
@@ -47,51 +44,41 @@ bool FileManager::openFile(const QString& fileName)
     return result;
 }
 
-QString FileManager::fileName() const
+std::vector<QString> FileManager::read(const QString& fileName)
 {
-    QString fileName;
+    auto it = getCurrentFile(fileName);
 
-    if (file_)
+    if (it != openFiles_.end())
     {
-        fileName = file_->fileName();
-    }
-
-    return fileName;
-}
-
-std::vector<QString> FileManager::read()
-{
-    if (file_)
-    {
-        return file_->read();
+        return (*it)->read();
     }
 
     return {};
 }
 
-bool FileManager::write(const QString& text)
+bool FileManager::write(const QString& fileName, const QString& text)
 {
     bool result = false;
+    auto it = getCurrentFile(fileName);
 
-    if (file_)
+    if (it != openFiles_.end())
     {
-        auto currentFileName = file_->fileName();
+        auto currentFileName = (*it)->fileName();
         auto tempFile = std::make_shared<File>(currentFileName + ".bcp");
 
         tempFile->write(text);
 
-        if (file_->remove())
+        if ((*it)->remove())
         {
-            file_.reset();
-            file_ = tempFile;
+            (*it).reset();
+            (*it) = tempFile;
         }
         else
         {
-            log_ << MY_FUNC << "Cannot remove file: " << file_->fileName() << log::END;
+            log_ << MY_FUNC << "Cannot remove file: " << (*it)->fileName() << log::END;
         }
 
-
-        if (!tempFile->rename(currentFileName))
+        if (!(*it)->rename(currentFileName))
         {
             log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
         }
@@ -102,31 +89,35 @@ bool FileManager::write(const QString& text)
     return result;
 }
 
-bool FileManager::exists()
+void FileManager::close(const QString& fileName)
 {
-    bool result = false;
+    auto it = getCurrentFile(fileName);
 
-    if (file_)
+    if (it != openFiles_.end())
     {
-        result = true;
-    }
-
-    return result;
-}
-
-void FileManager::close()
-{
-    if (file_)
-    {
-        file_.reset();
+        (*it).reset();
+        openFiles_.erase(it);
     }
 }
 
-void FileManager::remove()
+void FileManager::remove(const QString& fileName)
 {
-    if (file_)
+    auto it = getCurrentFile(fileName);
+
+    if (it != openFiles_.end())
     {
-        file_->remove();
-        file_.reset();
+        (*it)->remove();
+        (*it).reset();
+        openFiles_.erase(it);
     }
+}
+
+std::vector<std::shared_ptr<IFile>>::iterator FileManager::getCurrentFile(const QString& fileName)
+{
+    return std::find_if(
+        openFiles_.begin(),
+        openFiles_.end(),
+        [&fileName, this](auto file) {
+            return utils_->extractFileName(file->fileName()) == fileName;
+        });
 }

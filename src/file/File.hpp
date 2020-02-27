@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date 03.10.2016
+ * @author  {\_Sidewinder22_/}
+ * @date    03.10.2016
  *
- * @brief Class wrapping a file.
+ * @brief   Class wrapping a file.
  */
 
 #ifndef SRC_FILE_FILE_HPP_

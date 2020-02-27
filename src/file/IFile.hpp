@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date   02.10.2019
+ * @author  {\_Sidewinder22_/}
+ * @date    02.10.2019
  *
- * @brief Interface for class wrapping a file.
+ * @brief   Interface for class wrapping a file.
  */
 
 #ifndef SRC_IFILE_IFILE_HPP_
@@ -13,7 +13,6 @@
 //---------------------------------------------------------
 #include <vector>
 #include <QString>
-#include "utils/Logger.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration

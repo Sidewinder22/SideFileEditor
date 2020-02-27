@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date   01.10.2019
+ * @author  {\_Sidewinder22_/}
+ * @date    01.10.2019
  *
- * @brief Dock class for open files
+ * @brief   Dock class for open files
  */
 
 #ifndef SRC_WINDOW_OPENFILESDOCK_HPP_
@@ -15,6 +15,7 @@
 #include <QDockWidget>
 #include <QListWidget>
 #include "utils/Logger.hpp"
+#include "IOpenFilesDockObserver.hpp"
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -27,7 +28,7 @@ class OpenFilesDock : public QDockWidget
 //                  Public
 //---------------------------------------------------------
 public:
-    OpenFilesDock(QWidget *parent);
+    OpenFilesDock(IOpenFilesDockObserver* observer, QWidget *parent);
     virtual ~OpenFilesDock() = default;
 
     /**
@@ -38,6 +39,7 @@ public:
     /**
      * @brief Add filename to the dock
      * @param fileName File name
+     * @return Current row number
      */
     void addFileName(QString fileName);
 
@@ -46,10 +48,28 @@ public:
      * @param row Row to remove filename
      */
     void removeFileName(int row);
+
+    /**
+     * @brief Get fileName of currently selected file
+     * @return FileName
+     */
+    QString getCurrentFileName();
+
+    /**
+     * @brief Get row of the currently selected file
+     * @return Row number
+     */
+    int getCurrentRow();
+
 //---------------------------------------------------------
 //              Public slots
 //---------------------------------------------------------
 public slots:
+    /**
+     * @brief Current row changed
+     * @param currentRow row number
+     */
+    void rowChanged(int currentRow);
 
 //---------------------------------------------------------
 //                  Protected
@@ -62,6 +82,7 @@ protected:
 private:
     log::Logger log_;                                   //!< Logger object
     QListWidget *fileList_;                             //!< List widget for open files
+    IOpenFilesDockObserver* observer_;                  //!< Pointer to the observer
 };
 
 #endif /* SRC_WINDOW_OPENFILESDOCK_HPP_ */

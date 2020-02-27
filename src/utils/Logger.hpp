@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date 02.01.2019
+ * @author  {\_Sidewinder22_/}
+ * @date    02.01.2019
  *
- * @brief Class responsible for application logging.
+ * @brief   Class responsible for application logging.
  */
 
 #ifndef SRC_UTILS_LOGGER_H_
@@ -58,6 +58,7 @@ class Logger
          * @param info Data to log
         */
         friend Logger& operator<<(Logger& log, QString info);
+
         /**
          * @brief Function used to write const char* to stdout.
          * @param log Reference to logger instance

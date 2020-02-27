@@ -1,8 +1,8 @@
 /**
- * @author Sidewinder22
- * @date 03.10.2016
+ * @author  {\_Sidewinder22_/}
+ * @date    03.10.2016
  *
- * @brief Class wrapping a file.
+ * @brief   Class wrapping a file.
  */
 
 //---------------------------------------------------------
@@ -50,6 +50,9 @@ std::vector<QString> File::read()
         QString line = in.readLine();
         fileContent.push_back(line);
     }
+
+    // Set file ptr to the beginning of the file for the future readings
+    file_.seek(0);
 
     return fileContent;
 }
