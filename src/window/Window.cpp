@@ -114,6 +114,8 @@ void Window::connectSignalsToSlots()
 	connect(toolBTrash_, &QAction::triggered, this, &Window::removeFile);
     connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
 	connect(quit, &QAction::triggered, qApp, QApplication::quit);
+
+    connect(textEdit_, &QTextEdit::textChanged, this, &Window::textChanged);
 }
 
 void Window::showAboutWindow()
@@ -253,16 +255,16 @@ void Window::fileOpened(bool status, const QString& filePath)
     }
 }
 
-void Window::fileCreated(bool status, const QString& fileName)
+void Window::fileCreated(bool status, const QString& filePath)
 {
     log_ << MY_FUNC << log::END;
 
     if (status)
     {
-        openFileDock_->addFileName(utils_->extractFileName(fileName));
+        openFileDock_->addFileName(utils_->extractFileName(filePath));
 
-        statusBar()->showMessage("[New file]: " + fileName);
-        setWindowTitle(fileName);
+        statusBar()->showMessage("[New file]: " + filePath);
+        setWindowTitle(filePath);
     }
     else
     {
@@ -285,4 +287,12 @@ void Window::anotherFileSelected(const QString& fileName)
     {
         textEdit_->append(line);
     }
+}
+
+void Window::textChanged()
+{
+    log_ << MY_FUNC << "!!! TeXt ChAnGeD !!!" << log::END;
+
+    auto filename = openFileDock_->getCurrentFileName();
+    log_ << MY_FUNC << "filename = " << filename << log::END;
 }

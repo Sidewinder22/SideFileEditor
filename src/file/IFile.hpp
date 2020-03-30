@@ -55,6 +55,12 @@ public:
      * @return True if successful, False otherwise
      */
     virtual bool remove() = 0;
+
+    /**
+     * @brief Check if file is empty
+     * @return True if file is empty, False otherwise
+     */
+    virtual bool isEmpty() = 0;
 };
 
 #endif /* SRC_IFILE_IFILE_HPP_ */

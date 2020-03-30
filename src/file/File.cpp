@@ -13,9 +13,13 @@
 #include <QTextStream>
 #include "File.hpp"
 
+
+#include <iostream>
+
 File::File(QString fileName)
     : log_("File")
     , file_(fileName)
+    , isEmpty_(false)
 {
     if (!file_.open(QIODevice::ReadWrite | QIODevice::Text))
     {
@@ -23,6 +27,11 @@ File::File(QString fileName)
     }
 
     log_ << MY_FUNC << "File opened succesfully." << log::END;
+
+    if (file_.size() == 0) {
+        log_ << MY_FUNC << "New file created" << log::END;
+        isEmpty_ = true;
+    }
 }
 
 File::~File()
@@ -43,8 +52,9 @@ bool File::rename(const QString& newFileName)
 std::vector<QString> File::read()
 {
     std::vector<QString> fileContent;
-
+    
     QTextStream in(&file_);
+
     while (!in.atEnd())
     {
         QString line = in.readLine();
@@ -63,9 +73,17 @@ void File::write(const QString& text)
     out << text << "\n";
 
     file_.flush();
+
+    // Set file ptr to the beginning of the file for the future readings
+    file_.seek(0);
 }
 
 bool File::remove()
 {
     return file_.remove();
+}
+
+bool File::isEmpty()
+{
+    return isEmpty_;
 }

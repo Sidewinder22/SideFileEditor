@@ -60,6 +60,12 @@ public:
      */
     bool remove() override;
 
+    /**
+     * @brief Check if file is empty
+     * @return True if file is empty, False otherwise
+     */
+    bool isEmpty() override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -71,6 +77,7 @@ protected:
 private:
     log::Logger log_;                       //!< Logger object
     QFile file_;                            //!< QFile object
+    bool isEmpty_;                          //!< Is file empty (new file created)
 };
 
 #endif /* SRC_FILE_FILE_HPP_ */
