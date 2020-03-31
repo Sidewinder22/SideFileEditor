@@ -5,8 +5,8 @@
  * @brief   Interface for class wrapping a file.
  */
 
-#ifndef SRC_IFILE_IFILE_HPP_
-#define SRC_IFILE_IFILE_HPP_
+#ifndef SRC_FILE_IFILE_HPP_
+#define SRC_FILE_IFILE_HPP_
 
 //---------------------------------------------------------
 //                      Includes
@@ -63,4 +63,4 @@ public:
     virtual bool isEmpty() = 0;
 };
 
-#endif /* SRC_IFILE_IFILE_HPP_ */
+#endif /* SRC_FILE_IFILE_HPP_ */

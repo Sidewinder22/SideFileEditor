@@ -13,9 +13,6 @@
 #include <QTextStream>
 #include "File.hpp"
 
-
-#include <iostream>
-
 File::File(QString fileName)
     : log_("File")
     , file_(fileName)
