@@ -13,12 +13,18 @@
 #include "MainController.hpp"
 
 //---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace app
+{
+
+//---------------------------------------------------------
 //                  Class implementation
 //---------------------------------------------------------
 MainController::MainController()
     : log_("MainController")
-    , window_(std::make_shared<Window>(this))
-    , fileManager_(std::make_shared<FileManager>())
+    , window_(std::make_shared<window::Window>(this))
+    , fileManager_(std::make_shared<file::FileManager>())
 {
     // Nothing
 }
@@ -63,3 +69,5 @@ void MainController::remove(const QString& fileName)
 {
     fileManager_->remove(fileName);
 }
+
+} // ::app

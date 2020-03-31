@@ -14,16 +14,22 @@
 #include <memory>
 #include <QObject>
 #include "file/IFileManager.hpp"
-#include "utils/Logger.hpp"
+#include "log/Logger.hpp"
 #include "window/IWindow.hpp"
 #include "window/IWindowObserver.hpp"
+
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace app
+{
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
 class MainController
     : public QObject
-    , public IWindowObserver
+    , public window::IWindowObserver
 {
 	Q_OBJECT
 
@@ -88,10 +94,12 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    log::Logger log_;                                   //!< Logger object
-    std::shared_ptr<IWindow> window_;                   //!< Window unique pointer
-    std::shared_ptr<IFileManager> fileManager_;         //!< File manager unique pointer
+    log::Logger log_;                                       //!< Logger object
+    std::shared_ptr<window::IWindow> window_;               //!< Window unique pointer
+    std::shared_ptr<file::IFileManager> fileManager_;       //!< File manager unique pointer
 
 };
+
+} // ::app
 
 #endif /* SRC_APPLICATION_MAINCONTROLLER_HPP_ */

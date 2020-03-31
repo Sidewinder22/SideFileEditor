@@ -14,8 +14,14 @@
 #include <QString>
 #include <QDockWidget>
 #include <QListWidget>
-#include "utils/Logger.hpp"
+#include "log/Logger.hpp"
 #include "IOpenFilesDockObserver.hpp"
+
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace window
+{
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -84,5 +90,7 @@ private:
     QListWidget *fileList_;                             //!< List widget for open files
     IOpenFilesDockObserver* observer_;                  //!< Pointer to the observer
 };
+
+} // ::window
 
 #endif /* SRC_WINDOW_OPENFILESDOCK_HPP_ */

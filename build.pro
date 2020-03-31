@@ -19,7 +19,7 @@ HEADERS += 	../src/app/MainController.hpp \
             ../src/file/FileManager.hpp \
             ../src/file/IFile.hpp \
             ../src/file/IFileManager.hpp \
-            ../src/utils/Logger.hpp \
+            ../src/log/Logger.hpp \
             ../src/utils/Utils.hpp \
             ../src/window/IWindow.hpp \
             ../src/window/IWindowObserver.hpp \
@@ -31,7 +31,7 @@ SOURCES	+= 	../src/app/main.cpp \
             ../src/file/Buffer.cpp \
             ../src/file/File.cpp \
             ../src/file/FileManager.cpp \
-            ../src/utils/Logger.cpp \
+            ../src/log/Logger.cpp \
             ../src/utils/Utils.cpp \
             ../src/window/OpenFilesDock.cpp \
             ../src/window/Window.cpp

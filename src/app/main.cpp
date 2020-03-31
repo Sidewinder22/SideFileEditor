@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 {
 	QApplication app(argc, argv);
 
-    MainController mainController;
+    app::MainController mainController;
     mainController.start();
 
     return app.exec();

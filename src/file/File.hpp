@@ -13,8 +13,14 @@
 //---------------------------------------------------------
 #include <QFile>
 #include <QString>
-#include "utils/Logger.hpp"
+#include "log/Logger.hpp"
 #include "IFile.hpp"
+
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace file
+{
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -79,5 +85,7 @@ private:
     QFile file_;                            //!< QFile object
     bool isEmpty_;                          //!< Is file empty (new file created)
 };
+
+} // ::file
 
 #endif /* SRC_FILE_FILE_HPP_ */

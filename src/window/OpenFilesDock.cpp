@@ -11,6 +11,12 @@
 #include <QListWidgetItem>
 #include "OpenFilesDock.hpp"
 
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace window
+{
+
 OpenFilesDock::OpenFilesDock(IOpenFilesDockObserver* observer, QWidget *parent)
 	: QDockWidget(tr("Open files"), parent)
     , log_("OpenFilesDock")
@@ -66,3 +72,5 @@ void OpenFilesDock::rowChanged(int currentRow)
 {
     observer_->anotherFileSelected(getCurrentFileName());
 }
+
+} // ::window

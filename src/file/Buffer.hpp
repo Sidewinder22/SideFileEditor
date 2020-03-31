@@ -12,7 +12,7 @@
 //                      Includes
 //---------------------------------------------------------
 #include <QString>
-#include "utils/Logger.hpp"
+#include "log/Logger.hpp"
 #include "IBuffer.hpp"
 
 //---------------------------------------------------------

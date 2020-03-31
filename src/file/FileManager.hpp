@@ -14,10 +14,16 @@
 #include <memory>
 #include <vector>
 #include <QString>
-#include "utils/Logger.hpp"
+#include "log/Logger.hpp"
 #include "utils/Utils.hpp"
 #include "IFile.hpp"
 #include "IFileManager.hpp"
+
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace file
+{
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -86,5 +92,7 @@ private:
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
     std::vector<std::shared_ptr<IFile>> openFiles_;     //!< Vector for open files
 };
+
+} // ::file
 
 #endif /* SRC_FILE_FILEMANAGER_HPP_ */

@@ -20,6 +20,12 @@
 #include <QTextStream>
 #include "Window.hpp"
 
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace window
+{
+
 Window::Window(IWindowObserver* observer, QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
@@ -296,3 +302,5 @@ void Window::textChanged()
     auto filename = openFileDock_->getCurrentFileName();
     log_ << MY_FUNC << "filename = " << filename << log::END;
 }
+
+} // ::window

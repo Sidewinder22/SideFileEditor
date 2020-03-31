@@ -15,6 +15,12 @@
 #include <QString>
 
 //---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace window
+{
+
+//---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
 class IWindowObserver
@@ -64,5 +70,7 @@ public:
      */
     virtual void remove(const QString& fileName) = 0;
 };
+
+} // ::window
 
 #endif /* SRC_WINDOW_IWINDOWOBSERVER_HPP_ */

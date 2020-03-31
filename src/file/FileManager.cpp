@@ -11,6 +11,12 @@
 #include "File.hpp"
 #include "FileManager.hpp"
 
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace file
+{
+
 FileManager::FileManager()
     : log_("FileManager")
     , utils_(std::make_unique<utils::Utils>())
@@ -129,3 +135,5 @@ std::vector<std::shared_ptr<IFile>>::iterator FileManager::getCurrentFile(const 
             return utils_->extractFileName(file->fileName()) == fileName;
         });
 }
+
+} // ::file

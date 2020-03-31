@@ -13,6 +13,12 @@
 #include <QTextStream>
 #include "File.hpp"
 
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace file
+{
+
 File::File(QString fileName)
     : log_("File")
     , file_(fileName)
@@ -84,3 +90,5 @@ bool File::isEmpty()
 {
     return isEmpty_;
 }
+
+} // ::file

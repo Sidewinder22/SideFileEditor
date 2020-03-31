@@ -15,6 +15,12 @@
 #include <QString>
 
 //---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace file
+{
+
+//---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
 class IFileManager
@@ -59,5 +65,7 @@ public:
      */
     virtual void remove(const QString& fileName) = 0;
 };
+
+} // ::file
 
 #endif /* SRC_FILE_IFILEMANAGER_HPP_ */
