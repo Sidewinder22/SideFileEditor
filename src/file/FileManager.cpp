@@ -45,16 +45,7 @@ bool FileManager::openFile(const QString& fileName)
     log_ << MY_FUNC << "fileName = " << fileName << log::END;
     bool result = false;
 
-    std::shared_ptr<IFile> file;
-    try
-    {
-        file = std::make_shared<File>(fileName);
-    }
-    catch (const std::runtime_error& e)
-    {
-        log_ << MY_FUNC << "Cannot open file, error = " << e.what() << log::END;
-    }
-
+    auto file = createFile(fileName);
     if (file)
     {
         openFiles_.push_back(file);
@@ -92,40 +83,12 @@ bool FileManager::save(const QString &fileName)
         auto fileIt = getCurrentFile(fileName);
         if (fileIt != openFiles_.end())
         {
-            auto currentFilePath = (*fileIt)->fileName();
-            auto tempFile = std::make_shared<File>(currentFilePath + ".bcp");
-
-            tempFile->write((*buffIt)->getContent());
-
-            if ((*fileIt)->remove())
-            {
-                (*fileIt).reset();
-                (*fileIt) = tempFile;
-            }
-            else
-            {
-                log_ << MY_FUNC << "Cannot remove file: " << (*fileIt)->fileName() << log::END;
-            }
-
-            if (!(*fileIt)->rename(currentFilePath))
-            {
-                log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
-            }
-
+            saveFile(fileIt, buffIt);
             result = true;
         }
         else
         {
-            std::shared_ptr<IFile> file;
-            try
-            {
-                file = std::make_shared<File>((*buffIt)->fileName());
-            }
-            catch (const std::runtime_error& e)
-            {
-                log_ << MY_FUNC << "Cannot open file, error = " << e.what() << log::END;
-            }
-
+            auto file = createFile((*buffIt)->fileName());
             if (file)
             {
                 openFiles_.push_back(file);
@@ -144,12 +107,7 @@ bool FileManager::save(const QString &fileName)
 
 void FileManager::close(const QString& fileName)
 {
-    auto buffIt = getCurrentBuffer(fileName);
-    if (buffIt != openBuffers_.end())
-    {
-        (*buffIt).reset();
-        openBuffers_.erase(buffIt);
-    }
+    closeBuffer(fileName);
 
     auto fileIt = getCurrentFile(fileName);
     if (fileIt != openFiles_.end())
@@ -161,12 +119,7 @@ void FileManager::close(const QString& fileName)
 
 void FileManager::remove(const QString& fileName)
 {
-    auto buffIt = getCurrentBuffer(fileName);
-    if (buffIt != openBuffers_.end())
-    {
-        (*buffIt).reset();
-        openBuffers_.erase(buffIt);
-    }
+    closeBuffer(fileName);
 
     auto fileIt = getCurrentFile(fileName);
     if (fileIt != openFiles_.end())
@@ -188,22 +141,18 @@ void FileManager::clear(const QString& fileName)
 
 std::vector<std::shared_ptr<IFile>>::iterator FileManager::getCurrentFile(const QString& fileName)
 {
-    return std::find_if(
+    return getCurrentIterator<IFile>(
+        fileName,
         openFiles_.begin(),
-        openFiles_.end(),
-        [&fileName, this](auto file) {
-            return utils_->extractFileName(file->fileName()) == fileName;
-        });
+        openFiles_.end());
 }
 
 std::vector<std::shared_ptr<IBuffer>>::iterator FileManager::getCurrentBuffer(const QString& fileName)
 {
-    return std::find_if(
+    return getCurrentIterator<IBuffer>(
+        fileName,
         openBuffers_.begin(),
-        openBuffers_.end(),
-        [&fileName, this](auto buffer) {
-            return utils_->extractFileName(buffer->fileName()) == fileName;
-        });
+        openBuffers_.end());
 }
 
 void FileManager::loadFileContentToNewBuffer(std::shared_ptr<IFile> file)
@@ -213,6 +162,56 @@ void FileManager::loadFileContentToNewBuffer(std::shared_ptr<IFile> file)
 
     auto content = file->read();
     buffer->setContent(content);
+}
+
+std::shared_ptr<IFile> FileManager::createFile(const QString& fileName)
+{
+    std::shared_ptr<IFile> file;
+    try
+    {
+        file = std::make_shared<File>(fileName);
+    }
+    catch (const std::runtime_error& e)
+    {
+        log_ << MY_FUNC << "Cannot open file, error = " << e.what() << log::END;
+    }
+
+    return file;
+}
+
+void FileManager::closeBuffer(const QString& fileName)
+{
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
+    {
+        (*buffIt).reset();
+        openBuffers_.erase(buffIt);
+    }
+}
+
+void FileManager::saveFile(
+    std::vector<std::shared_ptr<IFile>>::iterator fileIt,
+    std::vector<std::shared_ptr<IBuffer>>::iterator buffIt)
+{
+    auto currentFilePath = (*fileIt)->fileName();
+    auto tempFile = std::make_shared<File>(currentFilePath + ".bcp");
+
+    tempFile->write((*buffIt)->getContent());
+
+    if ((*fileIt)->remove())
+    {
+        (*fileIt).reset();
+        (*fileIt) = tempFile;
+    }
+    else
+    {
+        log_ << MY_FUNC << "Cannot remove file: " << (*fileIt)->fileName() << log::END;
+    }
+
+    if (!(*fileIt)->rename(currentFilePath))
+    {
+        log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
+    }
 }
 
 } // ::file

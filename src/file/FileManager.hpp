@@ -103,6 +103,24 @@ private:
     std::vector<std::shared_ptr<IFile>>::iterator getCurrentFile(const QString& fileName);
     std::vector<std::shared_ptr<IBuffer>>::iterator getCurrentBuffer(const QString& fileName);
     void loadFileContentToNewBuffer(std::shared_ptr<IFile> file);
+    std::shared_ptr<IFile> createFile(const QString& fileName);
+    void closeBuffer(const QString& fileName);
+    void saveFile(std::vector<std::shared_ptr<IFile>>::iterator fileIt,
+        std::vector<std::shared_ptr<IBuffer>>::iterator buffIt);
+
+    template<typename T>
+    auto getCurrentIterator(
+        const QString& fileName,
+        std::vector<std::shared_ptr<T>>::iterator begin,
+        std::vector<std::shared_ptr<T>>::iterator end)
+    {
+        return std::find_if(
+            begin,
+            end,
+            [&fileName, this](auto element) {
+                return utils_->extractFileName(element->fileName()) == fileName;
+            });
+    }
 
     log::Logger log_;                                       //!< Logger object
     std::unique_ptr<utils::Utils> utils_;                   //!< Pointer to utils object
