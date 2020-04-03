@@ -58,12 +58,11 @@ public:
     virtual std::vector<QString> read(const QString& fileName) = 0;
 
     /**
-     * @brief Write data to file
+     * @brief Save data to file
      * @param fileName file name
-     * @param text Text to write to file
      * @return True if successful, False otherwise
      */
-    virtual bool write(const QString& fileName, const QString& text) = 0;
+    virtual bool save(const QString &fileName) = 0;
 
     /**
      * @brief Close open file

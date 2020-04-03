@@ -33,8 +33,6 @@ void FileManager::createBuffer(const QString& fileName)
     
 void FileManager::textChanged(const QString &fileName, const QString &content)
 {
-    log_ << MY_FUNC << "fileName = " << fileName << log::END;
-
     auto it = getCurrentBuffer(fileName);
     if (it != openBuffers_.end())
     {
@@ -83,44 +81,64 @@ std::vector<QString> FileManager::read(const QString& fileName)
     return {};
 }
 
-bool FileManager::write(const QString& fileName, const QString& text)
+bool FileManager::save(const QString &fileName) 
 {
+    log_ << MY_FUNC << "fileName: " << fileName << log::END;
     bool result = false;
-    auto it = getCurrentFile(fileName);
 
-   if ((*it)->isEmpty()) {
-        log_ << MY_FUNC << "New file " << log::END;
-
-        (*it)->write(text);
-        result = true;
-    }
-    else {
-        if (it != openFiles_.end())
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
+    {
+        auto fileIt = getCurrentFile(fileName);
+        if (fileIt != openFiles_.end())
         {
-            auto currentFileName = (*it)->fileName();
-            auto tempFile = std::make_shared<File>(currentFileName + ".bcp");
+            auto currentFilePath = (*fileIt)->fileName();
+            auto tempFile = std::make_shared<File>(currentFilePath + ".bcp");
 
-            tempFile->write(text);
+            tempFile->write((*buffIt)->getContent());
 
-            if ((*it)->remove())
+            if ((*fileIt)->remove())
             {
-                (*it).reset();
-                (*it) = tempFile;
+                (*fileIt).reset();
+                (*fileIt) = tempFile;
             }
             else
             {
-                log_ << MY_FUNC << "Cannot remove file: " << (*it)->fileName() << log::END;
+                log_ << MY_FUNC << "Cannot remove file: " << (*fileIt)->fileName() << log::END;
             }
 
-            if (!(*it)->rename(currentFileName))
+            if (!(*fileIt)->rename(currentFilePath))
             {
                 log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
             }
 
             result = true;
         }
-   }
+        else
+        {
+            std::shared_ptr<IFile> file;
+            try
+            {
+                file = std::make_shared<File>((*buffIt)->fileName());
+            }
+            catch (const std::runtime_error& e)
+            {
+                log_ << MY_FUNC << "Cannot open file, error = " << e.what() << log::END;
+            }
 
+            if (file)
+            {
+                openFiles_.push_back(file);
+                file->write((*buffIt)->getContent());
+                result = true;
+            }
+            else
+            {
+                log_ << MY_FUNC << "Cannot create File class object!!!" << log::END;
+            }
+        }
+    }
+    
     return result;
 }
 

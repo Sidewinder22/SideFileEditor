@@ -78,13 +78,11 @@ protected:
     std::vector<QString> read(const QString& fileName) override;
 
     /**
-     * @brief Write data to file
+     * @brief Save data to file
      * @param fileName file name
-     * @param text Text to write to file
      * @return True if successful, False otherwise
      */
-    bool write(const QString& fileName, const QString& text) override;
-
+    bool save(const QString &fileName) override;
 
     /**
      * @brief Close open file
@@ -105,7 +103,6 @@ private:
     log::Logger log_;                                       //!< Logger object
     std::shared_ptr<window::IWindow> window_;               //!< Window unique pointer
     std::shared_ptr<file::IFileManager> fileManager_;       //!< File manager unique pointer
-
 };
 
 } // ::app

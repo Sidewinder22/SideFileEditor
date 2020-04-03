@@ -164,10 +164,9 @@ void Window::saveFile()
 {
     log_ << MY_FUNC << log::END;
 
-    auto text = textEdit_->toPlainText();
     auto fileName = openFileDock_->getCurrentFileName();
 
-    if (observer_->write(fileName, text))
+    if (observer_->save(fileName))
     {
         statusBar()->showMessage("[File saved]: " + fileName);
     }
@@ -226,6 +225,8 @@ void Window::clearScreen()
     log_ << MY_FUNC << log::END;
 
     textEdit_->clear();
+    
+    // TODO: Add clean buffer
 }
 
 void Window::fileOpened(bool status, const QString& filePath)
@@ -283,8 +284,6 @@ void Window::anotherFileSelected(const QString& fileName)
 {
     log_ << MY_FUNC << log::END;
 
-    // anotherFileSelected_ = true;
-
     statusBar()->showMessage("[Current file]: " + fileName);
     setWindowTitle(fileName);
 
@@ -299,8 +298,6 @@ void Window::anotherFileSelected(const QString& fileName)
 
 void Window::textChanged()
 {
-    log_ << MY_FUNC << log::END;
-
     auto filename = openFileDock_->getCurrentFileName();
     auto text = textEdit_->toPlainText();
 

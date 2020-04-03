@@ -56,9 +56,9 @@ public:
 
     /**
      * @brief Write data to file
-     * @param text Text to write to file
+     * @param content Content to write to file
      */
-    void write(const QString& text) override;
+    void write(const std::vector<QString>& content) override;
 
     /**
      * @brief Remove file from filesystem

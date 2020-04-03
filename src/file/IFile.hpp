@@ -51,10 +51,10 @@ public:
     virtual std::vector<QString> read() = 0;
 
     /**
-     * @brief Write data to file
-     * @param text Text to write to file
+     * @brief Write content to file
+     * @param content Content to write to file
      */
-    virtual void write(const QString& text) = 0;
+    virtual void write(const std::vector<QString>& content) = 0;
 
     /**
      * @brief Remove file from filesystem

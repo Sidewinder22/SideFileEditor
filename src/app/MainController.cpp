@@ -54,9 +54,9 @@ std::vector<QString> MainController::read(const QString& fileName)
     return fileManager_->read(fileName);
 }
 
-bool MainController::write(const QString& fileName, const QString& text)
+bool MainController::save(const QString &fileName)
 {
-    return fileManager_->write(fileName, text);
+    return fileManager_->save(fileName);
 }
 
 void MainController::textChanged(const QString &fileName, const QString &content)

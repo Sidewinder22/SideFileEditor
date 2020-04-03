@@ -70,15 +70,15 @@ std::vector<QString> File::read()
     return fileContent;
 }
 
-void File::write(const QString& text)
+void File::write(const std::vector<QString>& content)
 {
-    QTextStream out(&file_);
-    out << text << "\n";
+    for (auto && line : content)
+    {
+        QTextStream out(&file_);
+        out << line;
 
-    file_.flush();
-
-    // Set file ptr to the beginning of the file for the future readings
-    file_.seek(0);
+        file_.flush();
+    }
 }
 
 bool File::remove()

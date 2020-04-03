@@ -67,12 +67,11 @@ public:
     std::vector<QString> read(const QString& fileName) override;
 
     /**
-     * @brief Write data to file
-     * @param fileName file name
-     * @param text Text to write to file
+     * @brief Save data to file
+     * @param fileName Filename of open file
      * @return True if successful, False otherwise
      */
-    bool write(const QString& fileName, const QString& text) override;
+    bool save(const QString &fileName) override;
 
     /**
      * @brief Close open file
@@ -95,15 +94,8 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    /**
-     * @brief Get iterator to the currently open file
-     * @param fileName file name
-     * @return Iterator to the currently open file
-     */
     std::vector<std::shared_ptr<IFile>>::iterator getCurrentFile(const QString& fileName);
-    
     std::vector<std::shared_ptr<IBuffer>>::iterator getCurrentBuffer(const QString& fileName);
-
     void loadFileContentToNewBuffer(std::shared_ptr<IFile> file);
 
     log::Logger log_;                                       //!< Logger object
