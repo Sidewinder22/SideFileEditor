@@ -16,6 +16,7 @@
 #include <QString>
 #include "log/Logger.hpp"
 #include "utils/Utils.hpp"
+#include "IBuffer.hpp"
 #include "IFile.hpp"
 #include "IFileManager.hpp"
 
@@ -44,6 +45,19 @@ public:
      * @return True if successfull, Fale otherwise
      */
     bool openFile(const QString& fileName) override;
+
+    /**
+     * @brief Open buffer for new file
+     * @param fileName fileName
+     */
+    void createBuffer(const QString& fileName) override;
+
+    /**
+     * @brief Text changed notification
+     * @param fileName fileName
+     * @param content content of the buffer
+     */
+    void textChanged(const QString &fileName, const QString &content) override;
 
     /**
      * @brief Read data from file
@@ -87,10 +101,13 @@ private:
      * @return Iterator to the currently open file
      */
     std::vector<std::shared_ptr<IFile>>::iterator getCurrentFile(const QString& fileName);
+    
+    std::vector<std::shared_ptr<IBuffer>>::iterator getCurrentBuffer(const QString& fileName);
 
-    log::Logger log_;                                   //!< Logger object
-    std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
-    std::vector<std::shared_ptr<IFile>> openFiles_;     //!< Vector for open files
+    log::Logger log_;                                       //!< Logger object
+    std::unique_ptr<utils::Utils> utils_;                   //!< Pointer to utils object
+    std::vector<std::shared_ptr<IFile>> openFiles_;         //!< Vector for open files
+    std::vector<std::shared_ptr<IBuffer>> openBuffers_;     //!< Vector for open buffers
 };
 
 } // ::file

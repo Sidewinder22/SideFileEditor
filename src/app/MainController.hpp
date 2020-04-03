@@ -64,6 +64,13 @@ protected:
     void createFile(const QString& fileName) override;
 
     /**
+     * @brief Text changed notification
+     * @param fileName fileName
+     * @param content content of the buffer
+     */
+    void textChanged(const QString& fileName, const QString &content) override;
+
+    /**
      * @brief Read data from file
      * @param fileName file name
      * @return Vector contains file's data
@@ -77,6 +84,7 @@ protected:
      * @return True if successful, False otherwise
      */
     bool write(const QString& fileName, const QString& text) override;
+
 
     /**
      * @brief Close open file

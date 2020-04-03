@@ -39,6 +39,19 @@ public:
     virtual bool openFile(const QString& fileName) = 0;
 
     /**
+     * @brief Open buffer for new file
+     * @param fileName fileName
+     */
+    virtual void createBuffer(const QString& fileName) = 0;
+
+    /**
+     * @brief Text changed notification
+     * @param fileName fileName
+     * @param content content of the buffer
+     */
+    virtual void textChanged(const QString &fileName, const QString &content) = 0;
+
+    /**
      * @brief Read data from file
      * @param fileName Filename of open file
      * @return Vector contains file's data

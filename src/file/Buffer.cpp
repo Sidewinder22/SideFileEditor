@@ -22,5 +22,25 @@ Buffer::Buffer(QString fileName)
 { 
     // Empty
 }
+    
+QString Buffer::fileName() const
+{
+    return fileName_;
+}
+
+void Buffer::setContent(const QString &content)
+{
+    if (!content.isEmpty())
+    {
+        log_ << MY_FUNC << "[" << fileName_ << "] content: " << content << log::END;
+        content_ = content;
+    }
+}
+
+std::vector<QString> Buffer::getContent()
+{
+    log_ << MY_FUNC << log::END;
+    return { content_ };
+}
 
 } // ::file

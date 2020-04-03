@@ -46,9 +46,8 @@ void MainController::openFile(const QString& fileName)
 
 void MainController::createFile(const QString& fileName)
 {
-    bool status = fileManager_->openFile(fileName);
-
-    window_->fileCreated(status, fileName);
+    fileManager_->createBuffer(fileName);
+    window_->fileCreated(true, fileName);
 }
 std::vector<QString> MainController::read(const QString& fileName)
 {
@@ -58,6 +57,11 @@ std::vector<QString> MainController::read(const QString& fileName)
 bool MainController::write(const QString& fileName, const QString& text)
 {
     return fileManager_->write(fileName, text);
+}
+
+void MainController::textChanged(const QString &fileName, const QString &content)
+{
+    fileManager_->textChanged(fileName, content);
 }
 
 void MainController::close(const QString& fileName)

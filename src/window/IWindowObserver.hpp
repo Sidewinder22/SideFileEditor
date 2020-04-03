@@ -44,6 +44,13 @@ public:
     virtual void createFile(const QString& fileName) = 0;
 
     /**
+     * @brief Text changed notification
+     * @param fileName fileName
+     * @param content content of the buffer
+     */
+    virtual void textChanged(const QString& fileName, const QString &content) = 0;
+
+    /**
      * @brief Read data from file
      * @param fileName file name
      * @return Vector contains file's data

@@ -38,6 +38,7 @@ Window::Window(IWindowObserver* observer, QWidget *parent)
 	, toolBQuit_(nullptr)
     , fileDialog_(nullptr)
     , openFileDock_(new OpenFilesDock(this, this))
+    , anotherFileSelected_(false)
     , utils_(std::make_unique<utils::Utils>())
     , observer_(observer)
 {
@@ -283,6 +284,8 @@ void Window::anotherFileSelected(const QString& fileName)
 {
     log_ << MY_FUNC << log::END;
 
+    // anotherFileSelected_ = true;
+
     statusBar()->showMessage("[Current file]: " + fileName);
     setWindowTitle(fileName);
 
@@ -297,10 +300,18 @@ void Window::anotherFileSelected(const QString& fileName)
 
 void Window::textChanged()
 {
-    log_ << MY_FUNC << "!!! TeXt ChAnGeD !!!" << log::END;
+    log_ << MY_FUNC << log::END;
 
-    auto filename = openFileDock_->getCurrentFileName();
-    log_ << MY_FUNC << "filename = " << filename << log::END;
+    // if (!anotherFileSelected_)
+    // {
+        log_ << MY_FUNC << "!!! TeXt ChAnGeD !!!" << log::END;
+
+        auto filename = openFileDock_->getCurrentFileName();
+        auto text = textEdit_->toPlainText();
+
+        observer_->textChanged(filename, text);
+        anotherFileSelected_ = false;
+    // }
 }
 
 } // ::window

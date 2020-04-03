@@ -29,6 +29,12 @@ class IBuffer
 //---------------------------------------------------------
 public:
     virtual ~IBuffer() = default;
+
+    virtual QString fileName() const = 0;
+
+    virtual void setContent(const QString &content) = 0;
+
+    virtual std::vector<QString> getContent() = 0;
 };
 
 } // ::file

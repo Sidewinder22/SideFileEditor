@@ -8,6 +8,7 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include "Buffer.hpp"
 #include "File.hpp"
 #include "FileManager.hpp"
 
@@ -21,6 +22,25 @@ FileManager::FileManager()
     : log_("FileManager")
     , utils_(std::make_unique<utils::Utils>())
 { }
+
+void FileManager::createBuffer(const QString& fileName)
+{
+    log_ << MY_FUNC << "fileName = " << fileName << log::END;
+
+    auto buffer = std::make_shared<Buffer>(fileName);
+    openBuffers_.push_back(buffer);
+}
+    
+void FileManager::textChanged(const QString &fileName, const QString &content)
+{
+    log_ << MY_FUNC << "fileName = " << fileName << log::END;
+
+    auto it = getCurrentBuffer(fileName);
+    if (it != openBuffers_.end())
+    {
+        (*it)->setContent(content);
+    }
+}
 
 bool FileManager::openFile(const QString& fileName)
 {
@@ -52,13 +72,21 @@ bool FileManager::openFile(const QString& fileName)
 
 std::vector<QString> FileManager::read(const QString& fileName)
 {
-    auto it = getCurrentFile(fileName);
-
-    if (it != openFiles_.end())
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
     {
-        return (*it)->read();
+        return (*buffIt)->getContent();
     }
+    else
+    {
+        auto fileIt = getCurrentFile(fileName);
 
+        if (fileIt != openFiles_.end())
+        {
+            return (*fileIt)->read();
+        }
+    }
+    
     return {};
 }
 
@@ -133,6 +161,16 @@ std::vector<std::shared_ptr<IFile>>::iterator FileManager::getCurrentFile(const 
         openFiles_.end(),
         [&fileName, this](auto file) {
             return utils_->extractFileName(file->fileName()) == fileName;
+        });
+}
+
+std::vector<std::shared_ptr<IBuffer>>::iterator FileManager::getCurrentBuffer(const QString& fileName)
+{
+    return std::find_if(
+        openBuffers_.begin(),
+        openBuffers_.end(),
+        [&fileName, this](auto buffer) {
+            return utils_->extractFileName(buffer->fileName()) == fileName;
         });
 }
 

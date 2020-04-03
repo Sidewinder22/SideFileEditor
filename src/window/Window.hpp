@@ -164,6 +164,8 @@ private:
 
     OpenFilesDock *openFileDock_;                       //!< Open files dock
 
+    bool anotherFileSelected_;
+
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
     IWindowObserver* observer_;                         //!< Pointer to the observer
 };

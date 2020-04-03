@@ -32,7 +32,14 @@ class Buffer
 //---------------------------------------------------------
 public:
     Buffer(QString fileName);
+
     virtual ~Buffer() = default;
+
+    QString fileName() const override;
+
+    void setContent(const QString &content) override;
+
+    std::vector<QString> getContent() override;
 
 //---------------------------------------------------------
 //                  Protected
