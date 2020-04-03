@@ -18,6 +18,7 @@
 #include <QInputDialog>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QDesktopWidget>
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -63,7 +64,7 @@ void Window::init()
 	statusBar()->showMessage("Ready!");
 
 	setWindowTitle("{\\_Sidewinder_/} File Editor");
-    showMaximized();
+    showNormal();
 }
 
 void Window::buildToolBar()
@@ -127,7 +128,7 @@ void Window::connectSignalsToSlots()
 void Window::showAboutWindow()
 {
     QString description;
-    description.append("       SFileEditor\n");
+    description.append("     SideFileEditor\n");
     description.append("             by\n");
     description.append("{\\_Sidewinder22_/}");
 
