@@ -104,6 +104,8 @@ private:
     
     std::vector<std::shared_ptr<IBuffer>>::iterator getCurrentBuffer(const QString& fileName);
 
+    void loadFileContentToNewBuffer(std::shared_ptr<IFile> file);
+
     log::Logger log_;                                       //!< Logger object
     std::unique_ptr<utils::Utils> utils_;                   //!< Pointer to utils object
     std::vector<std::shared_ptr<IFile>> openFiles_;         //!< Vector for open files

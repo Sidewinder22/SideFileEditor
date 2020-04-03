@@ -38,7 +38,7 @@ void FileManager::textChanged(const QString &fileName, const QString &content)
     auto it = getCurrentBuffer(fileName);
     if (it != openBuffers_.end())
     {
-        (*it)->setContent(content);
+        (*it)->setContent({ content });
     }
 }
 
@@ -60,6 +60,8 @@ bool FileManager::openFile(const QString& fileName)
     if (file)
     {
         openFiles_.push_back(file);
+        loadFileContentToNewBuffer(file);
+        
         result = true;
     }
     else
@@ -76,15 +78,6 @@ std::vector<QString> FileManager::read(const QString& fileName)
     if (buffIt != openBuffers_.end())
     {
         return (*buffIt)->getContent();
-    }
-    else
-    {
-        auto fileIt = getCurrentFile(fileName);
-
-        if (fileIt != openFiles_.end())
-        {
-            return (*fileIt)->read();
-        }
     }
     
     return {};
@@ -172,6 +165,15 @@ std::vector<std::shared_ptr<IBuffer>>::iterator FileManager::getCurrentBuffer(co
         [&fileName, this](auto buffer) {
             return utils_->extractFileName(buffer->fileName()) == fileName;
         });
+}
+
+void FileManager::loadFileContentToNewBuffer(std::shared_ptr<IFile> file)
+{
+    auto buffer = std::make_shared<Buffer>(file->fileName());
+    openBuffers_.push_back(buffer);
+
+    auto content = file->read();
+    buffer->setContent(content);
 }
 
 } // ::file

@@ -38,7 +38,6 @@ Window::Window(IWindowObserver* observer, QWidget *parent)
 	, toolBQuit_(nullptr)
     , fileDialog_(nullptr)
     , openFileDock_(new OpenFilesDock(this, this))
-    , anotherFileSelected_(false)
     , utils_(std::make_unique<utils::Utils>())
     , observer_(observer)
 {
@@ -302,16 +301,13 @@ void Window::textChanged()
 {
     log_ << MY_FUNC << log::END;
 
-    // if (!anotherFileSelected_)
-    // {
-        log_ << MY_FUNC << "!!! TeXt ChAnGeD !!!" << log::END;
+    auto filename = openFileDock_->getCurrentFileName();
+    auto text = textEdit_->toPlainText();
 
-        auto filename = openFileDock_->getCurrentFileName();
-        auto text = textEdit_->toPlainText();
-
+    if (!text.isEmpty())
+    {
         observer_->textChanged(filename, text);
-        anotherFileSelected_ = false;
-    // }
+    }
 }
 
 } // ::window

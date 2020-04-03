@@ -11,6 +11,7 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include <vector>
 #include <QString>
 #include "log/Logger.hpp"
 #include "IBuffer.hpp"
@@ -37,7 +38,7 @@ public:
 
     QString fileName() const override;
 
-    void setContent(const QString &content) override;
+    void setContent(const std::vector<QString> &content) override;
 
     std::vector<QString> getContent() override;
 
@@ -52,7 +53,8 @@ protected:
 private:
     log::Logger log_;                       //!< Logger object
     QString fileName_;                      //!< Filename
-    QString content_;                       //!< Buffer's content
+    //QString content_;                       //!< Buffer's content
+    std::vector<QString> content_;
 };
 
 } // ::file

@@ -1,13 +1,9 @@
-# Sidewinder File Editor (sfe)
+# Sidewinder File Editor (SFe)
 
 Hi everyone!
 
 This is simple program type of "proof of concept".
-
-This program will be show my progress with learning and understanding C++ and QT library.
-
-Target of this project is creation of simple file editor
-
+I create this program to learn more about C++ and QT library.
 
 
 *** BUILD INSTRUCTION ***

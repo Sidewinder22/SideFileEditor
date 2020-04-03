@@ -32,7 +32,7 @@ public:
 
     virtual QString fileName() const = 0;
 
-    virtual void setContent(const QString &content) = 0;
+    virtual void setContent(const std::vector<QString> &content) = 0;
 
     virtual std::vector<QString> getContent() = 0;
 };
