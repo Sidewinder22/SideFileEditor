@@ -225,8 +225,9 @@ void Window::clearScreen()
     log_ << MY_FUNC << log::END;
 
     textEdit_->clear();
-    
-    // TODO: Add clean buffer
+
+    auto fileName = openFileDock_->getCurrentFileName();
+    observer_->clear(fileName);
 }
 
 void Window::fileOpened(bool status, const QString& filePath)

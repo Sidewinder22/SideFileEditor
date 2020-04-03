@@ -74,4 +74,9 @@ void MainController::remove(const QString& fileName)
     fileManager_->remove(fileName);
 }
 
+void MainController::clear(const QString& fileName)
+{
+    fileManager_->clear(fileName);
+}
+
 } // ::app

@@ -35,6 +35,8 @@ public:
     virtual void setContent(const std::vector<QString> &content) = 0;
 
     virtual std::vector<QString> getContent() = 0;
+
+    virtual void clear() = 0;
 };
 
 } // ::file

@@ -85,6 +85,12 @@ public:
      */
     void remove(const QString& fileName) override;
 
+    /**
+     * @brief Clear buffer content
+     * @param fileName file name
+     */
+    void clear(const QString& fileName) override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------

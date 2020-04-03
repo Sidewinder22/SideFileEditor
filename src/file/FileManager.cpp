@@ -144,24 +144,45 @@ bool FileManager::save(const QString &fileName)
 
 void FileManager::close(const QString& fileName)
 {
-    auto it = getCurrentFile(fileName);
-
-    if (it != openFiles_.end())
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
     {
-        (*it).reset();
-        openFiles_.erase(it);
+        (*buffIt).reset();
+        openBuffers_.erase(buffIt);
+    }
+
+    auto fileIt = getCurrentFile(fileName);
+    if (fileIt != openFiles_.end())
+    {
+        (*fileIt).reset();
+        openFiles_.erase(fileIt);
     }
 }
 
 void FileManager::remove(const QString& fileName)
 {
-    auto it = getCurrentFile(fileName);
-
-    if (it != openFiles_.end())
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
     {
-        (*it)->remove();
-        (*it).reset();
-        openFiles_.erase(it);
+        (*buffIt).reset();
+        openBuffers_.erase(buffIt);
+    }
+
+    auto fileIt = getCurrentFile(fileName);
+    if (fileIt != openFiles_.end())
+    {
+        (*fileIt)->remove();
+        (*fileIt).reset();
+        openFiles_.erase(fileIt);
+    }
+}
+
+void FileManager::clear(const QString& fileName)
+{
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
+    {
+        (*buffIt)->clear();
     }
 }
 

@@ -42,6 +42,8 @@ public:
 
     std::vector<QString> getContent() override;
 
+    void clear() override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------

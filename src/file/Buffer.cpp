@@ -37,5 +37,10 @@ std::vector<QString> Buffer::getContent()
 {
     return content_;
 }
+    
+void Buffer::clear()
+{
+    content_.clear();
+}
 
 } // ::file
