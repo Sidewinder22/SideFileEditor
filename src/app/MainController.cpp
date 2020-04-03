@@ -13,12 +13,18 @@
 #include "MainController.hpp"
 
 //---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace app
+{
+
+//---------------------------------------------------------
 //                  Class implementation
 //---------------------------------------------------------
 MainController::MainController()
     : log_("MainController")
-    , window_(std::make_shared<Window>(this))
-    , fileManager_(std::make_shared<FileManager>())
+    , window_(std::make_shared<window::Window>(this))
+    , fileManager_(std::make_shared<file::FileManager>())
 {
     // Nothing
 }
@@ -40,18 +46,22 @@ void MainController::openFile(const QString& fileName)
 
 void MainController::createFile(const QString& fileName)
 {
-    bool status = fileManager_->openFile(fileName);
-
-    window_->fileCreated(status, fileName);
+    fileManager_->createBuffer(fileName);
+    window_->fileCreated(true, fileName);
 }
 std::vector<QString> MainController::read(const QString& fileName)
 {
     return fileManager_->read(fileName);
 }
 
-bool MainController::write(const QString& fileName, const QString& text)
+bool MainController::save(const QString &fileName)
 {
-    return fileManager_->write(fileName, text);
+    return fileManager_->save(fileName);
+}
+
+void MainController::textChanged(const QString &fileName, const QString &content)
+{
+    fileManager_->textChanged(fileName, content);
 }
 
 void MainController::close(const QString& fileName)
@@ -63,3 +73,10 @@ void MainController::remove(const QString& fileName)
 {
     fileManager_->remove(fileName);
 }
+
+void MainController::clear(const QString& fileName)
+{
+    fileManager_->clear(fileName);
+}
+
+} // ::app

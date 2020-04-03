@@ -15,6 +15,12 @@
 #include <QString>
 
 //---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace window
+{
+
+//---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
 class IWindowObserver
@@ -38,6 +44,13 @@ public:
     virtual void createFile(const QString& fileName) = 0;
 
     /**
+     * @brief Text changed notification
+     * @param fileName fileName
+     * @param content content of the buffer
+     */
+    virtual void textChanged(const QString& fileName, const QString &content) = 0;
+
+    /**
      * @brief Read data from file
      * @param fileName file name
      * @return Vector contains file's data
@@ -45,12 +58,11 @@ public:
     virtual std::vector<QString> read(const QString& fileName) = 0;
 
     /**
-     * @brief Write data to file
+     * @brief Save data to file
      * @param fileName file name
-     * @param text Text to write to file
      * @return True if successful, False otherwise
      */
-    virtual bool write(const QString& fileName, const QString& text) = 0;
+    virtual bool save(const QString &fileName) = 0;
 
     /**
      * @brief Close open file
@@ -63,6 +75,14 @@ public:
      * @param fileName file name
      */
     virtual void remove(const QString& fileName) = 0;
+
+    /**
+     * @brief Clear buffer content
+     * @param fileName file name
+     */
+    virtual void clear(const QString& fileName) = 0;
 };
+
+} // ::window
 
 #endif /* SRC_WINDOW_IWINDOWOBSERVER_HPP_ */

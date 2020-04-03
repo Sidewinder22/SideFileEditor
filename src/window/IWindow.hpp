@@ -14,6 +14,12 @@
 #include <QString>
 
 //---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace window
+{
+
+//---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
 class IWindow
@@ -42,5 +48,7 @@ public:
      */
     virtual void fileCreated(bool status, const QString& fileName) = 0;
 };
+
+} // ::window
 
 #endif /* SRC_WINDOW_IWINDOW_HPP_ */

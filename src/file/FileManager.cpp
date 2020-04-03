@@ -8,13 +8,37 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include "Buffer.hpp"
 #include "File.hpp"
 #include "FileManager.hpp"
+
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace file
+{
 
 FileManager::FileManager()
     : log_("FileManager")
     , utils_(std::make_unique<utils::Utils>())
 { }
+
+void FileManager::createBuffer(const QString& fileName)
+{
+    log_ << MY_FUNC << "fileName = " << fileName << log::END;
+
+    auto buffer = std::make_shared<Buffer>(fileName);
+    openBuffers_.push_back(buffer);
+}
+    
+void FileManager::textChanged(const QString &fileName, const QString &content)
+{
+    auto it = getCurrentBuffer(fileName);
+    if (it != openBuffers_.end())
+    {
+        (*it)->setContent({ content });
+    }
+}
 
 bool FileManager::openFile(const QString& fileName)
 {
@@ -34,6 +58,8 @@ bool FileManager::openFile(const QString& fileName)
     if (file)
     {
         openFiles_.push_back(file);
+        loadFileContentToNewBuffer(file);
+        
         result = true;
     }
     else
@@ -46,69 +72,117 @@ bool FileManager::openFile(const QString& fileName)
 
 std::vector<QString> FileManager::read(const QString& fileName)
 {
-    auto it = getCurrentFile(fileName);
-
-    if (it != openFiles_.end())
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
     {
-        return (*it)->read();
+        return (*buffIt)->getContent();
     }
-
+    
     return {};
 }
 
-bool FileManager::write(const QString& fileName, const QString& text)
+bool FileManager::save(const QString &fileName) 
 {
+    log_ << MY_FUNC << "fileName: " << fileName << log::END;
     bool result = false;
-    auto it = getCurrentFile(fileName);
 
-    if (it != openFiles_.end())
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
     {
-        auto currentFileName = (*it)->fileName();
-        auto tempFile = std::make_shared<File>(currentFileName + ".bcp");
-
-        tempFile->write(text);
-
-        if ((*it)->remove())
+        auto fileIt = getCurrentFile(fileName);
+        if (fileIt != openFiles_.end())
         {
-            (*it).reset();
-            (*it) = tempFile;
+            auto currentFilePath = (*fileIt)->fileName();
+            auto tempFile = std::make_shared<File>(currentFilePath + ".bcp");
+
+            tempFile->write((*buffIt)->getContent());
+
+            if ((*fileIt)->remove())
+            {
+                (*fileIt).reset();
+                (*fileIt) = tempFile;
+            }
+            else
+            {
+                log_ << MY_FUNC << "Cannot remove file: " << (*fileIt)->fileName() << log::END;
+            }
+
+            if (!(*fileIt)->rename(currentFilePath))
+            {
+                log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
+            }
+
+            result = true;
         }
         else
         {
-            log_ << MY_FUNC << "Cannot remove file: " << (*it)->fileName() << log::END;
-        }
+            std::shared_ptr<IFile> file;
+            try
+            {
+                file = std::make_shared<File>((*buffIt)->fileName());
+            }
+            catch (const std::runtime_error& e)
+            {
+                log_ << MY_FUNC << "Cannot open file, error = " << e.what() << log::END;
+            }
 
-        if (!(*it)->rename(currentFileName))
-        {
-            log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
+            if (file)
+            {
+                openFiles_.push_back(file);
+                file->write((*buffIt)->getContent());
+                result = true;
+            }
+            else
+            {
+                log_ << MY_FUNC << "Cannot create File class object!!!" << log::END;
+            }
         }
-
-        result = true;
     }
-
+    
     return result;
 }
 
 void FileManager::close(const QString& fileName)
 {
-    auto it = getCurrentFile(fileName);
-
-    if (it != openFiles_.end())
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
     {
-        (*it).reset();
-        openFiles_.erase(it);
+        (*buffIt).reset();
+        openBuffers_.erase(buffIt);
+    }
+
+    auto fileIt = getCurrentFile(fileName);
+    if (fileIt != openFiles_.end())
+    {
+        (*fileIt).reset();
+        openFiles_.erase(fileIt);
     }
 }
 
 void FileManager::remove(const QString& fileName)
 {
-    auto it = getCurrentFile(fileName);
-
-    if (it != openFiles_.end())
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
     {
-        (*it)->remove();
-        (*it).reset();
-        openFiles_.erase(it);
+        (*buffIt).reset();
+        openBuffers_.erase(buffIt);
+    }
+
+    auto fileIt = getCurrentFile(fileName);
+    if (fileIt != openFiles_.end())
+    {
+        (*fileIt)->remove();
+        (*fileIt).reset();
+        openFiles_.erase(fileIt);
+    }
+}
+
+void FileManager::clear(const QString& fileName)
+{
+    auto buffIt = getCurrentBuffer(fileName);
+    if (buffIt != openBuffers_.end())
+    {
+        (*buffIt)->clear();
     }
 }
 
@@ -121,3 +195,24 @@ std::vector<std::shared_ptr<IFile>>::iterator FileManager::getCurrentFile(const 
             return utils_->extractFileName(file->fileName()) == fileName;
         });
 }
+
+std::vector<std::shared_ptr<IBuffer>>::iterator FileManager::getCurrentBuffer(const QString& fileName)
+{
+    return std::find_if(
+        openBuffers_.begin(),
+        openBuffers_.end(),
+        [&fileName, this](auto buffer) {
+            return utils_->extractFileName(buffer->fileName()) == fileName;
+        });
+}
+
+void FileManager::loadFileContentToNewBuffer(std::shared_ptr<IFile> file)
+{
+    auto buffer = std::make_shared<Buffer>(file->fileName());
+    openBuffers_.push_back(buffer);
+
+    auto content = file->read();
+    buffer->setContent(content);
+}
+
+} // ::file

@@ -14,10 +14,17 @@
 #include <memory>
 #include <vector>
 #include <QString>
-#include "utils/Logger.hpp"
+#include "log/Logger.hpp"
 #include "utils/Utils.hpp"
+#include "IBuffer.hpp"
 #include "IFile.hpp"
 #include "IFileManager.hpp"
+
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace file
+{
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -40,6 +47,19 @@ public:
     bool openFile(const QString& fileName) override;
 
     /**
+     * @brief Open buffer for new file
+     * @param fileName fileName
+     */
+    void createBuffer(const QString& fileName) override;
+
+    /**
+     * @brief Text changed notification
+     * @param fileName fileName
+     * @param content content of the buffer
+     */
+    void textChanged(const QString &fileName, const QString &content) override;
+
+    /**
      * @brief Read data from file
      * @param fileName Filename of open file
      * @return Vector contains file's data
@@ -47,12 +67,11 @@ public:
     std::vector<QString> read(const QString& fileName) override;
 
     /**
-     * @brief Write data to file
-     * @param fileName file name
-     * @param text Text to write to file
+     * @brief Save data to file
+     * @param fileName Filename of open file
      * @return True if successful, False otherwise
      */
-    bool write(const QString& fileName, const QString& text) override;
+    bool save(const QString &fileName) override;
 
     /**
      * @brief Close open file
@@ -66,6 +85,12 @@ public:
      */
     void remove(const QString& fileName) override;
 
+    /**
+     * @brief Clear buffer content
+     * @param fileName file name
+     */
+    void clear(const QString& fileName) override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -75,16 +100,16 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    /**
-     * @brief Get iterator to the currently open file
-     * @param fileName file name
-     * @return Iterator to the currently open file
-     */
     std::vector<std::shared_ptr<IFile>>::iterator getCurrentFile(const QString& fileName);
+    std::vector<std::shared_ptr<IBuffer>>::iterator getCurrentBuffer(const QString& fileName);
+    void loadFileContentToNewBuffer(std::shared_ptr<IFile> file);
 
-    log::Logger log_;                                   //!< Logger object
-    std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
-    std::vector<std::shared_ptr<IFile>> openFiles_;     //!< Vector for open files
+    log::Logger log_;                                       //!< Logger object
+    std::unique_ptr<utils::Utils> utils_;                   //!< Pointer to utils object
+    std::vector<std::shared_ptr<IFile>> openFiles_;         //!< Vector for open files
+    std::vector<std::shared_ptr<IBuffer>> openBuffers_;     //!< Vector for open buffers
 };
+
+} // ::file
 
 #endif /* SRC_FILE_FILEMANAGER_HPP_ */

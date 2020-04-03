@@ -14,6 +14,12 @@
 #include <QString>
 
 //---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace window
+{
+
+//---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
 class IOpenFilesDockObserver
@@ -31,5 +37,7 @@ public:
      */
     virtual void anotherFileSelected(const QString& fileName) = 0;
 };
+
+} // ::window
 
 #endif /* SRC_WINDOW_IOPENFILESDOCKOBSERVER_HPP_ */

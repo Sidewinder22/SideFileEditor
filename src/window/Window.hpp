@@ -22,12 +22,18 @@
 #include <QMainWindow>
 #include <QVBoxLayout>
 #include "file/FileManager.hpp"
-#include "utils/Logger.hpp"
+#include "log/Logger.hpp"
 #include "utils/Utils.hpp"
 #include "IOpenFilesDockObserver.hpp"
 #include "IWindow.hpp"
 #include "IWindowObserver.hpp"
 #include "OpenFilesDock.hpp"
+
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace window
+{
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -111,6 +117,11 @@ public slots:
      */
     void clearScreen();
 
+    /**
+     * @brief Text changed
+     */
+    void textChanged();
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -156,5 +167,7 @@ private:
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
     IWindowObserver* observer_;                         //!< Pointer to the observer
 };
+
+} // ::window
 
 #endif /* SRC_WINDOW_WINDOW_HPP_ */

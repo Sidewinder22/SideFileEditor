@@ -13,8 +13,14 @@
 //---------------------------------------------------------
 #include <QFile>
 #include <QString>
-#include "utils/Logger.hpp"
+#include "log/Logger.hpp"
 #include "IFile.hpp"
+
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace file
+{
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -50,15 +56,21 @@ public:
 
     /**
      * @brief Write data to file
-     * @param text Text to write to file
+     * @param content Content to write to file
      */
-    void write(const QString& text) override;
+    void write(const std::vector<QString>& content) override;
 
     /**
      * @brief Remove file from filesystem
      * @return True if successful, False otherwise
      */
     bool remove() override;
+
+    /**
+     * @brief Check if file is empty
+     * @return True if file is empty, False otherwise
+     */
+    bool isEmpty() override;
 
 //---------------------------------------------------------
 //                  Protected
@@ -71,6 +83,9 @@ protected:
 private:
     log::Logger log_;                       //!< Logger object
     QFile file_;                            //!< QFile object
+    bool isEmpty_;                          //!< Is file empty (new file created)
 };
+
+} // ::file
 
 #endif /* SRC_FILE_FILE_HPP_ */

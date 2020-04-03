@@ -20,6 +20,12 @@
 #include <QTextStream>
 #include "Window.hpp"
 
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace window
+{
+
 Window::Window(IWindowObserver* observer, QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
@@ -114,6 +120,8 @@ void Window::connectSignalsToSlots()
 	connect(toolBTrash_, &QAction::triggered, this, &Window::removeFile);
     connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
 	connect(quit, &QAction::triggered, qApp, QApplication::quit);
+
+    connect(textEdit_, &QTextEdit::textChanged, this, &Window::textChanged);
 }
 
 void Window::showAboutWindow()
@@ -156,10 +164,9 @@ void Window::saveFile()
 {
     log_ << MY_FUNC << log::END;
 
-    auto text = textEdit_->toPlainText();
     auto fileName = openFileDock_->getCurrentFileName();
 
-    if (observer_->write(fileName, text))
+    if (observer_->save(fileName))
     {
         statusBar()->showMessage("[File saved]: " + fileName);
     }
@@ -218,6 +225,9 @@ void Window::clearScreen()
     log_ << MY_FUNC << log::END;
 
     textEdit_->clear();
+
+    auto fileName = openFileDock_->getCurrentFileName();
+    observer_->clear(fileName);
 }
 
 void Window::fileOpened(bool status, const QString& filePath)
@@ -253,16 +263,16 @@ void Window::fileOpened(bool status, const QString& filePath)
     }
 }
 
-void Window::fileCreated(bool status, const QString& fileName)
+void Window::fileCreated(bool status, const QString& filePath)
 {
     log_ << MY_FUNC << log::END;
 
     if (status)
     {
-        openFileDock_->addFileName(utils_->extractFileName(fileName));
+        openFileDock_->addFileName(utils_->extractFileName(filePath));
 
-        statusBar()->showMessage("[New file]: " + fileName);
-        setWindowTitle(fileName);
+        statusBar()->showMessage("[New file]: " + filePath);
+        setWindowTitle(filePath);
     }
     else
     {
@@ -286,3 +296,16 @@ void Window::anotherFileSelected(const QString& fileName)
         textEdit_->append(line);
     }
 }
+
+void Window::textChanged()
+{
+    auto filename = openFileDock_->getCurrentFileName();
+    auto text = textEdit_->toPlainText();
+
+    if (!text.isEmpty())
+    {
+        observer_->textChanged(filename, text);
+    }
+}
+
+} // ::window

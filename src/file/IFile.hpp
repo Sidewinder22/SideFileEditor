@@ -5,14 +5,20 @@
  * @brief   Interface for class wrapping a file.
  */
 
-#ifndef SRC_IFILE_IFILE_HPP_
-#define SRC_IFILE_IFILE_HPP_
+#ifndef SRC_FILE_IFILE_HPP_
+#define SRC_FILE_IFILE_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
 #include <vector>
 #include <QString>
+
+//---------------------------------------------------------
+//                      Namespace
+//---------------------------------------------------------
+namespace file
+{
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -45,16 +51,24 @@ public:
     virtual std::vector<QString> read() = 0;
 
     /**
-     * @brief Write data to file
-     * @param text Text to write to file
+     * @brief Write content to file
+     * @param content Content to write to file
      */
-    virtual void write(const QString& text) = 0;
+    virtual void write(const std::vector<QString>& content) = 0;
 
     /**
      * @brief Remove file from filesystem
      * @return True if successful, False otherwise
      */
     virtual bool remove() = 0;
+
+    /**
+     * @brief Check if file is empty
+     * @return True if file is empty, False otherwise
+     */
+    virtual bool isEmpty() = 0;
 };
 
-#endif /* SRC_IFILE_IFILE_HPP_ */
+} // ::file
+
+#endif /* SRC_FILE_IFILE_HPP_ */
