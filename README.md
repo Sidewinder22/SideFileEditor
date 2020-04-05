@@ -32,3 +32,5 @@ I create this program to learn more about C++ and QT library.
   ```bash
   $ ./SideFileEditor
   ```
+
+![Screenshot](images/screenshot.png)
