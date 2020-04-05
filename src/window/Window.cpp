@@ -143,7 +143,7 @@ void Window::openFile()
         this,
         tr("Select file to open..."),
         QDir::homePath(),
-        tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
+        tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
 
     observer_->openFile(fileName);
 }
@@ -156,7 +156,7 @@ void Window::newFile()
         this,
         tr("Select loction to save a file"),
         QDir::homePath(),
-        tr("Text files (*.txt *.h *.hpp *.c *.cpp)"));
+        tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
 
     observer_->createFile(fileName);
 }
