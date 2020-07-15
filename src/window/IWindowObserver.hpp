@@ -1,12 +1,11 @@
+#ifndef SRC_WINDOW_IWINDOWOBSERVER_HPP_
+#define SRC_WINDOW_IWINDOWOBSERVER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    11.10.2019
  *
  * @brief   Main window observer interface
  */
-
-#ifndef SRC_WINDOW_IWINDOWOBSERVER_HPP_
-#define SRC_WINDOW_IWINDOWOBSERVER_HPP_
 
 //---------------------------------------------------------
 //                      Includes

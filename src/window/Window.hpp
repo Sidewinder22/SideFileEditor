@@ -1,12 +1,11 @@
+#ifndef SRC_WINDOW_WINDOW_HPP_
+#define SRC_WINDOW_WINDOW_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    20.09.2016
  *
  * @brief   Main Window class
  */
-
-#ifndef SRC_WINDOW_WINDOW_HPP_
-#define SRC_WINDOW_WINDOW_HPP_
 
 //---------------------------------------------------------
 //                      Includes

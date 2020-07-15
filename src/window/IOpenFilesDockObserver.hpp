@@ -1,12 +1,11 @@
+#ifndef SRC_WINDOW_IOPENFILESDOCKOBSERVER_HPP_
+#define SRC_WINDOW_IOPENFILESDOCKOBSERVER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    28.02.2020
  *
  * @brief   OpenFilesDock observer interface
  */
-
-#ifndef SRC_WINDOW_IOPENFILESDOCKOBSERVER_HPP_
-#define SRC_WINDOW_IOPENFILESDOCKOBSERVER_HPP_
 
 //---------------------------------------------------------
 //                      Includes

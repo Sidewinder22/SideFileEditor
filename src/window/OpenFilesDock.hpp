@@ -1,12 +1,11 @@
+#ifndef SRC_WINDOW_OPENFILESDOCK_HPP_
+#define SRC_WINDOW_OPENFILESDOCK_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    01.10.2019
  *
  * @brief   Dock class for open files
  */
-
-#ifndef SRC_WINDOW_OPENFILESDOCK_HPP_
-#define SRC_WINDOW_OPENFILESDOCK_HPP_
 
 //---------------------------------------------------------
 //                      Includes

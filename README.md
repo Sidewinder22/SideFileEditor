@@ -8,14 +8,14 @@ I create this program to learn more about C++ and QT library.
 
 *** BUILD INSTRUCTION ***
 
-*This project require: Qt library, make and gcc tool.*
+*This project require: Qt library, qmake and make tool.*
 
-*This program has been tested on ArchLinux (x86_64) and Debian 10.*
+*This program has been tested on Manjaro and Debian Linux.*
 
 
 1. Prepare source:
   ```bash
-  $ git clone https://gitlab.com/Sidewinder22/SideFileEditor.git
+  $ git clone https://github.com/Sidewinder22/SideFileEditor.git
   $ cd SideFileEditor
   ```
 

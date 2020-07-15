@@ -70,6 +70,7 @@ int OpenFilesDock::getCurrentRow()
 
 void OpenFilesDock::rowChanged(int currentRow)
 {
+	(void) currentRow;
     observer_->anotherFileSelected(getCurrentFileName());
 }
 

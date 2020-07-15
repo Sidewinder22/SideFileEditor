@@ -1,12 +1,11 @@
+#ifndef SRC_FILE_BUFFER_HPP_
+#define SRC_FILE_BUFFER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    31.03.2020
  *
  * @brief   Class to buffering text which represent file content.
  */
-
-#ifndef SRC_FILE_BUFFER_HPP_
-#define SRC_FILE_BUFFER_HPP_
 
 //---------------------------------------------------------
 //                      Includes

@@ -1,12 +1,11 @@
+#ifndef SRC_UTILS_LOGGER_H_
+#define SRC_UTILS_LOGGER_H_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    02.01.2019
  *
  * @brief   Class responsible for application logging.
  */
-
-#ifndef SRC_UTILS_LOGGER_H_
-#define SRC_UTILS_LOGGER_H_
 
 //---------------------------------------------------------
 //                      Includes

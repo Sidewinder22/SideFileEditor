@@ -1,12 +1,11 @@
+#ifndef SRC_APPLICATION_MAINCONTROLLER_HPP_
+#define SRC_APPLICATION_MAINCONTROLLER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    10.10.2019
  *
  * @brief   Main Controller class
  */
-
-#ifndef SRC_APPLICATION_MAINCONTROLLER_HPP_
-#define SRC_APPLICATION_MAINCONTROLLER_HPP_
 
 //---------------------------------------------------------
 //                      Includes

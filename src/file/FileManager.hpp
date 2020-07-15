@@ -1,12 +1,11 @@
+#ifndef SRC_FILE_FILEMANAGER_HPP_
+#define SRC_FILE_FILEMANAGER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    11.02.2019
  *
  * @brief   FileManager Manager class
  */
-
-#ifndef SRC_FILE_FILEMANAGER_HPP_
-#define SRC_FILE_FILEMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes

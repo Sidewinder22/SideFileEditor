@@ -1,12 +1,11 @@
+#ifndef SRC_UTILS_UTILS_H_
+#define SRC_UTILS_UTILS_H_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    02.10.2019
  *
  * @brief   Set of useful utils
  */
-
-#ifndef SRC_UTILS_UTILS_H_
-#define SRC_UTILS_UTILS_H_
 
 //---------------------------------------------------------
 //                      Includes
