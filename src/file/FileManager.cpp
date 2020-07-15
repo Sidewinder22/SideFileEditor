@@ -139,7 +139,8 @@ void FileManager::clear(const QString& fileName)
     }
 }
 
-std::vector<std::shared_ptr<IFile>>::iterator FileManager::getCurrentFile(const QString& fileName)
+std::vector<std::shared_ptr<IFile>>::iterator FileManager::getCurrentFile(
+	const QString& fileName)
 {
     return getCurrentIterator<IFile>(
         fileName,

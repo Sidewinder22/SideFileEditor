@@ -10,6 +10,7 @@
 //---------------------------------------------------------
 #include <QIcon>
 #include <QAction>
+#include <QScreen>
 #include <QMenuBar>
 #include <QStatusBar>
 #include <QIODevice>
@@ -64,7 +65,13 @@ void Window::init()
 	statusBar()->showMessage("Ready!");
 
 	setWindowTitle("{\\_Sidewinder_/} File Editor");
-    showNormal();
+
+	resize(900, 600);
+	show();
+
+	// Display center window
+	QScreen *screen = QGuiApplication::primaryScreen();
+	move(screen->geometry().center() - frameGeometry().center());
 }
 
 void Window::buildToolBar()
