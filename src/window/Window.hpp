@@ -136,9 +136,14 @@ private:
 	void connectSignalsToSlots();
 
     /**
+     * @brief Prepare Menu
+     */
+	void prepareMenu();
+
+    /**
      * @brief Prepare tool bar
      */
-	void buildToolBar();
+	void prepareToolBar();
 
     /**
      * @brief Show window with about description
@@ -157,6 +162,15 @@ private:
 	QAction *toolBTrash_;                               //!< Pointer to the tool bar trash file command
 	QAction *toolBQuit_;                                //!< Pointer to the tool bar quit command
 	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
+
+	QAction *menuNewFile_;
+	QAction *menuOpenFile_;
+	QAction *menuSaveFile_;
+	QAction *menuClearScreen_;
+	QAction *menuCloseFile_;
+	QAction *menuRemoveFile_;
+	QAction *menuQuit_;
+    QAction *menuAbout_;
 
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field

@@ -23,6 +23,8 @@ OpenFilesDock::OpenFilesDock(IOpenFilesDockObserver* observer, QWidget *parent)
     , fileList_(new QListWidget())
     , observer_(observer)
 {
+    setStatusTip("Open files list");
+
     connect(fileList_, &QListWidget::currentRowChanged, this, &OpenFilesDock::rowChanged);
 }
 

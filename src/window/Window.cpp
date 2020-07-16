@@ -38,6 +38,14 @@ Window::Window(IWindowObserver* observer, QWidget *parent)
     , toolBClose_(nullptr)
     , toolBTrash_(nullptr)
 	, toolBQuit_(nullptr)
+	, menuNewFile_(new QAction("&New", this))
+	, menuOpenFile_(new QAction("&Open", this))
+	, menuSaveFile_(new QAction("&Save", this))
+	, menuClearScreen_(new QAction("&Clear screen", this))
+	, menuCloseFile_(new QAction("&Close", this))
+	, menuRemoveFile_(new QAction("&Remove", this))
+	, menuQuit_(new QAction("&Quit", this))
+    , menuAbout_(new QAction("&About", this))
     , fileDialog_(nullptr)
     , openFileDock_(new OpenFilesDock(this, this))
     , utils_(std::make_unique<utils::Utils>())
@@ -53,18 +61,20 @@ Window::Window(IWindowObserver* observer, QWidget *parent)
     addDockWidget(Qt::TopDockWidgetArea, openFileDock_);
 
 	textEdit_ = new QTextEdit(this);
+	textEdit_->setStatusTip("Text editor window");
 }
 
 void Window::init()
 {
-	buildToolBar();
+	prepareMenu();
+	prepareToolBar();
 	connectSignalsToSlots();
 
     setCentralWidget(textEdit_);
 
 	statusBar()->showMessage("Ready!");
 
-	setWindowTitle("{\\_Sidewinder_/} File Editor");
+	setWindowTitle("{\\_SideFileEditor_/} ");
 
 	resize(900, 600);
 	show();
@@ -74,7 +84,36 @@ void Window::init()
 	move(screen->geometry().center() - frameGeometry().center());
 }
 
-void Window::buildToolBar()
+void Window::prepareMenu()
+{
+	fileMenu_->addAction(menuNewFile_);
+	fileMenu_->addAction(menuOpenFile_);
+	fileMenu_->addAction(menuSaveFile_);
+	fileMenu_->addAction(menuClearScreen_);
+	fileMenu_->addAction(menuCloseFile_);
+	fileMenu_->addAction(menuRemoveFile_);
+    fileMenu_->addSeparator();
+	fileMenu_->addAction(menuQuit_);
+    helpMenu_->addAction(menuAbout_);
+
+    QKeySequence newShortcut("Ctrl+N");
+    QKeySequence openShortcut("Ctrl+O");
+    QKeySequence saveShortcut("Ctrl+S");
+    QKeySequence clearScreenShortcut("Ctrl+L");
+    QKeySequence closeShortcut("Ctrl+W");
+    QKeySequence removeShortcut("Ctrl+R");
+    QKeySequence quitShortcut("Ctrl+Q");
+
+    menuNewFile_->setShortcut(newShortcut);
+    menuOpenFile_->setShortcut(openShortcut);
+    menuSaveFile_->setShortcut(saveShortcut);
+    menuClearScreen_->setShortcut(clearScreenShortcut);
+    menuCloseFile_->setShortcut(closeShortcut);
+    menuRemoveFile_->setShortcut(removeShortcut);
+    menuQuit_->setShortcut(quitShortcut);
+}
+
+void Window::prepareToolBar()
 {
 	toolBNew_ = toolBar_->addAction(QIcon("../icons/new.png"), "New File");
 	toolBOpen_ = toolBar_->addAction(QIcon("../icons/open.png"), "Open File");
@@ -82,6 +121,13 @@ void Window::buildToolBar()
 	toolBClear_ = toolBar_->addAction(QIcon("../icons/clear.png"), "Clear Screen");
 	toolBClose_ = toolBar_->addAction(QIcon("../icons/close.png"), "Close File");
     toolBTrash_ = toolBar_->addAction(QIcon("../icons/trash.png"), "Remove File");
+
+	toolBNew_->setStatusTip("New File");
+	toolBOpen_->setStatusTip("Open File");
+	toolBSave_->setStatusTip("Save File");
+	toolBClear_->setStatusTip("Clear Screen");
+	toolBClose_->setStatusTip("Close File");
+	toolBTrash_->setStatusTip("Remove File");
 
 	toolBar_->addSeparator();
 
@@ -93,33 +139,15 @@ void Window::buildToolBar()
 
 void Window::connectSignalsToSlots()
 {
-	QAction *newFile = new QAction("&New", this);
-	fileMenu_->addAction(newFile);
-	QAction *openFile = new QAction("&Open", this);
-	fileMenu_->addAction(openFile);
-	QAction *saveFile = new QAction("&Save", this);
-	fileMenu_->addAction(saveFile);
-	QAction *clearScreen = new QAction("&Clear screen", this);
-	fileMenu_->addAction(clearScreen);
-	QAction *closeFile = new QAction("&Close", this);
-	fileMenu_->addAction(closeFile);
-	QAction *removeFile = new QAction("&Remove", this);
-	fileMenu_->addAction(removeFile);
-    fileMenu_->addSeparator();
+	connect(menuNewFile_, &QAction::triggered, this, &Window::newFile);
+	connect(menuOpenFile_, &QAction::triggered, this, &Window::openFile);
+    connect(menuSaveFile_, &QAction::triggered, this, &Window::saveFile);
+    connect(menuClearScreen_, &QAction::triggered, this, &Window::clearScreen);
+    connect(menuCloseFile_, &QAction::triggered, this, &Window::closeFile);
+    connect(menuRemoveFile_, &QAction::triggered, this, &Window::removeFile);
+	connect(menuAbout_, &QAction::triggered, this, &Window::showAboutWindow);
+	connect(menuQuit_, &QAction::triggered, qApp, QApplication::quit);
 
-	QAction *quit = new QAction("&Quit", this);
-	fileMenu_->addAction(quit);
-
-    QAction *about = new QAction("&About", this);
-    helpMenu_->addAction(about);
-
-	connect(newFile, &QAction::triggered, this, &Window::newFile);
-	connect(openFile, &QAction::triggered, this, &Window::openFile);
-    connect(saveFile, &QAction::triggered, this, &Window::saveFile);
-    connect(clearScreen, &QAction::triggered, this, &Window::clearScreen);
-    connect(closeFile, &QAction::triggered, this, &Window::closeFile);
-    connect(removeFile, &QAction::triggered, this, &Window::removeFile);
-	connect(about, &QAction::triggered, this, &Window::showAboutWindow);
 	connect(toolBNew_, &QAction::triggered, this, &Window::newFile);
 	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
 	connect(toolBSave_, &QAction::triggered, this, &Window::saveFile);
@@ -127,8 +155,6 @@ void Window::connectSignalsToSlots()
 	connect(toolBClose_, &QAction::triggered, this, &Window::closeFile);
 	connect(toolBTrash_, &QAction::triggered, this, &Window::removeFile);
     connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
-	connect(quit, &QAction::triggered, qApp, QApplication::quit);
-
     connect(textEdit_, &QTextEdit::textChanged, this, &Window::textChanged);
 }
 
