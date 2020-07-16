@@ -63,6 +63,12 @@ protected:
     void createFile(const QString& fileName) override;
 
     /**
+     * @brief Create new empty buffer
+     * @param bufferName name for the buffer
+     */
+    void createBuffer(const QString& bufferName) override;
+
+    /**
      * @brief Text changed notification
      * @param fileName fileName
      * @param content content of the buffer

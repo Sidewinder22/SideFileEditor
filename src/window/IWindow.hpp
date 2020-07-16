@@ -42,10 +42,16 @@ public:
 
     /**
      * @brief createFile() response
-     * @param status Status of operation
      * @param fileName fileName of the created file
      */
-    virtual void fileCreated(bool status, const QString& fileName) = 0;
+    virtual void fileCreated(const QString& fileName) = 0;
+
+    /**
+     * @brief createBuffer() response
+     * @param status Status of operation
+     * @param bufferName name of the created buffer
+     */
+    virtual void bufferCreated(const QString& bufferName) = 0;
 };
 
 } // ::window

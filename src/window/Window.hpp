@@ -67,10 +67,15 @@ public:
 
     /**
      * @brief createFile() response
-     * @param status Status of operation
      * @param fileName fileName of the created file
      */
-    void fileCreated(bool status, const QString& fileName) override;
+    void fileCreated(const QString& fileName) override;
+
+    /**
+     * @brief createBuffer() response
+     * @param bufferName name of the created buffer
+     */
+    void bufferCreated(const QString& bufferName) override;
 
     //-----------------------------------------------------
     //              IOpenFilesDockObserver
@@ -163,14 +168,14 @@ private:
 	QAction *toolBQuit_;                                //!< Pointer to the tool bar quit command
 	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
 
-	QAction *menuNewFile_;
-	QAction *menuOpenFile_;
-	QAction *menuSaveFile_;
-	QAction *menuClearScreen_;
-	QAction *menuCloseFile_;
-	QAction *menuRemoveFile_;
-	QAction *menuQuit_;
-    QAction *menuAbout_;
+	QAction *menuNewFile_;								//!< Pointer to the menu new file command
+	QAction *menuOpenFile_;								//!< Pointer to the menu open file command
+	QAction *menuSaveFile_;								//!< Pointer to the menu save file command
+	QAction *menuClearScreen_;							//!< Pointer to the menu clear screen command
+	QAction *menuCloseFile_;							//!< Pointer to the menu close file command
+	QAction *menuRemoveFile_;							//!< Pointer to the menu remove file command
+	QAction *menuQuit_;									//!< Pointer to the menu quit command
+    QAction *menuAbout_;								//!< Pointer to the menu about command
 
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
 	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
@@ -179,6 +184,8 @@ private:
 
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
     IWindowObserver* observer_;                         //!< Pointer to the observer
+
+    static int bufferNumber_;							//!< Number for next buffer to create
 };
 
 } // ::window

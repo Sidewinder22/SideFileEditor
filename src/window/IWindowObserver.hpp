@@ -43,6 +43,12 @@ public:
     virtual void createFile(const QString& fileName) = 0;
 
     /**
+     * @brief Create new empty buffer
+     * @param bufferName name for the buffer
+     */
+    virtual void createBuffer(const QString& bufferName) = 0;
+
+    /**
      * @brief Text changed notification
      * @param fileName fileName
      * @param content content of the buffer

@@ -47,8 +47,15 @@ void MainController::openFile(const QString& fileName)
 void MainController::createFile(const QString& fileName)
 {
     fileManager_->createBuffer(fileName);
-    window_->fileCreated(true, fileName);
+    window_->fileCreated(fileName);
 }
+
+void MainController::createBuffer(const QString& bufferName)
+{
+    fileManager_->createBuffer(bufferName);
+    window_->bufferCreated(bufferName);
+}
+
 std::vector<QString> MainController::read(const QString& fileName)
 {
     return fileManager_->read(fileName);

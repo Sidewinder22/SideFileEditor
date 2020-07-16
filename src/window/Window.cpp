@@ -28,6 +28,8 @@
 namespace window
 {
 
+int Window::bufferNumber_ = 1;
+
 Window::Window(IWindowObserver* observer, QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
@@ -185,13 +187,16 @@ void Window::newFile()
 {
     log_ << MY_FUNC << log::END;
 
-	QString fileName = QFileDialog::getSaveFileName(
-        this,
-        tr("Select loction to save a file"),
-        QDir::homePath(),
-        tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
+    auto bufferName = "Buffer" + std::to_string(bufferNumber_++);
+    observer_->createBuffer(QString(bufferName.c_str()));
 
-    observer_->createFile(fileName);
+//QString fileName = QFileDialog::getSaveFileName(
+//        this,
+//        tr("Select loction to save a file"),
+//        QDir::homePath(),
+//        tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
+//
+//    observer_->createFile(fileName);
 }
 
 void Window::saveFile()
@@ -297,22 +302,24 @@ void Window::fileOpened(bool status, const QString& filePath)
     }
 }
 
-void Window::fileCreated(bool status, const QString& filePath)
+void Window::fileCreated(const QString& filePath)
 {
     log_ << MY_FUNC << log::END;
 
-    if (status)
-    {
-        openFileDock_->addFileName(utils_->extractFileName(filePath));
+	openFileDock_->addFileName(utils_->extractFileName(filePath));
 
-        statusBar()->showMessage("[New file]: " + filePath);
-        setWindowTitle(filePath);
-    }
-    else
-    {
-        log_ << MY_FUNC << "Cannot open file!!!" << log::END;
-        QMessageBox::information(this, "ERROR", "Can't open file!!!");
-    }
+	statusBar()->showMessage("[New file]: " + filePath);
+	setWindowTitle(filePath);
+}
+
+void Window::bufferCreated(const QString& bufferName)
+{
+    log_ << MY_FUNC << log::END;
+
+	openFileDock_->addFileName(bufferName);
+
+	statusBar()->showMessage("[New buffer]: " + bufferName);
+	setWindowTitle(bufferName);
 }
 
 void Window::anotherFileSelected(const QString& fileName)
