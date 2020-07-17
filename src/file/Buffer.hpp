@@ -43,6 +43,10 @@ public:
 
     void clear() override;
 
+    bool isSaved() override;
+
+    void setSaved(bool saved) override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -52,10 +56,14 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
+    /**
+     * True if buffer is saved to the file, false otherwise
+     */
+    bool saved_;
+
     log::Logger log_;                       //!< Logger object
     QString fileName_;                      //!< Filename
-    //QString content_;                       //!< Buffer's content
-    std::vector<QString> content_;
+    std::vector<QString> content_;			//!< Buffer's content
 };
 
 } // ::file

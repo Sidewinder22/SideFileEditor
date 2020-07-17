@@ -8,11 +8,10 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include <algorithm>
 #include "Buffer.hpp"
 #include "File.hpp"
 #include "FileManager.hpp"
-
-#include <iostream>
 
 //---------------------------------------------------------
 //                      Namespace
@@ -86,6 +85,8 @@ bool FileManager::save(const QString &fileName)
         if (fileIt != openFiles_.end())
         {
             saveFile(fileIt, buffIt);
+
+            (*buffIt)->setSaved(true);
             result = true;
         }
         else
@@ -95,6 +96,8 @@ bool FileManager::save(const QString &fileName)
             {
                 openFiles_.push_back(file);
                 file->write((*buffIt)->getContent());
+
+                (*buffIt)->setSaved(true);
                 result = true;
             }
             else
@@ -219,8 +222,12 @@ void FileManager::saveFile(
 
 size_t FileManager::numberOfUnsavedBuffers() const
 {
-	// TODO: add logic for check the unsaved buffers
-	return openBuffers_.size();
+	return std::count_if(
+		openBuffers_.begin(),
+		openBuffers_.end(),
+		[](auto && buffer) {
+			return !buffer->isSaved();
+		} );
 }
 
 } // ::file

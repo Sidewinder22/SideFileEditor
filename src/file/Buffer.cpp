@@ -17,7 +17,8 @@ namespace file
 {
 
 Buffer::Buffer(QString fileName)
-    : log_("Buffer")
+    : saved_(false)
+    , log_("Buffer")
     , fileName_(fileName)
 { 
     // Nothing
@@ -41,6 +42,16 @@ std::vector<QString> Buffer::getContent()
 void Buffer::clear()
 {
     content_.clear();
+}
+
+bool Buffer::isSaved()
+{
+	return saved_;
+}
+
+void Buffer::setSaved(bool saved)
+{
+	saved_ = saved;
 }
 
 } // ::file

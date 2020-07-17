@@ -36,6 +36,9 @@ public:
     virtual std::vector<QString> getContent() = 0;
 
     virtual void clear() = 0;
+
+    virtual bool isSaved() = 0;
+    virtual void setSaved(bool saved) = 0;
 };
 
 } // ::file
