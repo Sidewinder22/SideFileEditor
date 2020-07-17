@@ -20,12 +20,13 @@
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QVBoxLayout>
+
+#include "app/IMainController.hpp"
 #include "file/FileManager.hpp"
 #include "log/Logger.hpp"
 #include "utils/Utils.hpp"
 #include "IOpenFilesDockObserver.hpp"
 #include "IWindow.hpp"
-#include "IWindowObserver.hpp"
 #include "OpenFilesDock.hpp"
 
 //---------------------------------------------------------
@@ -48,7 +49,7 @@ class Window
 //                  Public
 //---------------------------------------------------------
 public:
-	Window(IWindowObserver* observer, QWidget *parent = 0);
+	Window(app::IMainController* mainController, QWidget *parent = 0);
 	virtual ~Window() = default;
 
     //-----------------------------------------------------
@@ -126,6 +127,11 @@ public slots:
      */
     void textChanged();
 
+    /**
+     * @brief Quit from the application
+     */
+    void quitApplication();
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -155,6 +161,12 @@ private:
      */
     void showAboutWindow();
 
+    /**
+     * @brief Check which buffers and files and unsaved.
+     * 		  And ask user if he wants to save.
+     */
+    void checkUnsaved();
+
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object
 	QMenu *helpMenu_;                                   //!< Pointer to help menu object
@@ -183,7 +195,7 @@ private:
     OpenFilesDock *openFileDock_;                       //!< Open files dock
 
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
-    IWindowObserver* observer_;                         //!< Pointer to the observer
+    app::IMainController* mainController_;              //!< Pointer to the observer
 
     static int bufferNumber_;							//!< Number for next buffer to create
 };

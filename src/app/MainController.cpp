@@ -86,4 +86,9 @@ void MainController::clear(const QString& fileName)
     fileManager_->clear(fileName);
 }
 
+size_t MainController::openFiles() const
+{
+	return fileManager_->openFiles();
+}
+
 } // ::app

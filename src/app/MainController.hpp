@@ -13,9 +13,9 @@
 #include <memory>
 #include <QObject>
 #include "file/IFileManager.hpp"
+#include "IMainController.hpp"
 #include "log/Logger.hpp"
 #include "window/IWindow.hpp"
-#include "window/IWindowObserver.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -28,7 +28,7 @@ namespace app
 //---------------------------------------------------------
 class MainController
     : public QObject
-    , public window::IWindowObserver
+    , public IMainController
 {
 	Q_OBJECT
 
@@ -106,6 +106,12 @@ protected:
      * @param fileName file name
      */
     void clear(const QString& fileName) override;
+
+    /**
+     * @brief Return the number of the open files
+     * @return NUmber of the open files
+     */
+    size_t openFiles() const override;
 
 //---------------------------------------------------------
 //                  Private

@@ -30,7 +30,7 @@ namespace window
 
 int Window::bufferNumber_ = 1;
 
-Window::Window(IWindowObserver* observer, QWidget *parent)
+Window::Window(app::IMainController* mainController, QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
 	, toolBNew_(nullptr)
@@ -51,7 +51,7 @@ Window::Window(IWindowObserver* observer, QWidget *parent)
     , fileDialog_(nullptr)
     , openFileDock_(new OpenFilesDock(this, this))
     , utils_(std::make_unique<utils::Utils>())
-    , observer_(observer)
+    , mainController_(mainController)
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -84,6 +84,8 @@ void Window::init()
 	// Display center window
 	QScreen *screen = QGuiApplication::primaryScreen();
 	move(screen->geometry().center() - frameGeometry().center());
+
+	newFile();
 }
 
 void Window::prepareMenu()
@@ -148,7 +150,7 @@ void Window::connectSignalsToSlots()
     connect(menuCloseFile_, &QAction::triggered, this, &Window::closeFile);
     connect(menuRemoveFile_, &QAction::triggered, this, &Window::removeFile);
 	connect(menuAbout_, &QAction::triggered, this, &Window::showAboutWindow);
-	connect(menuQuit_, &QAction::triggered, qApp, QApplication::quit);
+	connect(menuQuit_, &QAction::triggered, this, &Window::quitApplication);
 
 	connect(toolBNew_, &QAction::triggered, this, &Window::newFile);
 	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
@@ -156,8 +158,8 @@ void Window::connectSignalsToSlots()
 	connect(toolBClear_, &QAction::triggered, this, &Window::clearScreen);
 	connect(toolBClose_, &QAction::triggered, this, &Window::closeFile);
 	connect(toolBTrash_, &QAction::triggered, this, &Window::removeFile);
-    connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
     connect(textEdit_, &QTextEdit::textChanged, this, &Window::textChanged);
+	connect(toolBQuit_, &QAction::triggered, this, &Window::quitApplication);
 }
 
 void Window::showAboutWindow()
@@ -180,7 +182,7 @@ void Window::openFile()
         QDir::homePath(),
         tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
 
-    observer_->openFile(fileName);
+    mainController_->openFile(fileName);
 }
 
 void Window::newFile()
@@ -188,15 +190,16 @@ void Window::newFile()
     log_ << MY_FUNC << log::END;
 
     auto bufferName = "Buffer" + std::to_string(bufferNumber_++);
-    observer_->createBuffer(QString(bufferName.c_str()));
+    mainController_->createBuffer(QString(bufferName.c_str()));
 
-//QString fileName = QFileDialog::getSaveFileName(
-//        this,
-//        tr("Select loction to save a file"),
-//        QDir::homePath(),
-//        tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
-//
-//    observer_->createFile(fileName);
+	// TODO: Add asking for the file saving
+	//QString fileName = QFileDialog::getSaveFileName(
+	//        this,
+	//        tr("Select loction to save a file"),
+	//        QDir::homePath(),
+	//        tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
+	//
+	//    mainController_->createFile(fileName);
 }
 
 void Window::saveFile()
@@ -205,7 +208,7 @@ void Window::saveFile()
 
     auto fileName = openFileDock_->getCurrentFileName();
 
-    if (observer_->save(fileName))
+    if (mainController_->save(fileName))
     {
         statusBar()->showMessage("[File saved]: " + fileName);
     }
@@ -229,7 +232,7 @@ void Window::closeFile()
     if (!fileName.isEmpty())
     {
         statusBar()->showMessage("File: " + fileName + " closed.");
-        observer_->close(fileName);
+        mainController_->close(fileName);
     }
     else
     {
@@ -251,7 +254,7 @@ void Window::removeFile()
     if (!fileName.isEmpty())
     {
         statusBar()->showMessage("File: " + fileName + " removed.");
-        observer_->remove(fileName);
+        mainController_->remove(fileName);
     }
     else
     {
@@ -266,7 +269,7 @@ void Window::clearScreen()
     textEdit_->clear();
 
     auto fileName = openFileDock_->getCurrentFileName();
-    observer_->clear(fileName);
+    mainController_->clear(fileName);
 }
 
 void Window::fileOpened(bool status, const QString& filePath)
@@ -282,7 +285,7 @@ void Window::fileOpened(bool status, const QString& filePath)
 
             textEdit_->clear();
 
-            auto fileContent = observer_->read(fileName);
+            auto fileContent = mainController_->read(fileName);
             for (auto&& line : fileContent)
             {
                 textEdit_->append(line);
@@ -331,7 +334,7 @@ void Window::anotherFileSelected(const QString& fileName)
 
     textEdit_->clear();
 
-    auto fileContent = observer_->read(utils_->extractFileName(fileName));
+    auto fileContent = mainController_->read(utils_->extractFileName(fileName));
     for (auto&& line : fileContent)
     {
         textEdit_->append(line);
@@ -345,8 +348,29 @@ void Window::textChanged()
 
     if (!text.isEmpty())
     {
-        observer_->textChanged(filename, text);
+        mainController_->textChanged(filename, text);
     }
+}
+
+void Window::quitApplication()
+{
+    log_ << MY_FUNC << log::END;
+
+    log_ << MY_FUNC << ", open files = "
+    	<< std::to_string(mainController_->openFiles())
+    	<< log::END;
+
+    checkUnsaved();
+
+    QApplication::quit();
+}
+
+void Window::checkUnsaved()
+{
+    log_ << MY_FUNC << log::END;
+
+//    mainController_->getUnsavedBuffers();
+
 }
 
 } // ::window

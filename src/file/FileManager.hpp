@@ -90,6 +90,12 @@ public:
      */
     void clear(const QString& fileName) override;
 
+    /**
+     * @brief Return the number of the open files
+     * @return NUmber of the open files
+     */
+    size_t openFiles() const override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------

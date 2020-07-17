@@ -12,7 +12,8 @@ QT      += widgets
 
 # DEFINES +=  "DEBUG=1"
 
-HEADERS += 	../src/app/MainController.hpp \
+HEADERS += 	../src/app/IMaincontroller.hpp \
+            ../src/app/MainController.hpp \
             ../src/file/Buffer.hpp \
             ../src/file/IBuffer.hpp \
             ../src/file/File.hpp \
@@ -22,7 +23,6 @@ HEADERS += 	../src/app/MainController.hpp \
             ../src/log/Logger.hpp \
             ../src/utils/Utils.hpp \
             ../src/window/IWindow.hpp \
-            ../src/window/IWindowObserver.hpp \
             ../src/window/OpenFilesDock.hpp \
             ../src/window/Window.hpp
 

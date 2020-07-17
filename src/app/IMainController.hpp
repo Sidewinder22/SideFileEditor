@@ -1,10 +1,10 @@
-#ifndef SRC_WINDOW_IWINDOWOBSERVER_HPP_
-#define SRC_WINDOW_IWINDOWOBSERVER_HPP_
+#ifndef SRC_APP_IMAINCONTROLLER_HPP_
+#define SRC_APP_IMAINCONTROLLER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    11.10.2019
  *
- * @brief   Main window observer interface
+ * @brief   Main controller interface
  */
 
 //---------------------------------------------------------
@@ -16,19 +16,19 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace window
+namespace app
 {
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class IWindowObserver
+class IMainController
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-	virtual ~IWindowObserver() = default;
+	virtual ~IMainController() = default;
 
     /**
      * @brief Open file
@@ -86,8 +86,14 @@ public:
      * @param fileName file name
      */
     virtual void clear(const QString& fileName) = 0;
+
+    /**
+     * @brief Return the number of the open files
+     * @return NUmber of the open files
+     */
+    virtual size_t openFiles() const = 0;
 };
 
-} // ::window
+} // ::app
 
-#endif /* SRC_WINDOW_IWINDOWOBSERVER_HPP_ */
+#endif /* SRC_APP_IMAINCONTROLLER_HPP_ */

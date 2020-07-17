@@ -12,6 +12,8 @@
 #include "File.hpp"
 #include "FileManager.hpp"
 
+#include <iostream>
+
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
@@ -213,6 +215,11 @@ void FileManager::saveFile(
     {
         log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
     }
+}
+
+size_t FileManager::openFiles() const
+{
+	return openBuffers_.size();
 }
 
 } // ::file
