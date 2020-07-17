@@ -36,7 +36,6 @@ SOURCES	+= 	../src/app/main.cpp \
             ../src/window/OpenFilesDock.cpp \
             ../src/window/Window.cpp
 
-#QMAKE_CXXFLAGS += -std=c++17
 QMAKE_CXXFLAGS += -std=c++2a -Wextra
 
 QMAKE_LIBS += -lstdc++fs

@@ -217,8 +217,9 @@ void FileManager::saveFile(
     }
 }
 
-size_t FileManager::openFiles() const
+size_t FileManager::numberOfUnsavedBuffers() const
 {
+	// TODO: add logic for check the unsaved buffers
 	return openBuffers_.size();
 }
 

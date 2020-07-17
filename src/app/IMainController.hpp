@@ -87,11 +87,11 @@ public:
      */
     virtual void clear(const QString& fileName) = 0;
 
-    /**
-     * @brief Return the number of the open files
-     * @return NUmber of the open files
+     /**
+     * @brief Return the number of the unsaved buffers
+     * @return NUmber of the unsaved buffers
      */
-    virtual size_t openFiles() const = 0;
+    virtual size_t numberOfUnsavedBuffers() const = 0;
 };
 
 } // ::app

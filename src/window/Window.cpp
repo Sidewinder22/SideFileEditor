@@ -357,19 +357,20 @@ void Window::quitApplication()
     log_ << MY_FUNC << log::END;
 
     log_ << MY_FUNC << ", open files = "
-    	<< std::to_string(mainController_->openFiles())
+    	<< std::to_string(mainController_->numberOfUnsavedBuffers())
     	<< log::END;
 
-    checkUnsaved();
+    verifyUnsavedBuffers();
 
     QApplication::quit();
 }
 
-void Window::checkUnsaved()
+void Window::verifyUnsavedBuffers()
 {
     log_ << MY_FUNC << log::END;
 
-//    mainController_->getUnsavedBuffers();
+    // TODO: add
+    //    mainController_->unsavedBuffers();
 
 }
 

@@ -108,10 +108,10 @@ protected:
     void clear(const QString& fileName) override;
 
     /**
-     * @brief Return the number of the open files
-     * @return NUmber of the open files
+     * @brief Return the number of the unsaved buffers
+     * @return NUmber of the unsaved buffers
      */
-    size_t openFiles() const override;
+    size_t numberOfUnsavedBuffers() const override;
 
 //---------------------------------------------------------
 //                  Private

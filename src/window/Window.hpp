@@ -162,10 +162,9 @@ private:
     void showAboutWindow();
 
     /**
-     * @brief Check which buffers and files and unsaved.
-     * 		  And ask user if he wants to save.
+     * @brief Verify which unsaved buffers should be saved.
      */
-    void checkUnsaved();
+    void verifyUnsavedBuffers();
 
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object

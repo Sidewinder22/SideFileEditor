@@ -86,9 +86,9 @@ void MainController::clear(const QString& fileName)
     fileManager_->clear(fileName);
 }
 
-size_t MainController::openFiles() const
+size_t MainController::numberOfUnsavedBuffers() const
 {
-	return fileManager_->openFiles();
+	return fileManager_->numberOfUnsavedBuffers();
 }
 
 } // ::app
