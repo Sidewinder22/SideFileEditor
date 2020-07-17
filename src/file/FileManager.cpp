@@ -226,7 +226,7 @@ size_t FileManager::numberOfUnsavedBuffers() const
 		openBuffers_.begin(),
 		openBuffers_.end(),
 		[](auto && buffer) {
-			return !buffer->isSaved();
+			return !buffer->empty() && !buffer->isSaved();
 		} );
 }
 
@@ -236,7 +236,7 @@ std::vector<QString> FileManager::unsavedBufferNames() const
 
 	for (auto && buffer : openBuffers_)
 	{
-		if (!buffer->isSaved())
+		if (!buffer->empty() && !buffer->isSaved())
 		{
 			names.push_back(buffer->fileName());
 		}

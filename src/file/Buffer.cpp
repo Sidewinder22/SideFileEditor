@@ -34,9 +34,14 @@ void Buffer::setContent(const std::vector<QString> &content)
     content_ = content;
 }
 
-std::vector<QString> Buffer::getContent()
+std::vector<QString> Buffer::getContent() const
 {
     return content_;
+}
+
+bool Buffer::empty() const
+{
+	return content_.empty();
 }
     
 void Buffer::clear()
@@ -44,7 +49,7 @@ void Buffer::clear()
     content_.clear();
 }
 
-bool Buffer::isSaved()
+bool Buffer::isSaved() const
 {
 	return saved_;
 }

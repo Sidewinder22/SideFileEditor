@@ -39,11 +39,12 @@ public:
 
     void setContent(const std::vector<QString> &content) override;
 
-    std::vector<QString> getContent() override;
+    std::vector<QString> getContent() const override;
 
+    bool empty() const override;
     void clear() override;
 
-    bool isSaved() override;
+    bool isSaved() const override;
 
     void setSaved(bool saved) override;
 

@@ -379,7 +379,27 @@ void Window::verifyUnsavedBuffers()
     for (auto && name : namesVec)
     {
     	log_ << MY_FUNC << ", name: " << name << log::END;
+
+    	if (askForSaveBuffer(name))
+    	{
+    		log_ << MY_FUNC << "+++ Save file +++" << log::END;
+    	}
     }
+}
+
+bool Window::askForSaveBuffer(const QString& name)
+{
+	QMessageBox msgBox;
+
+	msgBox.setText("The file: " + name + " has been modified.");
+	msgBox.setInformativeText("Do you want to save your changes?");
+	msgBox.setStandardButtons( QMessageBox::Cancel |
+		QMessageBox::Discard |
+		QMessageBox::Save);
+	msgBox.setDefaultButton(QMessageBox::Save);
+
+	int ret = msgBox.exec();
+	return ret == QMessageBox::Save;
 }
 
 } // ::window

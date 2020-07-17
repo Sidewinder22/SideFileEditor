@@ -166,6 +166,8 @@ private:
      */
     void verifyUnsavedBuffers();
 
+    bool askForSaveBuffer(const QString& name);
+
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object
 	QMenu *helpMenu_;                                   //!< Pointer to help menu object
