@@ -91,4 +91,9 @@ size_t MainController::numberOfUnsavedBuffers() const
 	return fileManager_->numberOfUnsavedBuffers();
 }
 
+std::vector<QString> MainController::unsavedBufferNames() const
+{
+	return fileManager_->unsavedBufferNames();
+}
+
 } // ::app

@@ -87,6 +87,12 @@ public:
      * @return NUmber of the unsaved buffers
      */
     virtual size_t numberOfUnsavedBuffers() const = 0;
+
+    /**
+     * @brief Return names of the unsaved buffers
+     * @return Vector with the names of the unsaved buffers
+     */
+    virtual std::vector<QString> unsavedBufferNames() const = 0;
 };
 
 } // ::file

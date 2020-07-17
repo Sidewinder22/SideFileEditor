@@ -356,11 +356,16 @@ void Window::quitApplication()
 {
     log_ << MY_FUNC << log::END;
 
+    auto numberOfUnsavedBuffers = mainController_->numberOfUnsavedBuffers();
+
     log_ << MY_FUNC << ", open files = "
-    	<< std::to_string(mainController_->numberOfUnsavedBuffers())
+    	<< std::to_string(numberOfUnsavedBuffers)
     	<< log::END;
 
-    verifyUnsavedBuffers();
+    if (numberOfUnsavedBuffers > 0)
+    {
+    	verifyUnsavedBuffers();
+    }
 
     QApplication::quit();
 }
@@ -369,9 +374,12 @@ void Window::verifyUnsavedBuffers()
 {
     log_ << MY_FUNC << log::END;
 
-    // TODO: add
-    //    mainController_->unsavedBuffers();
+    auto namesVec = mainController_->unsavedBufferNames();
 
+    for (auto && name : namesVec)
+    {
+    	log_ << MY_FUNC << ", name: " << name << log::END;
+    }
 }
 
 } // ::window

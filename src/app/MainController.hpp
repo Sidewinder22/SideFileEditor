@@ -113,6 +113,12 @@ protected:
      */
     size_t numberOfUnsavedBuffers() const override;
 
+    /**
+     * @brief Return names of the unsaved buffers
+     * @return Vector with the names of the unsaved buffers
+     */
+    std::vector<QString> unsavedBufferNames() const override;
+
 //---------------------------------------------------------
 //                  Private
 //---------------------------------------------------------

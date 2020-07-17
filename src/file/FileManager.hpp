@@ -96,6 +96,12 @@ public:
      */
     size_t numberOfUnsavedBuffers() const override;
 
+    /**
+     * @brief Return names of the unsaved buffers
+     * @return Vector with the names of the unsaved buffers
+     */
+    std::vector<QString> unsavedBufferNames() const override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -127,7 +133,7 @@ private:
             });
     }
 
-    log::Logger log_;                                       //!< Logger object
+    log::Logger log_;                               //!< Logger object
     std::unique_ptr<utils::Utils> utils_;                   //!< Pointer to utils object
     std::vector<std::shared_ptr<IFile>> openFiles_;         //!< Vector for open files
     std::vector<std::shared_ptr<IBuffer>> openBuffers_;     //!< Vector for open buffers
