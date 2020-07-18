@@ -182,7 +182,24 @@ void Window::openFile()
         QDir::homePath(),
         tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
 
-    mainController_->openFile(fileName);
+
+    if (!fileName.isEmpty())
+    {
+		/**
+		 * Delete empty startup buffer
+		 */
+		auto unsavedBuffers = mainController_->numberOfUnsavedBuffers();
+		if (unsavedBuffers == 0)
+		{
+			auto bufferName = "Buffer" + std::to_string(bufferNumber_);
+			mainController_->close(QString::fromStdString(bufferName));
+
+			int row = openFileDock_->getCurrentRow();
+			openFileDock_->removeFileName(row);
+		}
+
+		mainController_->openFile(fileName);
+    }
 }
 
 void Window::newFile()

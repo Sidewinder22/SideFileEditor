@@ -187,6 +187,10 @@ void FileManager::loadFileContentToNewBuffer(std::shared_ptr<IFile> file)
 
     auto content = file->read();
     buffer->setContent(content);
+
+    // Set saved as true because content of file has been read from file
+    // and it is not modified at this point
+    buffer->setSaved(true);
 }
 
 std::shared_ptr<IFile> FileManager::createFile(const QString& fileName)
