@@ -38,6 +38,14 @@ public:
     virtual bool openFile(const QString& fileName) = 0;
 
     /**
+     * @brief Create new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     */
+    virtual void createFileFromBuffer(const QString& bufferName,
+    	const QString& fileName) = 0;
+
+    /**
      * @brief Open buffer for new file
      * @param fileName fileName
      */

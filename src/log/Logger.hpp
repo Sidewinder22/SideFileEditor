@@ -11,6 +11,7 @@
 //                      Includes
 //---------------------------------------------------------
 #include <string>
+#include <iostream>
 #include <QString>
 
 //---------------------------------------------------------
@@ -27,6 +28,7 @@ namespace log
  * @brief Static defines controlling the operation of the logger
  */
 static std::string END("\n");
+
 
 //---------------------------------------------------------
 //                  Class declaration
@@ -45,25 +47,19 @@ class Logger
 
 
         /**
-         * @brief Function used to write string to stdout.
+         * @brief Template function used to write value of type T to the stdout.
          * @param log Reference to logger instance
-         * @param str Data to log
+         * @param value Data to log
         */
-        friend Logger& operator<<(Logger& log, std::string str);
+        template <typename T>
+        friend Logger& operator<<(Logger& log, T value)
+        {
+			log.writeIndex();
 
-        /**
-         * @brief Function used to write QString to stdout.
-         * @param log Reference to logger instance
-         * @param info Data to log
-        */
-        friend Logger& operator<<(Logger& log, QString info);
+			std::cout << value;
 
-        /**
-         * @brief Function used to write const char* to stdout.
-         * @param log Reference to logger instance
-         * @param str Data to log
-        */
-        friend Logger& operator<<(Logger& log, const char* str);
+			return log;
+        }
 
 //---------------------------------------------------------
 //                  Protected
@@ -83,6 +79,17 @@ class Logger
         bool beginLine_;        //!< Flag determining whether the line has been started
 };
 
+template <typename T>
+Logger& operator<<(Logger& log, T value);
+
+template<>
+Logger& operator<<(Logger& log, std::string str);
+
+template<>
+Logger& operator<<(Logger& log, QString info);
+
+template<>
+Logger& operator<<(Logger& log, const char* str);
 } // ::log
 
 #endif // SRC_UTILS_LOGGER_H_

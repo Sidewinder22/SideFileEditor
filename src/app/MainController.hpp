@@ -63,6 +63,14 @@ protected:
     void createFile(const QString& fileName) override;
 
     /**
+     * @brief Create new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     */
+    void createFileFromBuffer(const QString& bufferName,
+    	const QString& fileName) override;
+
+    /**
      * @brief Create new empty buffer
      * @param bufferName name for the buffer
      */

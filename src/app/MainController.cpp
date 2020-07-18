@@ -50,6 +50,13 @@ void MainController::createFile(const QString& fileName)
     window_->fileCreated(fileName);
 }
 
+void MainController::createFileFromBuffer(const QString& bufferName,
+	const QString& fileName)
+{
+	fileManager_->createFileFromBuffer(bufferName, fileName);
+	window_->fileCreated(fileName);
+}
+
 void MainController::createBuffer(const QString& bufferName)
 {
     fileManager_->createBuffer(bufferName);

@@ -13,6 +13,8 @@
 #include "File.hpp"
 #include "FileManager.hpp"
 
+#include <iostream>
+
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
@@ -30,6 +32,22 @@ void FileManager::createBuffer(const QString& fileName)
 
     auto buffer = std::make_shared<Buffer>(fileName);
     openBuffers_.push_back(buffer);
+}
+
+void FileManager::createFileFromBuffer(const QString& bufferName,
+	const QString& fileName)
+{
+    log_ << MY_FUNC << "bufferName = " << bufferName
+    	<< ", fileName = " << fileName << log::END;
+
+    auto buffIt = getCurrentBuffer(bufferName);
+
+    auto filePtr = createFile(fileName);
+    openFiles_.push_back(filePtr);
+
+    auto fileIt = getCurrentFile(utils_->extractFileName(fileName));
+
+    saveFile(fileIt, buffIt);
 }
     
 void FileManager::textChanged(const QString &fileName, const QString &content)
@@ -153,7 +171,8 @@ std::vector<std::shared_ptr<IFile>>::iterator FileManager::getCurrentFile(
         openFiles_.end());
 }
 
-std::vector<std::shared_ptr<IBuffer>>::iterator FileManager::getCurrentBuffer(const QString& fileName)
+std::vector<std::shared_ptr<IBuffer>>::iterator FileManager::getCurrentBuffer(
+	const QString& fileName)
 {
     return getCurrentIterator<IBuffer>(
         fileName,

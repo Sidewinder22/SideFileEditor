@@ -167,6 +167,7 @@ private:
     void verifyUnsavedBuffers();
 
     bool askForSaveBuffer(const QString& name);
+    QString askUserForFileLocation();
 
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object

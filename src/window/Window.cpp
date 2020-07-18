@@ -190,16 +190,7 @@ void Window::newFile()
     log_ << MY_FUNC << log::END;
 
     auto bufferName = "Buffer" + std::to_string(bufferNumber_++);
-    mainController_->createBuffer(QString(bufferName.c_str()));
-
-	// TODO: Add asking for the file saving
-	//QString fileName = QFileDialog::getSaveFileName(
-	//        this,
-	//        tr("Select loction to save a file"),
-	//        QDir::homePath(),
-	//        tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
-	//
-	//    mainController_->createFile(fileName);
+    mainController_->createBuffer(QString::fromStdString(bufferName.c_str()));
 }
 
 void Window::saveFile()
@@ -374,15 +365,28 @@ void Window::verifyUnsavedBuffers()
 {
     log_ << MY_FUNC << log::END;
 
-    auto namesVec = mainController_->unsavedBufferNames();
+    auto unsavedBufferNames = mainController_->unsavedBufferNames();
 
-    for (auto && name : namesVec)
+    for (auto && bufferName : unsavedBufferNames)
     {
-    	log_ << MY_FUNC << ", name: " << name << log::END;
-
-    	if (askForSaveBuffer(name))
+    	if (askForSaveBuffer(bufferName))
     	{
-    		log_ << MY_FUNC << "+++ Save file +++" << log::END;
+    		auto fileName = askUserForFileLocation();
+    		if (!fileName.isEmpty())
+    		{
+    			auto bufferStdString = bufferName.toStdString();
+    			log_ << MY_FUNC << "+++ bufferStdStrig: "
+    				<< bufferStdString << log::END;
+
+				if (bufferStdString.find("Buffer") != std::string::npos)
+				{
+					mainController_->createFileFromBuffer(bufferName, fileName);
+				}
+				else
+				{
+					mainController_->createFile(fileName);
+				}
+    		}
     	}
     }
 }
@@ -400,6 +404,15 @@ bool Window::askForSaveBuffer(const QString& name)
 
 	int ret = msgBox.exec();
 	return ret == QMessageBox::Save;
+}
+
+QString Window::askUserForFileLocation()
+{
+	return QFileDialog::getSaveFileName(
+		this,
+		tr("Select loction to save a file"),
+		QDir::homePath(),
+		tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
 }
 
 } // ::window

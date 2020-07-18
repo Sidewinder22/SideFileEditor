@@ -46,6 +46,14 @@ public:
     bool openFile(const QString& fileName) override;
 
     /**
+     * @brief Create new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     */
+    void createFileFromBuffer(const QString& bufferName,
+    	const QString& fileName) override;
+
+    /**
      * @brief Open buffer for new file
      * @param fileName fileName
      */
@@ -133,7 +141,7 @@ private:
             });
     }
 
-    log::Logger log_;                               //!< Logger object
+    log::Logger log_;                               		//!< Logger object
     std::unique_ptr<utils::Utils> utils_;                   //!< Pointer to utils object
     std::vector<std::shared_ptr<IFile>> openFiles_;         //!< Vector for open files
     std::vector<std::shared_ptr<IBuffer>> openBuffers_;     //!< Vector for open buffers

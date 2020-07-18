@@ -6,7 +6,6 @@
  */
 
 #include <cstring>
-#include <iostream>
 #include "Logger.hpp"
 
 //---------------------------------------------------------
@@ -20,20 +19,22 @@ Logger::Logger(std::string prefix)
     , beginLine_(true)
 { }
 
+template<>
 Logger& operator<<(Logger& log, std::string str)
 {
-    log.writeIndex();
+	log.writeIndex();
 
-    std::cout << str;
+	std::cout << str;
 
-    if (str == "\n")
-    {
-        log.beginLine_ = true;
-    }
+	if (str == "\n")
+	{
+		log.beginLine_ = true;
+	}
 
-    return log;
+	return log;
 }
 
+template<>
 Logger& operator<<(Logger& log, QString info)
 {
     log.writeIndex();
@@ -49,6 +50,7 @@ Logger& operator<<(Logger& log, QString info)
     return log;
 }
 
+template<>
 Logger& operator<<(Logger& log, const char* str)
 {
     log.writeIndex();
@@ -62,7 +64,6 @@ Logger& operator<<(Logger& log, const char* str)
     }
 
     return log;
-
 }
 
 void Logger::writeIndex()
@@ -75,4 +76,3 @@ void Logger::writeIndex()
 }
 
 } // ::log
-

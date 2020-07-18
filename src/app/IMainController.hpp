@@ -49,6 +49,14 @@ public:
     virtual void createBuffer(const QString& bufferName) = 0;
 
     /**
+     * @brief Create new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     */
+    virtual void createFileFromBuffer(const QString& bufferName,
+    	const QString& fileName) = 0;
+
+    /**
      * @brief Text changed notification
      * @param fileName fileName
      * @param content content of the buffer
