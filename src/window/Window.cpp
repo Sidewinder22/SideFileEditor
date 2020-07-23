@@ -124,14 +124,12 @@ void Window::prepareToolBar()
 	toolBSave_ = toolBar_->addAction(QIcon("../icons/save.png"), "Save File");
 	toolBClear_ = toolBar_->addAction(QIcon("../icons/clear.png"), "Clear Screen");
 	toolBClose_ = toolBar_->addAction(QIcon("../icons/close.png"), "Close File");
-    toolBTrash_ = toolBar_->addAction(QIcon("../icons/trash.png"), "Remove File");
 
 	toolBNew_->setStatusTip("New File");
 	toolBOpen_->setStatusTip("Open File");
 	toolBSave_->setStatusTip("Save File");
 	toolBClear_->setStatusTip("Clear Screen");
 	toolBClose_->setStatusTip("Close File");
-	toolBTrash_->setStatusTip("Remove File");
 
 	toolBar_->addSeparator();
 
@@ -188,8 +186,10 @@ void Window::openFile()
 		/**
 		 * Delete empty startup buffer
 		 */
+    	auto openBuffers = mainController_->numberOfOpenBuffers();
 		auto unsavedBuffers = mainController_->numberOfUnsavedBuffers();
-		if (unsavedBuffers == 0)
+		if (openBuffers == ONE_BUFFER_OPEN &&
+			unsavedBuffers == ALL_BUFFERS_SAVED)
 		{
 			auto bufferName = "Buffer" + std::to_string(bufferNumber_);
 			mainController_->close(QString::fromStdString(bufferName));
@@ -385,26 +385,22 @@ void Window::verifyUnsavedBuffers()
     auto unsavedBufferNames = mainController_->unsavedBufferNames();
 
     for (auto && bufferName : unsavedBufferNames)
-    {
-    	if (askForSaveBuffer(bufferName))
-    	{
-    		auto fileName = askUserForFileLocation();
-    		if (!fileName.isEmpty())
-    		{
-    			auto bufferStdString = bufferName.toStdString();
-    			log_ << MY_FUNC << "+++ bufferStdStrig: "
-    				<< bufferStdString << log::END;
-
-				if (bufferStdString.find("Buffer") != std::string::npos)
+   {
+		if (askForSaveBuffer(bufferName))
+		{
+			if (bufferName.contains('/'))
+			{
+				mainController_->save(utils_->extractFileName(bufferName));
+			}
+			else
+			{
+				auto fileName = askUserForFileLocation();
+				if (!fileName.isEmpty())
 				{
-					mainController_->createFileFromBuffer(bufferName, fileName);
+					mainController_->saveBufferIntoFile(bufferName, fileName);
 				}
-				else
-				{
-					mainController_->createFile(fileName);
-				}
-    		}
-    	}
+			}
+		}
     }
 }
 

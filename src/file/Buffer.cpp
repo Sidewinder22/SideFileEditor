@@ -31,6 +31,11 @@ QString Buffer::fileName() const
 
 void Buffer::setContent(const std::vector<QString> &content)
 {
+	if (!content_.empty() &&
+		content_[0] != content[0])
+	{
+		saved_ = false;
+	}
     content_ = content;
 }
 

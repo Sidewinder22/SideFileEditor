@@ -63,11 +63,11 @@ protected:
     void createFile(const QString& fileName) override;
 
     /**
-     * @brief Create new file
+     * @brief Save buffer's content as a new file
      * @param bufferName name of the buffer
      * @param fileName path for file
      */
-    void createFileFromBuffer(const QString& bufferName,
+    void saveBufferIntoFile(const QString& bufferName,
     	const QString& fileName) override;
 
     /**
@@ -114,6 +114,12 @@ protected:
      * @param fileName file name
      */
     void clear(const QString& fileName) override;
+
+    /**
+     * @brief Return the number of the open buffers
+     * @return Number of the open buffers
+     */
+    size_t numberOfOpenBuffers() const override;
 
     /**
      * @brief Return the number of the unsaved buffers

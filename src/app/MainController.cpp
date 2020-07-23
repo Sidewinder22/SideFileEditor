@@ -40,7 +40,6 @@ void MainController::start()
 void MainController::openFile(const QString& fileName)
 {
     bool status = fileManager_->openFile(fileName);
-
     window_->fileOpened(status, fileName);
 }
 
@@ -50,10 +49,10 @@ void MainController::createFile(const QString& fileName)
     window_->fileCreated(fileName);
 }
 
-void MainController::createFileFromBuffer(const QString& bufferName,
+void MainController::saveBufferIntoFile(const QString& bufferName,
 	const QString& fileName)
 {
-	fileManager_->createFileFromBuffer(bufferName, fileName);
+	fileManager_->saveBufferIntoFile(bufferName, fileName);
 	window_->fileCreated(fileName);
 }
 
@@ -91,6 +90,11 @@ void MainController::remove(const QString& fileName)
 void MainController::clear(const QString& fileName)
 {
     fileManager_->clear(fileName);
+}
+
+size_t MainController::numberOfOpenBuffers() const
+{
+	return fileManager_->numberOfOpenBuffers();
 }
 
 size_t MainController::numberOfUnsavedBuffers() const

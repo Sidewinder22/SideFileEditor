@@ -200,6 +200,8 @@ private:
     app::IMainController* mainController_;              //!< Pointer to the observer
 
     static int bufferNumber_;							//!< Number for next buffer to create
+    constexpr static const int ONE_BUFFER_OPEN = 1;
+    constexpr static const int ALL_BUFFERS_SAVED = 0;
 };
 
 } // ::window

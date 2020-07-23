@@ -13,8 +13,6 @@
 #include "File.hpp"
 #include "FileManager.hpp"
 
-#include <iostream>
-
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
@@ -34,25 +32,25 @@ void FileManager::createBuffer(const QString& fileName)
     openBuffers_.push_back(buffer);
 }
 
-void FileManager::createFileFromBuffer(const QString& bufferName,
+void FileManager::saveBufferIntoFile(const QString& bufferName,
 	const QString& fileName)
 {
     log_ << MY_FUNC << "bufferName = " << bufferName
     	<< ", fileName = " << fileName << log::END;
 
-    auto buffIt = getCurrentBuffer(bufferName);
+    auto buffIt = getBufferIterator(bufferName);
 
-    auto filePtr = createFile(fileName);
-    openFiles_.push_back(filePtr);
+    auto file = createFile(fileName);
+    openFiles_.push_back(file);
 
-    auto fileIt = getCurrentFile(utils_->extractFileName(fileName));
+    auto fileIt = getFileIterator(utils_->extractFileName(fileName));
 
     saveFile(fileIt, buffIt);
 }
     
 void FileManager::textChanged(const QString &fileName, const QString &content)
 {
-    auto it = getCurrentBuffer(fileName);
+    auto it = getBufferIterator(fileName);
     if (it != openBuffers_.end())
     {
         (*it)->setContent({ content });
@@ -69,7 +67,7 @@ bool FileManager::openFile(const QString& fileName)
     {
         openFiles_.push_back(file);
         loadFileContentToNewBuffer(file);
-        
+
         result = true;
     }
     else
@@ -82,7 +80,7 @@ bool FileManager::openFile(const QString& fileName)
 
 std::vector<QString> FileManager::read(const QString& fileName)
 {
-    auto buffIt = getCurrentBuffer(fileName);
+    auto buffIt = getBufferIterator(fileName);
     if (buffIt != openBuffers_.end())
     {
         return (*buffIt)->getContent();
@@ -96,10 +94,10 @@ bool FileManager::save(const QString &fileName)
     log_ << MY_FUNC << "fileName: " << fileName << log::END;
     bool result = false;
 
-    auto buffIt = getCurrentBuffer(fileName);
+    auto buffIt = getBufferIterator(fileName);
     if (buffIt != openBuffers_.end())
     {
-        auto fileIt = getCurrentFile(fileName);
+        auto fileIt = getFileIterator(fileName);
         if (fileIt != openFiles_.end())
         {
             saveFile(fileIt, buffIt);
@@ -132,7 +130,7 @@ void FileManager::close(const QString& fileName)
 {
     closeBuffer(fileName);
 
-    auto fileIt = getCurrentFile(fileName);
+    auto fileIt = getFileIterator(fileName);
     if (fileIt != openFiles_.end())
     {
         (*fileIt).reset();
@@ -144,7 +142,7 @@ void FileManager::remove(const QString& fileName)
 {
     closeBuffer(fileName);
 
-    auto fileIt = getCurrentFile(fileName);
+    auto fileIt = getFileIterator(fileName);
     if (fileIt != openFiles_.end())
     {
         (*fileIt)->remove();
@@ -155,26 +153,26 @@ void FileManager::remove(const QString& fileName)
 
 void FileManager::clear(const QString& fileName)
 {
-    auto buffIt = getCurrentBuffer(fileName);
+    auto buffIt = getBufferIterator(fileName);
     if (buffIt != openBuffers_.end())
     {
         (*buffIt)->clear();
     }
 }
 
-std::vector<std::shared_ptr<IFile>>::iterator FileManager::getCurrentFile(
+std::vector<std::shared_ptr<IFile>>::iterator FileManager::getFileIterator(
 	const QString& fileName)
 {
-    return getCurrentIterator<IFile>(
+    return getIterator<IFile>(
         fileName,
         openFiles_.begin(),
         openFiles_.end());
 }
 
-std::vector<std::shared_ptr<IBuffer>>::iterator FileManager::getCurrentBuffer(
+std::vector<std::shared_ptr<IBuffer>>::iterator FileManager::getBufferIterator(
 	const QString& fileName)
 {
-    return getCurrentIterator<IBuffer>(
+    return getIterator<IBuffer>(
         fileName,
         openBuffers_.begin(),
         openBuffers_.end());
@@ -210,7 +208,7 @@ std::shared_ptr<IFile> FileManager::createFile(const QString& fileName)
 
 void FileManager::closeBuffer(const QString& fileName)
 {
-    auto buffIt = getCurrentBuffer(fileName);
+    auto buffIt = getBufferIterator(fileName);
     if (buffIt != openBuffers_.end())
     {
         (*buffIt).reset();
@@ -241,6 +239,11 @@ void FileManager::saveFile(
     {
         log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
     }
+}
+
+size_t FileManager::numberOfOpenBuffers() const
+{
+	return openBuffers_.size();
 }
 
 size_t FileManager::numberOfUnsavedBuffers() const

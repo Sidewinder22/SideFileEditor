@@ -38,11 +38,11 @@ public:
     virtual bool openFile(const QString& fileName) = 0;
 
     /**
-     * @brief Create new file
+     * @brief Save buffer's content as a new file
      * @param bufferName name of the buffer
      * @param fileName path for file
      */
-    virtual void createFileFromBuffer(const QString& bufferName,
+    virtual void saveBufferIntoFile(const QString& bufferName,
     	const QString& fileName) = 0;
 
     /**
@@ -89,6 +89,12 @@ public:
      * @param fileName file name
      */
     virtual void clear(const QString& fileName) = 0;
+
+    /**
+     * @brief Return the number of the open buffers
+     * @return Number of the open buffers
+     */
+    virtual size_t numberOfOpenBuffers() const = 0;
 
     /**
      * @brief Return the number of the unsaved buffers
