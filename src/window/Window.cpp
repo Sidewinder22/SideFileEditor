@@ -219,6 +219,7 @@ void Window::saveFile()
     if (mainController_->save(fileName))
     {
         statusBar()->showMessage("[File saved]: " + fileName);
+        openFileDock_->markCurrentFileAsSaved();
     }
     else
     {
@@ -351,12 +352,18 @@ void Window::anotherFileSelected(const QString& fileName)
 
 void Window::textChanged()
 {
-    auto filename = openFileDock_->getCurrentFileName();
+    auto fileName = openFileDock_->getCurrentFileName();
     auto text = textEdit_->toPlainText();
+    bool fileContentChanged = false;
 
     if (!text.isEmpty())
     {
-        mainController_->textChanged(filename, text);
+        fileContentChanged = mainController_->textChanged(fileName, text);
+    }
+
+    if (fileContentChanged)
+    {
+    	openFileDock_->markCurrentFileAsUnsaved();
     }
 }
 

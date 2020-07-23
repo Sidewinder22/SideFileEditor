@@ -55,8 +55,10 @@ public:
      * @brief Text changed notification
      * @param fileName fileName
      * @param content content of the buffer
+     * @return True if buffer content changed, False otherwise
      */
-    virtual void textChanged(const QString &fileName, const QString &content) = 0;
+    virtual bool textChanged(const QString &fileName,
+    	const QString &content) = 0;
 
     /**
      * @brief Read data from file

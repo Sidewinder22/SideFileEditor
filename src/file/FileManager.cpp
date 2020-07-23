@@ -48,13 +48,15 @@ void FileManager::saveBufferIntoFile(const QString& bufferName,
     saveFile(fileIt, buffIt);
 }
     
-void FileManager::textChanged(const QString &fileName, const QString &content)
+bool FileManager::textChanged(const QString &fileName, const QString &content)
 {
     auto it = getBufferIterator(fileName);
     if (it != openBuffers_.end())
     {
         (*it)->setContent({ content });
     }
+
+    return !(*it)->isSaved();
 }
 
 bool FileManager::openFile(const QString& fileName)

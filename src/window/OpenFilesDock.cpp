@@ -35,12 +35,15 @@ void OpenFilesDock::createDock()
     fileList_->setWrapping(true);
 
     setMaximumHeight(60);
-    setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
+    setAllowedAreas(Qt::TopDockWidgetArea |
+    	Qt::BottomDockWidgetArea |
+		Qt::LeftDockWidgetArea |
+		Qt::RightDockWidgetArea);
 
     setWidget(fileList_);
 }
 
-void OpenFilesDock::addFileName(QString fileName)
+void OpenFilesDock::addFileName(const QString& fileName)
 {
     auto item = new QListWidgetItem(fileName);
     fileList_->addItem(item);
@@ -60,6 +63,7 @@ QString OpenFilesDock::getCurrentFileName()
     if (fileList_->currentRow() > -1)
     {
         fileName = fileList_->currentItem()->text();
+        fileName.remove('*');
     }
 
     return fileName;
@@ -68,6 +72,26 @@ QString OpenFilesDock::getCurrentFileName()
 int OpenFilesDock::getCurrentRow()
 {
     return fileList_->currentRow();
+}
+
+void OpenFilesDock::markCurrentFileAsUnsaved()
+{
+	auto item = fileList_->currentItem();
+	auto fileName = item->text();
+
+	if (!fileName.contains('*'))
+	{
+		item->setText(fileName + '*');
+	}
+}
+
+void OpenFilesDock::markCurrentFileAsSaved()
+{
+	auto item = fileList_->currentItem();
+	auto fileName = item->text();
+
+	fileName.remove('*');
+	item->setText(fileName);
 }
 
 void OpenFilesDock::rowChanged(int currentRow)

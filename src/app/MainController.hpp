@@ -80,8 +80,9 @@ protected:
      * @brief Text changed notification
      * @param fileName fileName
      * @param content content of the buffer
+     * @return True if buffer content changed, False otherwise
      */
-    void textChanged(const QString& fileName, const QString &content) override;
+    bool textChanged(const QString& fileName, const QString &content) override;
 
     /**
      * @brief Read data from file

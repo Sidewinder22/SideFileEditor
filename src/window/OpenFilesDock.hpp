@@ -46,7 +46,7 @@ public:
      * @param fileName File name
      * @return Current row number
      */
-    void addFileName(QString fileName);
+    void addFileName(const QString& fileName);
 
     /**
      * @brief Remove filename from the dock
@@ -66,6 +66,15 @@ public:
      */
     int getCurrentRow();
 
+    /**
+     * @brief Mark current file as unsaved
+     */
+    void markCurrentFileAsUnsaved();
+
+    /**
+     * @brief Mark current file as saved
+     */
+    void markCurrentFileAsSaved();
 //---------------------------------------------------------
 //              Public slots
 //---------------------------------------------------------

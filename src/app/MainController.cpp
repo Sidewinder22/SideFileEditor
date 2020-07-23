@@ -72,9 +72,10 @@ bool MainController::save(const QString &fileName)
     return fileManager_->save(fileName);
 }
 
-void MainController::textChanged(const QString &fileName, const QString &content)
+bool MainController::textChanged(const QString &fileName,
+	const QString &content)
 {
-    fileManager_->textChanged(fileName, content);
+    return fileManager_->textChanged(fileName, content);
 }
 
 void MainController::close(const QString& fileName)
