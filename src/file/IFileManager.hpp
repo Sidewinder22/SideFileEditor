@@ -41,8 +41,9 @@ public:
      * @brief Save buffer's content as a new file
      * @param bufferName name of the buffer
      * @param fileName path for file
+     * @return True if successful, False otherwise
      */
-    virtual void saveBufferIntoFile(const QString& bufferName,
+    virtual bool saveBufferIntoFile(const QString& bufferName,
     	const QString& fileName) = 0;
 
     /**

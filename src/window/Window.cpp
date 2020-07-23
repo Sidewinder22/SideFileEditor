@@ -215,16 +215,38 @@ void Window::saveFile()
     log_ << MY_FUNC << log::END;
 
     auto fileName = openFileDock_->getCurrentFileName();
+    bool success = false;
 
-    if (mainController_->save(fileName))
+    if (!fileName.contains('/'))
     {
-        statusBar()->showMessage("[File saved]: " + fileName);
-        openFileDock_->markCurrentFileAsSaved();
+    	auto bufferName = fileName;
+    	fileName = askUserForFileLocation();
+
+    	if (!fileName.isEmpty())
+    	{
+    		if (mainController_->saveBufferIntoFile(bufferName, fileName))
+    		{
+    			success = true;
+    		}
+    	}
     }
     else
     {
-        statusBar()->showMessage("Can't save file!");
-        QMessageBox::warning(this, "INFO", "Cannot save file!");
+		if (mainController_->save(fileName))
+		{
+    		success = true;
+		}
+    }
+
+    if (success)
+    {
+		statusBar()->showMessage("[File saved]: " + fileName);
+		openFileDock_->markCurrentFileAsSaved();
+    }
+    else
+    {
+		statusBar()->showMessage("Can't save file!");
+		QMessageBox::warning(this, "INFO", "Cannot save file!");
     }
 }
 

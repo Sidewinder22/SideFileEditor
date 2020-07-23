@@ -32,20 +32,26 @@ void FileManager::createBuffer(const QString& fileName)
     openBuffers_.push_back(buffer);
 }
 
-void FileManager::saveBufferIntoFile(const QString& bufferName,
+bool FileManager::saveBufferIntoFile(const QString& bufferName,
 	const QString& fileName)
 {
     log_ << MY_FUNC << "bufferName = " << bufferName
     	<< ", fileName = " << fileName << log::END;
 
     auto buffIt = getBufferIterator(bufferName);
+    bool success = false;
 
     auto file = createFile(fileName);
-    openFiles_.push_back(file);
+    if (file)
+    {
+		openFiles_.push_back(file);
+		auto fileIt = getFileIterator(utils_->extractFileName(fileName));
 
-    auto fileIt = getFileIterator(utils_->extractFileName(fileName));
+		saveFile(fileIt, buffIt);
+		success = true;
+    }
 
-    saveFile(fileIt, buffIt);
+    return success;
 }
     
 bool FileManager::textChanged(const QString &fileName, const QString &content)

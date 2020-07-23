@@ -49,11 +49,13 @@ void MainController::createFile(const QString& fileName)
     window_->fileCreated(fileName);
 }
 
-void MainController::saveBufferIntoFile(const QString& bufferName,
+bool MainController::saveBufferIntoFile(const QString& bufferName,
 	const QString& fileName)
 {
-	fileManager_->saveBufferIntoFile(bufferName, fileName);
+	bool status = fileManager_->saveBufferIntoFile(bufferName, fileName);
 	window_->fileCreated(fileName);
+
+	return status;
 }
 
 void MainController::createBuffer(const QString& bufferName)

@@ -66,8 +66,9 @@ protected:
      * @brief Save buffer's content as a new file
      * @param bufferName name of the buffer
      * @param fileName path for file
+     * @return True if successful, False otherwise
      */
-    void saveBufferIntoFile(const QString& bufferName,
+    bool saveBufferIntoFile(const QString& bufferName,
     	const QString& fileName) override;
 
     /**
