@@ -162,15 +162,6 @@ void FileManager::remove(const QString& fileName)
     }
 }
 
-void FileManager::clear(const QString& fileName)
-{
-    auto buffIt = getBufferIterator(fileName);
-    if (buffIt != openBuffers_.end())
-    {
-        (*buffIt)->clear();
-    }
-}
-
 std::vector<std::shared_ptr<IFile>>::iterator FileManager::getFileIterator(
 	const QString& fileName)
 {

@@ -306,7 +306,6 @@ void Window::clearScreen()
     textEdit_->clear();
 
     auto fileName = openFileDock_->getCurrentFileName();
-    mainController_->clear(fileName);
 }
 
 void Window::fileOpened(bool status, const QString& filePath)

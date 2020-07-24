@@ -93,12 +93,6 @@ public:
     virtual void remove(const QString& fileName) = 0;
 
     /**
-     * @brief Clear buffer content
-     * @param fileName file name
-     */
-    virtual void clear(const QString& fileName) = 0;
-
-    /**
      * @brief Return the number of the open buffers
      * @return Number of the open buffers
      */

@@ -90,11 +90,6 @@ void MainController::remove(const QString& fileName)
     fileManager_->remove(fileName);
 }
 
-void MainController::clear(const QString& fileName)
-{
-    fileManager_->clear(fileName);
-}
-
 size_t MainController::numberOfOpenBuffers() const
 {
 	return fileManager_->numberOfOpenBuffers();

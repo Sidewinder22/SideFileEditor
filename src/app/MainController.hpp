@@ -112,12 +112,6 @@ protected:
     void remove(const QString& fileName) override;
 
     /**
-     * @brief Clear buffer content
-     * @param fileName file name
-     */
-    void clear(const QString& fileName) override;
-
-    /**
      * @brief Return the number of the open buffers
      * @return Number of the open buffers
      */
