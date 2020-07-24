@@ -38,6 +38,15 @@ public:
     virtual bool openFile(const QString& fileName) = 0;
 
     /**
+     * @brief Save buffer's content as a new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     * @return True if successful, False otherwise
+     */
+    virtual bool saveBufferIntoFile(const QString& bufferName,
+    	const QString& fileName) = 0;
+
+    /**
      * @brief Open buffer for new file
      * @param fileName fileName
      */
@@ -47,8 +56,10 @@ public:
      * @brief Text changed notification
      * @param fileName fileName
      * @param content content of the buffer
+     * @return True if buffer content changed, False otherwise
      */
-    virtual void textChanged(const QString &fileName, const QString &content) = 0;
+    virtual bool textChanged(const QString &fileName,
+    	const QString &content) = 0;
 
     /**
      * @brief Read data from file
@@ -81,6 +92,24 @@ public:
      * @param fileName file name
      */
     virtual void clear(const QString& fileName) = 0;
+
+    /**
+     * @brief Return the number of the open buffers
+     * @return Number of the open buffers
+     */
+    virtual size_t numberOfOpenBuffers() const = 0;
+
+    /**
+     * @brief Return the number of the unsaved buffers
+     * @return NUmber of the unsaved buffers
+     */
+    virtual size_t numberOfUnsavedBuffers() const = 0;
+
+    /**
+     * @brief Return names of the unsaved buffers
+     * @return Vector with the names of the unsaved buffers
+     */
+    virtual std::vector<QString> unsavedBufferNames() const = 0;
 };
 
 } // ::file

@@ -1,10 +1,10 @@
-#ifndef SRC_WINDOW_IWINDOWOBSERVER_HPP_
-#define SRC_WINDOW_IWINDOWOBSERVER_HPP_
+#ifndef SRC_APP_IMAINCONTROLLER_HPP_
+#define SRC_APP_IMAINCONTROLLER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    11.10.2019
  *
- * @brief   Main window observer interface
+ * @brief   Main controller interface
  */
 
 //---------------------------------------------------------
@@ -16,19 +16,19 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace window
+namespace app
 {
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class IWindowObserver
+class IMainController
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-	virtual ~IWindowObserver() = default;
+	virtual ~IMainController() = default;
 
     /**
      * @brief Open file
@@ -43,11 +43,28 @@ public:
     virtual void createFile(const QString& fileName) = 0;
 
     /**
+     * @brief Create new empty buffer
+     * @param bufferName name for the buffer
+     */
+    virtual void createBuffer(const QString& bufferName) = 0;
+
+    /**
+     * @brief Save buffer's content as a new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     * @return True if successful, False otherwise
+     */
+    virtual bool saveBufferIntoFile(const QString& bufferName,
+    	const QString& fileName) = 0;
+
+    /**
      * @brief Text changed notification
      * @param fileName fileName
      * @param content content of the buffer
+     * @return True if buffer content changed, False otherwise
      */
-    virtual void textChanged(const QString& fileName, const QString &content) = 0;
+    virtual bool textChanged(const QString& fileName,
+    	const QString &content) = 0;
 
     /**
      * @brief Read data from file
@@ -80,8 +97,26 @@ public:
      * @param fileName file name
      */
     virtual void clear(const QString& fileName) = 0;
+
+    /**
+     * @brief Return the number of the open buffers
+     * @return Number of the open buffers
+     */
+    virtual size_t numberOfOpenBuffers() const = 0;
+
+     /**
+     * @brief Return the number of the unsaved buffers
+     * @return NUmber of the unsaved buffers
+     */
+    virtual size_t numberOfUnsavedBuffers() const = 0;
+
+    /**
+     * @brief Return names of the unsaved buffers
+     * @return Vector with the names of the unsaved buffers
+     */
+    virtual std::vector<QString> unsavedBufferNames() const = 0;
 };
 
-} // ::window
+} // ::app
 
-#endif /* SRC_WINDOW_IWINDOWOBSERVER_HPP_ */
+#endif /* SRC_APP_IMAINCONTROLLER_HPP_ */

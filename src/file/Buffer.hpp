@@ -37,11 +37,18 @@ public:
 
     QString fileName() const override;
 
+    void setFileName(const QString& fileName) override;
+
     void setContent(const std::vector<QString> &content) override;
 
-    std::vector<QString> getContent() override;
+    std::vector<QString> getContent() const override;
 
+    bool empty() const override;
     void clear() override;
+
+    bool isSaved() const override;
+
+    void setSaved(bool saved) override;
 
 //---------------------------------------------------------
 //                  Protected
@@ -52,10 +59,14 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
+    /**
+     * True if buffer is saved to the file, false otherwise
+     */
+    bool saved_;
+
     log::Logger log_;                       //!< Logger object
     QString fileName_;                      //!< Filename
-    //QString content_;                       //!< Buffer's content
-    std::vector<QString> content_;
+    std::vector<QString> content_;			//!< Buffer's content
 };
 
 } // ::file

@@ -46,6 +46,15 @@ public:
     bool openFile(const QString& fileName) override;
 
     /**
+     * @brief Save buffer's content as a new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     * @return True if successful, False otherwise
+     */
+    bool saveBufferIntoFile(const QString& bufferName,
+    	const QString& fileName) override;
+
+    /**
      * @brief Open buffer for new file
      * @param fileName fileName
      */
@@ -55,8 +64,9 @@ public:
      * @brief Text changed notification
      * @param fileName fileName
      * @param content content of the buffer
+     * @return True if buffer content changed, False otherwise
      */
-    void textChanged(const QString &fileName, const QString &content) override;
+    bool textChanged(const QString &fileName, const QString &content) override;
 
     /**
      * @brief Read data from file
@@ -90,6 +100,24 @@ public:
      */
     void clear(const QString& fileName) override;
 
+    /**
+     * @brief Return the number of the open buffers
+     * @return Number of the open buffers
+     */
+    size_t numberOfOpenBuffers() const override;
+
+    /**
+     * @brief Return the number of the unsaved buffers
+     * @return Number of the unsaved buffers
+     */
+    size_t numberOfUnsavedBuffers() const override;
+
+    /**
+     * @brief Return names of the unsaved buffers
+     * @return Vector with the names of the unsaved buffers
+     */
+    std::vector<QString> unsavedBufferNames() const override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -99,8 +127,8 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    std::vector<std::shared_ptr<IFile>>::iterator getCurrentFile(const QString& fileName);
-    std::vector<std::shared_ptr<IBuffer>>::iterator getCurrentBuffer(const QString& fileName);
+    std::vector<std::shared_ptr<IFile>>::iterator getFileIterator(const QString& fileName);
+    std::vector<std::shared_ptr<IBuffer>>::iterator getBufferIterator(const QString& fileName);
     void loadFileContentToNewBuffer(std::shared_ptr<IFile> file);
     std::shared_ptr<IFile> createFile(const QString& fileName);
     void closeBuffer(const QString& fileName);
@@ -108,7 +136,7 @@ private:
         std::vector<std::shared_ptr<IBuffer>>::iterator buffIt);
 
     template<typename T>
-    auto getCurrentIterator(
+    auto getIterator(
         const QString& fileName,
         std::vector<std::shared_ptr<T>>::iterator begin,
         std::vector<std::shared_ptr<T>>::iterator end)
@@ -121,7 +149,7 @@ private:
             });
     }
 
-    log::Logger log_;                                       //!< Logger object
+    log::Logger log_;                               		//!< Logger object
     std::unique_ptr<utils::Utils> utils_;                   //!< Pointer to utils object
     std::vector<std::shared_ptr<IFile>> openFiles_;         //!< Vector for open files
     std::vector<std::shared_ptr<IBuffer>> openBuffers_;     //!< Vector for open buffers

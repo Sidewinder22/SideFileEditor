@@ -28,7 +28,9 @@
 namespace window
 {
 
-Window::Window(IWindowObserver* observer, QWidget *parent)
+int Window::bufferNumber_ = 1;
+
+Window::Window(app::IMainController* mainController, QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
 	, toolBNew_(nullptr)
@@ -49,7 +51,7 @@ Window::Window(IWindowObserver* observer, QWidget *parent)
     , fileDialog_(nullptr)
     , openFileDock_(new OpenFilesDock(this, this))
     , utils_(std::make_unique<utils::Utils>())
-    , observer_(observer)
+    , mainController_(mainController)
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -57,7 +59,10 @@ Window::Window(IWindowObserver* observer, QWidget *parent)
 
     openFileDock_->createDock();
 
-    setDockOptions(dockOptions() | QMainWindow::GroupedDragging | QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks);
+    setDockOptions(dockOptions() |
+    	QMainWindow::GroupedDragging |
+		QMainWindow::AllowNestedDocks |
+		QMainWindow::AllowTabbedDocks);
     addDockWidget(Qt::TopDockWidgetArea, openFileDock_);
 
 	textEdit_ = new QTextEdit(this);
@@ -82,6 +87,8 @@ void Window::init()
 	// Display center window
 	QScreen *screen = QGuiApplication::primaryScreen();
 	move(screen->geometry().center() - frameGeometry().center());
+
+	newFile();
 }
 
 void Window::prepareMenu()
@@ -120,14 +127,12 @@ void Window::prepareToolBar()
 	toolBSave_ = toolBar_->addAction(QIcon("../icons/save.png"), "Save File");
 	toolBClear_ = toolBar_->addAction(QIcon("../icons/clear.png"), "Clear Screen");
 	toolBClose_ = toolBar_->addAction(QIcon("../icons/close.png"), "Close File");
-    toolBTrash_ = toolBar_->addAction(QIcon("../icons/trash.png"), "Remove File");
 
 	toolBNew_->setStatusTip("New File");
 	toolBOpen_->setStatusTip("Open File");
 	toolBSave_->setStatusTip("Save File");
 	toolBClear_->setStatusTip("Clear Screen");
 	toolBClose_->setStatusTip("Close File");
-	toolBTrash_->setStatusTip("Remove File");
 
 	toolBar_->addSeparator();
 
@@ -146,7 +151,7 @@ void Window::connectSignalsToSlots()
     connect(menuCloseFile_, &QAction::triggered, this, &Window::closeFile);
     connect(menuRemoveFile_, &QAction::triggered, this, &Window::removeFile);
 	connect(menuAbout_, &QAction::triggered, this, &Window::showAboutWindow);
-	connect(menuQuit_, &QAction::triggered, qApp, QApplication::quit);
+	connect(menuQuit_, &QAction::triggered, this, &Window::quitApplication);
 
 	connect(toolBNew_, &QAction::triggered, this, &Window::newFile);
 	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
@@ -154,8 +159,8 @@ void Window::connectSignalsToSlots()
 	connect(toolBClear_, &QAction::triggered, this, &Window::clearScreen);
 	connect(toolBClose_, &QAction::triggered, this, &Window::closeFile);
 	connect(toolBTrash_, &QAction::triggered, this, &Window::removeFile);
-    connect(toolBQuit_, &QAction::triggered, qApp, QApplication::quit);
     connect(textEdit_, &QTextEdit::textChanged, this, &Window::textChanged);
+	connect(toolBQuit_, &QAction::triggered, this, &Window::quitApplication);
 }
 
 void Window::showAboutWindow()
@@ -178,20 +183,34 @@ void Window::openFile()
         QDir::homePath(),
         tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
 
-    observer_->openFile(fileName);
+
+    if (!fileName.isEmpty())
+    {
+		/**
+		 * Delete empty startup buffer
+		 */
+    	auto openBuffers = mainController_->numberOfOpenBuffers();
+		auto unsavedBuffers = mainController_->numberOfUnsavedBuffers();
+		if (openBuffers == ONE_BUFFER_OPEN &&
+			unsavedBuffers == ALL_BUFFERS_SAVED)
+		{
+			auto bufferName = "Buffer" + std::to_string(bufferNumber_);
+			mainController_->close(QString::fromStdString(bufferName));
+
+			int row = openFileDock_->getCurrentRow();
+			openFileDock_->removeFileName(row);
+		}
+
+		mainController_->openFile(fileName);
+    }
 }
 
 void Window::newFile()
 {
     log_ << MY_FUNC << log::END;
 
-	QString fileName = QFileDialog::getSaveFileName(
-        this,
-        tr("Select loction to save a file"),
-        QDir::homePath(),
-        tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
-
-    observer_->createFile(fileName);
+    auto bufferName = "Buffer" + std::to_string(bufferNumber_++);
+    mainController_->createBuffer(QString::fromStdString(bufferName.c_str()));
 }
 
 void Window::saveFile()
@@ -199,15 +218,41 @@ void Window::saveFile()
     log_ << MY_FUNC << log::END;
 
     auto fileName = openFileDock_->getCurrentFileName();
+    bool success = false;
 
-    if (observer_->save(fileName))
+    if (fileName.contains("Buffer"))
     {
-        statusBar()->showMessage("[File saved]: " + fileName);
+    	auto bufferName = fileName;
+    	fileName = askUserForFileLocation();
+
+    	if (!fileName.isEmpty())
+    	{
+    		int row = openFileDock_->getCurrentRow();
+    		if (mainController_->saveBufferIntoFile(bufferName, fileName))
+    		{
+    			success = true;
+
+    		    openFileDock_->removeFileName(row);
+    		}
+    	}
     }
     else
     {
-        statusBar()->showMessage("Can't save file!");
-        QMessageBox::warning(this, "INFO", "Cannot save file!");
+		if (mainController_->save(fileName))
+		{
+    		success = true;
+		}
+    }
+
+    if (success)
+    {
+		statusBar()->showMessage("[File saved]: " + fileName);
+		openFileDock_->markCurrentFileAsSaved();
+    }
+    else
+    {
+		statusBar()->showMessage("Can't save file!");
+		QMessageBox::warning(this, "INFO", "Cannot save file!");
     }
 }
 
@@ -224,7 +269,7 @@ void Window::closeFile()
     if (!fileName.isEmpty())
     {
         statusBar()->showMessage("File: " + fileName + " closed.");
-        observer_->close(fileName);
+        mainController_->close(fileName);
     }
     else
     {
@@ -246,7 +291,7 @@ void Window::removeFile()
     if (!fileName.isEmpty())
     {
         statusBar()->showMessage("File: " + fileName + " removed.");
-        observer_->remove(fileName);
+        mainController_->remove(fileName);
     }
     else
     {
@@ -261,7 +306,7 @@ void Window::clearScreen()
     textEdit_->clear();
 
     auto fileName = openFileDock_->getCurrentFileName();
-    observer_->clear(fileName);
+    mainController_->clear(fileName);
 }
 
 void Window::fileOpened(bool status, const QString& filePath)
@@ -277,7 +322,7 @@ void Window::fileOpened(bool status, const QString& filePath)
 
             textEdit_->clear();
 
-            auto fileContent = observer_->read(fileName);
+            auto fileContent = mainController_->read(fileName);
             for (auto&& line : fileContent)
             {
                 textEdit_->append(line);
@@ -297,22 +342,24 @@ void Window::fileOpened(bool status, const QString& filePath)
     }
 }
 
-void Window::fileCreated(bool status, const QString& filePath)
+void Window::fileCreated(const QString& filePath)
 {
     log_ << MY_FUNC << log::END;
 
-    if (status)
-    {
-        openFileDock_->addFileName(utils_->extractFileName(filePath));
+	openFileDock_->addFileName(utils_->extractFileName(filePath));
 
-        statusBar()->showMessage("[New file]: " + filePath);
-        setWindowTitle(filePath);
-    }
-    else
-    {
-        log_ << MY_FUNC << "Cannot open file!!!" << log::END;
-        QMessageBox::information(this, "ERROR", "Can't open file!!!");
-    }
+	statusBar()->showMessage("[New file]: " + filePath);
+	setWindowTitle(filePath);
+}
+
+void Window::bufferCreated(const QString& bufferName)
+{
+    log_ << MY_FUNC << log::END;
+
+	openFileDock_->addFileName(bufferName);
+
+	statusBar()->showMessage("[New buffer]: " + bufferName);
+	setWindowTitle(bufferName);
 }
 
 void Window::anotherFileSelected(const QString& fileName)
@@ -324,7 +371,7 @@ void Window::anotherFileSelected(const QString& fileName)
 
     textEdit_->clear();
 
-    auto fileContent = observer_->read(utils_->extractFileName(fileName));
+    auto fileContent = mainController_->read(utils_->extractFileName(fileName));
     for (auto&& line : fileContent)
     {
         textEdit_->append(line);
@@ -333,13 +380,87 @@ void Window::anotherFileSelected(const QString& fileName)
 
 void Window::textChanged()
 {
-    auto filename = openFileDock_->getCurrentFileName();
+    auto fileName = openFileDock_->getCurrentFileName();
     auto text = textEdit_->toPlainText();
+    bool fileContentChanged = false;
 
     if (!text.isEmpty())
     {
-        observer_->textChanged(filename, text);
+        fileContentChanged = mainController_->textChanged(fileName, text);
     }
+
+    if (fileContentChanged)
+    {
+    	openFileDock_->markCurrentFileAsUnsaved();
+    }
+}
+
+void Window::quitApplication()
+{
+    log_ << MY_FUNC << log::END;
+
+    auto numberOfUnsavedBuffers = mainController_->numberOfUnsavedBuffers();
+
+    log_ << MY_FUNC << ", open files = "
+    	<< std::to_string(numberOfUnsavedBuffers)
+    	<< log::END;
+
+    if (numberOfUnsavedBuffers > 0)
+    {
+    	verifyUnsavedBuffers();
+    }
+
+    QApplication::quit();
+}
+
+void Window::verifyUnsavedBuffers()
+{
+    log_ << MY_FUNC << log::END;
+
+    auto unsavedBufferNames = mainController_->unsavedBufferNames();
+
+    for (auto && bufferName : unsavedBufferNames)
+   {
+		if (askForSaveBuffer(bufferName))
+		{
+			if (bufferName.contains('/'))
+			{
+				mainController_->save(utils_->extractFileName(bufferName));
+			}
+			else
+			{
+				auto fileName = askUserForFileLocation();
+				if (!fileName.isEmpty())
+				{
+					mainController_->saveBufferIntoFile(bufferName, fileName);
+				}
+			}
+		}
+    }
+}
+
+bool Window::askForSaveBuffer(const QString& name)
+{
+	QMessageBox msgBox;
+
+	msgBox.setText("The file: " + name + " has been modified.");
+	msgBox.setInformativeText("Do you want to save your changes?");
+	msgBox.setStandardButtons( QMessageBox::Cancel |
+		QMessageBox::Discard |
+		QMessageBox::Save);
+	msgBox.setDefaultButton(QMessageBox::Save);
+
+	int ret = msgBox.exec();
+	return ret == QMessageBox::Save;
+}
+
+QString Window::askUserForFileLocation()
+{
+	return QFileDialog::getSaveFileName(
+		this,
+		tr("Select loction to save a file"),
+		QDir::homePath(),
+		tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
 }
 
 } // ::window

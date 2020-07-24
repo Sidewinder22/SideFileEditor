@@ -13,9 +13,9 @@
 #include <memory>
 #include <QObject>
 #include "file/IFileManager.hpp"
+#include "IMainController.hpp"
 #include "log/Logger.hpp"
 #include "window/IWindow.hpp"
-#include "window/IWindowObserver.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -28,7 +28,7 @@ namespace app
 //---------------------------------------------------------
 class MainController
     : public QObject
-    , public window::IWindowObserver
+    , public IMainController
 {
 	Q_OBJECT
 
@@ -63,11 +63,27 @@ protected:
     void createFile(const QString& fileName) override;
 
     /**
+     * @brief Save buffer's content as a new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     * @return True if successful, False otherwise
+     */
+    bool saveBufferIntoFile(const QString& bufferName,
+    	const QString& fileName) override;
+
+    /**
+     * @brief Create new empty buffer
+     * @param bufferName name for the buffer
+     */
+    void createBuffer(const QString& bufferName) override;
+
+    /**
      * @brief Text changed notification
      * @param fileName fileName
      * @param content content of the buffer
+     * @return True if buffer content changed, False otherwise
      */
-    void textChanged(const QString& fileName, const QString &content) override;
+    bool textChanged(const QString& fileName, const QString &content) override;
 
     /**
      * @brief Read data from file
@@ -100,6 +116,24 @@ protected:
      * @param fileName file name
      */
     void clear(const QString& fileName) override;
+
+    /**
+     * @brief Return the number of the open buffers
+     * @return Number of the open buffers
+     */
+    size_t numberOfOpenBuffers() const override;
+
+    /**
+     * @brief Return the number of the unsaved buffers
+     * @return NUmber of the unsaved buffers
+     */
+    size_t numberOfUnsavedBuffers() const override;
+
+    /**
+     * @brief Return names of the unsaved buffers
+     * @return Vector with the names of the unsaved buffers
+     */
+    std::vector<QString> unsavedBufferNames() const override;
 
 //---------------------------------------------------------
 //                  Private

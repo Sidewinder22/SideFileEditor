@@ -17,7 +17,8 @@ namespace file
 {
 
 Buffer::Buffer(QString fileName)
-    : log_("Buffer")
+    : saved_(false)
+    , log_("Buffer")
     , fileName_(fileName)
 { 
     // Nothing
@@ -28,19 +29,44 @@ QString Buffer::fileName() const
     return fileName_;
 }
 
+void Buffer::setFileName(const QString& fileName)
+{
+	fileName_ = fileName;
+}
+
 void Buffer::setContent(const std::vector<QString> &content)
 {
+	if (!content_.empty() &&
+		content_[0] != content[0])
+	{
+		saved_ = false;
+	}
     content_ = content;
 }
 
-std::vector<QString> Buffer::getContent()
+std::vector<QString> Buffer::getContent() const
 {
     return content_;
+}
+
+bool Buffer::empty() const
+{
+	return content_.empty();
 }
     
 void Buffer::clear()
 {
     content_.clear();
+}
+
+bool Buffer::isSaved() const
+{
+	return saved_;
+}
+
+void Buffer::setSaved(bool saved)
+{
+	saved_ = saved;
 }
 
 } // ::file
