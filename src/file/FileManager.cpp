@@ -49,6 +49,9 @@ bool FileManager::saveBufferIntoFile(const QString& bufferName,
 
 		saveFile(fileIt, buffIt);
 		success = true;
+
+		(*buffIt)->setFileName(fileName);
+		(*buffIt)->setSaved(true);
     }
 
     return success;

@@ -30,6 +30,7 @@ public:
     virtual ~IBuffer() = default;
 
     virtual QString fileName() const = 0;
+    virtual void setFileName(const QString& fileName) = 0;
 
     virtual void setContent(const std::vector<QString> &content) = 0;
 

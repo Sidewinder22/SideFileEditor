@@ -35,10 +35,7 @@ void OpenFilesDock::createDock()
     fileList_->setWrapping(true);
 
     setMaximumHeight(60);
-    setAllowedAreas(Qt::TopDockWidgetArea |
-    	Qt::BottomDockWidgetArea |
-		Qt::LeftDockWidgetArea |
-		Qt::RightDockWidgetArea);
+    setAllowedAreas(Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea);
 
     setWidget(fileList_);
 }

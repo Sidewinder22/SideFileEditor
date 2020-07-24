@@ -37,6 +37,8 @@ public:
 
     QString fileName() const override;
 
+    void setFileName(const QString& fileName) override;
+
     void setContent(const std::vector<QString> &content) override;
 
     std::vector<QString> getContent() const override;

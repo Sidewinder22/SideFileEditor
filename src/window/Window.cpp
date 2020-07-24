@@ -59,7 +59,10 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 
     openFileDock_->createDock();
 
-    setDockOptions(dockOptions() | QMainWindow::GroupedDragging | QMainWindow::AllowNestedDocks | QMainWindow::AllowTabbedDocks);
+    setDockOptions(dockOptions() |
+    	QMainWindow::GroupedDragging |
+		QMainWindow::AllowNestedDocks |
+		QMainWindow::AllowTabbedDocks);
     addDockWidget(Qt::TopDockWidgetArea, openFileDock_);
 
 	textEdit_ = new QTextEdit(this);
@@ -217,16 +220,19 @@ void Window::saveFile()
     auto fileName = openFileDock_->getCurrentFileName();
     bool success = false;
 
-    if (!fileName.contains('/'))
+    if (fileName.contains("Buffer"))
     {
     	auto bufferName = fileName;
     	fileName = askUserForFileLocation();
 
     	if (!fileName.isEmpty())
     	{
+    		int row = openFileDock_->getCurrentRow();
     		if (mainController_->saveBufferIntoFile(bufferName, fileName))
     		{
     			success = true;
+
+    		    openFileDock_->removeFileName(row);
     		}
     	}
     }

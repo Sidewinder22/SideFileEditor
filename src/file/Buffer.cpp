@@ -29,6 +29,11 @@ QString Buffer::fileName() const
     return fileName_;
 }
 
+void Buffer::setFileName(const QString& fileName)
+{
+	fileName_ = fileName;
+}
+
 void Buffer::setContent(const std::vector<QString> &content)
 {
 	if (!content_.empty() &&
