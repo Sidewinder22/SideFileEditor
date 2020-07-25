@@ -112,6 +112,10 @@ public:
      */
     std::vector<QString> unsavedBufferNames() const override;
 
+    bool isFileSaved(const QString& fileName) override;
+
+    bool isFileEmpty(const QString& fileName) override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -121,8 +125,10 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    std::vector<std::shared_ptr<IFile>>::iterator getFileIterator(const QString& fileName);
-    std::vector<std::shared_ptr<IBuffer>>::iterator getBufferIterator(const QString& fileName);
+    std::vector<std::shared_ptr<IFile>>::iterator
+		getFileIterator(const QString& fileName);
+    std::vector<std::shared_ptr<IBuffer>>::iterator
+		getBufferIterator(const QString& fileName);
     void loadFileContentToNewBuffer(std::shared_ptr<IFile> file);
     std::shared_ptr<IFile> createFile(const QString& fileName);
     void closeBuffer(const QString& fileName);

@@ -38,35 +38,36 @@ void SaveCommand::execute()
 {
     log_ << MY_FUNC << log::END;
 
-    auto fileName = openFileDock_->getCurrentFileName();
-    bool success = false;
+//    bool success = false;
+//
+//    if (fileName.contains("Buffer"))
+//    {
+//    	auto bufferName = fileName;
+//    	fileName = utils::askUserForFileLocation(parent_);
+//
+//    	if (!fileName.isEmpty())
+//    	{
+//    		int row = openFileDock_->getCurrentRow();
+//    		if (mainController_->saveBufferIntoFile(bufferName, fileName))
+//    		{
+//    			success = true;
+//
+//    		    openFileDock_->removeFileName(row);
+//    		}
+//    	}
+//    }
+//    else
+//    {
+//		if (mainController_->save(fileName))
+//		{
+//    		success = true;
+//		}
+//    }
 
-    if (fileName.contains("Buffer"))
+    if (utils::saveFile(parent_, mainController_, openFileDock_))
     {
-    	auto bufferName = fileName;
-    	fileName = utils::askUserForFileLocation(parent_);
+    	auto fileName = openFileDock_->getCurrentFileName();
 
-    	if (!fileName.isEmpty())
-    	{
-    		int row = openFileDock_->getCurrentRow();
-    		if (mainController_->saveBufferIntoFile(bufferName, fileName))
-    		{
-    			success = true;
-
-    		    openFileDock_->removeFileName(row);
-    		}
-    	}
-    }
-    else
-    {
-		if (mainController_->save(fileName))
-		{
-    		success = true;
-		}
-    }
-
-    if (success)
-    {
     	// Cast is necessary because statuBar() method is from
     	// the QMainWindow class not from the QWidget class
 		static_cast<QMainWindow>(parent_).statusBar()->showMessage(

@@ -12,6 +12,8 @@
 //                      Includes
 //---------------------------------------------------------
 #include <QString>
+#include "app/IMainController.hpp"
+#include "window/OpenFilesDock.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -22,6 +24,12 @@ namespace utils
 {
 
 QString askUserForFileLocation(QWidget* parent);
+
+bool askForSaveBuffer(const QString& name);
+
+bool saveFile(QWidget* parent,
+	app::IMainController* mainController,
+	window::OpenFilesDock* openFileDock);
 
 } // :: utils
 } // ::comand

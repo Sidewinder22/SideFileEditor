@@ -25,6 +25,7 @@
 #include "command/AboutCommand.hpp"
 #include "command/NewCommand.hpp"
 #include "command/SaveCommand.hpp"
+#include "command/CloseCommand.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -60,6 +61,8 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 	, aboutCommand_(std::make_unique<command::AboutCommand>(this))
 	, newCommand_(std::make_unique<command::NewCommand>(mainController_))
 	, saveCommand_(std::make_unique<command::SaveCommand>(this,
+		mainController_, openFileDock_))
+	, closeCommand_(std::make_unique<command::CloseCommand>(this, textEdit_,
 		mainController_, openFileDock_))
 {
 	fileMenu_ = menuBar()->addMenu("File");
@@ -192,23 +195,7 @@ void Window::saveFile()
 
 void Window::closeFile()
 {
-    log_ << MY_FUNC << log::END;
-
-    textEdit_->clear();
-
-    int row = openFileDock_->getCurrentRow();
-    auto fileName = openFileDock_->getCurrentFileName();
-
-    openFileDock_->removeFileName(row);
-    if (!fileName.isEmpty())
-    {
-        statusBar()->showMessage("File: " + fileName + " closed.");
-        mainController_->close(fileName);
-    }
-    else
-    {
-        statusBar()->clearMessage();
-    }
+	closeCommand_->execute();
 }
 
 void Window::removeFile()
@@ -295,32 +282,35 @@ void Window::anotherFileSelected(const QString& fileName)
 {
     log_ << MY_FUNC << log::END;
 
-    statusBar()->showMessage("[Current file]: " + fileName);
-    setWindowTitle(fileName);
+	statusBar()->showMessage("[Current file]: " + fileName);
+	setWindowTitle(fileName);
 
-    textEdit_->clear();
+	textEdit_->clear();
 
-    auto fileContent = mainController_->read(utils_->extractFileName(fileName));
-    for (auto&& line : fileContent)
-    {
-        textEdit_->append(line);
-    }
+	auto fileContent = mainController_->read(utils_->extractFileName(fileName));
+	for (auto&& line : fileContent)
+	{
+		textEdit_->append(line);
+	}
 }
 
 void Window::textChanged()
 {
     auto fileName = openFileDock_->getCurrentFileName();
-    auto text = textEdit_->toPlainText();
-    bool fileContentChanged = false;
-
-    if (!text.isEmpty())
+    if (!fileName.isEmpty())
     {
-        fileContentChanged = mainController_->textChanged(fileName, text);
-    }
+		auto text = textEdit_->toPlainText();
+		bool fileContentChanged = false;
 
-    if (fileContentChanged)
-    {
-    	openFileDock_->markCurrentFileAsUnsaved();
+		if (!text.isEmpty())
+		{
+			fileContentChanged = mainController_->textChanged(fileName, text);
+		}
+
+		if (fileContentChanged)
+		{
+			openFileDock_->markCurrentFileAsUnsaved();
+		}
     }
 }
 
@@ -368,6 +358,7 @@ void Window::verifyUnsavedBuffers()
     }
 }
 
+// Method is moved to the CommandUtils class
 bool Window::askForSaveBuffer(const QString& name)
 {
 	QMessageBox msgBox;

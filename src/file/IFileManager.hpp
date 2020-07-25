@@ -104,6 +104,10 @@ public:
      * @return Vector with the names of the unsaved buffers
      */
     virtual std::vector<QString> unsavedBufferNames() const = 0;
+
+    virtual bool isFileSaved(const QString& fileName) = 0;
+
+    virtual bool isFileEmpty(const QString& fileName) = 0;
 };
 
 } // ::file

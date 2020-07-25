@@ -54,13 +54,13 @@ protected:
      * @brief Open file
      * @param fileName path for file
      */
-    void openFile(const QString& fileName) override;
+    void openFile(const QString& fileName) const override;
 
     /**
      * @brief Create new file
      * @param fileName path for file
      */
-    void createFile(const QString& fileName) override;
+    void createFile(const QString& fileName) const override;
 
     /**
      * @brief Save buffer's content as a new file
@@ -69,13 +69,13 @@ protected:
      * @return True if successful, False otherwise
      */
     bool saveBufferIntoFile(const QString& bufferName,
-    	const QString& fileName) override;
+    	const QString& fileName) const override;
 
     /**
      * @brief Create new empty buffer
      * @param bufferName name for the buffer
      */
-    void createBuffer(const QString& bufferName) override;
+    void createBuffer(const QString& bufferName) const override;
 
     /**
      * @brief Text changed notification
@@ -83,33 +83,33 @@ protected:
      * @param content content of the buffer
      * @return True if buffer content changed, False otherwise
      */
-    bool textChanged(const QString& fileName, const QString &content) override;
+    bool textChanged(const QString& fileName, const QString &content) const override;
 
     /**
      * @brief Read data from file
      * @param fileName file name
      * @return Vector contains file's data
      */
-    std::vector<QString> read(const QString& fileName) override;
+    std::vector<QString> read(const QString& fileName) const override;
 
     /**
      * @brief Save data to file
      * @param fileName file name
      * @return True if successful, False otherwise
      */
-    bool save(const QString &fileName) override;
+    bool save(const QString &fileName) const override;
 
     /**
      * @brief Close open file
      * @param fileName file name
      */
-    void close(const QString& fileName) override;
+    void close(const QString& fileName) const override;
 
     /**
      * @brief Remove file
      * @param fileName file name
      */
-    void remove(const QString& fileName) override;
+    void remove(const QString& fileName) const override;
 
     /**
      * @brief Return the number of the open buffers
@@ -128,6 +128,10 @@ protected:
      * @return Vector with the names of the unsaved buffers
      */
     std::vector<QString> unsavedBufferNames() const override;
+
+    bool isFileSaved(const QString& fileName) const override;
+
+    bool isFileEmpty(const QString& fileName) const override;
 
 //---------------------------------------------------------
 //                  Private
