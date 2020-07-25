@@ -35,11 +35,9 @@ SideFileEditor
 .settings
 
 # QT files
-moc_Window.cpp
 Makefile
-moc_predefs.h
-
-build
+moc_*
+.qmake.stash
 
 .files_for_cscope
 .vscode

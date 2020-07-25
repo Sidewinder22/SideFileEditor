@@ -122,11 +122,11 @@ void Window::prepareMenu()
 
 void Window::prepareToolBar()
 {
-	toolBNew_ = toolBar_->addAction(QIcon("../icons/new.png"), "New File");
-	toolBOpen_ = toolBar_->addAction(QIcon("../icons/open.png"), "Open File");
-	toolBSave_ = toolBar_->addAction(QIcon("../icons/save.png"), "Save File");
-	toolBClear_ = toolBar_->addAction(QIcon("../icons/clear.png"), "Clear Screen");
-	toolBClose_ = toolBar_->addAction(QIcon("../icons/close.png"), "Close File");
+	toolBNew_ = toolBar_->addAction(QIcon("icons/new.png"), "New File");
+	toolBOpen_ = toolBar_->addAction(QIcon("icons/open.png"), "Open File");
+	toolBSave_ = toolBar_->addAction(QIcon("icons/save.png"), "Save File");
+	toolBClear_ = toolBar_->addAction(QIcon("icons/clear.png"), "Clear Screen");
+	toolBClose_ = toolBar_->addAction(QIcon("icons/close.png"), "Close File");
 
 	toolBNew_->setStatusTip("New File");
 	toolBOpen_->setStatusTip("Open File");
@@ -136,7 +136,7 @@ void Window::prepareToolBar()
 
 	toolBar_->addSeparator();
 
-	toolBQuit_ = toolBar_->addAction(QIcon("../icons/quit.png"),
+	toolBQuit_ = toolBar_->addAction(QIcon("icons/quit.png"),
 		"Quit Application");
 
 	toolBar_->addSeparator();

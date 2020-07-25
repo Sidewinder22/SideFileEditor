@@ -12,29 +12,17 @@ QT      += widgets
 
 # DEFINES +=  "DEBUG=1"
 
-HEADERS += 	../src/app/IMaincontroller.hpp \
-            ../src/app/MainController.hpp \
-            ../src/file/Buffer.hpp \
-            ../src/file/IBuffer.hpp \
-            ../src/file/File.hpp \
-            ../src/file/FileManager.hpp \
-            ../src/file/IFile.hpp \
-            ../src/file/IFileManager.hpp \
-            ../src/log/Logger.hpp \
-            ../src/utils/Utils.hpp \
-            ../src/window/IWindow.hpp \
-            ../src/window/OpenFilesDock.hpp \
-            ../src/window/Window.hpp
+HEADERS +=  src/app/*.hpp \
+            src/file/*.hpp \
+            src/log/*.hpp \
+            src/utils/*.hpp \
+            src/window/*.hpp
 
-SOURCES	+= 	../src/app/main.cpp \
-            ../src/app/MainController.cpp \
-            ../src/file/Buffer.cpp \
-            ../src/file/File.cpp \
-            ../src/file/FileManager.cpp \
-            ../src/log/Logger.cpp \
-            ../src/utils/Utils.cpp \
-            ../src/window/OpenFilesDock.cpp \
-            ../src/window/Window.cpp
+SOURCES +=  src/app/*.cpp \
+            src/file/*.cpp \
+            src/log/*.cpp \
+            src/utils/*.cpp \
+            src/window/*.cpp
 
 QMAKE_CXXFLAGS += -std=c++2a -Wextra
 
