@@ -200,6 +200,7 @@ private:
 
     std::unique_ptr<command::Command> clearCommand_;
     std::unique_ptr<command::Command> openCommand_;
+    std::unique_ptr<command::Command> aboutCommand_;
 
     static int bufferNumber_;							//!< Number for next buffer to create
 };

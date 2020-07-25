@@ -22,6 +22,7 @@
 #include <QDesktopWidget>
 #include "command/ClearCommand.hpp"
 #include "command/OpenCommand.hpp"
+#include "command/AboutCommand.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -56,6 +57,7 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 	, clearCommand_(std::make_unique<command::ClearCommand>(textEdit_))
 	, openCommand_(std::make_unique<command::OpenCommand>(this,
 		mainController_, openFileDock_))
+	, aboutCommand_(std::make_unique<command::AboutCommand>(this))
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -167,12 +169,7 @@ void Window::connectSignalsToSlots()
 
 void Window::showAboutWindow()
 {
-    QString description;
-    description.append("     SideFileEditor\n");
-    description.append("             by\n");
-    description.append("{\\_Sidewinder22_/}");
-
-    QMessageBox::information(this, "INFO", description);
+	aboutCommand_->execute();
 }
 
 void Window::openFile()
