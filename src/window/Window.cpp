@@ -20,6 +20,7 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QDesktopWidget>
+#include "command/ClearCommand.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -38,7 +39,6 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
     , toolBSave_(nullptr)
     , toolBClear_(nullptr)
     , toolBClose_(nullptr)
-    , toolBTrash_(nullptr)
 	, toolBQuit_(nullptr)
 	, menuNewFile_(new QAction("&New", this))
 	, menuOpenFile_(new QAction("&Open", this))
@@ -48,10 +48,12 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 	, menuRemoveFile_(new QAction("&Remove", this))
 	, menuQuit_(new QAction("&Quit", this))
     , menuAbout_(new QAction("&About", this))
+	, textEdit_(new QTextEdit(this))
     , fileDialog_(nullptr)
     , openFileDock_(new OpenFilesDock(this, this))
     , utils_(std::make_unique<utils::Utils>())
     , mainController_(mainController)
+	, clearCommand_(std::make_unique<command::ClearCommand>(textEdit_))
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -65,7 +67,6 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 		QMainWindow::AllowTabbedDocks);
     addDockWidget(Qt::TopDockWidgetArea, openFileDock_);
 
-	textEdit_ = new QTextEdit(this);
 	textEdit_->setStatusTip("Text editor window");
 }
 
@@ -158,7 +159,6 @@ void Window::connectSignalsToSlots()
 	connect(toolBSave_, &QAction::triggered, this, &Window::saveFile);
 	connect(toolBClear_, &QAction::triggered, this, &Window::clearScreen);
 	connect(toolBClose_, &QAction::triggered, this, &Window::closeFile);
-	connect(toolBTrash_, &QAction::triggered, this, &Window::removeFile);
     connect(textEdit_, &QTextEdit::textChanged, this, &Window::textChanged);
 	connect(toolBQuit_, &QAction::triggered, this, &Window::quitApplication);
 }
@@ -301,11 +301,7 @@ void Window::removeFile()
 
 void Window::clearScreen()
 {
-    log_ << MY_FUNC << log::END;
-
-    textEdit_->clear();
-
-    auto fileName = openFileDock_->getCurrentFileName();
+	clearCommand_->execute();
 }
 
 void Window::fileOpened(bool status, const QString& filePath)

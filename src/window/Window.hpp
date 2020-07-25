@@ -21,6 +21,8 @@
 #include <QMainWindow>
 #include <QVBoxLayout>
 
+#include "command/Command.hpp"
+
 #include "app/IMainController.hpp"
 #include "file/FileManager.hpp"
 #include "log/Logger.hpp"
@@ -178,7 +180,6 @@ private:
 	QAction *toolBSave_;                                //!< Pointer to the tool bar save file command
 	QAction *toolBClear_;                               //!< Pointer to the tool bar clear screen command
 	QAction *toolBClose_;                               //!< Pointer to the tool bar close file command
-	QAction *toolBTrash_;                               //!< Pointer to the tool bar trash file command
 	QAction *toolBQuit_;                                //!< Pointer to the tool bar quit command
 	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
 
@@ -198,6 +199,8 @@ private:
 
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
     app::IMainController* mainController_;              //!< Pointer to the observer
+
+    std::unique_ptr<command::Command> clearCommand_;
 
     static int bufferNumber_;							//!< Number for next buffer to create
     constexpr static const int ONE_BUFFER_OPEN = 1;
