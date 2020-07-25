@@ -21,6 +21,7 @@
 #include <QTextStream>
 #include <QDesktopWidget>
 #include "command/ClearCommand.hpp"
+#include "command/OpenCommand.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -49,11 +50,12 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 	, menuQuit_(new QAction("&Quit", this))
     , menuAbout_(new QAction("&About", this))
 	, textEdit_(new QTextEdit(this))
-    , fileDialog_(nullptr)
     , openFileDock_(new OpenFilesDock(this, this))
     , utils_(std::make_unique<utils::Utils>())
     , mainController_(mainController)
 	, clearCommand_(std::make_unique<command::ClearCommand>(textEdit_))
+	, openCommand_(std::make_unique<command::OpenCommand>(this,
+		mainController_, openFileDock_))
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -175,34 +177,7 @@ void Window::showAboutWindow()
 
 void Window::openFile()
 {
-    log_ << MY_FUNC << log::END;
-
-    QString fileName = QFileDialog::getOpenFileName(
-        this,
-        tr("Select file to open..."),
-        QDir::homePath(),
-        tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
-
-
-    if (!fileName.isEmpty())
-    {
-		/**
-		 * Delete empty startup buffer
-		 */
-    	auto openBuffers = mainController_->numberOfOpenBuffers();
-		auto unsavedBuffers = mainController_->numberOfUnsavedBuffers();
-		if (openBuffers == ONE_BUFFER_OPEN &&
-			unsavedBuffers == ALL_BUFFERS_SAVED)
-		{
-			auto bufferName = "Buffer" + std::to_string(bufferNumber_);
-			mainController_->close(QString::fromStdString(bufferName));
-
-			int row = openFileDock_->getCurrentRow();
-			openFileDock_->removeFileName(row);
-		}
-
-		mainController_->openFile(fileName);
-    }
+	openCommand_->execute();
 }
 
 void Window::newFile()

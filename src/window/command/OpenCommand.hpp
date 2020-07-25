@@ -1,16 +1,19 @@
-#ifndef SRC_WINDOW_COMMAND_CLEARCOMMAND_HPP_
-#define SRC_WINDOW_COMMAND_CLEARCOMMAND_HPP_
 /**
  * @author  {\_Sidewinder22_/}
- * @date    25.07.2020
+ * @date    25 lip 2020
+ * @file    OpenCommand.hpp
  *
- * @brief   Class handles clear command
+ * @brief  	Class handles open command
  */
+#ifndef SRC_WINDOW_COMMAND_OPENCOMMAND_HPP_
+#define SRC_WINDOW_COMMAND_OPENCOMMAND_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <QTextEdit>
+#include <QWidget>
+#include "app/IMainController.hpp"
+#include "window/OpenFilesDock.hpp"
 #include "log/Logger.hpp"
 #include "Command.hpp"
 
@@ -23,15 +26,16 @@ namespace command
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class ClearCommand
+class OpenCommand
 	: public Command
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-	ClearCommand(QTextEdit* textEdit);
-    virtual ~ClearCommand() = default;
+	OpenCommand(QWidget *parent, app::IMainController* mainController,
+		window::OpenFilesDock *openFileDock);
+    virtual ~OpenCommand() = default;
 
 	//-----------------------------------------------------
 	//               Command
@@ -47,10 +51,17 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
+    QString askUserForFileName() const;
+
     log::Logger log_;
-    QTextEdit* textEdit_;
+    QWidget* parent_;
+    app::IMainController* mainController_;
+    window::OpenFilesDock *openFileDock_;
+
+    constexpr static const int ONE_BUFFER_OPEN = 1;
+    constexpr static const int ALL_BUFFERS_SAVED = 0;
 };
 
 } // ::command
 
-#endif /* SRC_WINDOW_COMMAND_CLEARCOMMAND_HPP_ */
+#endif /* SRC_WINDOW_COMMAND_OPENCOMMAND_HPP_ */

@@ -16,13 +16,15 @@ HEADERS +=  src/app/*.hpp \
             src/file/*.hpp \
             src/log/*.hpp \
             src/utils/*.hpp \
-            src/window/*.hpp
+            src/window/*.hpp \
+            src/window/command/*.hpp
 
 SOURCES +=  src/app/*.cpp \
             src/file/*.cpp \
             src/log/*.cpp \
             src/utils/*.cpp \
-            src/window/*.cpp
+            src/window/*.cpp \
+            src/window/command/*.cpp
 
 QMAKE_CXXFLAGS += -std=c++2a -Wextra
 

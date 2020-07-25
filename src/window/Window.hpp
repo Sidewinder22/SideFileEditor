@@ -17,7 +17,6 @@
 #include <QToolBar>
 #include <QTextEdit>
 #include <QVBoxLayout>
-#include <QFileDialog>
 #include <QMainWindow>
 #include <QVBoxLayout>
 
@@ -193,7 +192,6 @@ private:
     QAction *menuAbout_;								//!< Pointer to the menu about command
 
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
-	QFileDialog *fileDialog_;                           //!< Pointer to the file dialog field
 
     OpenFilesDock *openFileDock_;                       //!< Open files dock
 
@@ -201,10 +199,9 @@ private:
     app::IMainController* mainController_;              //!< Pointer to the observer
 
     std::unique_ptr<command::Command> clearCommand_;
+    std::unique_ptr<command::Command> openCommand_;
 
     static int bufferNumber_;							//!< Number for next buffer to create
-    constexpr static const int ONE_BUFFER_OPEN = 1;
-    constexpr static const int ALL_BUFFERS_SAVED = 0;
 };
 
 } // ::window
