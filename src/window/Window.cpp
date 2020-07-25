@@ -26,6 +26,7 @@
 #include "command/NewCommand.hpp"
 #include "command/SaveCommand.hpp"
 #include "command/CloseCommand.hpp"
+#include "command/RemoveCommand.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -63,6 +64,8 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 	, saveCommand_(std::make_unique<command::SaveCommand>(this,
 		mainController_, openFileDock_))
 	, closeCommand_(std::make_unique<command::CloseCommand>(this, textEdit_,
+		mainController_, openFileDock_))
+	, removeCommand_(std::make_unique<command::RemoveCommand>(this, textEdit_,
 		mainController_, openFileDock_))
 {
 	fileMenu_ = menuBar()->addMenu("File");
@@ -200,24 +203,7 @@ void Window::closeFile()
 
 void Window::removeFile()
 {
-    log_ << MY_FUNC << log::END;
-
-    textEdit_->clear();
-
-    int row = openFileDock_->getCurrentRow();
-    auto fileName = openFileDock_->getCurrentFileName();
-
-    openFileDock_->removeFileName(row);
-
-    if (!fileName.isEmpty())
-    {
-        statusBar()->showMessage("File: " + fileName + " removed.");
-        mainController_->remove(fileName);
-    }
-    else
-    {
-        statusBar()->clearMessage();
-    }
+	removeCommand_->execute();
 }
 
 void Window::clearScreen()

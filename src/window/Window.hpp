@@ -202,6 +202,7 @@ private:
     std::unique_ptr<command::Command> newCommand_;
     std::unique_ptr<command::Command> saveCommand_;
     std::unique_ptr<command::Command> closeCommand_;
+    std::unique_ptr<command::Command> removeCommand_;
 };
 
 } // ::window
