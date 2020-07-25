@@ -24,6 +24,7 @@
 #include "command/OpenCommand.hpp"
 #include "command/AboutCommand.hpp"
 #include "command/NewCommand.hpp"
+#include "command/SaveCommand.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -58,6 +59,8 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 		mainController_, openFileDock_))
 	, aboutCommand_(std::make_unique<command::AboutCommand>(this))
 	, newCommand_(std::make_unique<command::NewCommand>(mainController_))
+	, saveCommand_(std::make_unique<command::SaveCommand>(this,
+		mainController_, openFileDock_))
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -184,45 +187,7 @@ void Window::newFile()
 
 void Window::saveFile()
 {
-    log_ << MY_FUNC << log::END;
-
-    auto fileName = openFileDock_->getCurrentFileName();
-    bool success = false;
-
-    if (fileName.contains("Buffer"))
-    {
-    	auto bufferName = fileName;
-    	fileName = askUserForFileLocation();
-
-    	if (!fileName.isEmpty())
-    	{
-    		int row = openFileDock_->getCurrentRow();
-    		if (mainController_->saveBufferIntoFile(bufferName, fileName))
-    		{
-    			success = true;
-
-    		    openFileDock_->removeFileName(row);
-    		}
-    	}
-    }
-    else
-    {
-		if (mainController_->save(fileName))
-		{
-    		success = true;
-		}
-    }
-
-    if (success)
-    {
-		statusBar()->showMessage("[File saved]: " + fileName);
-		openFileDock_->markCurrentFileAsSaved();
-    }
-    else
-    {
-		statusBar()->showMessage("Can't save file!");
-		QMessageBox::warning(this, "INFO", "Cannot save file!");
-    }
+	saveCommand_->execute();
 }
 
 void Window::closeFile()
@@ -422,7 +387,7 @@ QString Window::askUserForFileLocation()
 {
 	return QFileDialog::getSaveFileName(
 		this,
-		tr("Select loction to save a file"),
+		tr("Select location for a file"),
 		QDir::homePath(),
 		tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
 }
