@@ -16,6 +16,6 @@ jobs:
     - name: create build dir
       run: mkdir build && cd build
     - name: qmake
-      run: qmake ..
+      run: /usr/bin/qmake ..
     - name: build
       run: make
