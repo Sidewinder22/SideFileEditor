@@ -1,5 +1,7 @@
 # Sidewinder File Editor (SFe)
 
+![C/C++ CI](https://github.com/Sidewinder22/SideFileEditor/workflows/C/C++%20CI/badge.svg?branch=master)
+
 Hi everyone!
 
 This is simple program type of "proof of concept".
