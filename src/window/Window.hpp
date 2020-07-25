@@ -16,9 +16,7 @@
 #include <QWidget>
 #include <QToolBar>
 #include <QTextEdit>
-#include <QVBoxLayout>
 #include <QMainWindow>
-#include <QVBoxLayout>
 
 #include "command/Command.hpp"
 
@@ -201,8 +199,7 @@ private:
     std::unique_ptr<command::Command> clearCommand_;
     std::unique_ptr<command::Command> openCommand_;
     std::unique_ptr<command::Command> aboutCommand_;
-
-    static int bufferNumber_;							//!< Number for next buffer to create
+    std::unique_ptr<command::Command> newCommand_;
 };
 
 } // ::window

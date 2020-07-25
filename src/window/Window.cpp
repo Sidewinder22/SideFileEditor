@@ -23,6 +23,7 @@
 #include "command/ClearCommand.hpp"
 #include "command/OpenCommand.hpp"
 #include "command/AboutCommand.hpp"
+#include "command/NewCommand.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -30,8 +31,6 @@
 //---------------------------------------------------------
 namespace window
 {
-
-int Window::bufferNumber_ = 1;
 
 Window::Window(app::IMainController* mainController, QWidget *parent)
 	: QMainWindow(parent)
@@ -58,6 +57,7 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 	, openCommand_(std::make_unique<command::OpenCommand>(this,
 		mainController_, openFileDock_))
 	, aboutCommand_(std::make_unique<command::AboutCommand>(this))
+	, newCommand_(std::make_unique<command::NewCommand>(mainController_))
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -179,10 +179,7 @@ void Window::openFile()
 
 void Window::newFile()
 {
-    log_ << MY_FUNC << log::END;
-
-    auto bufferName = "Buffer" + std::to_string(bufferNumber_++);
-    mainController_->createBuffer(QString::fromStdString(bufferName.c_str()));
+	newCommand_->execute();
 }
 
 void Window::saveFile()

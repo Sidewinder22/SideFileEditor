@@ -1,17 +1,16 @@
 /**
  * @author  {\_Sidewinder22_/}
  * @date    25 lip 2020
- * @file    AboutCommand.cpp
+ * @file    NewCommand.cpp
  *
- * @brief   Class handles about command
+ * @brief   Class handles new command
  */
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
 #include <QString>
-#include <QMessageBox>
-#include "AboutCommand.hpp"
+#include "NewCommand.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -19,21 +18,21 @@
 namespace command
 {
 
-AboutCommand::AboutCommand(QWidget* parent)
-	: log_("AboutCommand")
-	, parent_(parent)
+int NewCommand::bufferNumber_ = 1;
+
+NewCommand::NewCommand(app::IMainController* mainController)
+	: log_("NewCommand")
+	, mainController_(mainController)
 {
 	// Nothing
 }
 
-void AboutCommand::execute()
+void NewCommand::execute()
 {
-    QString description;
-    description.append(APP);
-    description.append(BY);
-    description.append(AUTHOR);
+    log_ << MY_FUNC << log::END;
 
-    QMessageBox::about(parent_, ABOUT, description);
+	auto bufferName = "Buffer" + std::to_string(bufferNumber_++);
+	mainController_->createBuffer(QString::fromStdString(bufferName.c_str()));
 }
 
 } // ::command
