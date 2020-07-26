@@ -40,20 +40,14 @@ void MainController::start()
 void MainController::openFile(const QString& fileName) const
 {
     bool status = fileManager_->openFile(fileName);
-    window_->fileOpened(status, fileName);
-}
-
-void MainController::createFile(const QString& fileName) const
-{
-    fileManager_->createBuffer(fileName);
-    window_->fileCreated(fileName);
+    window_->opened(status, fileName);
 }
 
 bool MainController::saveBufferIntoFile(const QString& bufferName,
 	const QString& fileName) const
 {
 	bool status = fileManager_->saveBufferIntoFile(bufferName, fileName);
-	window_->fileCreated(fileName);
+	window_->created(bufferName);
 
 	return status;
 }
@@ -61,7 +55,7 @@ bool MainController::saveBufferIntoFile(const QString& bufferName,
 void MainController::createBuffer(const QString& bufferName) const
 {
     fileManager_->createBuffer(bufferName);
-    window_->bufferCreated(bufferName);
+    window_->created(bufferName);
 }
 
 std::vector<QString> MainController::read(const QString& fileName) const

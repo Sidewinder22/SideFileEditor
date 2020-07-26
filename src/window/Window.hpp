@@ -63,19 +63,13 @@ public:
      * @brief openFile() response
      * @param status Status of operation
      */
-    void fileOpened(bool status, const QString& fileName) override;
-
-    /**
-     * @brief createFile() response
-     * @param fileName fileName of the created file
-     */
-    void fileCreated(const QString& fileName) override;
+    void opened(bool status, const QString& fileName) override;
 
     /**
      * @brief createBuffer() response
      * @param bufferName name of the created buffer
      */
-    void bufferCreated(const QString& bufferName) override;
+    void created(const QString& bufferName) override;
 
     //-----------------------------------------------------
     //              IOpenFilesDockObserver
@@ -168,6 +162,8 @@ private:
     bool askForSaveBuffer(const QString& name);
     QString askUserForFileLocation();
 
+    void updateDockAndStatuBar(const QString& fileName);
+
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object
 	QMenu *helpMenu_;                                   //!< Pointer to help menu object
@@ -190,7 +186,6 @@ private:
     QAction *menuAbout_;								//!< Pointer to the menu about command
 
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
-
     OpenFilesDock *openFileDock_;                       //!< Open files dock
 
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object

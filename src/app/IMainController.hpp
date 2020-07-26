@@ -37,12 +37,6 @@ public:
     virtual void openFile(const QString& fileName) const = 0;
 
     /**
-     * @brief Create new file
-     * @param fileName path for file
-     */
-    virtual void createFile(const QString& fileName) const = 0;
-
-    /**
      * @brief Create new empty buffer
      * @param bufferName name for the buffer
      */

@@ -211,7 +211,7 @@ void Window::clearScreen()
 	clearCommand_->execute();
 }
 
-void Window::fileOpened(bool status, const QString& filePath)
+void Window::opened(bool status, const QString& filePath)
 {
     log_ << MY_FUNC << log::END;
 
@@ -244,24 +244,14 @@ void Window::fileOpened(bool status, const QString& filePath)
     }
 }
 
-void Window::fileCreated(const QString& filePath)
+void Window::created(const QString& filePath)
 {
     log_ << MY_FUNC << log::END;
 
 	openFileDock_->addFileName(utils_->extractFileName(filePath));
 
-	statusBar()->showMessage("[New file]: " + filePath);
+	statusBar()->showMessage("[New]: " + filePath);
 	setWindowTitle(filePath);
-}
-
-void Window::bufferCreated(const QString& bufferName)
-{
-    log_ << MY_FUNC << log::END;
-
-	openFileDock_->addFileName(bufferName);
-
-	statusBar()->showMessage("[New buffer]: " + bufferName);
-	setWindowTitle(bufferName);
 }
 
 void Window::anotherFileSelected(const QString& fileName)
