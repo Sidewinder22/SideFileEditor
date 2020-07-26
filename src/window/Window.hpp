@@ -11,20 +11,20 @@
 //                      Includes
 //---------------------------------------------------------
 #include <memory>
-#include <QMenu>
 #include <QLabel>
 #include <QWidget>
 #include <QToolBar>
 #include <QTextEdit>
 #include <QMainWindow>
 #include "app/IMainController.hpp"
-#include "command/Command.hpp"
+#include "command/CommandFactory.hpp"
 #include "file/FileManager.hpp"
 #include "log/Logger.hpp"
 #include "utils/Utils.hpp"
 #include "IOpenFilesDockObserver.hpp"
 #include "IWindow.hpp"
 #include "OpenFilesDock.hpp"
+#include "Menu.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -138,23 +138,12 @@ private:
 	void connectSignalsToSlots();
 
     /**
-     * @brief Prepare Menu
-     */
-	void prepareMenu();
-
-    /**
      * @brief Prepare tool bar
      */
 	void prepareToolBar();
 
-    /**
-     * @brief Show message with about description
-     */
-    void showAboutMessage();
 
     log::Logger log_;                                   //!< Logger object
-	QMenu *fileMenu_;                                   //!< Pointer to file menu object
-	QMenu *helpMenu_;                                   //!< Pointer to help menu object
 
 	QAction *toolBNew_;                                 //!< Pointer to the tool bar new file command
 	QAction *toolBOpen_;                                //!< Pointer to the tool bar open file command
@@ -164,29 +153,15 @@ private:
 	QAction *toolBQuit_;                                //!< Pointer to the tool bar quit command
 	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
 
-	QAction *menuNewFile_;								//!< Pointer to the menu new file command
-	QAction *menuOpenFile_;								//!< Pointer to the menu open file command
-	QAction *menuSaveFile_;								//!< Pointer to the menu save file command
-	QAction *menuClearScreen_;							//!< Pointer to the menu clear screen command
-	QAction *menuCloseFile_;							//!< Pointer to the menu close file command
-	QAction *menuRemoveFile_;							//!< Pointer to the menu remove file command
-	QAction *menuQuit_;									//!< Pointer to the menu quit command
-    QAction *menuAbout_;								//!< Pointer to the menu about command
-
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
     OpenFilesDock *openFileDock_;                       //!< Open files dock
 
     std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
     app::IMainController* mainController_;              //!< Pointer to the observer
 
-    std::unique_ptr<command::Command> clearCommand_;
-    std::unique_ptr<command::Command> openCommand_;
-    std::unique_ptr<command::Command> aboutCommand_;
-    std::unique_ptr<command::Command> newCommand_;
-    std::unique_ptr<command::Command> saveCommand_;
-    std::unique_ptr<command::Command> closeCommand_;
-    std::unique_ptr<command::Command> removeCommand_;
-    std::unique_ptr<command::Command> quitCommand_;
+    std::unique_ptr<Menu> menu_;
+
+    std::shared_ptr<command::CommandFactory> commandFactory_;
 };
 
 } // ::window

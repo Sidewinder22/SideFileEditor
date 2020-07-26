@@ -15,14 +15,6 @@
 #include <QStatusBar>
 #include <QMessageBox>
 #include <QGuiApplication>
-#include "command/ClearCommand.hpp"
-#include "command/OpenCommand.hpp"
-#include "command/AboutCommand.hpp"
-#include "command/NewCommand.hpp"
-#include "command/SaveCommand.hpp"
-#include "command/CloseCommand.hpp"
-#include "command/RemoveCommand.hpp"
-#include "command/QuitCommand.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -40,34 +32,15 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
     , toolBClear_(nullptr)
     , toolBClose_(nullptr)
 	, toolBQuit_(nullptr)
-	, menuNewFile_(new QAction("&New", this))
-	, menuOpenFile_(new QAction("&Open", this))
-	, menuSaveFile_(new QAction("&Save", this))
-	, menuClearScreen_(new QAction("&Clear screen", this))
-	, menuCloseFile_(new QAction("&Close", this))
-	, menuRemoveFile_(new QAction("&Remove", this))
-	, menuQuit_(new QAction("&Quit", this))
-    , menuAbout_(new QAction("&About", this))
 	, textEdit_(new QTextEdit(this))
     , openFileDock_(new OpenFilesDock(this, this))
     , utils_(std::make_unique<utils::Utils>())
     , mainController_(mainController)
-	, clearCommand_(std::make_unique<command::ClearCommand>(textEdit_))
-	, openCommand_(std::make_unique<command::OpenCommand>(this,
+	, commandFactory_(std::make_shared<command::CommandFactory>(this, textEdit_,
 		mainController_, openFileDock_))
-	, aboutCommand_(std::make_unique<command::AboutCommand>(this))
-	, newCommand_(std::make_unique<command::NewCommand>(mainController_))
-	, saveCommand_(std::make_unique<command::SaveCommand>(this,
-		mainController_, openFileDock_))
-	, closeCommand_(std::make_unique<command::CloseCommand>(this, textEdit_,
-		mainController_, openFileDock_))
-	, removeCommand_(std::make_unique<command::RemoveCommand>(this, textEdit_,
-		mainController_, openFileDock_))
-	, quitCommand_(std::make_unique<command::QuitCommand>(this,
-		mainController_))
 {
-	fileMenu_ = menuBar()->addMenu("File");
-    helpMenu_ = menuBar()->addMenu("Help");
+	menu_ = std::make_unique<Menu>(commandFactory_,  menuBar());
+
 	toolBar_ = addToolBar("Main toolbar");
 
     openFileDock_->createDock();
@@ -83,7 +56,8 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 
 void Window::init()
 {
-	prepareMenu();
+	menu_->init();
+
 	prepareToolBar();
 	connectSignalsToSlots();
 
@@ -101,35 +75,6 @@ void Window::init()
 	move(screen->geometry().center() - frameGeometry().center());
 
 	newFile();
-}
-
-void Window::prepareMenu()
-{
-	fileMenu_->addAction(menuNewFile_);
-	fileMenu_->addAction(menuOpenFile_);
-	fileMenu_->addAction(menuSaveFile_);
-	fileMenu_->addAction(menuClearScreen_);
-	fileMenu_->addAction(menuCloseFile_);
-	fileMenu_->addAction(menuRemoveFile_);
-    fileMenu_->addSeparator();
-	fileMenu_->addAction(menuQuit_);
-    helpMenu_->addAction(menuAbout_);
-
-    QKeySequence newShortcut("Ctrl+N");
-    QKeySequence openShortcut("Ctrl+O");
-    QKeySequence saveShortcut("Ctrl+S");
-    QKeySequence clearScreenShortcut("Ctrl+L");
-    QKeySequence closeShortcut("Ctrl+W");
-    QKeySequence removeShortcut("Ctrl+R");
-    QKeySequence quitShortcut("Ctrl+Q");
-
-    menuNewFile_->setShortcut(newShortcut);
-    menuOpenFile_->setShortcut(openShortcut);
-    menuSaveFile_->setShortcut(saveShortcut);
-    menuClearScreen_->setShortcut(clearScreenShortcut);
-    menuCloseFile_->setShortcut(closeShortcut);
-    menuRemoveFile_->setShortcut(removeShortcut);
-    menuQuit_->setShortcut(quitShortcut);
 }
 
 void Window::prepareToolBar()
@@ -156,15 +101,6 @@ void Window::prepareToolBar()
 
 void Window::connectSignalsToSlots()
 {
-	connect(menuNewFile_, &QAction::triggered, this, &Window::newFile);
-	connect(menuOpenFile_, &QAction::triggered, this, &Window::openFile);
-    connect(menuSaveFile_, &QAction::triggered, this, &Window::saveFile);
-    connect(menuClearScreen_, &QAction::triggered, this, &Window::clearScreen);
-    connect(menuCloseFile_, &QAction::triggered, this, &Window::closeFile);
-    connect(menuRemoveFile_, &QAction::triggered, this, &Window::removeFile);
-	connect(menuAbout_, &QAction::triggered, this, &Window::showAboutMessage);
-	connect(menuQuit_, &QAction::triggered, this, &Window::quitApplication);
-
 	connect(toolBNew_, &QAction::triggered, this, &Window::newFile);
 	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
 	connect(toolBSave_, &QAction::triggered, this, &Window::saveFile);
@@ -174,44 +110,39 @@ void Window::connectSignalsToSlots()
 	connect(toolBQuit_, &QAction::triggered, this, &Window::quitApplication);
 }
 
-void Window::showAboutMessage()
-{
-	aboutCommand_->execute();
-}
-
 void Window::openFile()
 {
-	openCommand_->execute();
+	commandFactory_->getOpenCommand().execute();
 }
 
 void Window::newFile()
 {
-	newCommand_->execute();
+	commandFactory_->getNewCommand().execute();
 }
 
 void Window::saveFile()
 {
-	saveCommand_->execute();
+	commandFactory_->getSaveCommand().execute();
 }
 
 void Window::closeFile()
 {
-	closeCommand_->execute();
+	commandFactory_->getCloseCommand().execute();
 }
 
 void Window::removeFile()
 {
-	removeCommand_->execute();
+	commandFactory_->getRemoveCommand().execute();
 }
 
 void Window::clearScreen()
 {
-	clearCommand_->execute();
+	commandFactory_->getClearCommand().execute();
 }
 
 void Window::quitApplication()
 {
-	quitCommand_->execute();
+	commandFactory_->getQuitCommand().execute();
 }
 
 void Window::opened(bool status, const QString& filePath)
