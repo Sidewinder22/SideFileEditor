@@ -21,6 +21,8 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
 
@@ -60,5 +62,6 @@ private:
 };
 
 } // ::command
+} // ::window
 
 #endif /* SRC_WINDOW_COMMAND_QUITCOMMAND_HPP_ */

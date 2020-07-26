@@ -18,6 +18,8 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
 namespace utils
@@ -32,6 +34,7 @@ bool saveFile(QWidget* parent,
 	window::OpenFilesDock* openFileDock);
 
 } // :: utils
-} // ::comand
+} // ::command
+} // ::window
 
 #endif /* SRC_WINDOW_COMMAND_COMMANDUTILS_HPP_ */

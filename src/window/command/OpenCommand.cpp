@@ -18,6 +18,8 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
 
@@ -67,5 +69,4 @@ QString OpenCommand::askUserForFileName() const
 }
 
 } // ::command
-
-
+} // ::window

@@ -18,6 +18,8 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
 
@@ -56,3 +58,4 @@ void RemoveCommand::execute()
 }
 
 } // ::command
+} // ::window

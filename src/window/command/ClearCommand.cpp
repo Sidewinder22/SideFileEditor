@@ -13,6 +13,8 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
 
@@ -31,3 +33,4 @@ void ClearCommand::execute()
 }
 
 } // ::command
+} // ::window

@@ -18,6 +18,8 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
 
@@ -61,3 +63,4 @@ void CloseCommand::execute()
 }
 
 } // ::command
+} // ::window

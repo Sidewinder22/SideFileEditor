@@ -16,9 +16,10 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
-
 namespace utils
 {
 
@@ -82,8 +83,8 @@ bool saveFile(QWidget* parent, app::IMainController* mainController,
     return success;
 }
 
-} // :: utils
-
+} // ::utils
 } // ::comand
+} // ::window
 
 

@@ -16,6 +16,8 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
 
@@ -37,3 +39,4 @@ void AboutCommand::execute()
 }
 
 } // ::command
+} // ::window

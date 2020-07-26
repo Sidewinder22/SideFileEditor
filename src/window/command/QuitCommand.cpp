@@ -16,6 +16,8 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
 
@@ -74,3 +76,4 @@ void QuitCommand::verifyUnsavedBuffers()
 }
 
 } // ::command
+} // ::window

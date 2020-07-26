@@ -21,6 +21,8 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
+namespace window
+{
 namespace command
 {
 
@@ -57,3 +59,4 @@ void SaveCommand::execute()
 }
 
 } // ::command
+} // ::window
