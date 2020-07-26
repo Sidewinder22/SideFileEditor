@@ -17,10 +17,8 @@
 #include <QToolBar>
 #include <QTextEdit>
 #include <QMainWindow>
-
-#include "command/Command.hpp"
-
 #include "app/IMainController.hpp"
+#include "command/Command.hpp"
 #include "file/FileManager.hpp"
 #include "log/Logger.hpp"
 #include "utils/Utils.hpp"
@@ -150,19 +148,9 @@ private:
 	void prepareToolBar();
 
     /**
-     * @brief Show window with about description
+     * @brief Show message with about description
      */
-    void showAboutWindow();
-
-    /**
-     * @brief Verify which unsaved buffers should be saved.
-     */
-    void verifyUnsavedBuffers();
-
-    bool askForSaveBuffer(const QString& name);
-    QString askUserForFileLocation();
-
-    void updateDockAndStatuBar(const QString& fileName);
+    void showAboutMessage();
 
     log::Logger log_;                                   //!< Logger object
 	QMenu *fileMenu_;                                   //!< Pointer to file menu object
@@ -198,6 +186,7 @@ private:
     std::unique_ptr<command::Command> saveCommand_;
     std::unique_ptr<command::Command> closeCommand_;
     std::unique_ptr<command::Command> removeCommand_;
+    std::unique_ptr<command::Command> quitCommand_;
 };
 
 } // ::window

@@ -13,13 +13,8 @@
 #include <QScreen>
 #include <QMenuBar>
 #include <QStatusBar>
-#include <QIODevice>
-#include <QApplication>
 #include <QMessageBox>
-#include <QInputDialog>
-#include <QFileDialog>
-#include <QTextStream>
-#include <QDesktopWidget>
+#include <QGuiApplication>
 #include "command/ClearCommand.hpp"
 #include "command/OpenCommand.hpp"
 #include "command/AboutCommand.hpp"
@@ -27,6 +22,7 @@
 #include "command/SaveCommand.hpp"
 #include "command/CloseCommand.hpp"
 #include "command/RemoveCommand.hpp"
+#include "command/QuitCommand.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------
@@ -67,6 +63,8 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 		mainController_, openFileDock_))
 	, removeCommand_(std::make_unique<command::RemoveCommand>(this, textEdit_,
 		mainController_, openFileDock_))
+	, quitCommand_(std::make_unique<command::QuitCommand>(this,
+		mainController_))
 {
 	fileMenu_ = menuBar()->addMenu("File");
     helpMenu_ = menuBar()->addMenu("Help");
@@ -164,7 +162,7 @@ void Window::connectSignalsToSlots()
     connect(menuClearScreen_, &QAction::triggered, this, &Window::clearScreen);
     connect(menuCloseFile_, &QAction::triggered, this, &Window::closeFile);
     connect(menuRemoveFile_, &QAction::triggered, this, &Window::removeFile);
-	connect(menuAbout_, &QAction::triggered, this, &Window::showAboutWindow);
+	connect(menuAbout_, &QAction::triggered, this, &Window::showAboutMessage);
 	connect(menuQuit_, &QAction::triggered, this, &Window::quitApplication);
 
 	connect(toolBNew_, &QAction::triggered, this, &Window::newFile);
@@ -176,7 +174,7 @@ void Window::connectSignalsToSlots()
 	connect(toolBQuit_, &QAction::triggered, this, &Window::quitApplication);
 }
 
-void Window::showAboutWindow()
+void Window::showAboutMessage()
 {
 	aboutCommand_->execute();
 }
@@ -209,6 +207,11 @@ void Window::removeFile()
 void Window::clearScreen()
 {
 	clearCommand_->execute();
+}
+
+void Window::quitApplication()
+{
+	quitCommand_->execute();
 }
 
 void Window::opened(bool status, const QString& filePath)
@@ -288,75 +291,6 @@ void Window::textChanged()
 			openFileDock_->markCurrentFileAsUnsaved();
 		}
     }
-}
-
-void Window::quitApplication()
-{
-    log_ << MY_FUNC << log::END;
-
-    auto numberOfUnsavedBuffers = mainController_->numberOfUnsavedBuffers();
-
-    log_ << MY_FUNC << ", open files = "
-    	<< std::to_string(numberOfUnsavedBuffers)
-    	<< log::END;
-
-    if (numberOfUnsavedBuffers > 0)
-    {
-    	verifyUnsavedBuffers();
-    }
-
-    QApplication::quit();
-}
-
-void Window::verifyUnsavedBuffers()
-{
-    log_ << MY_FUNC << log::END;
-
-    auto unsavedBufferNames = mainController_->unsavedBufferNames();
-
-    for (auto && bufferName : unsavedBufferNames)
-   {
-		if (askForSaveBuffer(bufferName))
-		{
-			if (bufferName.contains('/'))
-			{
-				mainController_->save(utils_->extractFileName(bufferName));
-			}
-			else
-			{
-				auto fileName = askUserForFileLocation();
-				if (!fileName.isEmpty())
-				{
-					mainController_->saveBufferIntoFile(bufferName, fileName);
-				}
-			}
-		}
-    }
-}
-
-// Method is moved to the CommandUtils class
-bool Window::askForSaveBuffer(const QString& name)
-{
-	QMessageBox msgBox;
-
-	msgBox.setText("The file: " + name + " has been modified.");
-	msgBox.setInformativeText("Do you want to save your changes?");
-	msgBox.setStandardButtons( QMessageBox::Cancel |
-		QMessageBox::Discard |
-		QMessageBox::Save);
-	msgBox.setDefaultButton(QMessageBox::Save);
-
-	int ret = msgBox.exec();
-	return ret == QMessageBox::Save;
-}
-
-QString Window::askUserForFileLocation()
-{
-	return QFileDialog::getSaveFileName(
-		this,
-		tr("Select location for a file"),
-		QDir::homePath(),
-		tr("Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py *.js *.ccs *.json)"));
 }
 
 } // ::window

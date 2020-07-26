@@ -38,32 +38,6 @@ void SaveCommand::execute()
 {
     log_ << MY_FUNC << log::END;
 
-//    bool success = false;
-//
-//    if (fileName.contains("Buffer"))
-//    {
-//    	auto bufferName = fileName;
-//    	fileName = utils::askUserForFileLocation(parent_);
-//
-//    	if (!fileName.isEmpty())
-//    	{
-//    		int row = openFileDock_->getCurrentRow();
-//    		if (mainController_->saveBufferIntoFile(bufferName, fileName))
-//    		{
-//    			success = true;
-//
-//    		    openFileDock_->removeFileName(row);
-//    		}
-//    	}
-//    }
-//    else
-//    {
-//		if (mainController_->save(fileName))
-//		{
-//    		success = true;
-//		}
-//    }
-
     if (utils::saveFile(parent_, mainController_, openFileDock_))
     {
     	auto fileName = openFileDock_->getCurrentFileName();

@@ -3,7 +3,7 @@
  * @date    25 lip 2020
  * @file    CommandUtils.cpp
  *
- * @brief   
+ * @brief  	Class contains useful free functions for commands handling
  */
 
 //---------------------------------------------------------
