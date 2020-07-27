@@ -1,21 +1,20 @@
 /**
  * @author  {\_Sidewinder22_/}
- * @date    26 lip 2020
- * @file    Menu.hpp
+ * @date    27 lip 2020
+ * @file    ToolBar.hpp
  *
- * @brief   Class creates menu functionality
+ * @brief   Class creates tool bar functionality
  */
-#ifndef SRC_WINDOW_MENU_HPP_
-#define SRC_WINDOW_MENU_HPP_
+#ifndef SRC_WINDOW_TOOLBAR_HPP_
+#define SRC_WINDOW_TOOLBAR_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
 #include <memory>
-#include <QMenu>
 #include <QObject>
 #include <QAction>
-#include <QMenuBar>
+#include <QToolBar>
 #include "log/Logger.hpp"
 #include "command/ICommandFactory.hpp"
 
@@ -28,7 +27,7 @@ namespace window
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class Menu
+class ToolBar
 	: public QObject
 {
 	Q_OBJECT
@@ -37,10 +36,10 @@ class Menu
 //                  Public
 //---------------------------------------------------------
 public:
-	Menu(std::shared_ptr<command::ICommandFactory> commandFactory,
-		QMenuBar* menuBar);
+	ToolBar(std::shared_ptr<command::ICommandFactory> commandFactory,
+		QToolBar* toolBar);
 
-    virtual ~Menu() = default;
+    virtual ~ToolBar() = default;
 
     void init();
 
@@ -53,8 +52,6 @@ public slots:
 	void saveFile();
 	void clearScreen();
 	void closeFile();
-	void removeFile();
-	void showAboutMessage();
 	void quitApplication();
 
 //---------------------------------------------------------
@@ -71,19 +68,16 @@ private:
     log::Logger log_;
 	std::shared_ptr<command::ICommandFactory> commandFactory_;
 
-	QMenu *fileMenu_;
-	QMenu *helpMenu_;
+	QToolBar* toolBar_;
 
 	QAction *newAction_;
 	QAction *openAction_;
 	QAction *saveAction_;
 	QAction *clearScreenAction_;
 	QAction *closeAction_;
-	QAction *removeFileAction_;
-    QAction *aboutAction_;
 	QAction *quitAction_;
 };
 
 } // ::window
 
-#endif /* SRC_WINDOW_MENU_HPP_ */
+#endif /* SRC_WINDOW_TOOLBAR_HPP_ */

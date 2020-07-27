@@ -3,7 +3,7 @@
  * @date    26 lip 2020
  * @file    Menu.cpp
  *
- * @brief   Class creating menu functionality
+ * @brief   Class creates menu functionality
  */
 
 //---------------------------------------------------------
@@ -27,9 +27,9 @@ Menu::Menu(std::shared_ptr<command::ICommandFactory> commandFactory,
  	, newAction_(new QAction("&New", this))
 	, openAction_(new QAction("&Open", this))
 	, saveAction_(new QAction("&Save", this))
-	, menuClearScreen_(new QAction("&Clear screen", this))
-	, menuCloseFile_(new QAction("&Close", this))
-	, menuRemoveFile_(new QAction("&Remove", this))
+	, clearScreenAction_(new QAction("&Clear screen", this))
+	, closeAction_(new QAction("&Close", this))
+	, removeFileAction_(new QAction("&Remove", this))
 	, aboutAction_(new QAction("&About", this))
 	, quitAction_(new QAction("&Quit", this))
 {
@@ -42,9 +42,9 @@ void Menu::init()
 	fileMenu_->addAction(newAction_);
 	fileMenu_->addAction(openAction_);
 	fileMenu_->addAction(saveAction_);
-	fileMenu_->addAction(menuClearScreen_);
-	fileMenu_->addAction(menuCloseFile_);
-	fileMenu_->addAction(menuRemoveFile_);
+	fileMenu_->addAction(clearScreenAction_);
+	fileMenu_->addAction(closeAction_);
+	fileMenu_->addAction(removeFileAction_);
     fileMenu_->addSeparator();
 	fileMenu_->addAction(quitAction_);
 
@@ -61,9 +61,9 @@ void Menu::init()
     newAction_->setShortcut(newShortcut);
     openAction_->setShortcut(openShortcut);
     saveAction_->setShortcut(saveShortcut);
-    menuClearScreen_->setShortcut(clearScreenShortcut);
-    menuCloseFile_->setShortcut(closeShortcut);
-    menuRemoveFile_->setShortcut(removeShortcut);
+    clearScreenAction_->setShortcut(clearScreenShortcut);
+    closeAction_->setShortcut(closeShortcut);
+    removeFileAction_->setShortcut(removeShortcut);
     quitAction_->setShortcut(quitShortcut);
 
 	connectSignalsToSlots();
@@ -74,9 +74,9 @@ void Menu::connectSignalsToSlots()
 	connect(newAction_, &QAction::triggered, this, &Menu::newFile);
 	connect(openAction_, &QAction::triggered, this, &Menu::openFile);
 	connect(saveAction_, &QAction::triggered, this, &Menu::saveFile);
-	connect(menuClearScreen_, &QAction::triggered, this, &Menu::clearScreen);
-	connect(menuCloseFile_, &QAction::triggered, this, &Menu::closeFile);
-	connect(menuRemoveFile_, &QAction::triggered, this, &Menu::removeFile);
+	connect(clearScreenAction_, &QAction::triggered, this, &Menu::clearScreen);
+	connect(closeAction_, &QAction::triggered, this, &Menu::closeFile);
+	connect(removeFileAction_, &QAction::triggered, this, &Menu::removeFile);
 	connect(aboutAction_, &QAction::triggered, this, &Menu::showAboutMessage);
 	connect(quitAction_, &QAction::triggered, this, &Menu::quitApplication);
 }

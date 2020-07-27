@@ -11,9 +11,7 @@
 //                      Includes
 //---------------------------------------------------------
 #include <memory>
-#include <QLabel>
 #include <QWidget>
-#include <QToolBar>
 #include <QTextEdit>
 #include <QMainWindow>
 #include "app/IMainController.hpp"
@@ -25,6 +23,7 @@
 #include "IWindow.hpp"
 #include "OpenFilesDock.hpp"
 #include "Menu.hpp"
+#include "ToolBar.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -84,44 +83,9 @@ public:
 //---------------------------------------------------------
 public slots:
     /**
-     * @brief Open file and add it to the container
-     */
-	void openFile();
-
-    /**
-     * @brief Select file name for new file
-     */
-	void newFile();
-
-    /**
-     * @brief Save file
-     */
-    void saveFile();
-
-    /**
-     * @brief Close file
-     */
-    void closeFile();
-
-    /**
-     * @brief Remove file
-     */
-    void removeFile();
-
-    /**
-     * @brief Clear screen
-     */
-    void clearScreen();
-
-    /**
      * @brief Text changed
      */
     void textChanged();
-
-    /**
-     * @brief Quit from the application
-     */
-    void quitApplication();
 
 //---------------------------------------------------------
 //                  Protected
@@ -132,26 +96,7 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    /**
-     * @brief Connect signals to the proper slots
-     */
-	void connectSignalsToSlots();
-
-    /**
-     * @brief Prepare tool bar
-     */
-	void prepareToolBar();
-
-
     log::Logger log_;                                   //!< Logger object
-
-	QAction *toolBNew_;                                 //!< Pointer to the tool bar new file command
-	QAction *toolBOpen_;                                //!< Pointer to the tool bar open file command
-	QAction *toolBSave_;                                //!< Pointer to the tool bar save file command
-	QAction *toolBClear_;                               //!< Pointer to the tool bar clear screen command
-	QAction *toolBClose_;                               //!< Pointer to the tool bar close file command
-	QAction *toolBQuit_;                                //!< Pointer to the tool bar quit command
-	QToolBar *toolBar_;                                 //!< Pointer to the tool bar
 
 	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
     OpenFilesDock *openFileDock_;                       //!< Open files dock
@@ -160,6 +105,7 @@ private:
     app::IMainController* mainController_;              //!< Pointer to the observer
 
     std::unique_ptr<Menu> menu_;
+    std::unique_ptr<ToolBar> toolBar_;
 
     std::shared_ptr<command::ICommandFactory> commandFactory_;
 };

@@ -8,10 +8,7 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <QIcon>
-#include <QAction>
 #include <QScreen>
-#include <QMenuBar>
 #include <QStatusBar>
 #include <QMessageBox>
 #include <QGuiApplication>
@@ -27,12 +24,6 @@ namespace window
 Window::Window(app::IMainController* mainController, QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
-	, toolBNew_(nullptr)
-	, toolBOpen_(nullptr)
-    , toolBSave_(nullptr)
-    , toolBClear_(nullptr)
-    , toolBClose_(nullptr)
-	, toolBQuit_(nullptr)
 	, textEdit_(new QTextEdit(this))
     , openFileDock_(new OpenFilesDock(this, this))
     , utils_(std::make_unique<utils::Utils>())
@@ -40,9 +31,10 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 	, commandFactory_(std::make_shared<command::CommandFactory>(this, textEdit_,
 		mainController_, openFileDock_))
 {
-	menu_ = std::make_unique<Menu>(commandFactory_,  menuBar());
+	menu_ = std::make_unique<Menu>(commandFactory_, menuBar());
 
-	toolBar_ = addToolBar("Main toolbar");
+	toolBar_ = std::make_unique<ToolBar>(commandFactory_,
+		addToolBar("Main toolbar"));
 
     openFileDock_->createDock();
 
@@ -53,19 +45,15 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
     addDockWidget(Qt::TopDockWidgetArea, openFileDock_);
 
 	textEdit_->setStatusTip("Text editor window");
+    connect(textEdit_, &QTextEdit::textChanged, this, &Window::textChanged);
 }
 
 void Window::init()
 {
 	menu_->init();
-
-	prepareToolBar();
-	connectSignalsToSlots();
+	toolBar_->init();
 
     setCentralWidget(textEdit_);
-
-	statusBar()->showMessage("Ready!");
-
 	setWindowTitle("{\\_SideFileEditor_/} ");
 
 	resize(900, 600);
@@ -75,75 +63,10 @@ void Window::init()
 	QScreen *screen = QGuiApplication::primaryScreen();
 	move(screen->geometry().center() - frameGeometry().center());
 
-	newFile();
-}
+    // Create empty buffer during startup
+    commandFactory_->getNewCommand().execute();
 
-void Window::prepareToolBar()
-{
-	toolBNew_ = toolBar_->addAction(QIcon("icons/new.png"), "New File");
-	toolBOpen_ = toolBar_->addAction(QIcon("icons/open.png"), "Open File");
-	toolBSave_ = toolBar_->addAction(QIcon("icons/save.png"), "Save File");
-	toolBClear_ = toolBar_->addAction(QIcon("icons/clear.png"), "Clear Screen");
-	toolBClose_ = toolBar_->addAction(QIcon("icons/close.png"), "Close File");
-
-	toolBNew_->setStatusTip("New File");
-	toolBOpen_->setStatusTip("Open File");
-	toolBSave_->setStatusTip("Save File");
-	toolBClear_->setStatusTip("Clear Screen");
-	toolBClose_->setStatusTip("Close File");
-
-	toolBar_->addSeparator();
-
-	toolBQuit_ = toolBar_->addAction(QIcon("icons/quit.png"),
-		"Quit Application");
-
-	toolBar_->addSeparator();
-}
-
-void Window::connectSignalsToSlots()
-{
-	connect(toolBNew_, &QAction::triggered, this, &Window::newFile);
-	connect(toolBOpen_, &QAction::triggered, this, &Window::openFile);
-	connect(toolBSave_, &QAction::triggered, this, &Window::saveFile);
-	connect(toolBClear_, &QAction::triggered, this, &Window::clearScreen);
-	connect(toolBClose_, &QAction::triggered, this, &Window::closeFile);
-    connect(textEdit_, &QTextEdit::textChanged, this, &Window::textChanged);
-	connect(toolBQuit_, &QAction::triggered, this, &Window::quitApplication);
-}
-
-void Window::openFile()
-{
-	commandFactory_->getOpenCommand().execute();
-}
-
-void Window::newFile()
-{
-	commandFactory_->getNewCommand().execute();
-}
-
-void Window::saveFile()
-{
-	commandFactory_->getSaveCommand().execute();
-}
-
-void Window::closeFile()
-{
-	commandFactory_->getCloseCommand().execute();
-}
-
-void Window::removeFile()
-{
-	commandFactory_->getRemoveCommand().execute();
-}
-
-void Window::clearScreen()
-{
-	commandFactory_->getClearCommand().execute();
-}
-
-void Window::quitApplication()
-{
-	commandFactory_->getQuitCommand().execute();
+	statusBar()->showMessage("Ready!");
 }
 
 void Window::opened(bool status, const QString& filePath)
