@@ -18,7 +18,7 @@
 #include <QMenuBar>
 #include "app/IMainController.hpp"
 #include "log/Logger.hpp"
-#include "command/CommandFactory.hpp"
+#include "command/ICommandFactory.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -38,7 +38,7 @@ class Menu
 //                  Public
 //---------------------------------------------------------
 public:
-	Menu(std::shared_ptr<command::CommandFactory> commandFactory,
+	Menu(std::shared_ptr<command::ICommandFactory> commandFactory,
 		QMenuBar* menuBar);
 
     virtual ~Menu() = default;
@@ -70,7 +70,7 @@ private:
     void connectSignalsToSlots();
 
     log::Logger log_;
-	std::shared_ptr<command::CommandFactory> commandFactory_;
+	std::shared_ptr<command::ICommandFactory> commandFactory_;
 
 	QMenu *fileMenu_;
 	QMenu *helpMenu_;

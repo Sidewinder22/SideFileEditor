@@ -15,6 +15,7 @@
 #include <QStatusBar>
 #include <QMessageBox>
 #include <QGuiApplication>
+#include "command/CommandFactory.hpp"
 #include "Window.hpp"
 
 //---------------------------------------------------------

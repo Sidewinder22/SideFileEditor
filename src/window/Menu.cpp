@@ -18,7 +18,7 @@
 namespace window
 {
 
-Menu::Menu(std::shared_ptr<command::CommandFactory> commandFactory,
+Menu::Menu(std::shared_ptr<command::ICommandFactory> commandFactory,
 		QMenuBar* menuBar)
 	: log_("Menu")
 	, commandFactory_(commandFactory)

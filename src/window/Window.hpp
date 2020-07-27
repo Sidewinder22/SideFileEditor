@@ -17,7 +17,7 @@
 #include <QTextEdit>
 #include <QMainWindow>
 #include "app/IMainController.hpp"
-#include "command/CommandFactory.hpp"
+#include "command/ICommandFactory.hpp"
 #include "file/FileManager.hpp"
 #include "log/Logger.hpp"
 #include "utils/Utils.hpp"
@@ -161,7 +161,7 @@ private:
 
     std::unique_ptr<Menu> menu_;
 
-    std::shared_ptr<command::CommandFactory> commandFactory_;
+    std::shared_ptr<command::ICommandFactory> commandFactory_;
 };
 
 } // ::window

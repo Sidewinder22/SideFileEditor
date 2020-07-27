@@ -17,6 +17,7 @@
 #include "window/OpenFilesDock.hpp"
 #include "log/Logger.hpp"
 #include "Command.hpp"
+#include "ICommandFactory.hpp"
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
@@ -29,6 +30,7 @@ namespace command
 //                  Class declaration
 //---------------------------------------------------------
 class CommandFactory final
+	: public ICommandFactory
 {
 //---------------------------------------------------------
 //                  Public
@@ -38,14 +40,16 @@ public:
 		app::IMainController* mainController,
 		window::OpenFilesDock *openFileDock);
 
-	Command& getNewCommand();
-	Command& getOpenCommand();
-	Command& getSaveCommand();
-	Command& getClearCommand();
-	Command& getCloseCommand();
-	Command& getRemoveCommand();
-	Command& getAboutCommand();
-	Command& getQuitCommand();
+	virtual ~CommandFactory() = default;
+
+	Command& getNewCommand() override;
+	Command& getOpenCommand() override;
+	Command& getSaveCommand() override;
+	Command& getClearCommand() override;
+	Command& getCloseCommand() override;
+	Command& getRemoveCommand() override;
+	Command& getAboutCommand() override;
+	Command& getQuitCommand() override;
 
 //---------------------------------------------------------
 //                  Protected
