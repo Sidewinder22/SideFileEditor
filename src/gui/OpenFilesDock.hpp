@@ -1,5 +1,5 @@
-#ifndef SRC_WINDOW_OPENFILESDOCK_HPP_
-#define SRC_WINDOW_OPENFILESDOCK_HPP_
+#ifndef SRC_GUI_OPENFILESDOCK_HPP_
+#define SRC_GUI_OPENFILESDOCK_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    01.10.2019
@@ -19,7 +19,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace window
+namespace gui
 {
 
 //---------------------------------------------------------
@@ -99,6 +99,6 @@ private:
     IOpenFilesDockObserver* observer_;                  //!< Pointer to the observer
 };
 
-} // ::window
+} // ::gui
 
-#endif /* SRC_WINDOW_OPENFILESDOCK_HPP_ */
+#endif /* SRC_GUI_OPENFILESDOCK_HPP_ */

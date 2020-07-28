@@ -1,5 +1,5 @@
-#ifndef SRC_WINDOW_IWINDOW_HPP_
-#define SRC_WINDOW_IWINDOW_HPP_
+#ifndef SRC_GUI_IWINDOW_HPP_
+#define SRC_GUI_IWINDOW_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    24.01.2020
@@ -15,7 +15,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace window
+namespace gui
 {
 
 //---------------------------------------------------------
@@ -38,22 +38,16 @@ public:
      * @brief openFile() response
      * @param status Status of operation
      */
-    virtual void fileOpened(bool status, const QString& fileName) = 0;
-
-    /**
-     * @brief createFile() response
-     * @param fileName fileName of the created file
-     */
-    virtual void fileCreated(const QString& fileName) = 0;
+    virtual void opened(bool status, const QString& fileName) = 0;
 
     /**
      * @brief createBuffer() response
      * @param status Status of operation
      * @param bufferName name of the created buffer
      */
-    virtual void bufferCreated(const QString& bufferName) = 0;
+    virtual void created(const QString& bufferName) = 0;
 };
 
-} // ::window
+} // ::gui
 
-#endif /* SRC_WINDOW_IWINDOW_HPP_ */
+#endif /* SRC_GUI_IWINDOW_HPP_ */

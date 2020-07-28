@@ -88,12 +88,6 @@ public:
     virtual void remove(const QString& fileName) = 0;
 
     /**
-     * @brief Clear buffer content
-     * @param fileName file name
-     */
-    virtual void clear(const QString& fileName) = 0;
-
-    /**
      * @brief Return the number of the open buffers
      * @return Number of the open buffers
      */
@@ -110,6 +104,10 @@ public:
      * @return Vector with the names of the unsaved buffers
      */
     virtual std::vector<QString> unsavedBufferNames() const = 0;
+
+    virtual bool isFileSaved(const QString& fileName) = 0;
+
+    virtual bool isFileEmpty(const QString& fileName) = 0;
 };
 
 } // ::file

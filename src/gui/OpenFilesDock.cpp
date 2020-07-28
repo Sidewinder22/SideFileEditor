@@ -14,7 +14,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace window
+namespace gui
 {
 
 OpenFilesDock::OpenFilesDock(IOpenFilesDockObserver* observer, QWidget *parent)
@@ -97,4 +97,4 @@ void OpenFilesDock::rowChanged(int currentRow)
     observer_->anotherFileSelected(getCurrentFileName());
 }
 
-} // ::window
+} // ::gui

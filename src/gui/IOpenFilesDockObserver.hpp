@@ -1,5 +1,5 @@
-#ifndef SRC_WINDOW_IOPENFILESDOCKOBSERVER_HPP_
-#define SRC_WINDOW_IOPENFILESDOCKOBSERVER_HPP_
+#ifndef SRC_GUI_IOPENFILESDOCKOBSERVER_HPP_
+#define SRC_GUI_IOPENFILESDOCKOBSERVER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    28.02.2020
@@ -15,7 +15,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace window
+namespace gui
 {
 
 //---------------------------------------------------------
@@ -37,6 +37,6 @@ public:
     virtual void anotherFileSelected(const QString& fileName) = 0;
 };
 
-} // ::window
+} // ::gui
 
-#endif /* SRC_WINDOW_IOPENFILESDOCKOBSERVER_HPP_ */
+#endif /* SRC_GUI_IOPENFILESDOCKOBSERVER_HPP_ */

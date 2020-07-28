@@ -34,19 +34,13 @@ public:
      * @brief Open file
      * @param fileName path for file
      */
-    virtual void openFile(const QString& fileName) = 0;
-
-    /**
-     * @brief Create new file
-     * @param fileName path for file
-     */
-    virtual void createFile(const QString& fileName) = 0;
+    virtual void openFile(const QString& fileName) const = 0;
 
     /**
      * @brief Create new empty buffer
      * @param bufferName name for the buffer
      */
-    virtual void createBuffer(const QString& bufferName) = 0;
+    virtual void createBuffer(const QString& bufferName) const = 0;
 
     /**
      * @brief Save buffer's content as a new file
@@ -55,7 +49,7 @@ public:
      * @return True if successful, False otherwise
      */
     virtual bool saveBufferIntoFile(const QString& bufferName,
-    	const QString& fileName) = 0;
+    	const QString& fileName) const = 0;
 
     /**
      * @brief Text changed notification
@@ -64,39 +58,33 @@ public:
      * @return True if buffer content changed, False otherwise
      */
     virtual bool textChanged(const QString& fileName,
-    	const QString &content) = 0;
+    	const QString &content) const = 0;
 
     /**
      * @brief Read data from file
      * @param fileName file name
      * @return Vector contains file's data
      */
-    virtual std::vector<QString> read(const QString& fileName) = 0;
+    virtual std::vector<QString> read(const QString& fileName) const = 0;
 
     /**
      * @brief Save data to file
      * @param fileName file name
      * @return True if successful, False otherwise
      */
-    virtual bool save(const QString &fileName) = 0;
+    virtual bool save(const QString &fileName) const = 0;
 
     /**
      * @brief Close open file
      * @param fileName file name
      */
-    virtual void close(const QString& fileName) = 0;
+    virtual void close(const QString& fileName) const = 0;
 
     /**
      * @brief Remove file
      * @param fileName file name
      */
-    virtual void remove(const QString& fileName) = 0;
-
-    /**
-     * @brief Clear buffer content
-     * @param fileName file name
-     */
-    virtual void clear(const QString& fileName) = 0;
+    virtual void remove(const QString& fileName) const = 0;
 
     /**
      * @brief Return the number of the open buffers
@@ -115,6 +103,10 @@ public:
      * @return Vector with the names of the unsaved buffers
      */
     virtual std::vector<QString> unsavedBufferNames() const = 0;
+
+    virtual bool isFileSaved(const QString& fileName) const = 0;
+
+    virtual bool isFileEmpty(const QString& fileName) const = 0;
 };
 
 } // ::app

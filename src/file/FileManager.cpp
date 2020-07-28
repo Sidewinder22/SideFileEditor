@@ -21,7 +21,7 @@ namespace file
 
 FileManager::FileManager()
     : log_("FileManager")
-    , utils_(std::make_unique<utils::Utils>())
+    , utils_(std::make_unique<common::Utils>())
 { }
 
 void FileManager::createBuffer(const QString& fileName)
@@ -162,15 +162,6 @@ void FileManager::remove(const QString& fileName)
     }
 }
 
-void FileManager::clear(const QString& fileName)
-{
-    auto buffIt = getBufferIterator(fileName);
-    if (buffIt != openBuffers_.end())
-    {
-        (*buffIt)->clear();
-    }
-}
-
 std::vector<std::shared_ptr<IFile>>::iterator FileManager::getFileIterator(
 	const QString& fileName)
 {
@@ -280,6 +271,30 @@ std::vector<QString> FileManager::unsavedBufferNames() const
 	}
 
 	return names;
+}
+
+bool FileManager::isFileSaved(const QString& fileName)
+{
+	bool saved = false;
+    auto buffIt = getBufferIterator(fileName);
+    if (buffIt != openBuffers_.end())
+    {
+    	saved = (*buffIt)->isSaved();
+    }
+
+    return saved;
+}
+
+bool FileManager::isFileEmpty(const QString& fileName)
+{
+	bool empty = false;
+    auto buffIt = getBufferIterator(fileName);
+    if (buffIt != openBuffers_.end())
+    {
+    	empty = (*buffIt)->empty();
+    }
+
+    return empty;
 }
 
 } // ::file

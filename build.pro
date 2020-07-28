@@ -13,16 +13,18 @@ QT      += widgets
 # DEFINES +=  "DEBUG=1"
 
 HEADERS +=  src/app/*.hpp \
+            src/common/*.hpp \
             src/file/*.hpp \
             src/log/*.hpp \
-            src/utils/*.hpp \
-            src/window/*.hpp
+            src/gui/*.hpp \
+            src/gui/command/*.hpp
 
 SOURCES +=  src/app/*.cpp \
+            src/common/*.cpp \
             src/file/*.cpp \
             src/log/*.cpp \
-            src/utils/*.cpp \
-            src/window/*.cpp
+            src/gui/*.cpp \
+            src/gui/command/*.cpp
 
 QMAKE_CXXFLAGS += -std=c++2a -Wextra
 

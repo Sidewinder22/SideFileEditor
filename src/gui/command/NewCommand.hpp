@@ -1,57 +1,61 @@
-#ifndef SRC_UTILS_UTILS_H_
-#define SRC_UTILS_UTILS_H_
 /**
  * @author  {\_Sidewinder22_/}
- * @date    02.10.2019
+ * @date    25 lip 2020
+ * @file    NewCommand.hpp
  *
- * @brief   Set of useful utils
+ * @brief   Class handles new command
  */
+#ifndef SRC_GUI_COMMAND_NEWCOMMAND_HPP_
+#define SRC_GUI_COMMAND_NEWCOMMAND_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <QString>
-
-//---------------------------------------------------------
-//                  Global context
-//---------------------------------------------------------
+#include "app/IMainController.hpp"
+#include "log/Logger.hpp"
+#include "Command.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace utils
+namespace gui
+{
+namespace command
 {
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class Utils
+class NewCommand
+	: public Command
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
-    public:
-        Utils() = default;
-        virtual ~Utils() = default;
+public:
+	NewCommand(app::IMainController* mainController);
+    virtual ~NewCommand() = default;
 
-        /**
-         * @brief Extract filename from the given path
-         * @param filePath Path to the file
-         * @return File name
-         */
-        QString extractFileName(QString filePath);
+	//-----------------------------------------------------
+	//               Command
+	//-----------------------------------------------------
+    void execute() override;
 
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
-    protected:
+protected:
 
 //---------------------------------------------------------
 //                  Private
 //---------------------------------------------------------
-    private:
+private:
+    log::Logger log_;
+    app::IMainController* mainController_;
+    static int bufferNumber_;	//!< Number for next buffer to create
 };
 
-} // ::utils
+} // ::command
+} // ::gui
 
-#endif /* SRC_UTILS_UTILS_H_ */
+#endif /* SRC_GUI_COMMAND_NEWCOMMAND_HPP_ */

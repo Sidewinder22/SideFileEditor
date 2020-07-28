@@ -8,7 +8,8 @@
 #include <iostream>
 #include <memory>
 #include <QApplication>
-#include "window/Window.hpp"
+
+#include "../gui/Window.hpp"
 #include "MainController.hpp"
 
 int main(int argc, char *argv[])

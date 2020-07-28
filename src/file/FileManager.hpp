@@ -13,8 +13,9 @@
 #include <memory>
 #include <vector>
 #include <QString>
+
+#include "common/Utils.hpp"
 #include "log/Logger.hpp"
-#include "utils/Utils.hpp"
 #include "IBuffer.hpp"
 #include "IFile.hpp"
 #include "IFileManager.hpp"
@@ -95,12 +96,6 @@ public:
     void remove(const QString& fileName) override;
 
     /**
-     * @brief Clear buffer content
-     * @param fileName file name
-     */
-    void clear(const QString& fileName) override;
-
-    /**
      * @brief Return the number of the open buffers
      * @return Number of the open buffers
      */
@@ -118,6 +113,10 @@ public:
      */
     std::vector<QString> unsavedBufferNames() const override;
 
+    bool isFileSaved(const QString& fileName) override;
+
+    bool isFileEmpty(const QString& fileName) override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
@@ -127,8 +126,10 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    std::vector<std::shared_ptr<IFile>>::iterator getFileIterator(const QString& fileName);
-    std::vector<std::shared_ptr<IBuffer>>::iterator getBufferIterator(const QString& fileName);
+    std::vector<std::shared_ptr<IFile>>::iterator
+		getFileIterator(const QString& fileName);
+    std::vector<std::shared_ptr<IBuffer>>::iterator
+		getBufferIterator(const QString& fileName);
     void loadFileContentToNewBuffer(std::shared_ptr<IFile> file);
     std::shared_ptr<IFile> createFile(const QString& fileName);
     void closeBuffer(const QString& fileName);
@@ -150,7 +151,7 @@ private:
     }
 
     log::Logger log_;                               		//!< Logger object
-    std::unique_ptr<utils::Utils> utils_;                   //!< Pointer to utils object
+    std::unique_ptr<common::Utils> utils_;                   //!< Pointer to utils object
     std::vector<std::shared_ptr<IFile>> openFiles_;         //!< Vector for open files
     std::vector<std::shared_ptr<IBuffer>> openBuffers_;     //!< Vector for open buffers
 };

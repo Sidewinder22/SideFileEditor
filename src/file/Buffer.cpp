@@ -23,7 +23,7 @@ Buffer::Buffer(QString fileName)
 { 
     // Nothing
 }
-    
+
 QString Buffer::fileName() const
 {
     return fileName_;
@@ -41,6 +41,7 @@ void Buffer::setContent(const std::vector<QString> &content)
 	{
 		saved_ = false;
 	}
+
     content_ = content;
 }
 
