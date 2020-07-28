@@ -9,8 +9,8 @@
 //                      Includes
 //---------------------------------------------------------
 #include "file/FileManager.hpp"
-#include "window/Window.hpp"
 #include "MainController.hpp"
+#include "../gui/Window.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -23,7 +23,7 @@ namespace app
 //---------------------------------------------------------
 MainController::MainController()
     : log_("MainController")
-    , window_(std::make_shared<window::Window>(this))
+    , window_(std::make_shared<gui::Window>(this))
     , fileManager_(std::make_shared<file::FileManager>())
 {
     // Nothing

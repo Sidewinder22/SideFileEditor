@@ -12,10 +12,11 @@
 //---------------------------------------------------------
 #include <memory>
 #include <QObject>
+
+#include "../gui/IWindow.hpp"
 #include "file/IFileManager.hpp"
 #include "IMainController.hpp"
 #include "log/Logger.hpp"
-#include "window/IWindow.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -132,7 +133,7 @@ protected:
 //---------------------------------------------------------
 private:
     log::Logger log_;                                       //!< Logger object
-    std::shared_ptr<window::IWindow> window_;               //!< Window unique pointer
+    std::shared_ptr<gui::IWindow> window_;               //!< Window unique pointer
     std::shared_ptr<file::IFileManager> fileManager_;       //!< File manager unique pointer
 };
 
