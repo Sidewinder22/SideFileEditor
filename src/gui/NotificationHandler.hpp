@@ -11,6 +11,7 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include <memory>
 #include <QWidget>
 #include <QTextEdit>
 #include <QStatusBar>
@@ -59,7 +60,7 @@ private:
     QStatusBar* statusBar_;
     app::IMainController* mainController_;
     gui::OpenFilesDock *openFileDock_;
-    std::unique_ptr<common::Utils> utils_;
+    std::unique_ptr<::common::Utils> utils_;
 };
 
 } // ::gui
