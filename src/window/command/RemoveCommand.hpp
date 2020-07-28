@@ -11,8 +11,8 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <QWidget>
 #include <QTextEdit>
+#include <QStatusBar>
 #include "app/IMainController.hpp"
 #include "window/OpenFilesDock.hpp"
 #include "log/Logger.hpp"
@@ -36,7 +36,7 @@ class RemoveCommand
 //                  Public
 //---------------------------------------------------------
 public:
-	RemoveCommand(QWidget *parent, QTextEdit* textEdit,
+	RemoveCommand(QTextEdit* textEdit, QStatusBar* statusBar,
 		app::IMainController* mainController,
 		window::OpenFilesDock *openFileDock);
     virtual ~RemoveCommand() = default;
@@ -56,8 +56,8 @@ protected:
 //---------------------------------------------------------
 private:
     log::Logger log_;
-    QWidget* parent_;
     QTextEdit* textEdit_;
+    QStatusBar* statusBar_;
     app::IMainController* mainController_;
     window::OpenFilesDock *openFileDock_;
 };

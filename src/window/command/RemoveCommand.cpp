@@ -13,6 +13,7 @@
 #include <QStatusBar>
 #include <QMainWindow>
 #include "CommandUtils.hpp"
+#include "common/Constants.hpp"
 #include "RemoveCommand.hpp"
 
 //---------------------------------------------------------
@@ -23,11 +24,12 @@ namespace window
 namespace command
 {
 
-RemoveCommand::RemoveCommand(QWidget *parent, QTextEdit* textEdit,
-	app::IMainController* mainController, window::OpenFilesDock *openFileDock)
+RemoveCommand::RemoveCommand(QTextEdit* textEdit, QStatusBar* statusBar,
+		app::IMainController* mainController,
+		window::OpenFilesDock *openFileDock)
 	: log_("RemoveCommand")
-	, parent_(parent)
 	, textEdit_(textEdit)
+	, statusBar_(statusBar)
 	, mainController_(mainController)
 	, openFileDock_(openFileDock)
 {
@@ -47,13 +49,13 @@ void RemoveCommand::execute()
 
     if (!fileName.isEmpty())
     {
-        static_cast<QMainWindow>(parent_).statusBar()->showMessage(
-        	"File: " + fileName + " removed.");
+    	statusBar_->showMessage("File: " + fileName + " removed.",
+    		common::constants::STATUS_BAR_MSG_TIMEOUT);
         mainController_->remove(fileName);
     }
     else
     {
-        static_cast<QMainWindow>(parent_).statusBar()->clearMessage();
+    	statusBar_->clearMessage();
     }
 }
 

@@ -15,6 +15,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QMainWindow>
+#include "common/Constants.hpp"
 #include "CommandUtils.hpp"
 #include "SaveCommand.hpp"
 
@@ -26,10 +27,12 @@ namespace window
 namespace command
 {
 
-SaveCommand::SaveCommand(QWidget* parent, app::IMainController* mainController,
-	window::OpenFilesDock* openFileDock)
+SaveCommand::SaveCommand(QWidget* parent, QStatusBar* statusBar,
+		app::IMainController* mainController,
+		window::OpenFilesDock* openFileDock)
 	: log_("SaveCommand")
 	, parent_(parent)
+	, statusBar_(statusBar)
 	, mainController_(mainController)
 	, openFileDock_(openFileDock)
 {
@@ -44,16 +47,14 @@ void SaveCommand::execute()
     {
     	auto fileName = openFileDock_->getCurrentFileName();
 
-    	// Cast is necessary because statuBar() method is from
-    	// the QMainWindow class not from the QWidget class
-		static_cast<QMainWindow>(parent_).statusBar()->showMessage(
-			"[File saved]: " + fileName);
+    	statusBar_->showMessage("[File saved]: " + fileName,
+    			common::constants::STATUS_BAR_MSG_TIMEOUT);
 		openFileDock_->markCurrentFileAsSaved();
     }
     else
     {
-		static_cast<QMainWindow>(parent_).statusBar()->showMessage(
-			"Can't save file!");
+    	statusBar_->showMessage("Can't save file!",
+    		common::constants::STATUS_BAR_MSG_TIMEOUT);
 		QMessageBox::warning(parent_, "INFO", "Cannot save file!");
     }
 }

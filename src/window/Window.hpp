@@ -13,17 +13,18 @@
 #include <memory>
 #include <QWidget>
 #include <QTextEdit>
+#include <QStatusBar>
 #include <QMainWindow>
 #include "app/IMainController.hpp"
 #include "command/ICommandFactory.hpp"
 #include "file/FileManager.hpp"
 #include "log/Logger.hpp"
-#include "utils/Utils.hpp"
 #include "IOpenFilesDockObserver.hpp"
 #include "IWindow.hpp"
 #include "OpenFilesDock.hpp"
 #include "Menu.hpp"
 #include "ToolBar.hpp"
+#include "NotificationHandler.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -96,17 +97,14 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    log::Logger log_;                                   //!< Logger object
-
-	QTextEdit *textEdit_;                               //!< Pointer to the text edit field
-    OpenFilesDock *openFileDock_;                       //!< Open files dock
-
-    std::unique_ptr<utils::Utils> utils_;               //!< Pointer to utils object
-    app::IMainController* mainController_;              //!< Pointer to the observer
-
+    log::Logger log_;
+	QTextEdit* textEdit_;
+	QStatusBar* statusBar_;
+    OpenFilesDock* openFileDock_;
+    app::IMainController* mainController_;
     std::unique_ptr<Menu> menu_;
     std::unique_ptr<ToolBar> toolBar_;
-
+    std::unique_ptr<window::NotificationHandler> notificationHandler_;
     std::shared_ptr<command::ICommandFactory> commandFactory_;
 };
 

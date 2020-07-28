@@ -25,7 +25,7 @@ QuitCommand::QuitCommand(QWidget* parent, app::IMainController* mainController)
 	: log_("QuitCommand")
 	, parent_(parent)
 	, mainController_(mainController)
-	, commonUtils_(std::make_unique<::utils::Utils>())
+	, commonUtils_(std::make_unique<::common::Utils>())
 {
 	// Nothing
 }

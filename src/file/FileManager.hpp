@@ -13,8 +13,9 @@
 #include <memory>
 #include <vector>
 #include <QString>
+
+#include "common/Utils.hpp"
 #include "log/Logger.hpp"
-#include "utils/Utils.hpp"
 #include "IBuffer.hpp"
 #include "IFile.hpp"
 #include "IFileManager.hpp"
@@ -150,7 +151,7 @@ private:
     }
 
     log::Logger log_;                               		//!< Logger object
-    std::unique_ptr<utils::Utils> utils_;                   //!< Pointer to utils object
+    std::unique_ptr<common::Utils> utils_;                   //!< Pointer to utils object
     std::vector<std::shared_ptr<IFile>> openFiles_;         //!< Vector for open files
     std::vector<std::shared_ptr<IBuffer>> openBuffers_;     //!< Vector for open buffers
 };

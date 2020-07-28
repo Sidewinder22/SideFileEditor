@@ -12,6 +12,7 @@
 //                      Includes
 //---------------------------------------------------------
 #include <QWidget>
+#include <QStatusBar>
 #include "app/IMainController.hpp"
 #include "window/OpenFilesDock.hpp"
 #include "log/Logger.hpp"
@@ -35,7 +36,8 @@ class SaveCommand
 //                  Public
 //---------------------------------------------------------
 public:
-	SaveCommand(QWidget *parent, app::IMainController* mainController,
+	SaveCommand(QWidget *parent, QStatusBar* statusBar,
+		app::IMainController* mainController,
 		window::OpenFilesDock *openFileDock);
     virtual ~SaveCommand() = default;
 
@@ -55,6 +57,7 @@ protected:
 private:
     log::Logger log_;
     QWidget* parent_;
+    QStatusBar* statusBar_;
     app::IMainController* mainController_;
     window::OpenFilesDock *openFileDock_;
 };

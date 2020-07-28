@@ -28,11 +28,12 @@ namespace command
 {
 
 CommandFactory::CommandFactory(QWidget *parent, QTextEdit* textEdit,
-		app::IMainController* mainController,
+		QStatusBar* statusBar, app::IMainController* mainController,
 		window::OpenFilesDock *openFileDock)
 	: log_("CommandFactory")
 	, parent_(parent)
 	, textEdit_(textEdit)
+	, statusBar_(statusBar)
 	, mainController_(mainController)
 	, openFileDock_(openFileDock)
 {
@@ -53,7 +54,8 @@ Command& CommandFactory::getOpenCommand()
 
 Command& CommandFactory::getSaveCommand()
 {
-	static SaveCommand saveCommand(parent_, mainController_, openFileDock_);
+	static SaveCommand saveCommand(parent_, statusBar_, mainController_,
+		openFileDock_);
 	return saveCommand;
 }
 
@@ -65,14 +67,14 @@ Command& CommandFactory::getClearCommand()
 
 Command& CommandFactory::getCloseCommand()
 {
-	static CloseCommand closeCommand(parent_, textEdit_, mainController_,
-		openFileDock_);
+	static CloseCommand closeCommand(parent_, textEdit_, statusBar_,
+		mainController_, openFileDock_);
 	return closeCommand;
 }
 
 Command& CommandFactory::getRemoveCommand()
 {
-	static RemoveCommand removeCommand(parent_, textEdit_, mainController_,
+	static RemoveCommand removeCommand(textEdit_, statusBar_, mainController_,
 		openFileDock_);
 	return removeCommand;
 }

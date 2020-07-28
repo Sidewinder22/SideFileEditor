@@ -13,9 +13,9 @@
 //---------------------------------------------------------
 #include <memory>
 #include <QWidget>
+#include "common/Utils.hpp"
 #include "app/IMainController.hpp"
 #include "log/Logger.hpp"
-#include "utils/Utils.hpp"
 #include "Command.hpp"
 
 //---------------------------------------------------------
@@ -58,7 +58,7 @@ private:
     log::Logger log_;
     QWidget* parent_;
     app::IMainController* mainController_;
-    std::unique_ptr<::utils::Utils> commonUtils_;
+    std::unique_ptr<::common::Utils> commonUtils_;
 };
 
 } // ::command

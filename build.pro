@@ -13,16 +13,16 @@ QT      += widgets
 # DEFINES +=  "DEBUG=1"
 
 HEADERS +=  src/app/*.hpp \
+            src/common/*.hpp \
             src/file/*.hpp \
             src/log/*.hpp \
-            src/utils/*.hpp \
             src/window/*.hpp \
             src/window/command/*.hpp
 
 SOURCES +=  src/app/*.cpp \
+            src/common/*.cpp \
             src/file/*.cpp \
             src/log/*.cpp \
-            src/utils/*.cpp \
             src/window/*.cpp \
             src/window/command/*.cpp
 

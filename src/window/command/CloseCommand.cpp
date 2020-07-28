@@ -12,6 +12,7 @@
 #include <string>
 #include <QStatusBar>
 #include <QMainWindow>
+#include "common/Constants.hpp"
 #include "CommandUtils.hpp"
 #include "CloseCommand.hpp"
 
@@ -24,10 +25,12 @@ namespace command
 {
 
 CloseCommand::CloseCommand(QWidget *parent, QTextEdit* textEdit,
-	app::IMainController* mainController, window::OpenFilesDock *openFileDock)
+	QStatusBar* statusBar, app::IMainController* mainController,
+	window::OpenFilesDock *openFileDock)
 	: log_("CloseCommand")
 	, parent_(parent)
 	, textEdit_(textEdit)
+	, statusBar_(statusBar)
 	, mainController_(mainController)
 	, openFileDock_(openFileDock)
 {
@@ -52,13 +55,13 @@ void CloseCommand::execute()
 
     if (!fileName.isEmpty())
     {
-        static_cast<QMainWindow>(parent_).statusBar()->showMessage(
-        	"File: " + fileName + " closed.");
+    	statusBar_->showMessage("File: " + fileName + " closed.",
+    			common::constants::STATUS_BAR_MSG_TIMEOUT);
         mainController_->close(fileName);
     }
     else
     {
-        static_cast<QMainWindow>(parent_).statusBar()->clearMessage();
+    	statusBar_->clearMessage();
     }
 }
 

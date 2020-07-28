@@ -9,8 +9,6 @@
 //                      Includes
 //---------------------------------------------------------
 #include <QScreen>
-#include <QStatusBar>
-#include <QMessageBox>
 #include <QGuiApplication>
 #include "command/CommandFactory.hpp"
 #include "Window.hpp"
@@ -25,16 +23,18 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 	: QMainWindow(parent)
     , log_("Window")
 	, textEdit_(new QTextEdit(this))
+	, statusBar_(statusBar())
     , openFileDock_(new OpenFilesDock(this, this))
-    , utils_(std::make_unique<utils::Utils>())
     , mainController_(mainController)
 	, commandFactory_(std::make_shared<command::CommandFactory>(this, textEdit_,
-		mainController_, openFileDock_))
+		statusBar_, mainController_, openFileDock_))
 {
 	menu_ = std::make_unique<Menu>(commandFactory_, menuBar());
-
 	toolBar_ = std::make_unique<ToolBar>(commandFactory_,
 		addToolBar("Main toolbar"));
+
+	notificationHandler_ = std::make_unique<window::NotificationHandler>(this,
+		textEdit_, statusBar_, mainController_, openFileDock_);
 
     openFileDock_->createDock();
 
@@ -44,7 +44,6 @@ Window::Window(app::IMainController* mainController, QWidget *parent)
 		QMainWindow::AllowTabbedDocks);
     addDockWidget(Qt::TopDockWidgetArea, openFileDock_);
 
-	textEdit_->setStatusTip("Text editor window");
     connect(textEdit_, &QTextEdit::textChanged, this, &Window::textChanged);
 }
 
@@ -66,86 +65,34 @@ void Window::init()
     // Create empty buffer during startup
     commandFactory_->getNewCommand().execute();
 
-	statusBar()->showMessage("Ready!");
+    statusBar_->showMessage("Ready!");
 }
 
 void Window::opened(bool status, const QString& filePath)
 {
-    log_ << MY_FUNC << log::END;
+	auto windowTitle = notificationHandler_->opened(status, filePath);
 
-    if (!filePath.isEmpty())
-    {
-        if (status)
-        {
-            auto fileName = utils_->extractFileName(filePath);
-            openFileDock_->addFileName(fileName);
-
-            textEdit_->clear();
-
-            auto fileContent = mainController_->read(fileName);
-            for (auto&& line : fileContent)
-            {
-                textEdit_->append(line);
-            }
-
-            statusBar()->showMessage("[Open file]: " + filePath);
-            setWindowTitle(fileName);
-
-        }
-        else
-        {
-            log_ << MY_FUNC << "Cannot open file!!!" << log::END;
-
-            QMessageBox::information(this, "ERROR", "Can't open file!!!");
-            statusBar()->showMessage("Cannot open file!!!" + filePath);
-        }
-    }
+	if (!windowTitle.isEmpty())
+	{
+		setWindowTitle(windowTitle);
+	}
 }
 
 void Window::created(const QString& filePath)
 {
-    log_ << MY_FUNC << log::END;
-
-	openFileDock_->addFileName(utils_->extractFileName(filePath));
-
-	statusBar()->showMessage("[New]: " + filePath);
-	setWindowTitle(filePath);
+	auto windowTitle = notificationHandler_->created(filePath);
+	setWindowTitle(windowTitle);
 }
 
 void Window::anotherFileSelected(const QString& fileName)
 {
-    log_ << MY_FUNC << log::END;
-
-	statusBar()->showMessage("[Current file]: " + fileName);
-	setWindowTitle(fileName);
-
-	textEdit_->clear();
-
-	auto fileContent = mainController_->read(utils_->extractFileName(fileName));
-	for (auto&& line : fileContent)
-	{
-		textEdit_->append(line);
-	}
+	auto windowTitle = notificationHandler_->anotherFileSelected(fileName);
+	setWindowTitle(windowTitle);
 }
 
 void Window::textChanged()
 {
-    auto fileName = openFileDock_->getCurrentFileName();
-    if (!fileName.isEmpty())
-    {
-		auto text = textEdit_->toPlainText();
-		bool fileContentChanged = false;
-
-		if (!text.isEmpty())
-		{
-			fileContentChanged = mainController_->textChanged(fileName, text);
-		}
-
-		if (fileContentChanged)
-		{
-			openFileDock_->markCurrentFileAsUnsaved();
-		}
-    }
+	notificationHandler_->textChanged();
 }
 
 } // ::window

@@ -21,7 +21,7 @@ namespace file
 
 FileManager::FileManager()
     : log_("FileManager")
-    , utils_(std::make_unique<utils::Utils>())
+    , utils_(std::make_unique<common::Utils>())
 { }
 
 void FileManager::createBuffer(const QString& fileName)

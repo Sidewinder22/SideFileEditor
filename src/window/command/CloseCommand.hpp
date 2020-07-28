@@ -14,6 +14,7 @@
 //---------------------------------------------------------
 #include <QWidget>
 #include <QTextEdit>
+#include <QStatusBar>
 #include "app/IMainController.hpp"
 #include "window/OpenFilesDock.hpp"
 #include "log/Logger.hpp"
@@ -38,6 +39,7 @@ class CloseCommand
 //---------------------------------------------------------
 public:
 	CloseCommand(QWidget *parent, QTextEdit* textEdit,
+		QStatusBar* statusBar,
 		app::IMainController* mainController,
 		window::OpenFilesDock *openFileDock);
 
@@ -60,6 +62,7 @@ private:
     log::Logger log_;
     QWidget* parent_;
     QTextEdit* textEdit_;
+	QStatusBar* statusBar_;
     app::IMainController* mainController_;
     window::OpenFilesDock *openFileDock_;
 };
