@@ -1,73 +1,90 @@
-#ifndef SRC_FILE_IFILE_HPP_
-#define SRC_FILE_IFILE_HPP_
+#ifndef SRC_CONTENT_FILE_HPP_
+#define SRC_CONTENT_FILE_HPP_
 /**
  * @author  {\_Sidewinder22_/}
- * @date    02.10.2019
+ * @date    03.10.2016
  *
- * @brief   Interface for class wrapping a file.
+ * @brief   Class wrapping a file.
  */
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <vector>
+#include <QFile>
 #include <QString>
+#include "log/Logger.hpp"
+#include "IFile.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class IFile
+class File
+    : public IFile
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-    virtual ~IFile() = default;
+    File(QString fileName);
+    virtual ~File();
 
     /**
      * @brief Get file name
      * @return String representing file name
      */
-    virtual QString fileName() const = 0;
+    QString fileName() const override;
 
     /**
      * @brief Rename the file
      * @param newFileName New file name
      * @return True if successful, False otherwise
      */
-    virtual bool rename(const QString& newFileName) = 0;
+    bool rename(const QString& newFileName) override;
 
     /**
      * @brief Read data from file
      * @return Vector contains file's data
      */
-    virtual std::vector<QString> read() = 0;
+    std::vector<QString> read() override;
 
     /**
-     * @brief Write content to file
+     * @brief Write data to file
      * @param content Content to write to file
      */
-    virtual void write(const std::vector<QString>& content) = 0;
+    void write(const std::vector<QString>& content) override;
 
     /**
      * @brief Remove file from filesystem
      * @return True if successful, False otherwise
      */
-    virtual bool remove() = 0;
+    bool remove() override;
 
     /**
      * @brief Check if file is empty
      * @return True if file is empty, False otherwise
      */
-    virtual bool isEmpty() = 0;
+    bool isEmpty() override;
+
+//---------------------------------------------------------
+//                  Protected
+//---------------------------------------------------------
+protected:
+
+//---------------------------------------------------------
+//                  Private
+//---------------------------------------------------------
+private:
+    log::Logger log_;                       //!< Logger object
+    QFile file_;                            //!< QFile object
+    bool isEmpty_;                          //!< Is file empty (new file created)
 };
 
-} // ::file
+} // ::content
 
-#endif /* SRC_FILE_IFILE_HPP_ */
+#endif /* SRC_CONTENT_FILE_HPP_ */

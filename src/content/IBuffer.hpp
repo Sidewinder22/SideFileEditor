@@ -1,5 +1,5 @@
-#ifndef SRC_FILE_IBUFFER_HPP_
-#define SRC_FILE_IBUFFER_HPP_
+#ifndef SRC_CONTENT_IBUFFER_HPP_
+#define SRC_CONTENT_IBUFFER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    31.03.2020
@@ -15,7 +15,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 //---------------------------------------------------------
@@ -43,6 +43,6 @@ public:
     virtual void setSaved(bool saved) = 0;
 };
 
-} // ::file
+} // ::content
 
-#endif /* SRC_FILE_IBUFFER_HPP_ */
+#endif /* SRC_CONTENT_IBUFFER_HPP_ */

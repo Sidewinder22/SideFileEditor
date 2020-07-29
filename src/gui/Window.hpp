@@ -16,7 +16,7 @@
 #include <QStatusBar>
 #include <QMainWindow>
 #include "app/IMainController.hpp"
-#include "file/FileManager.hpp"
+#include "content/FileManager.hpp"
 #include "log/Logger.hpp"
 #include "command/ICommandFactory.hpp"
 #include "IOpenFilesDockObserver.hpp"

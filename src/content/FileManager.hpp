@@ -1,5 +1,5 @@
-#ifndef SRC_FILE_FILEMANAGER_HPP_
-#define SRC_FILE_FILEMANAGER_HPP_
+#ifndef SRC_CONTENT_FILEMANAGER_HPP_
+#define SRC_CONTENT_FILEMANAGER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    11.02.2019
@@ -13,7 +13,6 @@
 #include <memory>
 #include <vector>
 #include <QString>
-
 #include "common/Utils.hpp"
 #include "log/Logger.hpp"
 #include "IBuffer.hpp"
@@ -23,7 +22,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 //---------------------------------------------------------
@@ -156,6 +155,6 @@ private:
     std::vector<std::shared_ptr<IBuffer>> openBuffers_;     //!< Vector for open buffers
 };
 
-} // ::file
+} // ::content
 
-#endif /* SRC_FILE_FILEMANAGER_HPP_ */
+#endif /* SRC_CONTENT_FILEMANAGER_HPP_ */

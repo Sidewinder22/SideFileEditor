@@ -13,7 +13,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 Buffer::Buffer(QString fileName)
@@ -70,4 +70,4 @@ void Buffer::setSaved(bool saved)
 	saved_ = saved;
 }
 
-} // ::file
+} // ::content

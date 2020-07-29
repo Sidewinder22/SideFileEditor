@@ -1,5 +1,5 @@
-#ifndef SRC_FILE_IFILEMANAGER_HPP_
-#define SRC_FILE_IFILEMANAGER_HPP_
+#ifndef SRC_CONTENT_IFILEMANAGER_HPP_
+#define SRC_CONTENT_IFILEMANAGER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    10.10.2019
@@ -16,7 +16,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 //---------------------------------------------------------
@@ -110,6 +110,6 @@ public:
     virtual bool isFileEmpty(const QString& fileName) = 0;
 };
 
-} // ::file
+} // ::content
 
-#endif /* SRC_FILE_IFILEMANAGER_HPP_ */
+#endif /* SRC_CONTENT_IFILEMANAGER_HPP_ */

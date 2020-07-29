@@ -1,5 +1,5 @@
-#ifndef SRC_FILE_BUFFER_HPP_
-#define SRC_FILE_BUFFER_HPP_
+#ifndef SRC_CONTENT_BUFFER_HPP_
+#define SRC_CONTENT_BUFFER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    31.03.2020
@@ -18,7 +18,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 //---------------------------------------------------------
@@ -69,6 +69,6 @@ private:
     std::vector<QString> content_;			//!< Buffer's content
 };
 
-} // ::file
+} // ::content
 
-#endif /* SRC_FILE_BUFFER_HPP_ */
+#endif /* SRC_CONTENT_BUFFER_HPP_ */

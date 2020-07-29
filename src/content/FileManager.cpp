@@ -16,7 +16,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 FileManager::FileManager()
@@ -297,4 +297,4 @@ bool FileManager::isFileEmpty(const QString& fileName)
     return empty;
 }
 
-} // ::file
+} // ::content
