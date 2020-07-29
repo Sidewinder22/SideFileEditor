@@ -31,7 +31,7 @@ NotificationHandler::NotificationHandler(QWidget *parent, QTextEdit* textEdit,
 	, statusBar_(statusBar)
 	, mainController_(mainController)
 	, openFileDock_(openFileDock)
-	, utils_(std::make_unique<common::Utils>())
+	, commonUtils_(std::make_unique<common::CommonUtils>())
 {
 	// Nothing
 }
@@ -45,7 +45,7 @@ QString NotificationHandler::opened(bool status, const QString& filePath)
     {
         if (status)
         {
-            auto fileName = utils_->extractFileName(filePath);
+            auto fileName = commonUtils_->extractFileName(filePath);
             openFileDock_->addFileName(fileName);
 
             textEdit_->clear();
@@ -77,7 +77,7 @@ QString NotificationHandler::created(const QString& filePath)
 {
     log_ << MY_FUNC << log::END;
 
-	openFileDock_->addFileName(utils_->extractFileName(filePath));
+	openFileDock_->addFileName(commonUtils_->extractFileName(filePath));
 
 	statusBar_->showMessage("[New]: " + filePath,
 		common::constants::STATUS_BAR_MSG_TIMEOUT);
@@ -112,7 +112,7 @@ QString NotificationHandler::anotherFileSelected(const QString& fileName)
 		common::constants::STATUS_BAR_MSG_TIMEOUT);
 	textEdit_->clear();
 
-	auto fileContent = mainController_->read(utils_->extractFileName(fileName));
+	auto fileContent = mainController_->read(commonUtils_->extractFileName(fileName));
 	for (auto&& line : fileContent)
 	{
 		textEdit_->append(line);

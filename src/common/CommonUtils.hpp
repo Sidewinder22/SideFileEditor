@@ -1,67 +1,53 @@
 /**
  * @author  {\_Sidewinder22_/}
- * @date    26 lip 2020
- * @file    QuitCommand.hpp
+ * @date    02.10.2019
  *
- * @brief   Class handles quit command
+ * @brief   Set of useful utils
  */
-#ifndef SRC_GUI_COMMAND_QUITCOMMAND_HPP_
-#define SRC_GUI_COMMAND_QUITCOMMAND_HPP_
+#ifndef SRC_COMMON_COMMONUTILS_H_
+#define SRC_COMMON_COMMONUTILS_H_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <memory>
-#include <QWidget>
-#include "common/CommonUtils.hpp"
-#include "app/IMainController.hpp"
-#include "log/Logger.hpp"
-#include "Command.hpp"
+#include <QString>
 
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace gui
-{
-namespace command
+namespace common
 {
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class QuitCommand
-	: public Command
+class CommonUtils
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
-public:
-	QuitCommand(QWidget *parent, app::IMainController* mainController);
-    virtual ~QuitCommand() = default;
+    public:
+        CommonUtils() = default;
+        virtual ~CommonUtils() = default;
 
-	//-----------------------------------------------------
-	//               Command
-	//-----------------------------------------------------
-    void execute() override;
+        /**
+         * @brief Extract filename from the given path
+         * @param filePath Path to the file
+         * @return File name
+         */
+        QString extractFileName(QString filePath);
 
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
-protected:
+    protected:
 
 //---------------------------------------------------------
 //                  Private
 //---------------------------------------------------------
-private:
-    void verifyUnsavedBuffers();
-
-    log::Logger log_;
-    QWidget* parent_;
-    app::IMainController* mainController_;
-    std::unique_ptr<common::CommonUtils> commonUtils_;
+    private:
 };
 
-} // ::command
-} // ::gui
+} // ::common
 
-#endif /* SRC_GUI_COMMAND_QUITCOMMAND_HPP_ */
+#endif /* SRC_COMMON_COMMONUTILS_H_ */

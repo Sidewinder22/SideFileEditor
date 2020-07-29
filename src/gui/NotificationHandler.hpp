@@ -15,8 +15,8 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QStatusBar>
-#include "common/Utils.hpp"
 #include "app/IMainController.hpp"
+#include "common/CommonUtils.hpp"
 #include "log/Logger.hpp"
 #include "OpenFilesDock.hpp"
 
@@ -60,7 +60,7 @@ private:
     QStatusBar* statusBar_;
     app::IMainController* mainController_;
     gui::OpenFilesDock *openFileDock_;
-    std::unique_ptr<::common::Utils> utils_;
+    std::unique_ptr<::common::CommonUtils> commonUtils_;
 };
 
 } // ::gui

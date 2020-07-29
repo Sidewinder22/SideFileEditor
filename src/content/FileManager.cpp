@@ -21,7 +21,8 @@ namespace content
 
 FileManager::FileManager()
     : log_("FileManager")
-    , utils_(std::make_unique<common::Utils>())
+    , commonUtils_(std::make_unique<common::CommonUtils>())
+	, utils_(std::make_unique<ContentUtils>())
 { }
 
 void FileManager::createBuffer(const QString& fileName)
@@ -45,7 +46,7 @@ bool FileManager::saveBufferIntoFile(const QString& bufferName,
     if (file)
     {
 		openFiles_.push_back(file);
-		auto fileIt = getFileIterator(utils_->extractFileName(fileName));
+		auto fileIt = getFileIterator(commonUtils_->extractFileName(fileName));
 
 		saveFile(fileIt, buffIt);
 		success = true;
@@ -165,7 +166,7 @@ void FileManager::remove(const QString& fileName)
 std::vector<std::shared_ptr<IFile>>::iterator FileManager::getFileIterator(
 	const QString& fileName)
 {
-    return getIterator<IFile>(
+    return utils_->getVectorIterator<IFile>(
         fileName,
         openFiles_.begin(),
         openFiles_.end());
@@ -174,7 +175,7 @@ std::vector<std::shared_ptr<IFile>>::iterator FileManager::getFileIterator(
 std::vector<std::shared_ptr<IBuffer>>::iterator FileManager::getBufferIterator(
 	const QString& fileName)
 {
-    return getIterator<IBuffer>(
+    return utils_->getVectorIterator<IBuffer>(
         fileName,
         openBuffers_.begin(),
         openBuffers_.end());

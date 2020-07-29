@@ -1,11 +1,11 @@
-#ifndef SRC_CONTENT_FILE_HPP_
-#define SRC_CONTENT_FILE_HPP_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    03.10.2016
  *
  * @brief   Class wrapping a file.
  */
+#ifndef SRC_CONTENT_FILE_HPP_
+#define SRC_CONTENT_FILE_HPP_
 
 //---------------------------------------------------------
 //                      Includes

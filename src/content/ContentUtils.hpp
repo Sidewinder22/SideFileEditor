@@ -1,57 +1,63 @@
-#ifndef SRC_UTILS_UTILS_H_
-#define SRC_UTILS_UTILS_H_
 /**
  * @author  {\_Sidewinder22_/}
- * @date    02.10.2019
+ * @date    30 lip 2020
+ * @file    Utils.hpp
  *
- * @brief   Set of useful utils
+ * @brief   Content utils
  */
+#ifndef SRC_CONTENT_CONTENTUTILS_HPP_
+#define SRC_CONTENT_CONTENTUTILS_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include <memory>
 #include <QString>
-
-//---------------------------------------------------------
-//                  Global context
-//---------------------------------------------------------
+#include "common/CommonUtils.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace common
+namespace content
 {
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class Utils
+class ContentUtils final
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
-    public:
-        Utils() = default;
-        virtual ~Utils() = default;
+public:
+	ContentUtils();
 
-        /**
-         * @brief Extract filename from the given path
-         * @param filePath Path to the file
-         * @return File name
-         */
-        QString extractFileName(QString filePath);
+    template<typename T>
+    auto getVectorIterator(
+        const QString& fileName,
+        std::vector<std::shared_ptr<T>>::iterator begin,
+        std::vector<std::shared_ptr<T>>::iterator end)
+    {
+        return std::find_if(
+            begin,
+            end,
+            [&fileName, this](auto element) {
+                return utils_->extractFileName(element->fileName()) == fileName;
+            });
+    }
 
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
-    protected:
+protected:
 
 //---------------------------------------------------------
 //                  Private
 //---------------------------------------------------------
-    private:
+private:
+    std::unique_ptr<::common::CommonUtils> utils_;
 };
 
-} // ::common
+} // ::content
 
-#endif /* SRC_UTILS_UTILS_H_ */
+#endif /* SRC_CONTENT_CONTENTUTILS_HPP_ */

@@ -13,7 +13,8 @@
 #include <memory>
 #include <vector>
 #include <QString>
-#include "common/Utils.hpp"
+#include "common/CommonUtils.hpp"
+#include "ContentUtils.hpp"
 #include "log/Logger.hpp"
 #include "IBuffer.hpp"
 #include "IFile.hpp"
@@ -28,6 +29,7 @@ namespace content
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
+// TODO: Change the name of this class to the ContentManager
 class FileManager
     : public IFileManager
 {
@@ -135,24 +137,11 @@ private:
     void saveFile(std::vector<std::shared_ptr<IFile>>::iterator fileIt,
         std::vector<std::shared_ptr<IBuffer>>::iterator buffIt);
 
-    template<typename T>
-    auto getIterator(
-        const QString& fileName,
-        std::vector<std::shared_ptr<T>>::iterator begin,
-        std::vector<std::shared_ptr<T>>::iterator end)
-    {
-        return std::find_if(
-            begin,
-            end,
-            [&fileName, this](auto element) {
-                return utils_->extractFileName(element->fileName()) == fileName;
-            });
-    }
-
-    log::Logger log_;                               		//!< Logger object
-    std::unique_ptr<common::Utils> utils_;                   //!< Pointer to utils object
-    std::vector<std::shared_ptr<IFile>> openFiles_;         //!< Vector for open files
-    std::vector<std::shared_ptr<IBuffer>> openBuffers_;     //!< Vector for open buffers
+    log::Logger log_;
+    std::unique_ptr<common::CommonUtils> commonUtils_;
+    std::unique_ptr<ContentUtils> utils_;
+    std::vector<std::shared_ptr<IFile>> openFiles_;
+    std::vector<std::shared_ptr<IBuffer>> openBuffers_;
 };
 
 } // ::content
