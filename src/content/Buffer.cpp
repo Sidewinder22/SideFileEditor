@@ -34,7 +34,7 @@ void Buffer::setFileName(const QString& fileName)
 	fileName_ = fileName;
 }
 
-void Buffer::setContent(const std::vector<QString> &content)
+void Buffer::write(const std::vector<QString> &content)
 {
 	if (!content_.empty() &&
 		content_[0] != content[0])
@@ -45,7 +45,7 @@ void Buffer::setContent(const std::vector<QString> &content)
     content_ = content;
 }
 
-std::vector<QString> Buffer::getContent() const
+std::vector<QString> Buffer::read() const
 {
     return content_;
 }

@@ -39,15 +39,13 @@ public:
 
     void setFileName(const QString& fileName) override;
 
-    void setContent(const std::vector<QString> &content) override;
-
-    std::vector<QString> getContent() const override;
+    void write(const std::vector<QString> &content) override;
+    std::vector<QString> read() const override;
 
     bool empty() const override;
     void clear() override;
 
     bool isSaved() const override;
-
     void setSaved(bool saved) override;
 
 //---------------------------------------------------------

@@ -1,21 +1,20 @@
 /**
  * @author  {\_Sidewinder22_/}
  * @date    30 lip 2020
- * @file    FileManager.hpp
+ * @file    ContentManager.hpp
  *
- * @brief   File manager
+ * @brief   Manager for buffer and files
  */
-#ifndef SRC_CONTENT_FILEMANAGER_HPP_
-#define SRC_CONTENT_FILEMANAGER_HPP_
+#ifndef SRC_CONTENT_CONTENTMANAGER_HPP_
+#define SRC_CONTENT_CONTENTMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
 #include <memory>
-#include <vector>
 #include "log/Logger.hpp"
-#include "ContentUtils.hpp"
-#include "IFile.hpp"
+#include "IBufferManager.hpp"
+#include "IContentManager.hpp"
 #include "IFileManager.hpp"
 
 //---------------------------------------------------------
@@ -27,15 +26,15 @@ namespace content
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class FileManager final
-	: public IFileManager
+class ContentManager final
+	: public IContentManager
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-	FileManager();
-	virtual ~FileManager() = default;
+	ContentManager();
+	virtual ~ContentManager() = default;
 
 	bool open(const QString& fileName) override;
 
@@ -50,18 +49,13 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-	std::shared_ptr<IFile> create(const QString& fileName);
-
-    std::vector<std::shared_ptr<IFile>>::iterator
-		getIterator(const QString& fileName);
+	void loadFileContentIntoBuffer(const QString& fileName);
 
 	log::Logger log_;
-	std::vector<std::shared_ptr<IFile>> files_;
-	std::unique_ptr<ContentUtils> contentUtils_;
+	std::unique_ptr<IBufferManager> bufferManager_;
+	std::unique_ptr<IFileManager> fileManager_;
 };
 
 } // ::content
 
-
-
-#endif /* SRC_CONTENT_FILEMANAGER_HPP_ */
+#endif /* SRC_CONTENT_CONTENTMANAGER_HPP_ */

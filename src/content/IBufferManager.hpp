@@ -1,15 +1,17 @@
-#ifndef SRC_CONTENT_IBUFFER_HPP_
-#define SRC_CONTENT_IBUFFER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
- * @date    31.03.2020
+ * @date    30 lip 2020
+ * @file    IBufferManager.hpp
  *
- * @brief   Class to buffering text which represent file content.
+ * @brief   Interface for buffer manager
  */
+#ifndef SRC_CONTENT_IBUFFERMANAGER_HPP_
+#define SRC_CONTENT_IBUFFERMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include <vector>
 #include <QString>
 
 //---------------------------------------------------------
@@ -21,27 +23,22 @@ namespace content
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class IBuffer
+class IBufferManager
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-    virtual ~IBuffer() = default;
+    virtual ~IBufferManager() = default;
 
-    virtual QString fileName() const = 0;
-    virtual void setFileName(const QString& fileName) = 0;
+    virtual void create(const QString& fileName) = 0;
 
-    virtual void write(const std::vector<QString> &content) = 0;
-    virtual std::vector<QString> read() const = 0;
+    virtual void write(const QString& fileName,
+    	const std::vector<QString> &content) = 0;
+    virtual std::vector<QString> read(const QString& fileName) = 0;
 
-    virtual bool empty() const = 0;
-    virtual void clear() = 0;
-
-    virtual bool isSaved() const = 0;
-    virtual void setSaved(bool saved) = 0;
 };
 
 } // ::content
 
-#endif /* SRC_CONTENT_IBUFFER_HPP_ */
+#endif /* SRC_CONTENT_IBUFFERMANAGER_HPP_ */

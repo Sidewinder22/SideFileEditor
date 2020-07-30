@@ -1,12 +1,12 @@
 /**
  * @author  {\_Sidewinder22_/}
  * @date    30 lip 2020
- * @file    FileManager.hpp
+ * @file    BufferManager.hpp
  *
- * @brief   File manager
+ * @brief   Buffer manager
  */
-#ifndef SRC_CONTENT_FILEMANAGER_HPP_
-#define SRC_CONTENT_FILEMANAGER_HPP_
+#ifndef SRC_CONTENT_BUFFERMANAGER_HPP_
+#define SRC_CONTENT_BUFFERMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
@@ -14,9 +14,9 @@
 #include <memory>
 #include <vector>
 #include "log/Logger.hpp"
+#include "IBuffer.hpp"
+#include "IBufferManager.hpp"
 #include "ContentUtils.hpp"
-#include "IFile.hpp"
-#include "IFileManager.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -27,19 +27,20 @@ namespace content
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class FileManager final
-	: public IFileManager
+class BufferManager final
+	: public IBufferManager
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-	FileManager();
-	virtual ~FileManager() = default;
+	BufferManager();
+	virtual ~BufferManager() = default;
 
-	bool open(const QString& fileName) override;
+    void create(const QString& fileName) override;
 
-	std::vector<QString> read(const QString& fileName) override;
+    void write(const QString& fileName, const std::vector<QString> &content);
+    std::vector<QString> read(const QString& fileName) override;
 
 //---------------------------------------------------------
 //                  Protected
@@ -50,18 +51,14 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-	std::shared_ptr<IFile> create(const QString& fileName);
-
-    std::vector<std::shared_ptr<IFile>>::iterator
-		getIterator(const QString& fileName);
+    std::vector<std::shared_ptr<IBuffer>>::iterator getBufferIterator(
+    	const QString& fileName);
 
 	log::Logger log_;
-	std::vector<std::shared_ptr<IFile>> files_;
+	std::vector<std::shared_ptr<IBuffer>> buffers_;
 	std::unique_ptr<ContentUtils> contentUtils_;
 };
 
 } // ::content
 
-
-
-#endif /* SRC_CONTENT_FILEMANAGER_HPP_ */
+#endif /* SRC_CONTENT_BUFFERMANAGER_HPP_ */

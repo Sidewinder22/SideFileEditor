@@ -55,7 +55,7 @@ void OpenCommand::execute()
 			openFileDock_->removeFileName(row);
 		}
 
-		mainController_->openFile(fileName);
+		mainController_->open(fileName);
     }
 }
 

@@ -11,8 +11,7 @@
 //                      Includes
 //---------------------------------------------------------
 #include <memory>
-#include <QObject>
-#include "content/IFileManager.hpp"
+#include "content/IContentManager.hpp"
 #include "gui/IWindow.hpp"
 #include "log/Logger.hpp"
 #include "IMainController.hpp"
@@ -27,11 +26,8 @@ namespace app
 //                  Class declaration
 //---------------------------------------------------------
 class MainController
-    : public QObject
-    , public IMainController
+	: public IMainController
 {
-	Q_OBJECT
-
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
@@ -48,36 +44,13 @@ public:
 //---------------------------------------------------------
 protected:
     //-----------------------------------------------------
-    //                  IWindowObserver
+    //                  IMainController
     //-----------------------------------------------------
     /**
      * @brief Open file
      * @param fileName path for file
      */
-    void openFile(const QString& fileName) const override;
-
-    /**
-     * @brief Save buffer's content as a new file
-     * @param bufferName name of the buffer
-     * @param fileName path for file
-     * @return True if successful, False otherwise
-     */
-    bool saveBufferIntoFile(const QString& bufferName,
-    	const QString& fileName) const override;
-
-    /**
-     * @brief Create new empty buffer
-     * @param bufferName name for the buffer
-     */
-    void createBuffer(const QString& bufferName) const override;
-
-    /**
-     * @brief Text changed notification
-     * @param fileName fileName
-     * @param content content of the buffer
-     * @return True if buffer content changed, False otherwise
-     */
-    bool textChanged(const QString& fileName, const QString &content) const override;
+    void open(const QString& fileName) const override;
 
     /**
      * @brief Read data from file
@@ -106,6 +79,30 @@ protected:
     void remove(const QString& fileName) const override;
 
     /**
+     * @brief Save buffer's content as a new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     * @return True if successful, False otherwise
+     */
+    bool saveBufferIntoFile(const QString& bufferName,
+    	const QString& fileName) const override;
+
+    /**
+     * @brief Create new empty buffer
+     * @param bufferName name for the buffer
+     */
+    void createBuffer(const QString& bufferName) const override;
+
+    /**
+     * @brief Text changed notification
+     * @param fileName fileName
+     * @param content content of the buffer
+     * @return True if buffer content changed, False otherwise
+     */
+    bool textChanged(const QString& fileName, const QString &content) const
+    	override;
+
+    /**
      * @brief Return the number of the open buffers
      * @return Number of the open buffers
      */
@@ -123,17 +120,27 @@ protected:
      */
     std::vector<QString> unsavedBufferNames() const override;
 
+    /**
+     * @brief Check if file is saved
+     * @param fileName name of the file to check
+     * @return True if file is saved, False otherwise
+     */
     bool isFileSaved(const QString& fileName) const override;
 
+    /*
+     * @brief Check if file is empty
+     * @param fileName name of the file to check
+     * @return True if file is empty, False otherwise
+     */
     bool isFileEmpty(const QString& fileName) const override;
 
 //---------------------------------------------------------
 //                  Private
 //---------------------------------------------------------
 private:
-    log::Logger log_;                                       //!< Logger object
-    std::shared_ptr<gui::IWindow> window_;               //!< Window unique pointer
-    std::shared_ptr<content::IFileManager> fileManager_;       //!< File manager unique pointer
+    log::Logger log_;
+    std::unique_ptr<gui::IWindow> window_;
+    std::unique_ptr<content::IContentManager> contentManager_;
 };
 
 } // ::app
