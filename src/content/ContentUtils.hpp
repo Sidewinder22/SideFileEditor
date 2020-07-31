@@ -42,7 +42,7 @@ public:
             begin,
             end,
             [&fileName, this](auto element) {
-                return utils_->extractFileName(element->fileName()) == fileName;
+        		return element->fileName() == fileName;
             });
     }
 

@@ -27,7 +27,6 @@ FileManager::FileManager()
 
 bool FileManager::open(const QString& fileName)
 {
-	log_ << MY_FUNC << "fileName = " << fileName << log::END;
     bool success = false;
 
     auto file = create(fileName);
@@ -50,6 +49,10 @@ std::vector<QString> FileManager::read(const QString& fileName)
     if (it != files_.end())
     {
         return (*it)->read();
+    }
+    else
+    {
+    	log_ << MY_FUNC << "file not found!" << log::END;
     }
 
     return {};

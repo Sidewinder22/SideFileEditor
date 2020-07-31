@@ -27,8 +27,6 @@ BufferManager::BufferManager()
 
 void BufferManager::create(const QString& fileName)
 {
-    log_ << MY_FUNC << "fileName = " << fileName << log::END;
-
     auto buffer = std::make_shared<Buffer>(fileName);
     buffers_.push_back(buffer);
 }
@@ -42,6 +40,10 @@ void BufferManager::write(const QString& fileName,
 		(*it)->write(content);
 		(*it)->setSaved(true);
 	}
+	else
+	{
+    	log_ << MY_FUNC << "buffer not found!" << log::END;
+	}
 }
 
 std::vector<QString> BufferManager::read(const QString& fileName)
@@ -50,6 +52,10 @@ std::vector<QString> BufferManager::read(const QString& fileName)
     if (it != buffers_.end())
     {
         return (*it)->read();
+    }
+    else
+    {
+    	log_ << MY_FUNC << "buffer not found!" << log::END;
     }
 
     return {};

@@ -60,8 +60,7 @@ void QuitCommand::verifyUnsavedBuffers()
 		{
 			if (bufferName.contains('/'))
 			{
-				mainController_->save(
-					commonUtils_->extractFileName(bufferName));
+				mainController_->save(bufferName);
 			}
 			else
 			{

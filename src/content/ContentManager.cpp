@@ -48,7 +48,9 @@ std::vector<QString> ContentManager::read(const QString& fileName)
 void ContentManager::loadFileContentIntoBuffer(const QString& fileName)
 {
 	bufferManager_->create(fileName);
-	bufferManager_->write(fileName, fileManager_->read(fileName));
+
+	auto content = fileManager_->read(fileName);
+	bufferManager_->write(fileName, content);
 }
 
 } // ::content
