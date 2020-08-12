@@ -34,6 +34,11 @@ public:
     virtual bool open(const QString& fileName) = 0;
 
     virtual std::vector<QString> read(const QString& fileName) = 0;
+
+    virtual void save(const QString& fileName,
+    	const std::vector<QString>& content) = 0;
+
+    virtual bool isOpen(const QString& fileName) = 0;
 };
 
 } // ::content

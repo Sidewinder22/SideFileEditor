@@ -33,10 +33,13 @@ public:
 
     virtual void create(const QString& fileName) = 0;
 
-    virtual void write(const QString& fileName,
+    virtual bool write(const QString& fileName,
     	const std::vector<QString> &content) = 0;
+
     virtual std::vector<QString> read(const QString& fileName) = 0;
 
+    virtual void setSaved(const QString& fileName, bool saved) = 0;
+    virtual bool isSaved(const QString& fileName) = 0;
 };
 
 } // ::content

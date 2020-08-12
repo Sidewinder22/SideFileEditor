@@ -61,13 +61,14 @@ bool FileMgr::saveBufferIntoFile(const QString& bufferName,
     
 bool FileMgr::textChanged(const QString &fileName, const QString &content)
 {
-    auto it = getBufferIterator(fileName);
-    if (it != openBuffers_.end())
-    {
-        (*it)->write({ content });
-    }
-
-    return !(*it)->isSaved();
+//    auto it = getBufferIterator(fileName);
+//    if (it != openBuffers_.end())
+//    {
+//        (*it)->write({ content });
+//    }
+//
+//    return !(*it)->isSaved();
+	return {};
 }
 
 bool FileMgr::openFile(const QString& fileName)
@@ -108,35 +109,35 @@ bool FileMgr::save(const QString &fileName)
     log_ << MY_FUNC << "fileName: " << fileName << log::END;
     bool result = false;
 
-    auto buffIt = getBufferIterator(fileName);
-    if (buffIt != openBuffers_.end())
-    {
-        auto fileIt = getFileIterator(fileName);
-        if (fileIt != openFiles_.end())
-        {
-            saveFile(fileIt, buffIt);
-
-            (*buffIt)->setSaved(true);
-            result = true;
-        }
-        else
-        {
-            auto file = createFile((*buffIt)->fileName());
-            if (file)
-            {
-                openFiles_.push_back(file);
-                file->write((*buffIt)->read());
-
-                (*buffIt)->setSaved(true);
-                result = true;
-            }
-            else
-            {
-                log_ << MY_FUNC << "Cannot create File class object!!!" << log::END;
-            }
-        }
-    }
-    
+//    auto buffIt = getBufferIterator(fileName);
+//    if (buffIt != openBuffers_.end())
+//    {
+//        auto fileIt = getFileIterator(fileName);
+//        if (fileIt != openFiles_.end())
+//        {
+//            saveFile(fileIt, buffIt);
+//
+//            (*buffIt)->setSaved(true);
+//            result = true;
+//        }
+//        else
+//        {
+//            auto file = createFile((*buffIt)->fileName());
+//            if (file)
+//            {
+//                openFiles_.push_back(file);
+//                file->write((*buffIt)->read());
+//
+//                (*buffIt)->setSaved(true);
+//                result = true;
+//            }
+//            else
+//            {
+//                log_ << MY_FUNC << "Cannot create File class object!!!" << log::END;
+//            }
+//        }
+//    }
+//
     return result;
 }
 
@@ -187,15 +188,15 @@ std::vector<std::shared_ptr<IBuffer>>::iterator FileMgr::getBufferIterator(
 
 void FileMgr::loadFileContentToNewBuffer(std::shared_ptr<IFile> file)
 {
-    auto buffer = std::make_shared<Buffer>(file->fileName());
-    openBuffers_.push_back(buffer);
-
-    auto content = file->read();
-    buffer->write(content);
-
-    // Set saved as true because content of file has been read from file
-    // and it is not modified at this point
-    buffer->setSaved(true);
+//    auto buffer = std::make_shared<Buffer>(file->fileName());
+//    openBuffers_.push_back(buffer);
+//
+//    auto content = file->read();
+//    buffer->write(content);
+//
+//    // Set saved as true because content of file has been read from file
+//    // and it is not modified at this point
+//    buffer->setSaved(true);
 }
 
 std::shared_ptr<IFile> FileMgr::createFile(const QString& fileName)
@@ -224,29 +225,30 @@ void FileMgr::closeBuffer(const QString& fileName)
     }
 }
 
+// -> save()
 void FileMgr::saveFile(
     std::vector<std::shared_ptr<IFile>>::iterator fileIt,
     std::vector<std::shared_ptr<IBuffer>>::iterator buffIt)
 {
-    auto currentFilePath = (*fileIt)->fileName();
-    auto tempFile = std::make_shared<File>(currentFilePath + ".bcp");
-
-    tempFile->write((*buffIt)->read());
-
-    if ((*fileIt)->remove())
-    {
-        (*fileIt).reset();
-        (*fileIt) = tempFile;
-    }
-    else
-    {
-        log_ << MY_FUNC << "Cannot remove file: " << (*fileIt)->fileName() << log::END;
-    }
-
-    if (!(*fileIt)->rename(currentFilePath))
-    {
-        log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
-    }
+//    auto currentFilePath = (*fileIt)->fileName();
+//    auto tempFile = std::make_shared<File>(currentFilePath + ".bcp");
+//
+//    tempFile->write((*buffIt)->read());
+//
+//    if ((*fileIt)->remove())
+//    {
+//        (*fileIt).reset();
+//        (*fileIt) = tempFile;
+//    }
+//    else
+//    {
+//        log_ << MY_FUNC << "Cannot remove file: " << (*fileIt)->fileName() << log::END;
+//    }
+//
+//    if (!(*fileIt)->rename(currentFilePath))
+//    {
+//        log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
+//    }
 }
 
 size_t FileMgr::numberOfOpenBuffers() const

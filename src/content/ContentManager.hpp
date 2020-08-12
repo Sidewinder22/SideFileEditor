@@ -40,6 +40,11 @@ public:
 
 	std::vector<QString> read(const QString& fileName) override;
 
+	bool save(const QString &fileName) override;
+
+	bool contentChanged(const QString &fileName,
+		const QString &content) override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------

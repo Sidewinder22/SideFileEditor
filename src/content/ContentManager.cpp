@@ -45,6 +45,33 @@ std::vector<QString> ContentManager::read(const QString& fileName)
 	return bufferManager_->read(fileName);
 }
 
+bool ContentManager::save(const QString &fileName)
+{
+	log_ << MY_FUNC << "Filename = " << fileName << log::END;
+
+	if (!fileManager_->isOpen(fileName))
+	{
+		log_ << MY_FUNC << "Content is empty, create new file" << log::END;
+		if (!fileManager_->open(fileName))
+		{
+			log_ << MY_FUNC << "Cannot create new file" << log::END;
+			return false;
+		}
+	}
+
+	fileManager_->save(fileName, bufferManager_->read(fileName));
+	bufferManager_->setSaved(fileName, true);
+
+	return true;
+}
+
+bool ContentManager::contentChanged(const QString &fileName,
+	const QString &content)
+{
+	// TODO: Change to the vector of lines
+	return bufferManager_->write(fileName, { content });
+}
+
 void ContentManager::loadFileContentIntoBuffer(const QString& fileName)
 {
 	bufferManager_->create(fileName);

@@ -50,8 +50,7 @@ std::vector<QString> MainController::read(const QString& fileName) const
 
 bool MainController::save(const QString &fileName) const
 {
-//    return fileManager_->save(fileName);
-	return {};
+    return contentManager_->save(fileName);
 }
 
 void MainController::close(const QString& fileName) const
@@ -83,8 +82,7 @@ void MainController::createBuffer(const QString& bufferName) const
 bool MainController::textChanged(const QString &fileName,
 	const QString &content) const
 {
-//    return fileManager_->textChanged(fileName, content);
-	return {};
+    return contentManager_->contentChanged(fileName, content);
 }
 
 size_t MainController::numberOfOpenBuffers() const

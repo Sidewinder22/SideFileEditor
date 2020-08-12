@@ -58,6 +58,41 @@ std::vector<QString> FileManager::read(const QString& fileName)
     return {};
 }
 
+void FileManager::save(const QString& fileName,
+	const std::vector<QString>& content)
+{
+	log_ << MY_FUNC << "fileName: " << fileName << log::END;
+
+    auto it = getIterator(fileName);
+    if (it != files_.end())
+    {
+    	auto currentFileName = (*it)->fileName();
+    	auto tempFile =  std::make_shared<File>(currentFileName + ".bcp");
+
+    	tempFile->write(content);
+
+		if ((*it)->remove())
+		{
+			(*it).reset();
+			(*it) = tempFile;
+		}
+		else
+		{
+			log_ << MY_FUNC << "Cannot remove file: "
+				<< (*it)->fileName() << log::END;
+		}
+
+		if (!(*it)->rename(currentFileName))
+		{
+			log_ << MY_FUNC << "Cannot changed fileName!" << log::END;
+		}
+    }
+    else
+    {
+    	log_ << MY_FUNC << "file not found!" << log::END;
+    }
+}
+
 std::shared_ptr<IFile> FileManager::create(const QString& fileName)
 {
     std::shared_ptr<IFile> file;
@@ -73,6 +108,11 @@ std::shared_ptr<IFile> FileManager::create(const QString& fileName)
     return file;
 }
 
+bool FileManager::isOpen(const QString& fileName)
+{
+	return getIterator(fileName) != files_.end();
+}
+
 std::vector<std::shared_ptr<IFile>>::iterator
 	FileManager::getIterator(const QString& fileName)
 {
@@ -83,5 +123,3 @@ std::vector<std::shared_ptr<IFile>>::iterator
 }
 
 } // ::content
-
-

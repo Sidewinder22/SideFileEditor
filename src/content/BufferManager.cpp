@@ -31,19 +31,24 @@ void BufferManager::create(const QString& fileName)
     buffers_.push_back(buffer);
 }
 
-void BufferManager::write(const QString& fileName,
+bool BufferManager::write(const QString& fileName,
 	const std::vector<QString> &content)
 {
+	bool success = false;
+
 	auto it = getBufferIterator(fileName);
 	if (it != buffers_.end())
 	{
 		(*it)->write(content);
 		(*it)->setSaved(true);
+		success = true;
 	}
 	else
 	{
     	log_ << MY_FUNC << "buffer not found!" << log::END;
 	}
+
+	return success;
 }
 
 std::vector<QString> BufferManager::read(const QString& fileName)
@@ -56,9 +61,34 @@ std::vector<QString> BufferManager::read(const QString& fileName)
     else
     {
     	log_ << MY_FUNC << "buffer not found!" << log::END;
+    	return {};
+    }
+}
+
+void BufferManager::setSaved(const QString& fileName, bool saved)
+{
+    auto it = getBufferIterator(fileName);
+    if (it != buffers_.end())
+    {
+        (*it)->setSaved(saved);
+    }
+    else
+    {
+    	log_ << MY_FUNC << "buffer not found!" << log::END;
+    }
+}
+
+bool BufferManager::isSaved(const QString& fileName)
+{
+	bool isSaved = false;
+
+	auto it = getBufferIterator(fileName);
+    if (it != buffers_.end())
+    {
+        isSaved = (*it)->isSaved();
     }
 
-    return {};
+    return isSaved;
 }
 
 std::vector<std::shared_ptr<IBuffer>>::iterator

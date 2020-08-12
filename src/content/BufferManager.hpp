@@ -39,8 +39,12 @@ public:
 
     void create(const QString& fileName) override;
 
-    void write(const QString& fileName, const std::vector<QString> &content);
+    bool write(const QString& fileName, const std::vector<QString> &content);
+
     std::vector<QString> read(const QString& fileName) override;
+
+    void setSaved(const QString& fileName, bool saved) override;
+    bool isSaved(const QString& fileName) override;
 
 //---------------------------------------------------------
 //                  Protected

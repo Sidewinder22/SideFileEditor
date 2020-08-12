@@ -35,6 +35,10 @@ public:
 
     virtual std::vector<QString> read(const QString& fileName) = 0;
 
+    virtual bool save(const QString &fileName) = 0;
+
+    virtual bool contentChanged(const QString &fileName,
+    	const QString &content) = 0;
 };
 
 } // ::content

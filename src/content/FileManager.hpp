@@ -41,6 +41,11 @@ public:
 
 	std::vector<QString> read(const QString& fileName) override;
 
+	void save(const QString& fileName,
+		const std::vector<QString>& content) override;
+
+    bool isOpen(const QString& fileName) override;
+
 //---------------------------------------------------------
 //                  Protected
 //---------------------------------------------------------
