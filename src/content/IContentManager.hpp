@@ -46,6 +46,9 @@ public:
 	virtual bool saveBufferIntoFile(const QString& bufferName,
 		const QString& fileName) = 0;
 
+	virtual size_t numberOfBuffers() const = 0;
+	virtual size_t numberOfUnsavedBuffers() const = 0;
+
     virtual bool contentChanged(const QString &fileName,
     	const QString &content) = 0;
 };

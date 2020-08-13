@@ -9,6 +9,7 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include <algorithm>
 #include "Buffer.hpp"
 #include "BufferManager.hpp"
 
@@ -75,6 +76,11 @@ void BufferManager::close(const QString& fileName)
     }
 }
 
+size_t BufferManager::size() const
+{
+	return buffers_.size();
+}
+
 void BufferManager::setBufferName(const QString& oldFileName,
     const QString& newFileName)
 {
@@ -109,6 +115,16 @@ bool BufferManager::isSaved(const QString& fileName)
     }
 
     return isSaved;
+}
+
+size_t BufferManager::numberOfUnsavedBuffers() const
+{
+	return std::count_if(
+		buffers_.begin(),
+		buffers_.end(),
+		[](auto && buffer) {
+			return !buffer->empty() && !buffer->isSaved();
+		} );
 }
 
 std::vector<std::shared_ptr<IBuffer>>::iterator

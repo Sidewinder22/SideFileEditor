@@ -51,6 +51,9 @@ public:
     bool saveBufferIntoFile(const QString& bufferName,
 		const QString& fileName) override;
 
+	size_t numberOfBuffers() const override;
+	size_t numberOfUnsavedBuffers() const override;
+
 	bool contentChanged(const QString &fileName,
 		const QString &content) override;
 

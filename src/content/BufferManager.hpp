@@ -45,11 +45,15 @@ public:
 
     void close(const QString& fileName) override;
 
+    size_t size() const override;
+
     void setBufferName(const QString& oldFileName,
     	const QString& newFileName) override;
 
     void setSaved(const QString& fileName, bool saved) override;
     bool isSaved(const QString& fileName) override;
+
+	size_t numberOfUnsavedBuffers() const override;
 
 //---------------------------------------------------------
 //                  Protected

@@ -40,11 +40,16 @@ public:
 
     virtual void close(const QString& fileName) = 0;
 
+    virtual size_t size() const = 0;
+
     virtual void setBufferName(const QString& oldFileName,
     	const QString& newFileName) = 0;
 
     virtual void setSaved(const QString& fileName, bool saved) = 0;
     virtual bool isSaved(const QString& fileName) = 0;
+
+	virtual size_t numberOfUnsavedBuffers() const = 0;
+
 };
 
 } // ::content

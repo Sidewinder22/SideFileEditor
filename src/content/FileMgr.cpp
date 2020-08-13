@@ -254,17 +254,19 @@ void FileMgr::saveFile(
 
 size_t FileMgr::numberOfOpenBuffers() const
 {
-	return openBuffers_.size();
+//	return openBuffers_.size();
+	return {};
 }
 
 size_t FileMgr::numberOfUnsavedBuffers() const
 {
-	return std::count_if(
-		openBuffers_.begin(),
-		openBuffers_.end(),
-		[](auto && buffer) {
-			return !buffer->empty() && !buffer->isSaved();
-		} );
+//	return std::count_if(
+//		openBuffers_.begin(),
+//		openBuffers_.end(),
+//		[](auto && buffer) {
+//			return !buffer->empty() && !buffer->isSaved();
+//		} );
+	return {};
 }
 
 std::vector<QString> FileMgr::unsavedBufferNames() const

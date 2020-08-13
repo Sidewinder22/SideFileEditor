@@ -106,7 +106,7 @@ protected:
      * @brief Return the number of the open buffers
      * @return Number of the open buffers
      */
-    size_t numberOfOpenBuffers() const override;
+    size_t numberOfBuffers() const override;
 
     /**
      * @brief Return the number of the unsaved buffers

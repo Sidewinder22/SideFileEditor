@@ -43,10 +43,8 @@ void OpenCommand::execute()
 		/**
 		 * Delete empty startup buffer
 		 */
-    	auto openBuffers = mainController_->numberOfOpenBuffers();
-		auto unsavedBuffers = mainController_->numberOfUnsavedBuffers();
-		if (openBuffers == ONE_BUFFER_OPEN &&
-			unsavedBuffers == ALL_BUFFERS_SAVED)
+		if (mainController_->numberOfBuffers() == ONE_BUFFER_OPEN &&
+			mainController_->numberOfUnsavedBuffers() == ALL_BUFFERS_SAVED)
 		{
 			auto bufferName = "Buffer" + std::to_string(ONE_BUFFER_OPEN);
 			mainController_->close(QString::fromStdString(bufferName));

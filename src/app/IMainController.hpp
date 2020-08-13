@@ -90,7 +90,7 @@ public:
      * @brief Return the number of the open buffers
      * @return Number of the open buffers
      */
-    virtual size_t numberOfOpenBuffers() const = 0;
+    virtual size_t numberOfBuffers() const = 0;
 
      /**
      * @brief Return the number of the unsaved buffers

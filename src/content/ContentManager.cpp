@@ -107,6 +107,16 @@ bool ContentManager::saveBufferIntoFile(const QString& bufferName,
 	return success;
 }
 
+size_t ContentManager::numberOfBuffers() const
+{
+	return bufferManager_->size();
+}
+
+size_t ContentManager::numberOfUnsavedBuffers() const
+{
+	return bufferManager_->numberOfUnsavedBuffers();
+}
+
 bool ContentManager::contentChanged(const QString &fileName,
 	const QString &content)
 {

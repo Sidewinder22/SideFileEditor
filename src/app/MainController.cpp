@@ -84,16 +84,14 @@ bool MainController::textChanged(const QString &fileName,
     return contentManager_->contentChanged(fileName, content);
 }
 
-size_t MainController::numberOfOpenBuffers() const
+size_t MainController::numberOfBuffers() const
 {
-	return {};
-//	return fileManager_->numberOfOpenBuffers();
+	return contentManager_->numberOfBuffers();
 }
 
 size_t MainController::numberOfUnsavedBuffers() const
 {
-//	return fileManager_->numberOfUnsavedBuffers();
-	return {};
+	return contentManager_->numberOfUnsavedBuffers();
 }
 
 std::vector<QString> MainController::unsavedBufferNames() const
