@@ -121,18 +121,18 @@ protected:
     std::vector<QString> namesOfUnsavedBuffers() const override;
 
     /**
-     * @brief Check if file is saved
-     * @param fileName name of the file to check
-     * @return True if file is saved, False otherwise
+     * @brief Check if buffer is saved
+     * @param fileName name of the buffer to check
+     * @return True if buffer is saved, False otherwise
      */
-    bool isFileSaved(const QString& fileName) const override;
+    bool isBufferSaved(const QString& fileName) const override;
 
     /*
-     * @brief Check if file is empty
-     * @param fileName name of the file to check
-     * @return True if file is empty, False otherwise
+     * @brief Check if buffer is empty
+     * @param fileName name of the buffer to check
+     * @return True if buffer is empty, False otherwise
      */
-    bool isFileEmpty(const QString& fileName) const override;
+    bool isBufferEmpty(const QString& fileName) const override;
 
 //---------------------------------------------------------
 //                  Private

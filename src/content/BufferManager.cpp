@@ -141,6 +141,30 @@ std::vector<QString> BufferManager::namesOfUnsavedBuffers() const
 	return names;
 }
 
+bool BufferManager::isBufferSaved(const QString& fileName)
+{
+	bool saved = false;
+    auto it = getIterator(fileName);
+    if (it != buffers_.end())
+    {
+    	saved = (*it)->isSaved();
+    }
+
+    return saved;
+}
+
+bool BufferManager::isBufferEmpty(const QString& fileName)
+{
+	bool empty = false;
+    auto it = getIterator(fileName);
+    if (it != buffers_.end())
+    {
+    	empty = (*it)->empty();
+    }
+
+    return empty;
+}
+
 std::vector<std::shared_ptr<IBuffer>>::iterator
 	BufferManager::getIterator(const QString& fileName)
 {

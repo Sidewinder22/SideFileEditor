@@ -287,26 +287,28 @@ std::vector<QString> FileMgr::unsavedBufferNames() const
 
 bool FileMgr::isFileSaved(const QString& fileName)
 {
-	bool saved = false;
-    auto buffIt = getBufferIterator(fileName);
-    if (buffIt != openBuffers_.end())
-    {
-    	saved = (*buffIt)->isSaved();
-    }
-
-    return saved;
+//	bool saved = false;
+//    auto buffIt = getBufferIterator(fileName);
+//    if (buffIt != openBuffers_.end())
+//    {
+//    	saved = (*buffIt)->isSaved();
+//    }
+//
+//    return saved;
+	return {};
 }
 
 bool FileMgr::isFileEmpty(const QString& fileName)
 {
-	bool empty = false;
-    auto buffIt = getBufferIterator(fileName);
-    if (buffIt != openBuffers_.end())
-    {
-    	empty = (*buffIt)->empty();
-    }
-
-    return empty;
+//	bool empty = false;
+//    auto buffIt = getBufferIterator(fileName);
+//    if (buffIt != openBuffers_.end())
+//    {
+//    	empty = (*buffIt)->empty();
+//    }
+//
+//    return empty;
+	return {};
 }
 
 } // ::content

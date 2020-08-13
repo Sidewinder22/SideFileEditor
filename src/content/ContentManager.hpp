@@ -55,6 +55,9 @@ public:
 	size_t numberOfUnsavedBuffers() const override;
     std::vector<QString> namesOfUnsavedBuffers() const override;
 
+    bool isBufferSaved(const QString& fileName) const override;
+    bool isBufferEmpty(const QString& fileName) const override;
+
 	bool contentChanged(const QString &fileName,
 		const QString &content) override;
 

@@ -50,6 +50,9 @@ public:
 	virtual size_t numberOfUnsavedBuffers() const = 0;
     virtual std::vector<QString> namesOfUnsavedBuffers() const = 0;
 
+    virtual bool isBufferSaved(const QString& fileName) const = 0;
+    virtual bool isBufferEmpty(const QString& fileName) const = 0;
+
     virtual bool contentChanged(const QString &fileName,
     	const QString &content) = 0;
 };

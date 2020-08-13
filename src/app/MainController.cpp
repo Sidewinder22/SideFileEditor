@@ -99,16 +99,14 @@ std::vector<QString> MainController::namesOfUnsavedBuffers() const
 	return contentManager_->namesOfUnsavedBuffers();
 }
 
-bool MainController::isFileSaved(const QString& fileName) const
+bool MainController::isBufferSaved(const QString& fileName) const
 {
-//	return fileManager_->isFileSaved(fileName);
-	return {};
+	return contentManager_->isBufferSaved(fileName);
 }
 
-bool MainController::isFileEmpty(const QString& fileName) const
+bool MainController::isBufferEmpty(const QString& fileName) const
 {
-//	return fileManager_->isFileEmpty(fileName);
-	return {};
+	return contentManager_->isBufferEmpty(fileName);
 }
 
 } // ::app

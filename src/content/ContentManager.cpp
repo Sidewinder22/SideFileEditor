@@ -122,6 +122,16 @@ std::vector<QString> ContentManager::namesOfUnsavedBuffers() const
 	return bufferManager_->namesOfUnsavedBuffers();
 }
 
+bool ContentManager::isBufferSaved(const QString& fileName) const
+{
+	return bufferManager_->isBufferSaved(fileName);
+}
+
+bool ContentManager::isBufferEmpty(const QString& fileName) const
+{
+	return bufferManager_->isBufferEmpty(fileName);
+}
+
 bool ContentManager::contentChanged(const QString &fileName,
 	const QString &content)
 {

@@ -44,8 +44,8 @@ void CloseCommand::execute()
     textEdit_->clear();
 
     auto fileName = openFileDock_->getCurrentFileName();
-    if (!mainController_->isFileSaved(fileName) &&
-    	!mainController_->isFileEmpty(fileName))
+    if (!mainController_->isBufferSaved(fileName) &&
+    	!mainController_->isBufferEmpty(fileName))
     {
     	utils::saveFile(parent_, mainController_, openFileDock_);
     }

@@ -105,18 +105,18 @@ public:
     virtual std::vector<QString> namesOfUnsavedBuffers() const = 0;
 
     /**
-     * @brief Check if file is saved
-     * @param fileName name of the file to check
-     * @return True if file is saved, False otherwise
+     * @brief Check if buffer is saved
+     * @param fileName name of the buffer to check
+     * @return True if buffer is saved, False otherwise
      */
-    virtual bool isFileSaved(const QString& fileName) const = 0;
+    virtual bool isBufferSaved(const QString& fileName) const = 0;
 
     /*
-     * @brief Check if file is empty
-     * @param fileName name of the file to check
-     * @return True if file is empty, False otherwise
+     * @brief Check if buffer is empty
+     * @param fileName name of the buffer to check
+     * @return True if buffer is empty, False otherwise
      */
-    virtual bool isFileEmpty(const QString& fileName) const = 0;
+    virtual bool isBufferEmpty(const QString& fileName) const = 0;
 };
 
 } // ::app
