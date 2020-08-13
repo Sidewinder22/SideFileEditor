@@ -117,6 +117,11 @@ size_t ContentManager::numberOfUnsavedBuffers() const
 	return bufferManager_->numberOfUnsavedBuffers();
 }
 
+std::vector<QString> ContentManager::namesOfUnsavedBuffers() const
+{
+	return bufferManager_->namesOfUnsavedBuffers();
+}
+
 bool ContentManager::contentChanged(const QString &fileName,
 	const QString &content)
 {

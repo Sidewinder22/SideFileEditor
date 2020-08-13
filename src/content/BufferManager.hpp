@@ -54,6 +54,7 @@ public:
     bool isSaved(const QString& fileName) override;
 
 	size_t numberOfUnsavedBuffers() const override;
+    std::vector<QString> namesOfUnsavedBuffers() const override;
 
 //---------------------------------------------------------
 //                  Protected

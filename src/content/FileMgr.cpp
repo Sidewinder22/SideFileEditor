@@ -271,17 +271,18 @@ size_t FileMgr::numberOfUnsavedBuffers() const
 
 std::vector<QString> FileMgr::unsavedBufferNames() const
 {
-	std::vector<QString> names;
-
-	for (auto && buffer : openBuffers_)
-	{
-		if (!buffer->empty() && !buffer->isSaved())
-		{
-			names.push_back(buffer->fileName());
-		}
-	}
-
-	return names;
+//	std::vector<QString> names;
+//
+//	for (auto && buffer : openBuffers_)
+//	{
+//		if (!buffer->empty() && !buffer->isSaved())
+//		{
+//			names.push_back(buffer->fileName());
+//		}
+//	}
+//
+//	return names;
+	return {};
 }
 
 bool FileMgr::isFileSaved(const QString& fileName)

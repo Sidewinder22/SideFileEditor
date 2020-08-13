@@ -41,7 +41,6 @@ bool BufferManager::write(const QString& fileName,
 	if (it != buffers_.end())
 	{
 		(*it)->write(content);
-		(*it)->setSaved(true);
 		success = true;
 	}
 	else
@@ -125,6 +124,21 @@ size_t BufferManager::numberOfUnsavedBuffers() const
 		[](auto && buffer) {
 			return !buffer->empty() && !buffer->isSaved();
 		} );
+}
+
+std::vector<QString> BufferManager::namesOfUnsavedBuffers() const
+{
+	std::vector<QString> names;
+
+	for (auto && buffer : buffers_)
+	{
+		if (!buffer->empty() && !buffer->isSaved())
+		{
+			names.push_back(buffer->fileName());
+		}
+	}
+
+	return names;
 }
 
 std::vector<std::shared_ptr<IBuffer>>::iterator

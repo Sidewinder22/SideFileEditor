@@ -102,7 +102,7 @@ public:
      * @brief Return names of the unsaved buffers
      * @return Vector with the names of the unsaved buffers
      */
-    virtual std::vector<QString> unsavedBufferNames() const = 0;
+    virtual std::vector<QString> namesOfUnsavedBuffers() const = 0;
 
     /**
      * @brief Check if file is saved

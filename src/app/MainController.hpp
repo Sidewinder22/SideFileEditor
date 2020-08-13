@@ -118,7 +118,7 @@ protected:
      * @brief Return names of the unsaved buffers
      * @return Vector with the names of the unsaved buffers
      */
-    std::vector<QString> unsavedBufferNames() const override;
+    std::vector<QString> namesOfUnsavedBuffers() const override;
 
     /**
      * @brief Check if file is saved

@@ -52,10 +52,8 @@ void QuitCommand::verifyUnsavedBuffers()
 {
     log_ << MY_FUNC << log::END;
 
-    auto unsavedBufferNames = mainController_->unsavedBufferNames();
-
-    for (auto && bufferName : unsavedBufferNames)
-   {
+    for (auto && bufferName : mainController_->namesOfUnsavedBuffers())
+    {
 		if (utils::askForSaveBuffer(bufferName))
 		{
 			if (bufferName.contains('/'))

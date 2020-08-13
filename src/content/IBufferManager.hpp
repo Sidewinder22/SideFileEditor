@@ -49,7 +49,7 @@ public:
     virtual bool isSaved(const QString& fileName) = 0;
 
 	virtual size_t numberOfUnsavedBuffers() const = 0;
-
+    virtual std::vector<QString> namesOfUnsavedBuffers() const = 0;
 };
 
 } // ::content

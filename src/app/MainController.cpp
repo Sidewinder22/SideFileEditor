@@ -94,10 +94,9 @@ size_t MainController::numberOfUnsavedBuffers() const
 	return contentManager_->numberOfUnsavedBuffers();
 }
 
-std::vector<QString> MainController::unsavedBufferNames() const
+std::vector<QString> MainController::namesOfUnsavedBuffers() const
 {
-//	return fileManager_->unsavedBufferNames();
-	return {};
+	return contentManager_->namesOfUnsavedBuffers();
 }
 
 bool MainController::isFileSaved(const QString& fileName) const
