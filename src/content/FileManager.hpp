@@ -44,6 +44,8 @@ public:
 	void save(const QString& fileName,
 		const std::vector<QString>& content) override;
 
+	void close(const QString& fileName) override;
+
     bool isOpen(const QString& fileName) override;
 
 //---------------------------------------------------------

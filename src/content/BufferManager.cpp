@@ -36,7 +36,7 @@ bool BufferManager::write(const QString& fileName,
 {
 	bool success = false;
 
-	auto it = getBufferIterator(fileName);
+	auto it = getIterator(fileName);
 	if (it != buffers_.end())
 	{
 		(*it)->write(content);
@@ -53,7 +53,7 @@ bool BufferManager::write(const QString& fileName,
 
 std::vector<QString> BufferManager::read(const QString& fileName)
 {
-    auto it = getBufferIterator(fileName);
+    auto it = getIterator(fileName);
     if (it != buffers_.end())
     {
         return (*it)->read();
@@ -65,9 +65,19 @@ std::vector<QString> BufferManager::read(const QString& fileName)
     }
 }
 
+void BufferManager::close(const QString& fileName)
+{
+    auto it = getIterator(fileName);
+    if (it != buffers_.end())
+    {
+        (*it).reset();
+        buffers_.erase(it);
+    }
+}
+
 void BufferManager::setSaved(const QString& fileName, bool saved)
 {
-    auto it = getBufferIterator(fileName);
+    auto it = getIterator(fileName);
     if (it != buffers_.end())
     {
         (*it)->setSaved(saved);
@@ -82,7 +92,7 @@ bool BufferManager::isSaved(const QString& fileName)
 {
 	bool isSaved = false;
 
-	auto it = getBufferIterator(fileName);
+	auto it = getIterator(fileName);
     if (it != buffers_.end())
     {
         isSaved = (*it)->isSaved();
@@ -92,7 +102,7 @@ bool BufferManager::isSaved(const QString& fileName)
 }
 
 std::vector<std::shared_ptr<IBuffer>>::iterator
-	BufferManager::getBufferIterator(const QString& fileName)
+	BufferManager::getIterator(const QString& fileName)
 {
     return contentUtils_->getVectorIterator<IBuffer>(
         fileName,

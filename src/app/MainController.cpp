@@ -55,7 +55,7 @@ bool MainController::save(const QString &fileName) const
 
 void MainController::close(const QString& fileName) const
 {
-//    fileManager_->close(fileName);
+    contentManager_->close(fileName);
 }
 
 void MainController::remove(const QString& fileName) const

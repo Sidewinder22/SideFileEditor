@@ -43,6 +43,8 @@ public:
 
     std::vector<QString> read(const QString& fileName) override;
 
+    void close(const QString& fileName) override;
+
     void setSaved(const QString& fileName, bool saved) override;
     bool isSaved(const QString& fileName) override;
 
@@ -55,7 +57,7 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    std::vector<std::shared_ptr<IBuffer>>::iterator getBufferIterator(
+    std::vector<std::shared_ptr<IBuffer>>::iterator getIterator(
     	const QString& fileName);
 
 	log::Logger log_;

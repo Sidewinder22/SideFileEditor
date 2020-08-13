@@ -108,6 +108,16 @@ std::shared_ptr<IFile> FileManager::create(const QString& fileName)
     return file;
 }
 
+void FileManager::close(const QString& fileName)
+{
+    auto it = getIterator(fileName);
+    if (it != files_.end())
+    {
+        (*it).reset();
+        files_.erase(it);
+    }
+}
+
 bool FileManager::isOpen(const QString& fileName)
 {
 	return getIterator(fileName) != files_.end();

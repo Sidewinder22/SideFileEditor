@@ -38,6 +38,8 @@ public:
     virtual void save(const QString& fileName,
     	const std::vector<QString>& content) = 0;
 
+    virtual void close(const QString& fileName) = 0;
+
     virtual bool isOpen(const QString& fileName) = 0;
 };
 

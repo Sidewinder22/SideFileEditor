@@ -65,6 +65,14 @@ bool ContentManager::save(const QString &fileName)
 	return true;
 }
 
+void ContentManager::close(const QString& fileName)
+{
+	log_ << MY_FUNC << "Filename = " << fileName << log::END;
+
+	bufferManager_->close(fileName);
+	fileManager_->close(fileName);
+}
+
 bool ContentManager::contentChanged(const QString &fileName,
 	const QString &content)
 {

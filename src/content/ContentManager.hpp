@@ -42,6 +42,8 @@ public:
 
 	bool save(const QString &fileName) override;
 
+	void close(const QString& fileName) override;
+
 	bool contentChanged(const QString &fileName,
 		const QString &content) override;
 

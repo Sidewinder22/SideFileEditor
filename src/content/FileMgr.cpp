@@ -143,14 +143,14 @@ bool FileMgr::save(const QString &fileName)
 
 void FileMgr::close(const QString& fileName)
 {
-    closeBuffer(fileName);
-
-    auto fileIt = getFileIterator(fileName);
-    if (fileIt != openFiles_.end())
-    {
-        (*fileIt).reset();
-        openFiles_.erase(fileIt);
-    }
+//    closeBuffer(fileName);
+//
+//    auto fileIt = getFileIterator(fileName);
+//    if (fileIt != openFiles_.end())
+//    {
+//        (*fileIt).reset();
+//        openFiles_.erase(fileIt);
+//    }
 }
 
 void FileMgr::remove(const QString& fileName)
@@ -217,12 +217,12 @@ std::shared_ptr<IFile> FileMgr::createFile(const QString& fileName)
 
 void FileMgr::closeBuffer(const QString& fileName)
 {
-    auto buffIt = getBufferIterator(fileName);
-    if (buffIt != openBuffers_.end())
-    {
-        (*buffIt).reset();
-        openBuffers_.erase(buffIt);
-    }
+//    auto buffIt = getBufferIterator(fileName);
+//    if (buffIt != openBuffers_.end())
+//    {
+//        (*buffIt).reset();
+//        openBuffers_.erase(buffIt);
+//    }
 }
 
 // -> save()
