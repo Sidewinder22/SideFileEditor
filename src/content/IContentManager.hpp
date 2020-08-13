@@ -41,6 +41,11 @@ public:
 
     virtual void remove(const QString& fileName) = 0;
 
+    virtual void createBuffer(const QString& fileName) = 0;
+
+	virtual bool saveBufferIntoFile(const QString& bufferName,
+		const QString& fileName) = 0;
+
     virtual bool contentChanged(const QString &fileName,
     	const QString &content) = 0;
 };

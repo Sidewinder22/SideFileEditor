@@ -75,6 +75,16 @@ void BufferManager::close(const QString& fileName)
     }
 }
 
+void BufferManager::setBufferName(const QString& oldFileName,
+    const QString& newFileName)
+{
+    auto it = getIterator(oldFileName);
+    if (it != buffers_.end())
+    {
+        (*it)->setFileName(newFileName);
+    }
+}
+
 void BufferManager::setSaved(const QString& fileName, bool saved)
 {
     auto it = getIterator(fileName);

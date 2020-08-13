@@ -27,6 +27,8 @@ FileManager::FileManager()
 
 bool FileManager::open(const QString& fileName)
 {
+	log_ << MY_FUNC << "fileName: " << fileName << log::END;
+
     bool success = false;
 
     auto file = create(fileName);
@@ -45,6 +47,8 @@ bool FileManager::open(const QString& fileName)
 
 std::vector<QString> FileManager::read(const QString& fileName)
 {
+	log_ << MY_FUNC << "fileName: " << fileName << log::END;
+
     auto it = getIterator(fileName);
     if (it != files_.end())
     {
@@ -93,21 +97,6 @@ void FileManager::save(const QString& fileName,
     }
 }
 
-std::shared_ptr<IFile> FileManager::create(const QString& fileName)
-{
-    std::shared_ptr<IFile> file;
-    try
-    {
-        file = std::make_shared<File>(fileName);
-    }
-    catch (const std::runtime_error& e)
-    {
-        log_ << MY_FUNC << "Cannot open file, error = " << e.what() << log::END;
-    }
-
-    return file;
-}
-
 void FileManager::close(const QString& fileName)
 {
     auto it = getIterator(fileName);
@@ -132,6 +121,21 @@ void FileManager::remove(const QString& fileName)
 bool FileManager::isOpen(const QString& fileName)
 {
 	return getIterator(fileName) != files_.end();
+}
+
+std::shared_ptr<IFile> FileManager::create(const QString& fileName)
+{
+    std::shared_ptr<IFile> file;
+    try
+    {
+        file = std::make_shared<File>(fileName);
+    }
+    catch (const std::runtime_error& e)
+    {
+        log_ << MY_FUNC << "Cannot open file, error = " << e.what() << log::END;
+    }
+
+    return file;
 }
 
 std::vector<std::shared_ptr<IFile>>::iterator

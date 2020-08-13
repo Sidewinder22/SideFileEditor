@@ -45,6 +45,9 @@ public:
 
     void close(const QString& fileName) override;
 
+    void setBufferName(const QString& oldFileName,
+    	const QString& newFileName) override;
+
     void setSaved(const QString& fileName, bool saved) override;
     bool isSaved(const QString& fileName) override;
 

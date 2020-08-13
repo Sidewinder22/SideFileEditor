@@ -40,6 +40,9 @@ public:
 
     virtual void close(const QString& fileName) = 0;
 
+    virtual void setBufferName(const QString& oldFileName,
+    	const QString& newFileName) = 0;
+
     virtual void setSaved(const QString& fileName, bool saved) = 0;
     virtual bool isSaved(const QString& fileName) = 0;
 };

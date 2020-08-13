@@ -66,16 +66,15 @@ void MainController::remove(const QString& fileName) const
 bool MainController::saveBufferIntoFile(const QString& bufferName,
 	const QString& fileName) const
 {
-//	bool status = fileManager_->saveBufferIntoFile(bufferName, fileName);
-	bool status = false;
-	window_->created(bufferName);
+	bool status = contentManager_->saveBufferIntoFile(bufferName, fileName);
+	window_->created(fileName);
 
 	return status;
 }
 
 void MainController::createBuffer(const QString& bufferName) const
 {
-//    fileManager_->createBuffer(bufferName);
+    contentManager_->createBuffer(bufferName);
     window_->created(bufferName);
 }
 

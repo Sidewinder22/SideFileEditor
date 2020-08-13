@@ -46,6 +46,11 @@ public:
 
     void remove(const QString& fileName) override;
 
+    void createBuffer(const QString& fileName) override;
+
+    bool saveBufferIntoFile(const QString& bufferName,
+		const QString& fileName) override;
+
 	bool contentChanged(const QString &fileName,
 		const QString &content) override;
 

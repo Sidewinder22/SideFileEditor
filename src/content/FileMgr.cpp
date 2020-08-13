@@ -37,26 +37,27 @@ void FileMgr::createBuffer(const QString& fileName)
 bool FileMgr::saveBufferIntoFile(const QString& bufferName,
 	const QString& fileName)
 {
-    log_ << MY_FUNC << "bufferName = " << bufferName
-    	<< ", fileName = " << fileName << log::END;
-
-    auto buffIt = getBufferIterator(bufferName);
-    bool success = false;
-
-    auto file = createFile(fileName);
-    if (file)
-    {
-		openFiles_.push_back(file);
-		auto fileIt = getFileIterator(commonUtils_->extractFileName(fileName));
-
-		saveFile(fileIt, buffIt);
-		success = true;
-
-		(*buffIt)->setFileName(fileName);
-		(*buffIt)->setSaved(true);
-    }
-
-    return success;
+//    log_ << MY_FUNC << "bufferName = " << bufferName
+//    	<< ", fileName = " << fileName << log::END;
+//
+//    auto buffIt = getBufferIterator(bufferName);
+//    bool success = false;
+//
+//    auto file = createFile(fileName);
+//    if (file)
+//    {
+//		openFiles_.push_back(file);
+//		auto fileIt = getFileIterator(commonUtils_->extractFileName(fileName));
+//
+//		saveFile(fileIt, buffIt);
+//		success = true;
+//
+//		(*buffIt)->setFileName(fileName);
+//		(*buffIt)->setSaved(true);
+//    }
+//
+//    return success;
+	return {};
 }
     
 bool FileMgr::textChanged(const QString &fileName, const QString &content)

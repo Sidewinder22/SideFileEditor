@@ -81,6 +81,32 @@ void ContentManager::remove(const QString& fileName)
 	fileManager_->remove(fileName);
 }
 
+void ContentManager::createBuffer(const QString& fileName)
+{
+	bufferManager_->create(fileName);
+}
+
+bool ContentManager::saveBufferIntoFile(const QString& bufferName,
+	const QString& fileName)
+{
+	log_ << MY_FUNC << "Buffer: " << bufferName
+		<< ", filename = " << fileName << log::END;
+
+	bool success = false;
+
+	if (fileManager_->open(fileName))
+	{
+		fileManager_->save(fileName, bufferManager_->read(bufferName));
+
+		bufferManager_->setBufferName(bufferName, fileName);
+		bufferManager_->setSaved(fileName, true);
+
+		success = true;
+	}
+
+	return success;
+}
+
 bool ContentManager::contentChanged(const QString &fileName,
 	const QString &content)
 {
