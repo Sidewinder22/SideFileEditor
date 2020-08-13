@@ -60,7 +60,7 @@ void MainController::close(const QString& fileName) const
 
 void MainController::remove(const QString& fileName) const
 {
-//    fileManager_->remove(fileName);
+    contentManager_->remove(fileName);
 }
 
 bool MainController::saveBufferIntoFile(const QString& bufferName,

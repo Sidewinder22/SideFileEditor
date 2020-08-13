@@ -44,6 +44,8 @@ public:
 
 	void close(const QString& fileName) override;
 
+    void remove(const QString& fileName) override;
+
 	bool contentChanged(const QString &fileName,
 		const QString &content) override;
 

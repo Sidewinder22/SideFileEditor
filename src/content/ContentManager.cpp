@@ -73,6 +73,14 @@ void ContentManager::close(const QString& fileName)
 	fileManager_->close(fileName);
 }
 
+void ContentManager::remove(const QString& fileName)
+{
+	log_ << MY_FUNC << "Filename = " << fileName << log::END;
+
+	bufferManager_->close(fileName);
+	fileManager_->remove(fileName);
+}
+
 bool ContentManager::contentChanged(const QString &fileName,
 	const QString &content)
 {

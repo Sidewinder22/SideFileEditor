@@ -39,6 +39,8 @@ public:
 
     virtual void close(const QString& fileName) = 0;
 
+    virtual void remove(const QString& fileName) = 0;
+
     virtual bool contentChanged(const QString &fileName,
     	const QString &content) = 0;
 };

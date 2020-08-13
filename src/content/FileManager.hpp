@@ -46,6 +46,8 @@ public:
 
 	void close(const QString& fileName) override;
 
+	void remove(const QString& fileName) override;
+
     bool isOpen(const QString& fileName) override;
 
 //---------------------------------------------------------

@@ -155,15 +155,15 @@ void FileMgr::close(const QString& fileName)
 
 void FileMgr::remove(const QString& fileName)
 {
-    closeBuffer(fileName);
-
-    auto fileIt = getFileIterator(fileName);
-    if (fileIt != openFiles_.end())
-    {
-        (*fileIt)->remove();
-        (*fileIt).reset();
-        openFiles_.erase(fileIt);
-    }
+//    closeBuffer(fileName);
+//
+//    auto fileIt = getFileIterator(fileName);
+//    if (fileIt != openFiles_.end())
+//    {
+//        (*fileIt)->remove();
+//        (*fileIt).reset();
+//        openFiles_.erase(fileIt);
+//    }
 }
 
 std::vector<std::shared_ptr<IFile>>::iterator FileMgr::getFileIterator(
