@@ -8,9 +8,9 @@
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include "file/FileManager.hpp"
+#include "gui/Window.hpp"
+#include "content/ContentManager.hpp"
 #include "MainController.hpp"
-#include "../gui/Window.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
@@ -18,13 +18,13 @@
 namespace app
 {
 
-//---------------------------------------------------------
+//---------------------------------------------------------./
 //                  Class implementation
 //---------------------------------------------------------
 MainController::MainController()
     : log_("MainController")
-    , window_(std::make_shared<gui::Window>(this))
-    , fileManager_(std::make_shared<file::FileManager>())
+    , window_(std::make_unique<gui::Window>(this))
+	, contentManager_(std::make_unique<content::ContentManager>())
 {
     // Nothing
 }
@@ -37,76 +37,76 @@ void MainController::start()
 //-----------------------------------------------------
 //                  IWindowObserver
 //-----------------------------------------------------
-void MainController::openFile(const QString& fileName) const
+void MainController::open(const QString& fileName) const
 {
-    bool status = fileManager_->openFile(fileName);
+    bool status = contentManager_->open(fileName);
     window_->opened(status, fileName);
+}
+
+std::vector<QString> MainController::read(const QString& fileName) const
+{
+    return contentManager_->read(fileName);
+}
+
+bool MainController::save(const QString &fileName) const
+{
+    return contentManager_->save(fileName);
+}
+
+void MainController::close(const QString& fileName) const
+{
+    contentManager_->close(fileName);
+}
+
+void MainController::remove(const QString& fileName) const
+{
+    contentManager_->remove(fileName);
 }
 
 bool MainController::saveBufferIntoFile(const QString& bufferName,
 	const QString& fileName) const
 {
-	bool status = fileManager_->saveBufferIntoFile(bufferName, fileName);
-	window_->created(bufferName);
+	bool status = contentManager_->saveBufferIntoFile(bufferName, fileName);
+	window_->created(fileName);
 
 	return status;
 }
 
 void MainController::createBuffer(const QString& bufferName) const
 {
-    fileManager_->createBuffer(bufferName);
+    contentManager_->createBuffer(bufferName);
     window_->created(bufferName);
-}
-
-std::vector<QString> MainController::read(const QString& fileName) const
-{
-    return fileManager_->read(fileName);
-}
-
-bool MainController::save(const QString &fileName) const
-{
-    return fileManager_->save(fileName);
 }
 
 bool MainController::textChanged(const QString &fileName,
 	const QString &content) const
 {
-    return fileManager_->textChanged(fileName, content);
+    return contentManager_->contentChanged(fileName, content);
 }
 
-void MainController::close(const QString& fileName) const
+size_t MainController::numberOfBuffers() const
 {
-    fileManager_->close(fileName);
-}
-
-void MainController::remove(const QString& fileName) const
-{
-    fileManager_->remove(fileName);
-}
-
-size_t MainController::numberOfOpenBuffers() const
-{
-	return fileManager_->numberOfOpenBuffers();
+	return contentManager_->numberOfBuffers();
 }
 
 size_t MainController::numberOfUnsavedBuffers() const
 {
-	return fileManager_->numberOfUnsavedBuffers();
+	return contentManager_->numberOfUnsavedBuffers();
 }
 
-std::vector<QString> MainController::unsavedBufferNames() const
+std::vector<QString> MainController::namesOfUnsavedBuffers() const
 {
-	return fileManager_->unsavedBufferNames();
+	return contentManager_->namesOfUnsavedBuffers();
 }
 
-bool MainController::isFileSaved(const QString& fileName) const
+bool MainController::isBufferSaved(const QString& fileName) const
 {
-	return fileManager_->isFileSaved(fileName);
+	return contentManager_->isBufferSaved(fileName);
 }
 
-bool MainController::isFileEmpty(const QString& fileName) const
+bool MainController::isBufferEmpty(const QString& fileName) const
 {
-	return fileManager_->isFileEmpty(fileName);
+	return contentManager_->isBufferEmpty(fileName);
 }
 
 } // ::app

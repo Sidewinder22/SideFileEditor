@@ -1,54 +1,50 @@
-#ifndef SRC_FILE_BUFFER_HPP_
-#define SRC_FILE_BUFFER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
- * @date    31.03.2020
+ * @date    30 lip 2020
+ * @file    Utils.hpp
  *
- * @brief   Class to buffering text which represent file content.
+ * @brief   Content utils
  */
+#ifndef SRC_CONTENT_CONTENTUTILS_HPP_
+#define SRC_CONTENT_CONTENTUTILS_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <vector>
+#include <memory>
 #include <QString>
-#include "log/Logger.hpp"
-#include "IBuffer.hpp"
+#include "common/CommonUtils.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class Buffer
-    : public IBuffer
+class ContentUtils final
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-    Buffer(QString fileName);
+	ContentUtils();
 
-    virtual ~Buffer() = default;
-
-    QString fileName() const override;
-
-    void setFileName(const QString& fileName) override;
-
-    void setContent(const std::vector<QString> &content) override;
-
-    std::vector<QString> getContent() const override;
-
-    bool empty() const override;
-    void clear() override;
-
-    bool isSaved() const override;
-
-    void setSaved(bool saved) override;
+    template<typename T>
+    auto getVectorIterator(
+        const QString& fileName,
+        std::vector<std::shared_ptr<T>>::iterator begin,
+        std::vector<std::shared_ptr<T>>::iterator end)
+    {
+        return std::find_if(
+            begin,
+            end,
+            [&fileName, this](auto element) {
+        		return element->fileName() == fileName;
+            });
+    }
 
 //---------------------------------------------------------
 //                  Protected
@@ -59,16 +55,9 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    /**
-     * True if buffer is saved to the file, false otherwise
-     */
-    bool saved_;
-
-    log::Logger log_;                       //!< Logger object
-    QString fileName_;                      //!< Filename
-    std::vector<QString> content_;			//!< Buffer's content
+    std::unique_ptr<::common::CommonUtils> utils_;
 };
 
-} // ::file
+} // ::content
 
-#endif /* SRC_FILE_BUFFER_HPP_ */
+#endif /* SRC_CONTENT_CONTENTUTILS_HPP_ */

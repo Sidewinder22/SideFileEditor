@@ -14,14 +14,14 @@ QT      += widgets
 
 HEADERS +=  src/app/*.hpp \
             src/common/*.hpp \
-            src/file/*.hpp \
+            src/content/*.hpp \
             src/log/*.hpp \
             src/gui/*.hpp \
             src/gui/command/*.hpp
 
 SOURCES +=  src/app/*.cpp \
             src/common/*.cpp \
-            src/file/*.cpp \
+            src/content/*.cpp \
             src/log/*.cpp \
             src/gui/*.cpp \
             src/gui/command/*.cpp

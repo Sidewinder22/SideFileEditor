@@ -25,7 +25,7 @@ QuitCommand::QuitCommand(QWidget* parent, app::IMainController* mainController)
 	: log_("QuitCommand")
 	, parent_(parent)
 	, mainController_(mainController)
-	, commonUtils_(std::make_unique<::common::Utils>())
+	, commonUtils_(std::make_unique<::common::CommonUtils>())
 {
 	// Nothing
 }
@@ -52,16 +52,13 @@ void QuitCommand::verifyUnsavedBuffers()
 {
     log_ << MY_FUNC << log::END;
 
-    auto unsavedBufferNames = mainController_->unsavedBufferNames();
-
-    for (auto && bufferName : unsavedBufferNames)
-   {
+    for (auto && bufferName : mainController_->namesOfUnsavedBuffers())
+    {
 		if (utils::askForSaveBuffer(bufferName))
 		{
 			if (bufferName.contains('/'))
 			{
-				mainController_->save(
-					commonUtils_->extractFileName(bufferName));
+				mainController_->save(bufferName);
 			}
 			else
 			{

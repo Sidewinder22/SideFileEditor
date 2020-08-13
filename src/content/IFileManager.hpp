@@ -1,48 +1,50 @@
-#ifndef SRC_FILE_IBUFFER_HPP_
-#define SRC_FILE_IBUFFER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
- * @date    31.03.2020
+ * @date    30 lip 2020
+ * @file    IFileManager.hpp
  *
- * @brief   Class to buffering text which represent file content.
+ * @brief   Interface for file manager
  */
+#ifndef SRC_CONTENT_IFILEMANAGER_HPP_
+#define SRC_CONTENT_IFILEMANAGER_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
+#include <vector>
 #include <QString>
 
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class IBuffer
+class IFileManager
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-    virtual ~IBuffer() = default;
+    virtual ~IFileManager() = default;
 
-    virtual QString fileName() const = 0;
-    virtual void setFileName(const QString& fileName) = 0;
+    virtual bool open(const QString& fileName) = 0;
 
-    virtual void setContent(const std::vector<QString> &content) = 0;
+    virtual std::vector<QString> read(const QString& fileName) = 0;
 
-    virtual std::vector<QString> getContent() const = 0;
+    virtual void save(const QString& fileName,
+    	const std::vector<QString>& content) = 0;
 
-    virtual bool empty() const = 0;
-    virtual void clear() = 0;
+    virtual void close(const QString& fileName) = 0;
 
-    virtual bool isSaved() const = 0;
-    virtual void setSaved(bool saved) = 0;
+    virtual void remove(const QString& fileName) = 0;
+
+    virtual bool isOpen(const QString& fileName) = 0;
 };
 
-} // ::file
+} // ::content
 
-#endif /* SRC_FILE_IBUFFER_HPP_ */
+#endif /* SRC_CONTENT_IFILEMANAGER_HPP_ */

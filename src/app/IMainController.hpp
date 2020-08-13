@@ -34,31 +34,7 @@ public:
      * @brief Open file
      * @param fileName path for file
      */
-    virtual void openFile(const QString& fileName) const = 0;
-
-    /**
-     * @brief Create new empty buffer
-     * @param bufferName name for the buffer
-     */
-    virtual void createBuffer(const QString& bufferName) const = 0;
-
-    /**
-     * @brief Save buffer's content as a new file
-     * @param bufferName name of the buffer
-     * @param fileName path for file
-     * @return True if successful, False otherwise
-     */
-    virtual bool saveBufferIntoFile(const QString& bufferName,
-    	const QString& fileName) const = 0;
-
-    /**
-     * @brief Text changed notification
-     * @param fileName fileName
-     * @param content content of the buffer
-     * @return True if buffer content changed, False otherwise
-     */
-    virtual bool textChanged(const QString& fileName,
-    	const QString &content) const = 0;
+    virtual void open(const QString& fileName) const = 0;
 
     /**
      * @brief Read data from file
@@ -87,10 +63,34 @@ public:
     virtual void remove(const QString& fileName) const = 0;
 
     /**
+     * @brief Create new empty buffer
+     * @param bufferName name for the buffer
+     */
+    virtual void createBuffer(const QString& bufferName) const = 0;
+
+    /**
+     * @brief Save buffer's content as a new file
+     * @param bufferName name of the buffer
+     * @param fileName path for file
+     * @return True if successful, False otherwise
+     */
+    virtual bool saveBufferIntoFile(const QString& bufferName,
+    	const QString& fileName) const = 0;
+
+    /**
+     * @brief Text changed notification
+     * @param fileName fileName
+     * @param content content of the buffer
+     * @return True if buffer content changed, False otherwise
+     */
+    virtual bool textChanged(const QString& fileName,
+    	const QString &content) const = 0;
+
+    /**
      * @brief Return the number of the open buffers
      * @return Number of the open buffers
      */
-    virtual size_t numberOfOpenBuffers() const = 0;
+    virtual size_t numberOfBuffers() const = 0;
 
      /**
      * @brief Return the number of the unsaved buffers
@@ -102,11 +102,21 @@ public:
      * @brief Return names of the unsaved buffers
      * @return Vector with the names of the unsaved buffers
      */
-    virtual std::vector<QString> unsavedBufferNames() const = 0;
+    virtual std::vector<QString> namesOfUnsavedBuffers() const = 0;
 
-    virtual bool isFileSaved(const QString& fileName) const = 0;
+    /**
+     * @brief Check if buffer is saved
+     * @param fileName name of the buffer to check
+     * @return True if buffer is saved, False otherwise
+     */
+    virtual bool isBufferSaved(const QString& fileName) const = 0;
 
-    virtual bool isFileEmpty(const QString& fileName) const = 0;
+    /*
+     * @brief Check if buffer is empty
+     * @param fileName name of the buffer to check
+     * @return True if buffer is empty, False otherwise
+     */
+    virtual bool isBufferEmpty(const QString& fileName) const = 0;
 };
 
 } // ::app

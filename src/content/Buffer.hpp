@@ -1,48 +1,52 @@
+#ifndef SRC_CONTENT_BUFFER_HPP_
+#define SRC_CONTENT_BUFFER_HPP_
 /**
  * @author  {\_Sidewinder22_/}
- * @date    26 lip 2020
- * @file    QuitCommand.hpp
+ * @date    31.03.2020
  *
- * @brief   Class handles quit command
+ * @brief   Class to buffering text which represent file content.
  */
-#ifndef SRC_GUI_COMMAND_QUITCOMMAND_HPP_
-#define SRC_GUI_COMMAND_QUITCOMMAND_HPP_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
-#include <memory>
-#include <QWidget>
-#include "common/CommonUtils.hpp"
-#include "app/IMainController.hpp"
+#include <vector>
+#include <QString>
 #include "log/Logger.hpp"
-#include "Command.hpp"
+#include "IBuffer.hpp"
 
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace gui
-{
-namespace command
+namespace content
 {
 
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class QuitCommand
-	: public Command
+class Buffer
+    : public IBuffer
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
 public:
-	QuitCommand(QWidget *parent, app::IMainController* mainController);
-    virtual ~QuitCommand() = default;
+    Buffer(QString fileName);
 
-	//-----------------------------------------------------
-	//               Command
-	//-----------------------------------------------------
-    void execute() override;
+    virtual ~Buffer() = default;
+
+    QString fileName() const override;
+
+    void setFileName(const QString& fileName) override;
+
+    void write(const std::vector<QString> &content) override;
+    std::vector<QString> read() const override;
+
+    bool empty() const override;
+    void clear() override;
+
+    bool isSaved() const override;
+    void setSaved(bool saved) override;
 
 //---------------------------------------------------------
 //                  Protected
@@ -53,15 +57,16 @@ protected:
 //                  Private
 //---------------------------------------------------------
 private:
-    void verifyUnsavedBuffers();
+    /**
+     * True if buffer is saved to the file, false otherwise
+     */
+    bool saved_;
 
-    log::Logger log_;
-    QWidget* parent_;
-    app::IMainController* mainController_;
-    std::unique_ptr<common::CommonUtils> commonUtils_;
+    log::Logger log_;                       //!< Logger object
+    QString fileName_;                      //!< Filename
+    std::vector<QString> content_;			//!< Buffer's content
 };
 
-} // ::command
-} // ::gui
+} // ::content
 
-#endif /* SRC_GUI_COMMAND_QUITCOMMAND_HPP_ */
+#endif /* SRC_CONTENT_BUFFER_HPP_ */

@@ -16,7 +16,7 @@
 //---------------------------------------------------------
 //                      Namespace
 //---------------------------------------------------------
-namespace file
+namespace content
 {
 
 File::File(QString fileName)
@@ -91,4 +91,4 @@ bool File::isEmpty()
     return isEmpty_;
 }
 
-} // ::file
+} // ::content

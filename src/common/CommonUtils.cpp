@@ -5,7 +5,7 @@
  * @brief   Set of useful utils
  */
 
-#include "Utils.hpp"
+#include "CommonUtils.hpp"
 
 #include <string>
 #include <filesystem>   // C++17
@@ -16,7 +16,7 @@
 namespace common
 {
 
-QString Utils::extractFileName(QString filePath)
+QString CommonUtils::extractFileName(QString filePath)
 {
     return std::filesystem::path(filePath.toStdString()).filename().c_str();
 }

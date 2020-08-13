@@ -1,20 +1,16 @@
-#ifndef SRC_UTILS_UTILS_H_
-#define SRC_UTILS_UTILS_H_
 /**
  * @author  {\_Sidewinder22_/}
  * @date    02.10.2019
  *
  * @brief   Set of useful utils
  */
+#ifndef SRC_COMMON_COMMONUTILS_H_
+#define SRC_COMMON_COMMONUTILS_H_
 
 //---------------------------------------------------------
 //                      Includes
 //---------------------------------------------------------
 #include <QString>
-
-//---------------------------------------------------------
-//                  Global context
-//---------------------------------------------------------
 
 //---------------------------------------------------------
 //                      Namespace
@@ -25,14 +21,14 @@ namespace common
 //---------------------------------------------------------
 //                  Class declaration
 //---------------------------------------------------------
-class Utils
+class CommonUtils
 {
 //---------------------------------------------------------
 //                  Public
 //---------------------------------------------------------
     public:
-        Utils() = default;
-        virtual ~Utils() = default;
+        CommonUtils() = default;
+        virtual ~CommonUtils() = default;
 
         /**
          * @brief Extract filename from the given path
@@ -54,4 +50,4 @@ class Utils
 
 } // ::common
 
-#endif /* SRC_UTILS_UTILS_H_ */
+#endif /* SRC_COMMON_COMMONUTILS_H_ */
