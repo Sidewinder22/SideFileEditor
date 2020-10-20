@@ -18,19 +18,21 @@ echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}->>>- Starting build -<<<-${NC}"
 
 if [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
     echo -e "${YELLOW}${BOLD}${REVERSE}-*- Removed build directory. -*-${NC}"
-    rm -rf build
+    rm -f *.o
 fi
 
-if [ -d build ]; then
-    echo -e "${LIGHT_MAGENDA}${BOLD}${REVERSE}-!- Build directory exists! -!-${NC}"
-    cd build
-else
-    mkdir build && cd build
+# if [ -d build ]; then
+#     echo -e "${LIGHT_MAGENDA}${BOLD}${REVERSE}-!- Build directory exists! -!-${NC}"
+#     cd build
+# else
+#     mkdir build && cd build
 
-    echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}-+- Invoking qmake -+-${NC}"
-    #qmake-qt5 ..
-    qmake ..
-fi
+#     echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}-+- Invoking qmake -+-${NC}"
+#     qmake ..
+# fi
+
+echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}-+- Invoking qmake -+-${NC}"
+qmake
 
 echo -e "${CYAN}${BOLD}${REVERSE}-+- Build started... -+-${NC}"
 make
