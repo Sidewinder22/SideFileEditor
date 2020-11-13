@@ -9,14 +9,18 @@ INCLUDEPATH += src
 
 # Input
 
-QT              += widgets
+QT              +=  widgets
 
-DEFINES         += "DEBUG=1"
+DEFINES         +=  "DEBUG=1"
 
-#HEADERS         += ../src/*.hpp
+HEADERS         +=  ../src/*.hpp \
+                    ../src/view/*.hpp
 
-SOURCES         += ../src/*.cpp
+SOURCES         +=  ../src/*.cpp \
+                    ../src/view/*.cpp
 
-QMAKE_CXXFLAGS  += -std=c++20 -Wall -Wextra
+QMAKE_CXXFLAGS  +=  -std=c++20 \
+                    -Wall \
+                    -Wextra
 
-QMAKE_LIBS      += -lstdc++fs
+QMAKE_LIBS      +=  -lstdc++fs

@@ -5,19 +5,19 @@
  * @brief   Side file editor class.
  */
 
-#ifndef SIDEFILEEDITOR_HPP_
-#define SIDEFILEEDITOR_HPP_
+#ifndef SRC_SIDEFILEEDITOR_HPP_
+#define SRC_SIDEFILEEDITOR_HPP_
 
-
-#include <QMainWindow>
+#include <memory>
+#include "view/Window.hpp"
 
 class SideFileEditor
-    : public QMainWindow
 {
-    // Q_OBJECT
-
 public:
     SideFileEditor();
+    
+private:
+    std::unique_ptr<view::Window> window_;
 };
 
-#endif /* SIDEFILEEDITOR_HPP_ */
+#endif /* SRC_SIDEFILEEDITOR_HPP_ */

@@ -25,6 +25,7 @@
 
 # Executables
 SideFileEditor
+SFe
 *.exe
 *.out
 *.app

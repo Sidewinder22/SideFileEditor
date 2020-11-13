@@ -5,11 +5,10 @@
  * @brief   Side file editor class.
  */
 
+#include <QScreen>
+#include <QGuiApplication>
 #include "SideFileEditor.hpp"
 
 SideFileEditor::SideFileEditor()
-    : QMainWindow()
-{
-    resize(900, 600);
-    show();
-}
+    : window_(std::make_unique<view::Window>())
+{ }
