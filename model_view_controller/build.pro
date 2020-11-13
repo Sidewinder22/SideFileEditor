@@ -14,9 +14,11 @@ QT              +=  widgets
 DEFINES         +=  "DEBUG=1"
 
 HEADERS         +=  ../src/*.hpp \
+                    ../src/ctrl/*.hpp \
                     ../src/view/*.hpp
 
 SOURCES         +=  ../src/*.cpp \
+                    ../src/ctrl/*.cpp \
                     ../src/view/*.cpp
 
 QMAKE_CXXFLAGS  +=  -std=c++20 \

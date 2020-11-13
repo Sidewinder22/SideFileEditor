@@ -10,5 +10,5 @@
 #include "SideFileEditor.hpp"
 
 SideFileEditor::SideFileEditor()
-    : window_( std::make_unique<view::Window>() )
+    : controller_( std::make_unique< ctrl::Controller >() )
 { }

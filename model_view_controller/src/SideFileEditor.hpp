@@ -9,7 +9,7 @@
 #define SRC_SIDEFILEEDITOR_HPP_
 
 #include <memory>
-#include "view/Window.hpp"
+#include "ctrl/Controller.hpp"
 
 class SideFileEditor
 {
@@ -17,7 +17,7 @@ public:
     SideFileEditor();
     
 private:
-    std::unique_ptr< view::Window > window_;
+    std::unique_ptr< ctrl::Controller > controller_;
 };
 
 #endif /* SRC_SIDEFILEEDITOR_HPP_ */
