@@ -17,7 +17,7 @@ public:
     SideFileEditor();
     
 private:
-    std::unique_ptr<view::Window> window_;
+    std::unique_ptr< view::Window > window_;
 };
 
 #endif /* SRC_SIDEFILEEDITOR_HPP_ */
