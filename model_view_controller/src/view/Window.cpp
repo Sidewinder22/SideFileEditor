@@ -14,13 +14,13 @@ namespace view
 
 Window::Window()
     : QMainWindow()
+    , log_( "Window" )
     , menu_( std::make_unique< view::Menu >() )
     , dock_( std::make_unique< view::Dock >() )
     , toolBar_( std::make_unique< view::ToolBar >() )
     , statusBar_( std::make_unique< view::StatusBar >() )
     , textEdit_( std::make_unique< view::TextEdit >() )
 {
-
     setMenuBar( menu_.get() );
     addToolBar( toolBar_.get() );
     addDockWidget( Qt::TopDockWidgetArea, dock_.get() );
@@ -39,6 +39,8 @@ Window::Window()
 
     statusBar_->showMessage( "Ready!" );
     textEdit_->setText( "Hello, world!" );
+
+    log_ << MY_FUNC << "Window created" << log::END;
 }
 
 } // ::view

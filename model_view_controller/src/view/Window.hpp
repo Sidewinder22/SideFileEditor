@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <QMainWindow>
+#include "log/Logger.hpp"
 #include "Dock.hpp"
 #include "Menu.hpp"
 #include "StatusBar.hpp"
@@ -26,6 +27,7 @@ public:
     Window();
 
 private:
+    log::Logger log_;
     std::unique_ptr< view::Menu > menu_;
     std::unique_ptr< view::Dock > dock_;
     std::unique_ptr< view::ToolBar > toolBar_;
