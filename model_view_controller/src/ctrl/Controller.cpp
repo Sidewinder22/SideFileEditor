@@ -13,8 +13,9 @@ namespace ctrl
 
 Controller::Controller()
     : log_( "Controller" )
-    , modelController_( std::make_unique< ModelController >() )
-    , commandFactory_( std::make_unique< cmd::CommandFactory> () )
+    , modelController_( std::make_shared< ModelController >() )
+    , commandFactory_( std::make_unique< cmd::CommandFactory> (
+        modelController_ ) )
 { }
 
 void Controller::newFile()

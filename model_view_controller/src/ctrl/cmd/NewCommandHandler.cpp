@@ -12,13 +12,14 @@ namespace ctrl
 namespace cmd
 {
 
-NewCommandHandler::NewCommandHandler()
-    : log_( "NewCommandHandler" )
+NewCommandHandler::NewCommandHandler(
+    std::shared_ptr< ctrl::ModelController > modelController )
+    : modelController_( modelController )
 { }
 
 void NewCommandHandler::execute()
 {
-    log_ << MY_FUNC << log::END;
+    modelController_->create();
 }
 
 } // ::cmd

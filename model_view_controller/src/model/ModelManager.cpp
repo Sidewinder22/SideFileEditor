@@ -12,8 +12,14 @@ namespace model
 
 ModelManager::ModelManager()
     : log_( "ModelManager" )
+    , bufferManager_( std::make_unique< BufferManager >() )
 {
     log_ << MY_FUNC << "Created." << log::END;
+}
+    
+void ModelManager::create()
+{
+    bufferManager_->create();
 }
 
 } // ::model

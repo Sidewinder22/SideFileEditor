@@ -19,6 +19,8 @@ class ModelController
 public:
     ModelController();
 
+    void create();
+
 private:
     std::unique_ptr< model::ModelManager > modelManager_;
 

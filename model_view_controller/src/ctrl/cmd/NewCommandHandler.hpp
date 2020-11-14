@@ -8,7 +8,7 @@
 #ifndef SRC_CTRL_CMD_NEWCOMMANDHANDLER_HPP_
 #define SRC_CTRL_CMD_NEWCOMMANDHANDLER_HPP_
 
-#include "log/Logger.hpp"
+#include "ctrl/ModelController.hpp"
 #include "ICommandHandler.hpp"
 
 namespace ctrl
@@ -20,7 +20,7 @@ class NewCommandHandler
     : public ICommandHandler
 {
 public:
-    NewCommandHandler();
+    NewCommandHandler( std::shared_ptr< ctrl::ModelController > modelController );
     virtual ~NewCommandHandler() = default;
 
     /**********************************************
@@ -29,7 +29,7 @@ public:
     void execute() override;
 
 private:
-    log::Logger log_;
+    std::shared_ptr< ctrl::ModelController > modelController_;
 };
 
 } // ::cmd

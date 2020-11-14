@@ -13,5 +13,10 @@ namespace ctrl
 ModelController::ModelController()
     : modelManager_( std::make_unique< model::ModelManager >() )
 { }
+    
+void ModelController::create()
+{
+    modelManager_->create();
+}
 
 } // ::ctrl

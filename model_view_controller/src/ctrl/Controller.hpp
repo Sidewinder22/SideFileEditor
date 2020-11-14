@@ -31,7 +31,7 @@ public slots:
 
 private:
     log::Logger log_;
-    std::unique_ptr< ModelController > modelController_;
+    std::shared_ptr< ModelController > modelController_;
     std::unique_ptr< cmd::ICommandFactory > commandFactory_;
 };
 

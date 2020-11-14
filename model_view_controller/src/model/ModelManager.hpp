@@ -8,7 +8,9 @@
 #ifndef SRC_MODEL_MODELMANAGER_HPP_
 #define SRC_MODEL_MODELMANAGER_HPP_
 
+#include <memory>
 #include "log/Logger.hpp"
+#include "BufferManager.hpp"
 
 namespace model
 {
@@ -18,8 +20,11 @@ class ModelManager
 public:
     ModelManager();
 
+    void create();
+
 private:
     log::Logger log_;
+    std::unique_ptr< BufferManager > bufferManager_;
 };
 
 } // ::model

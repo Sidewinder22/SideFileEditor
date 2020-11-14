@@ -13,9 +13,13 @@ namespace ctrl
 namespace cmd
 {
 
+CommandFactory::CommandFactory( std::shared_ptr< ModelController > modelController )
+    : modelController_( modelController )
+{ }
+
 ICommandHandler& CommandFactory::getNewCommandHandler()
 {
-    static NewCommandHandler handler;
+    static NewCommandHandler handler( modelController_ );
     return handler;
 }
 
