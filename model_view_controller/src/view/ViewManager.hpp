@@ -11,6 +11,7 @@
 #include <QObject>
 #include "log/Logger.hpp"
 #include "view/Window.hpp"
+#include "Dock.hpp"
 
 namespace view
 {
@@ -29,6 +30,7 @@ public slots:
 
 private:
     log::Logger log_;
+    Dock* dock_;
     std::unique_ptr< view::Window > window_;
 };
 

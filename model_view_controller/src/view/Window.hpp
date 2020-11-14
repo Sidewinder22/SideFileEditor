@@ -11,8 +11,8 @@
 #include <memory>
 #include <QMainWindow>
 #include "log/Logger.hpp"
-#include "Dock.hpp"
 #include "Menu.hpp"
+#include "Dock.hpp"
 #include "StatusBar.hpp"
 #include "TextEdit.hpp"
 #include "ToolBar.hpp"
@@ -25,15 +25,15 @@ class Window
     : public QMainWindow
 {
 public:
-    Window( std::shared_ptr< CommandHandler > commandHandler );
+    Window( std::shared_ptr< CommandHandler > commandHandler,
+        Dock* dock );
 
 private:
     log::Logger log_;
-    std::unique_ptr< Menu > menu_;
-    std::unique_ptr< Dock > dock_;
-    std::unique_ptr< ToolBar > toolBar_;
-    std::unique_ptr< StatusBar > statusBar_;
-    std::unique_ptr< TextEdit > textEdit_;
+    Menu* menu_;
+    ToolBar* toolBar_;
+    StatusBar* statusBar_;
+    TextEdit* textEdit_;
 };
 
 } // ::view

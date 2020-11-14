@@ -12,12 +12,15 @@ namespace view
     
 ViewManager::ViewManager( std::shared_ptr< view::CommandHandler > commandHandler )
     : log_( "ViewManager" )
-    , window_( std::make_unique< view::Window >( commandHandler ) )
+    , dock_ ( new Dock() )
+    , window_( std::make_unique< view::Window >( commandHandler, dock_ ) )
 { }
     
 void ViewManager::bufferCreated( const QString& bufferName )
 {
     log_ << MY_FUNC << ": " << bufferName << log::END;
+
+    dock_->addName( bufferName );
 }
 
 } // ::view

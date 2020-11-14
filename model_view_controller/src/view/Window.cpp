@@ -12,21 +12,21 @@
 namespace view
 {
 
-Window::Window( std::shared_ptr< CommandHandler > commandHandler )
+Window::Window( std::shared_ptr< CommandHandler > commandHandler,
+    Dock* dock)
     : QMainWindow()
     , log_( "Window" )
-    , menu_( std::make_unique< view::Menu >( commandHandler ) )
-    , dock_( std::make_unique< view::Dock >() )
-    , toolBar_( std::make_unique< view::ToolBar >( commandHandler ) )
-    , statusBar_( std::make_unique< view::StatusBar >() )
-    , textEdit_( std::make_unique< view::TextEdit >() )
+    , menu_( new Menu( commandHandler ) )
+    , toolBar_( new ToolBar( commandHandler ) )
+    , statusBar_(new StatusBar() )
+    , textEdit_( new TextEdit() )
 {
-    setMenuBar( menu_.get() );
-    addToolBar( toolBar_.get() );
-    addDockWidget( Qt::TopDockWidgetArea, dock_.get() );
-    setStatusBar( statusBar_.get() );
+    setMenuBar( menu_ );
+    addToolBar( toolBar_ );
+    addDockWidget( Qt::TopDockWidgetArea, dock );
+    setStatusBar( statusBar_ );
 
-    setCentralWidget( textEdit_.get() );
+    setCentralWidget( textEdit_ );
 
     setWindowTitle( "{\\_SideFileEditor_/}" );
 
