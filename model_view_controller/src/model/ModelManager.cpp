@@ -17,9 +17,9 @@ ModelManager::ModelManager()
     log_ << MY_FUNC << "Created." << log::END;
 }
     
-void ModelManager::create()
+QString ModelManager::create()
 {
-    bufferManager_->create();
+    return bufferManager_->create();
 }
 
 } // ::model

@@ -18,7 +18,7 @@ class BufferManager
 public:
     BufferManager();
 
-    void create();
+    QString create();
 
 private:
     log::Logger log_;

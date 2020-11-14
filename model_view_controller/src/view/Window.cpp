@@ -38,7 +38,6 @@ Window::Window( std::shared_ptr< CommandHandler > commandHandler )
     show();
 
     statusBar_->showMessage( "Ready!" );
-    textEdit_->setText( "Hello, world!" );
 
     log_ << MY_FUNC << "Window created" << log::END;
 }

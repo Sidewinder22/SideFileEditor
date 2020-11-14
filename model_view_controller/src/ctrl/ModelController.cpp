@@ -16,7 +16,8 @@ ModelController::ModelController()
     
 void ModelController::create()
 {
-    modelManager_->create();
+    auto bufferName = modelManager_->create();
+    emit created( bufferName );
 }
 
 } // ::ctrl

@@ -16,12 +16,12 @@ BufferManager::BufferManager()
     : log_( "BufferManager" )
 { }
 
-void BufferManager::create()
+QString BufferManager::create()
 {
     auto bufferName = "Buffer[" + std::to_string( nextBufferNumber_++ ) + "]";
-
     log_ << MY_FUNC << ": " << bufferName << log::END;
-    //modelController_->create( QString::fromStdString( bufferName.c_str() ) )
+
+    return QString::fromStdString( bufferName.c_str() );
 }
 
 } // ::model

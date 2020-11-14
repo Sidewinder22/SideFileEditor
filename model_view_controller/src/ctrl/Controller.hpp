@@ -28,6 +28,10 @@ public:
 
 public slots:
     void newFile();
+    void bufferCreated( const QString& bufferName );
+
+signals:
+    void created( const QString& bufferName );
 
 private:
     log::Logger log_;

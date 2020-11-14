@@ -12,11 +12,16 @@
 SideFileEditor::SideFileEditor()
     : controller_( std::make_unique< ctrl::Controller >() )
     , commandHandler_( std::make_shared< view::CommandHandler >() )
-    , window_( std::make_unique< view::Window >( commandHandler_ ) )
+    , viewManager_( std::make_unique< view::ViewManager >( commandHandler_ ) )
 {
-    QObject::connect( 
-        commandHandler_.get(),
+    connect( commandHandler_.get(),
         &view::CommandHandler::newFileRequested, 
         controller_.get(),
         &ctrl::Controller::newFile );
+
+    connect( controller_.get(),
+        &ctrl::Controller::created,
+        viewManager_.get(),
+        &view::ViewManager::bufferCreated );
+
 }

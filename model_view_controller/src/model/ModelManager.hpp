@@ -20,7 +20,7 @@ class ModelManager
 public:
     ModelManager();
 
-    void create();
+    QString create();
 
 private:
     log::Logger log_;

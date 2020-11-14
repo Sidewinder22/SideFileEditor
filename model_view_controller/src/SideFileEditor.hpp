@@ -11,7 +11,7 @@
 #include <QObject>
 #include <memory>
 #include "ctrl/Controller.hpp"
-#include "view/Window.hpp"
+#include "view/ViewManager.hpp"
 #include "view/CommandHandler.hpp"
 
 class SideFileEditor
@@ -25,7 +25,7 @@ public:
 private:
     std::unique_ptr< ctrl::Controller > controller_;
     std::shared_ptr< view::CommandHandler > commandHandler_;
-    std::unique_ptr< view::Window > window_;
+    std::unique_ptr< view::ViewManager > viewManager_;
 };
 
 #endif /* SRC_SIDEFILEEDITOR_HPP_ */
