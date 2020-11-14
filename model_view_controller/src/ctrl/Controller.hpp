@@ -10,6 +10,7 @@
 
 #include <memory>
 #include "view/Window.hpp"
+#include "ModelController.hpp"
 
 namespace ctrl
 {
@@ -21,6 +22,7 @@ public:
 
 private:
     std::unique_ptr< view::Window > window_;
+    std::unique_ptr< ModelController > modelController_;
 };
 
 }; // ::ctrl
