@@ -13,7 +13,6 @@
 #include "ctrl/Controller.hpp"
 #include "view/Window.hpp"
 #include "view/CommandHandler.hpp"
-//#include "view/ICommandHandler.hpp"
 
 class SideFileEditor
     : public QObject

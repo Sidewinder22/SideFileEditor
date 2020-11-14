@@ -15,12 +15,14 @@ DEFINES         +=  "DEBUG=1"
 
 HEADERS         +=  ../src/*.hpp \
                     ../src/ctrl/*.hpp \
+                    ../src/ctrl/cmd/*.hpp \
                     ../src/log/*.hpp \
                     ../src/model/*.hpp \
                     ../src/view/*.hpp
 
 SOURCES         +=  ../src/*.cpp \
                     ../src/ctrl/*.cpp \
+                    ../src/ctrl/cmd/*.cpp \
                     ../src/log/*.cpp \
                     ../src/model/*.cpp \
                     ../src/view/*.cpp

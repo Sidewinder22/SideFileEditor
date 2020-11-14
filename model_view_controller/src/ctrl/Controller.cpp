@@ -5,6 +5,7 @@
  * @brief   Main controller class.
  */
 
+#include "cmd/CommandFactory.hpp"
 #include "Controller.hpp"
 
 namespace ctrl
@@ -13,11 +14,14 @@ namespace ctrl
 Controller::Controller()
     : log_( "Controller" )
     , modelController_( std::make_unique< ModelController >() )
+    , commandFactory_( std::make_unique< cmd::CommandFactory> () )
 { }
 
 void Controller::newFile()
 {
     log_ << MY_FUNC << log::END;
+
+    commandFactory_->getNewCommandHandler().execute();
 }
 
 } // ::ctrl

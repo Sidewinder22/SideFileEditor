@@ -11,6 +11,7 @@
 #include <memory>
 #include <QObject>
 #include "log/Logger.hpp"
+#include "cmd/ICommandFactory.hpp"
 #include "ModelController.hpp"
 
 namespace ctrl
@@ -31,6 +32,7 @@ public slots:
 private:
     log::Logger log_;
     std::unique_ptr< ModelController > modelController_;
+    std::unique_ptr< cmd::ICommandFactory > commandFactory_;
 };
 
 }; // ::ctrl
