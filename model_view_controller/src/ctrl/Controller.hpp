@@ -9,19 +9,27 @@
 #define SRC_CTRL_CONTROLLER_HPP_
 
 #include <memory>
-#include "view/Window.hpp"
+#include <QObject>
+#include "log/Logger.hpp"
 #include "ModelController.hpp"
 
 namespace ctrl
 {
 
 class Controller
+    : public QObject
 {
+    Q_OBJECT
+
 public:
     Controller();
+    virtual ~Controller() = default;
+
+public slots:
+    void newFile();
 
 private:
-    std::unique_ptr< view::Window > window_;
+    log::Logger log_;
     std::unique_ptr< ModelController > modelController_;
 };
 

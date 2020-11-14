@@ -16,6 +16,7 @@
 #include "StatusBar.hpp"
 #include "TextEdit.hpp"
 #include "ToolBar.hpp"
+#include "CommandHandler.hpp"
 
 namespace view
 {
@@ -24,15 +25,15 @@ class Window
     : public QMainWindow
 {
 public:
-    Window();
+    Window( std::shared_ptr< CommandHandler > commandHandler );
 
 private:
     log::Logger log_;
-    std::unique_ptr< view::Menu > menu_;
-    std::unique_ptr< view::Dock > dock_;
-    std::unique_ptr< view::ToolBar > toolBar_;
-    std::unique_ptr< view::StatusBar > statusBar_;
-    std::unique_ptr< view::TextEdit > textEdit_;
+    std::unique_ptr< Menu > menu_;
+    std::unique_ptr< Dock > dock_;
+    std::unique_ptr< ToolBar > toolBar_;
+    std::unique_ptr< StatusBar > statusBar_;
+    std::unique_ptr< TextEdit > textEdit_;
 };
 
 } // ::view

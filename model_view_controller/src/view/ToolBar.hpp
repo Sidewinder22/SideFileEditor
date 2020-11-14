@@ -10,6 +10,7 @@
 
 #include <QAction>
 #include <QToolBar>
+#include "CommandHandler.hpp"
 
 namespace view
 {
@@ -17,11 +18,18 @@ namespace view
 class ToolBar
     : public QToolBar
 {
+    Q_OBJECT
+
 public:
-    ToolBar();
+    ToolBar( std::shared_ptr< CommandHandler > commandHandler );
+
+public slots:
+    void newFile();
 
 private:
-    QAction* new_;
+    std::shared_ptr< CommandHandler > commandHandler_;
+
+    QAction* newAction_;
 };
 
 } // ::view

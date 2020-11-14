@@ -9,7 +9,9 @@
 #define SRC_VIEW_MENU_HPP_
 
 #include <QMenu>
+#include <QAction>
 #include <QMenuBar>
+#include "CommandHandler.hpp"
 
 namespace view
 {
@@ -17,11 +19,20 @@ namespace view
 class Menu
     : public QMenuBar
 {
+    Q_OBJECT
+
 public:
-    Menu();
+    Menu( std::shared_ptr< CommandHandler > commandHandler );
+
+public slots:
+    void newFile();
 
 private:
+    std::shared_ptr< CommandHandler > commandHandler_;
+
     QMenu* fileMenu_;
+
+	QAction *newAction_;
 };
 
 } // ::view

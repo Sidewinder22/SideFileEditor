@@ -6,18 +6,18 @@
  */
 
 #include <QScreen>
-#include "Window.hpp"
 #include <QGuiApplication>
+#include "Window.hpp"
 
 namespace view
 {
 
-Window::Window()
+Window::Window( std::shared_ptr< CommandHandler > commandHandler )
     : QMainWindow()
     , log_( "Window" )
-    , menu_( std::make_unique< view::Menu >() )
+    , menu_( std::make_unique< view::Menu >( commandHandler ) )
     , dock_( std::make_unique< view::Dock >() )
-    , toolBar_( std::make_unique< view::ToolBar >() )
+    , toolBar_( std::make_unique< view::ToolBar >( commandHandler ) )
     , statusBar_( std::make_unique< view::StatusBar >() )
     , textEdit_( std::make_unique< view::TextEdit >() )
 {
