@@ -6,6 +6,7 @@
  */
 
 #include "BufferManager.hpp"
+#include "BufferStateMachine.hpp"
 
 namespace model
 {
@@ -18,10 +19,16 @@ BufferManager::BufferManager()
 
 QString BufferManager::create()
 {
-    auto bufferName = "Buffer[" + std::to_string( nextBufferNumber_++ ) + "]";
+    auto bufferName = QString( "Buffer[" );
+    bufferName.append( QString::number( nextBufferNumber_++ ) );
+    bufferName.append( "]");
+
     log_ << MY_FUNC << ": " << bufferName << log::END;
 
-    return QString::fromStdString( bufferName.c_str() );
+    auto buffer = std::make_unique< BufferStateMachine >( bufferName );
+    buffers_.push_back( std::move( buffer ) );
+
+    return bufferName;
 }
 
 } // ::model

@@ -8,6 +8,9 @@
 #ifndef SRC_MODEL_BUFFERMANAGER_HPP_
 #define SRC_MODEL_BUFFERMANAGER_HPP_
 
+#include <memory>
+#include <vector>
+#include "BufferStateMachine.hpp"
 #include "log/Logger.hpp"
 
 namespace model
@@ -23,6 +26,8 @@ public:
 private:
     log::Logger log_;
     static int nextBufferNumber_;
+
+    std::vector< std::unique_ptr< BufferStateMachine > > buffers_;
 };
 
 } // ::model
