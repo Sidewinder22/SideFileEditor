@@ -13,6 +13,7 @@
 #include "log/Logger.hpp"
 #include "cmd/ICommandFactory.hpp"
 #include "ModelController.hpp"
+#include "ViewController.hpp"
 
 namespace ctrl
 {
@@ -23,7 +24,7 @@ class Controller
     Q_OBJECT
 
 public:
-    Controller();
+    Controller( view::ViewManager* viewManager );
     virtual ~Controller() = default;
 
 public slots:
@@ -35,7 +36,8 @@ signals:
 
 private:
     log::Logger log_;
-    std::shared_ptr< ModelController > modelController_;
+    ModelController* modelController_;
+    ViewController* viewController_;
     std::unique_ptr< cmd::ICommandFactory > commandFactory_;
 };
 

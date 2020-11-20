@@ -10,7 +10,7 @@
 namespace view
 {
 
-ToolBar::ToolBar( std::shared_ptr< CommandHandler > commandHandler )
+ToolBar::ToolBar( CommandHandler* commandHandler )
     : commandHandler_ ( commandHandler )
     , newAction_( addAction( QIcon( "../../icons/new.png" ), "New File" ) )
 {

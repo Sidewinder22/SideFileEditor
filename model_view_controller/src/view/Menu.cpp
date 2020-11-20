@@ -11,7 +11,7 @@
 namespace view
 {
 
-Menu::Menu( std::shared_ptr< CommandHandler > commandHandler )
+Menu::Menu( CommandHandler* commandHandler )
     : commandHandler_( commandHandler )
     , fileMenu_( new QMenu("File"))
     , newAction_( new QAction( "&New", this ) )

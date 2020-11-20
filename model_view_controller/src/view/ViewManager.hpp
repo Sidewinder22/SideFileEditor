@@ -22,16 +22,17 @@ class ViewManager
     Q_OBJECT
 
 public:
-    ViewManager( std::shared_ptr< view::CommandHandler > commandHandler );
+    ViewManager( CommandHandler* commandHandler );
     virtual ~ViewManager() = default;
 
 public slots:
     void bufferCreated( const QString& bufferName );
+    void textChanged();
 
 private:
     log::Logger log_;
     Dock* dock_;
-    std::unique_ptr< view::Window > window_;
+    view::Window* window_;
 };
 
 } // ::view

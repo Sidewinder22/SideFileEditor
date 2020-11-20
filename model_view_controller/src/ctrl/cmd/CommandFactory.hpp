@@ -20,7 +20,7 @@ class CommandFactory
     : public ICommandFactory
 {
 public:
-    CommandFactory( std::shared_ptr< ModelController > modelController );
+    CommandFactory( ModelController* modelController );
     virtual ~CommandFactory() = default;
 
     /**********************************************
@@ -29,7 +29,7 @@ public:
     ICommandHandler& getNewCommandHandler() override;
 
 private:
-    std::shared_ptr< ModelController > modelController_;
+    ModelController* modelController_;
 };
 
 } // ::cmd

@@ -11,13 +11,14 @@
 namespace ctrl
 {
 
-Controller::Controller()
+Controller::Controller( view::ViewManager* viewManager )
     : log_( "Controller" )
-    , modelController_( std::make_shared< ModelController >() )
+    , modelController_( new ModelController() )
+    , viewController_( new ViewController( viewManager ) )
     , commandFactory_( std::make_unique< cmd::CommandFactory> (
         modelController_ ) )
 {
-    connect( modelController_.get(),
+    connect( modelController_,
         &ModelController::created,
         this,
         &Controller::bufferCreated);

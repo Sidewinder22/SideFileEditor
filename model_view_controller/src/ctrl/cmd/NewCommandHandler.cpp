@@ -12,8 +12,7 @@ namespace ctrl
 namespace cmd
 {
 
-NewCommandHandler::NewCommandHandler(
-    std::shared_ptr< ctrl::ModelController > modelController )
+NewCommandHandler::NewCommandHandler( ctrl::ModelController* modelController )
     : modelController_( modelController )
 { }
 

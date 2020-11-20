@@ -10,17 +10,26 @@
 namespace view
 {
     
-ViewManager::ViewManager( std::shared_ptr< view::CommandHandler > commandHandler )
+ViewManager::ViewManager( view::CommandHandler* commandHandler )
     : log_( "ViewManager" )
     , dock_ ( new Dock() )
-    , window_( std::make_unique< view::Window >( commandHandler, dock_ ) )
-{ }
+    , window_( new view::Window( commandHandler, dock_ ) )
+{
+    connect( window_, &view::Window::textChangedSignal, this, &ViewManager::textChanged );
+}
     
 void ViewManager::bufferCreated( const QString& bufferName )
 {
     log_ << MY_FUNC << ": " << bufferName << log::END;
 
     dock_->addName( bufferName );
+}
+
+void ViewManager::textChanged()
+{
+    auto bufferName = dock_->getCurrent();
+
+    log_ << MY_FUNC << "Buff: " << bufferName << log::END;
 }
 
 } // ::view

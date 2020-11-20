@@ -24,9 +24,16 @@ namespace view
 class Window
     : public QMainWindow
 {
+    Q_OBJECT
+
 public:
-    Window( std::shared_ptr< CommandHandler > commandHandler,
-        Dock* dock );
+    Window( CommandHandler* commandHandler, Dock* dock );
+
+public slots:
+    void textChanged();
+
+signals:
+    void textChangedSignal();
 
 private:
     log::Logger log_;

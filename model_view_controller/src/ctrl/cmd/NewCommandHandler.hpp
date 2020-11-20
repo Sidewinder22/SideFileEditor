@@ -20,7 +20,7 @@ class NewCommandHandler
     : public ICommandHandler
 {
 public:
-    NewCommandHandler( std::shared_ptr< ctrl::ModelController > modelController );
+    NewCommandHandler( ctrl::ModelController* modelController );
     virtual ~NewCommandHandler() = default;
 
     /**********************************************
@@ -29,7 +29,7 @@ public:
     void execute() override;
 
 private:
-    std::shared_ptr< ctrl::ModelController > modelController_;
+    ctrl::ModelController* modelController_;
 };
 
 } // ::cmd

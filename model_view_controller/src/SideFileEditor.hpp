@@ -23,9 +23,9 @@ public:
     virtual ~SideFileEditor() = default;
     
 private:
-    std::unique_ptr< ctrl::Controller > controller_;
-    std::shared_ptr< view::CommandHandler > commandHandler_;
-    std::unique_ptr< view::ViewManager > viewManager_;
+    view::CommandHandler* commandHandler_;
+    view::ViewManager* viewManager_;
+    ctrl::Controller* controller_;
 };
 
 #endif /* SRC_SIDEFILEEDITOR_HPP_ */

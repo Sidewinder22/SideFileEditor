@@ -22,13 +22,13 @@ class Menu
     Q_OBJECT
 
 public:
-    Menu( std::shared_ptr< CommandHandler > commandHandler );
+    Menu( CommandHandler* commandHandler );
 
 public slots:
     void newFile();
 
 private:
-    std::shared_ptr< CommandHandler > commandHandler_;
+    CommandHandler* commandHandler_;
 
     QMenu* fileMenu_;
 

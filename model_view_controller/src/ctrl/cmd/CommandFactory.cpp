@@ -13,7 +13,7 @@ namespace ctrl
 namespace cmd
 {
 
-CommandFactory::CommandFactory( std::shared_ptr< ModelController > modelController )
+CommandFactory::CommandFactory( ModelController* modelController )
     : modelController_( modelController )
 { }
 

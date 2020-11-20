@@ -12,8 +12,7 @@
 namespace view
 {
 
-Window::Window( std::shared_ptr< CommandHandler > commandHandler,
-    Dock* dock)
+Window::Window( CommandHandler* commandHandler, Dock* dock )
     : QMainWindow()
     , log_( "Window" )
     , menu_( new Menu( commandHandler ) )
@@ -40,6 +39,13 @@ Window::Window( std::shared_ptr< CommandHandler > commandHandler,
     statusBar_->showMessage( "Ready!" );
 
     log_ << MY_FUNC << "Window created" << log::END;
+
+    connect( textEdit_, &QTextEdit::textChanged, this, &Window::textChanged );
+}
+
+void Window::textChanged()
+{
+    emit textChangedSignal();
 }
 
 } // ::view

@@ -38,6 +38,18 @@ void Dock::addName( const QString& bufferName )
     names_->addItem( item );
     names_->setCurrentItem( item );
 }
+
+QString Dock::getCurrent()
+{
+    QString fileName;
+
+    if ( names_->currentRow() > -1 )
+    {
+        fileName = names_->currentItem()->text();
+    }
+
+    return fileName;
+}
     
 void Dock::rowChanged( int currentRow )
 {

@@ -21,13 +21,13 @@ class ToolBar
     Q_OBJECT
 
 public:
-    ToolBar( std::shared_ptr< CommandHandler > commandHandler );
+    ToolBar( CommandHandler* commandHandler );
 
 public slots:
     void newFile();
 
 private:
-    std::shared_ptr< CommandHandler > commandHandler_;
+    CommandHandler* commandHandler_;
 
     QAction* newAction_;
 };

@@ -10,18 +10,18 @@
 #include "SideFileEditor.hpp"
 
 SideFileEditor::SideFileEditor()
-    : controller_( std::make_unique< ctrl::Controller >() )
-    , commandHandler_( std::make_shared< view::CommandHandler >() )
-    , viewManager_( std::make_unique< view::ViewManager >( commandHandler_ ) )
+    : commandHandler_( new view::CommandHandler() )
+    , viewManager_( new view::ViewManager( commandHandler_ ) )
+    , controller_( new ctrl::Controller( viewManager_ ) )
 {
-    connect( commandHandler_.get(),
+    connect( commandHandler_,
         &view::CommandHandler::newFileRequested, 
-        controller_.get(),
+        controller_,
         &ctrl::Controller::newFile );
 
-    connect( controller_.get(),
+    connect( controller_,
         &ctrl::Controller::created,
-        viewManager_.get(),
+        viewManager_,
         &view::ViewManager::bufferCreated );
 
 }

@@ -25,6 +25,7 @@ public:
     virtual ~Dock() = default;
 
     void addName( const QString& bufferName );
+    QString getCurrent();
 
 public slots:
     void rowChanged( int currentRow );
