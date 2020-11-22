@@ -24,15 +24,13 @@ class Menu
 public:
     Menu( CommandHandler* commandHandler );
 
-public slots:
-    void newFile();
-
 private:
     CommandHandler* commandHandler_;
 
     QMenu* fileMenu_;
 
 	QAction *newAction_;
+    QAction *quitAction_;
 };
 
 } // ::view

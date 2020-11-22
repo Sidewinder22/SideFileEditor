@@ -29,6 +29,8 @@ public:
 
 public slots:
     void newFile();
+    void quit();
+
     void bufferCreated( const QString& bufferName );
 
 signals:

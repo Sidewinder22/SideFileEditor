@@ -30,6 +30,13 @@ void Controller::newFile()
 
     commandFactory_->getNewCommandHandler().execute();
 }
+
+void Controller::quit()
+{
+    log_ << MY_FUNC << log::END;
+
+    commandFactory_->getQuitCommandHandler().execute();
+}
     
 void Controller::bufferCreated( const QString& bufferName )
 {

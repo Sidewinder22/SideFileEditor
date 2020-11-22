@@ -15,13 +15,17 @@ SideFileEditor::SideFileEditor()
     , controller_( new ctrl::Controller( viewManager_ ) )
 {
     connect( commandHandler_,
-        &view::CommandHandler::newFileRequested, 
+        &view::CommandHandler::newFileRequest, 
         controller_,
         &ctrl::Controller::newFile );
+
+    connect( commandHandler_,
+        &view::CommandHandler::quitRequest, 
+        controller_,
+        &ctrl::Controller::quit );
 
     connect( controller_,
         &ctrl::Controller::created,
         viewManager_,
         &view::ViewManager::bufferCreated );
-
 }

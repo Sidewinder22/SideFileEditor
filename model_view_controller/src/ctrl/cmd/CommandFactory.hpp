@@ -27,6 +27,7 @@ public:
      *              ICommandFactory
     **********************************************/
     ICommandHandler& getNewCommandHandler() override;
+    ICommandHandler& getQuitCommandHandler() override;
 
 private:
     ModelController* modelController_;

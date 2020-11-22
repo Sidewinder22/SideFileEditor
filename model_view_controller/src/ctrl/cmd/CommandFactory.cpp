@@ -6,6 +6,7 @@
  */
 
 #include "NewCommandHandler.hpp"
+#include "QuitCommandHandler.hpp"
 #include "CommandFactory.hpp"
 
 namespace ctrl
@@ -20,6 +21,12 @@ CommandFactory::CommandFactory( ModelController* modelController )
 ICommandHandler& CommandFactory::getNewCommandHandler()
 {
     static NewCommandHandler handler( modelController_ );
+    return handler;
+}
+    
+ICommandHandler& CommandFactory::getQuitCommandHandler()
+{
+    static QuitCommandHandler handler;
     return handler;
 }
 

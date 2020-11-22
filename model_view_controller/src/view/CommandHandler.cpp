@@ -18,7 +18,15 @@ void CommandHandler::newFile()
 {
     log_ << MY_FUNC << log::END;
 
-    emit newFileRequested();
+    emit newFileRequest();
 }
     
+void CommandHandler::quit()
+{
+    log_ << MY_FUNC << log::END;
+
+    emit quitRequest();
+
+}
+
 } // ::view

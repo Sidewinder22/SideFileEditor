@@ -27,9 +27,11 @@ public:
      *              ICommandHandler
     *********************************************************/
     void newFile();
+    void quit();
 
 signals:
-    void newFileRequested();
+    void newFileRequest();
+    void quitRequest();
 
 private:
     log::Logger log_;
