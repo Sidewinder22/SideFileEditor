@@ -24,24 +24,13 @@ class Controller
     Q_OBJECT
 
 public:
-    Controller( view::ViewManager* viewManager );
+    Controller( ModelController* modelController,
+        ViewController* viewController );
     virtual ~Controller() = default;
 
 public slots:
-    /***
-     * View slots
-     ***/
     void newFile();
     void quit();
-    void textChanged( const QString& bufferName, const QString& text );
-
-    /***
-     * Model slots
-     ***/
-    void bufferCreated( const QString& bufferName );
-
-signals:
-    void created( const QString& bufferName );
 
 private:
     log::Logger log_;

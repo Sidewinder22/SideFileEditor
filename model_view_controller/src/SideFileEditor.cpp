@@ -12,7 +12,9 @@
 SideFileEditor::SideFileEditor()
     : commandHandler_( new view::CommandHandler() )
     , viewManager_( new view::ViewManager( commandHandler_ ) )
-    , controller_( new ctrl::Controller( viewManager_ ) )
+    , modelController_( new ctrl::ModelController() )
+    , viewController_( new ctrl::ViewController( viewManager_ ) )
+    , controller_( new ctrl::Controller( modelController_, viewController_ ) )
 {
     connect( commandHandler_,
         &view::CommandHandler::newFileRequest, 
@@ -24,13 +26,13 @@ SideFileEditor::SideFileEditor()
         controller_,
         &ctrl::Controller::quit );
 
-    connect( controller_,
-        &ctrl::Controller::created,
+    connect( modelController_,
+        &ctrl::ModelController::created,
         viewManager_,
-        &view::ViewManager::bufferCreated );
+        &view::ViewManager::created );
 
     connect( viewManager_,
         &view::ViewManager::textChangedNotif,
-        controller_,
-        &ctrl::Controller::textChanged );
+        modelController_,
+        &ctrl::ModelController::textChanged );
 }

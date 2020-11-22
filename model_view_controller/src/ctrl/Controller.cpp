@@ -11,18 +11,14 @@
 namespace ctrl
 {
 
-Controller::Controller( view::ViewManager* viewManager )
+Controller::Controller( ModelController* modelController,
+        ViewController* viewController )
     : log_( "Controller" )
-    , modelController_( new ModelController() )
-    , viewController_( new ViewController( viewManager ) )
+    , modelController_( modelController )
+    , viewController_( viewController )
     , commandFactory_( std::make_unique< cmd::CommandFactory> (
         modelController_ ) )
-{
-    connect( modelController_,
-        &ModelController::created,
-        this,
-        &Controller::bufferCreated);
-}
+{ }
 
 void Controller::newFile()
 {
@@ -37,16 +33,5 @@ void Controller::quit()
 
     commandFactory_->getQuitCommandHandler().execute();
 }
-
-void Controller::textChanged( const QString& bufferName, const QString& text )
-{
-    log_ << MY_FUNC << bufferName <<  ": " << text << log::END;
-}
     
-void Controller::bufferCreated( const QString& bufferName )
-{
-    log_ << MY_FUNC << ": " << bufferName << log::END;
-    emit created( bufferName );
-}
-
 } // ::ctrl

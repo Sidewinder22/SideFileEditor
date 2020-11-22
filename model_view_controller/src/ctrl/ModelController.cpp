@@ -11,13 +11,20 @@ namespace ctrl
 {
 
 ModelController::ModelController()
-    : modelManager_( std::make_unique< model::ModelManager >() )
+    : log_( "ModelController" )
+    , modelManager_( std::make_unique< model::ModelManager >() )
 { }
     
 void ModelController::create()
 {
     auto bufferName = modelManager_->create();
     emit created( bufferName );
+}
+
+void ModelController::textChanged( const QString& bufferName,
+    const QString& text )
+{
+    log_ << MY_FUNC << bufferName <<  ": " << text << log::END;
 }
 
 } // ::ctrl

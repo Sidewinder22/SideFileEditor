@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <QObject>
+#include "log/Logger.hpp"
 #include "model/ModelManager.hpp"
 
 namespace ctrl
@@ -25,10 +26,14 @@ public:
 
     void create();
 
+public slots:
+    void textChanged( const QString& bufferName, const QString& text );
+
 signals:
     void created( const QString& bufferName );
 
 private:
+    log::Logger log_;
     std::unique_ptr< model::ModelManager > modelManager_;
 
 };

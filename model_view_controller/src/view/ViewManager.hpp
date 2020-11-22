@@ -27,7 +27,7 @@ public:
     virtual ~ViewManager() = default;
 
 public slots:
-    void bufferCreated( const QString& bufferName );
+    void created( const QString& bufferName );
     void textChanged();
 
 signals:

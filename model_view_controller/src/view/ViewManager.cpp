@@ -19,7 +19,7 @@ ViewManager::ViewManager( view::CommandHandler* commandHandler )
     connect( textEdit_, &QTextEdit::textChanged, this, &ViewManager::textChanged );
 }
     
-void ViewManager::bufferCreated( const QString& bufferName )
+void ViewManager::created( const QString& bufferName )
 {
     log_ << MY_FUNC << ": " << bufferName << log::END;
 
