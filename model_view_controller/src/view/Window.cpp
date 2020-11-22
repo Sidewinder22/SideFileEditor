@@ -12,13 +12,13 @@
 namespace view
 {
 
-Window::Window( CommandHandler* commandHandler, Dock* dock )
+Window::Window( CommandHandler* commandHandler, Dock* dock, TextEdit* textEdit )
     : QMainWindow()
     , log_( "Window" )
     , menu_( new Menu( commandHandler ) )
     , toolBar_( new ToolBar( commandHandler ) )
     , statusBar_(new StatusBar() )
-    , textEdit_( new TextEdit() )
+    , textEdit_( textEdit )
 {
     setMenuBar( menu_ );
     addToolBar( toolBar_ );
@@ -39,13 +39,6 @@ Window::Window( CommandHandler* commandHandler, Dock* dock )
     statusBar_->showMessage( "Ready!" );
 
     log_ << MY_FUNC << "Window created" << log::END;
-
-    connect( textEdit_, &QTextEdit::textChanged, this, &Window::textChanged );
-}
-
-void Window::textChanged()
-{
-    emit textChangedSignal();
 }
 
 } // ::view

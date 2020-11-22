@@ -12,5 +12,10 @@ namespace view
 
 TextEdit::TextEdit()
 { }
+    
+QString TextEdit::text()
+{
+    return toPlainText();
+}
 
 } // ::view

@@ -12,6 +12,7 @@
 #include "log/Logger.hpp"
 #include "view/Window.hpp"
 #include "Dock.hpp"
+#include "TextEdit.hpp"
 
 namespace view
 {
@@ -29,9 +30,13 @@ public slots:
     void bufferCreated( const QString& bufferName );
     void textChanged();
 
+signals:
+    void textChangedNotif( const QString& bufferName, const QString& text );
+
 private:
     log::Logger log_;
     Dock* dock_;
+    TextEdit* textEdit_;
     view::Window* window_;
 };
 

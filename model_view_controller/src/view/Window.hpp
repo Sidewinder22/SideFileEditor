@@ -27,13 +27,7 @@ class Window
     Q_OBJECT
 
 public:
-    Window( CommandHandler* commandHandler, Dock* dock );
-
-public slots:
-    void textChanged();
-
-signals:
-    void textChangedSignal();
+    Window( CommandHandler* commandHandler, Dock* dock, TextEdit* textEdit );
 
 private:
     log::Logger log_;

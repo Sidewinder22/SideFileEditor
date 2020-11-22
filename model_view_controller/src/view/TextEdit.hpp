@@ -18,6 +18,8 @@ class TextEdit
 {
 public:
     TextEdit();
+
+    QString text();
 };
 
 } // ::view

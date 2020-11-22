@@ -28,9 +28,16 @@ public:
     virtual ~Controller() = default;
 
 public slots:
+    /***
+     * View slots
+     ***/
     void newFile();
     void quit();
+    void textChanged( const QString& bufferName, const QString& text );
 
+    /***
+     * Model slots
+     ***/
     void bufferCreated( const QString& bufferName );
 
 signals:

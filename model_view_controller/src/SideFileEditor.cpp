@@ -28,4 +28,9 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::created,
         viewManager_,
         &view::ViewManager::bufferCreated );
+
+    connect( viewManager_,
+        &view::ViewManager::textChangedNotif,
+        controller_,
+        &ctrl::Controller::textChanged );
 }

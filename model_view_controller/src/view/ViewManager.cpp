@@ -13,9 +13,10 @@ namespace view
 ViewManager::ViewManager( view::CommandHandler* commandHandler )
     : log_( "ViewManager" )
     , dock_ ( new Dock() )
-    , window_( new view::Window( commandHandler, dock_ ) )
+    , textEdit_( new TextEdit() )
+    , window_( new view::Window( commandHandler, dock_, textEdit_ ) )
 {
-    connect( window_, &view::Window::textChangedSignal, this, &ViewManager::textChanged );
+    connect( textEdit_, &QTextEdit::textChanged, this, &ViewManager::textChanged );
 }
     
 void ViewManager::bufferCreated( const QString& bufferName )
@@ -30,6 +31,9 @@ void ViewManager::textChanged()
     auto bufferName = dock_->getCurrent();
 
     log_ << MY_FUNC << "Buff: " << bufferName << log::END;
+
+    auto text = textEdit_->text();
+    emit textChangedNotif( bufferName, text );
 }
 
 } // ::view

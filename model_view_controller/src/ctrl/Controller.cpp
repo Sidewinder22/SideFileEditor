@@ -37,6 +37,11 @@ void Controller::quit()
 
     commandFactory_->getQuitCommandHandler().execute();
 }
+
+void Controller::textChanged( const QString& bufferName, const QString& text )
+{
+    log_ << MY_FUNC << bufferName <<  ": " << text << log::END;
+}
     
 void Controller::bufferCreated( const QString& bufferName )
 {
