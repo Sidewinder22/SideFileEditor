@@ -21,5 +21,10 @@ BufferStateMachine::BufferStateMachine( QString name )
 {
     log_ << MY_FUNC << log::END;
 }
+    
+QString BufferStateMachine::name()
+{
+    return name_;
+}
 
 } // ::model

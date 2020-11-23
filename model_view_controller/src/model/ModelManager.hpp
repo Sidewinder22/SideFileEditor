@@ -9,8 +9,10 @@
 #define SRC_MODEL_MODELMANAGER_HPP_
 
 #include <memory>
+#include <vector>
+#include <QString> 
 #include "log/Logger.hpp"
-#include "BufferManager.hpp"
+#include "BufferStateMachine.hpp"
 
 namespace model
 {
@@ -22,9 +24,16 @@ public:
 
     QString create();
 
+    void textChanged( const QString& bufferName, const QString& text );
+
 private:
+    std::vector< std::shared_ptr< BufferStateMachine > >::iterator getIterator(
+    	const QString& name );
+
     log::Logger log_;
-    std::unique_ptr< BufferManager > bufferManager_;
+    static int nextBufferNumber_;
+
+    std::vector< std::shared_ptr< BufferStateMachine > > buffers_;
 };
 
 } // ::model

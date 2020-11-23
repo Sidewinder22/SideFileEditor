@@ -24,7 +24,7 @@ void ModelController::create()
 void ModelController::textChanged( const QString& bufferName,
     const QString& text )
 {
-    log_ << MY_FUNC << bufferName <<  ": " << text << log::END;
+    modelManager_->textChanged( bufferName, text );
 }
 
 } // ::ctrl

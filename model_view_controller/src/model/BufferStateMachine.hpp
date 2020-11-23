@@ -21,6 +21,8 @@ class BufferStateMachine
 public:
     BufferStateMachine( QString name );
 
+    QString name();
+
 private:
     enum class STATE {
         EMPTY_BUFFER,
