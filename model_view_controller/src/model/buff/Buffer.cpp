@@ -19,6 +19,7 @@ Buffer::Buffer()
 
 void Buffer::write( const QString &text )
 {
+    std::cout << __FUNCTION__ << ": " << text.toStdString() << std::endl;
     text_ = text;
 }
 

@@ -5,8 +5,8 @@
  * @brief   Buffer State Machine class
  */
 
-#ifndef SRC_MODEL_BUFFERSTATEMACHINE_HPP_
-#define SRC_MODEL_BUFFERSTATEMACHINE_HPP_
+#ifndef SRC_MODEL_BUFFERMANAGER_HPP_
+#define SRC_MODEL_BUFFERMANAGER_HPP_
 
 #include <memory>
 #include <QString>
@@ -16,28 +16,25 @@
 namespace model 
 {
 
-class BufferStateMachine 
+class BufferManager 
 {
 public:
-    BufferStateMachine( QString name );
+    BufferManager( QString name );
+    virtual ~BufferManager() = default;
 
+    void write( const QString& text );
     QString name();
+    QString read();
+    bool saved();
+    void setSaved( bool saved );
 
 private:
-    enum class STATE {
-        EMPTY_BUFFER,
-        WAIT_FOR_DATA,
-        READ,
-        REMOVE
-    };
-
     log::Logger log_;
     QString name_;
-    STATE state_;
     bool saved_;
     std::unique_ptr< buff::IBuffer > buffer_;
 };
 
 } // ::model
 
-#endif /* SRC_MODEL_BUFFERSTATEMACHINE_HPP_ */
+#endif /* SRC_MODEL_BUFFERMANAGER_HPP_ */

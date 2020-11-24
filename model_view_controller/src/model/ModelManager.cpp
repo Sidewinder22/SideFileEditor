@@ -6,7 +6,7 @@
  */
 
 #include "ModelManager.hpp"
-#include "BufferStateMachine.hpp"
+#include "BufferManager.hpp"
 #include "Utils.hpp"
 
 namespace model
@@ -28,7 +28,7 @@ QString ModelManager::create()
 
     log_ << MY_FUNC << ": " << bufferName << log::END;
 
-    auto buffer = std::make_shared< BufferStateMachine >( bufferName );
+    auto buffer = std::make_shared< BufferManager >( bufferName );
     buffers_.push_back( buffer );
 
     return bufferName;
@@ -42,14 +42,14 @@ void ModelManager::textChanged( const QString& bufferName,
     auto it = getIterator( bufferName );
     if ( it != buffers_.end() )
     {
-        // write to buffer    
+        (*it)->write( text );
     }
 }
 
-std::vector< std::shared_ptr< BufferStateMachine > >::iterator 
+std::vector< std::shared_ptr< BufferManager > >::iterator 
     ModelManager:: getIterator( const QString& name )
 {
-    return utils::getVectorIterator< BufferStateMachine >(
+    return utils::getVectorIterator< BufferManager >(
         name,
         buffers_.begin(),
         buffers_.end() );

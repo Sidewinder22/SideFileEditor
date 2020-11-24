@@ -12,7 +12,7 @@
 #include <vector>
 #include <QString> 
 #include "log/Logger.hpp"
-#include "BufferStateMachine.hpp"
+#include "BufferManager.hpp"
 
 namespace model
 {
@@ -27,13 +27,13 @@ public:
     void textChanged( const QString& bufferName, const QString& text );
 
 private:
-    std::vector< std::shared_ptr< BufferStateMachine > >::iterator getIterator(
+    std::vector< std::shared_ptr< BufferManager > >::iterator getIterator(
     	const QString& name );
 
     log::Logger log_;
     static int nextBufferNumber_;
 
-    std::vector< std::shared_ptr< BufferStateMachine > > buffers_;
+    std::vector< std::shared_ptr< BufferManager > > buffers_;
 };
 
 } // ::model
