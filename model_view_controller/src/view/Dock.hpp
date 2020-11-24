@@ -28,7 +28,10 @@ public:
     QString getCurrent();
 
 public slots:
-    void rowChanged( int currentRow );
+    void rowChanged( int row );
+
+signals:
+    void bufferSelectionChangedNotif( const QString& bufferName );
 
 private:
     log::Logger log_;

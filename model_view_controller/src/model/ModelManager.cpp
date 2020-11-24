@@ -45,9 +45,23 @@ void ModelManager::textChanged( const QString& bufferName,
         (*it)->write( text );
     }
 }
+    
+QString ModelManager::read( const QString& bufferName )
+{
+    log_ << MY_FUNC << bufferName << log::END;
+
+    auto it = getIterator( bufferName );
+    if ( it != buffers_.end() )
+    {
+        return (*it)->read();
+    }
+
+    log_ << MY_FUNC << "Buffer not found!" << log::END;
+    return {};
+}
 
 std::vector< std::shared_ptr< BufferManager > >::iterator 
-    ModelManager:: getIterator( const QString& name )
+    ModelManager::getIterator( const QString& name )
 {
     return utils::getVectorIterator< BufferManager >(
         name,

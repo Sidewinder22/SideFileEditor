@@ -25,8 +25,7 @@ public:
     ModelController();
 
     void create();
-
-public slots:
+    QString read( const QString& bufferName );
     void textChanged( const QString& bufferName, const QString& text );
 
 signals:

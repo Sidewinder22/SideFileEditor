@@ -9,6 +9,7 @@
 #define SRC_VIEW_VIEWMANAGER_HPP_
 
 #include <QObject>
+#include <QString>
 #include "log/Logger.hpp"
 #include "view/Window.hpp"
 #include "Dock.hpp"
@@ -23,20 +24,31 @@ class ViewManager
     Q_OBJECT
 
 public:
-    ViewManager( CommandHandler* commandHandler );
+    ViewManager();
     virtual ~ViewManager() = default;
 
-public slots:
     void created( const QString& bufferName );
+    void load( const QString& text );
+
+public slots:
+    void newFile();
+    void quit();
     void textChanged();
+    void bufferSelectionChanged( const QString& bufferName );
 
 signals:
+    void newFileNotif();
+    void quitNotif();
     void textChangedNotif( const QString& bufferName, const QString& text );
+    void bufferSelectionChangedNotif( const QString& bufferName );
 
 private:
     log::Logger log_;
     Dock* dock_;
     TextEdit* textEdit_;
+    Menu* menu_;
+    ToolBar* toolBar_;
+    StatusBar* statusBar_;
     view::Window* window_;
 };
 

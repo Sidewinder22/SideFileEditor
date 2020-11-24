@@ -14,6 +14,7 @@
 #include "cmd/ICommandFactory.hpp"
 #include "ModelController.hpp"
 #include "ViewController.hpp"
+#include "view/ViewManager.hpp"
 
 namespace ctrl
 {
@@ -24,13 +25,14 @@ class Controller
     Q_OBJECT
 
 public:
-    Controller( ModelController* modelController,
-        ViewController* viewController );
+    Controller( view::ViewManager* viewManager );
     virtual ~Controller() = default;
 
 public slots:
     void newFile();
     void quit();
+    void textChanged( const QString& bufferName, const QString& text );
+    void bufferSelectionChanged( const QString& bufferName );
 
 private:
     log::Logger log_;

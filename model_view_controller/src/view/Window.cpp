@@ -12,13 +12,18 @@
 namespace view
 {
 
-Window::Window( CommandHandler* commandHandler, Dock* dock, TextEdit* textEdit )
+Window::Window( Dock* dock,
+        TextEdit* textEdit,
+        Menu* menu,
+        ToolBar* toolBar,
+        StatusBar* statusBar )
     : QMainWindow()
     , log_( "Window" )
-    , menu_( new Menu( commandHandler ) )
-    , toolBar_( new ToolBar( commandHandler ) )
-    , statusBar_(new StatusBar() )
+    , dock_( dock )
     , textEdit_( textEdit )
+    , menu_( menu )
+    , toolBar_( toolBar )
+    , statusBar_( statusBar )
 {
     setMenuBar( menu_ );
     addToolBar( toolBar_ );

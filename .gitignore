@@ -43,3 +43,4 @@ moc_*
 .files_for_cscope
 .vscode
 
+build

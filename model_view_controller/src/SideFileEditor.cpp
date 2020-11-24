@@ -10,29 +10,26 @@
 #include "SideFileEditor.hpp"
 
 SideFileEditor::SideFileEditor()
-    : commandHandler_( new view::CommandHandler() )
-    , viewManager_( new view::ViewManager( commandHandler_ ) )
-    , modelController_( new ctrl::ModelController() )
-    , viewController_( new ctrl::ViewController( viewManager_ ) )
-    , controller_( new ctrl::Controller( modelController_, viewController_ ) )
+    : viewManager_( new view::ViewManager( ) )
+    , controller_( new ctrl::Controller( viewManager_ ) )
 {
-    connect( commandHandler_,
-        &view::CommandHandler::newFileRequest, 
+    connect( viewManager_,
+        &view::ViewManager::newFileNotif,
         controller_,
         &ctrl::Controller::newFile );
 
-    connect( commandHandler_,
-        &view::CommandHandler::quitRequest, 
+    connect( viewManager_,
+        &view::ViewManager::quitNotif,
         controller_,
         &ctrl::Controller::quit );
 
-    connect( modelController_,
-        &ctrl::ModelController::created,
-        viewManager_,
-        &view::ViewManager::created );
-
     connect( viewManager_,
         &view::ViewManager::textChangedNotif,
-        modelController_,
-        &ctrl::ModelController::textChanged );
+        controller_,
+        &ctrl::Controller::textChanged );
+
+    connect( viewManager_,
+        &view::ViewManager::bufferSelectionChangedNotif,
+        controller_,
+        &ctrl::Controller::bufferSelectionChanged );
 }

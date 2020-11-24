@@ -10,18 +10,20 @@
 namespace view
 {
 
-ToolBar::ToolBar( CommandHandler* commandHandler )
-    : commandHandler_ ( commandHandler )
-    , newAction_( addAction( QIcon( "../../icons/new.png" ), "New File" ) )
+ToolBar::ToolBar()
+    : newAction_( addAction( QIcon( "../../icons/new.png" ), "New File" ) )
 {
     newAction_->setStatusTip( "New File" );
 
-    connect( newAction_, &QAction::triggered, this, &ToolBar::newFile );
+    connect( newAction_,
+        &QAction::triggered,
+        this,
+        &ToolBar::newFile );
 }
 
 void ToolBar::newFile()
 {
-    commandHandler_->newFile();
+    emit newFileNotif();
 }
 
 } // ::view

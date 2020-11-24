@@ -11,10 +11,7 @@
 #include <QObject>
 #include <memory>
 #include "ctrl/Controller.hpp"
-#include "ctrl/ModelController.hpp"
-#include "ctrl/ViewController.hpp"
 #include "view/ViewManager.hpp"
-#include "view/CommandHandler.hpp"
 
 class SideFileEditor
     : public QObject
@@ -25,10 +22,7 @@ public:
     virtual ~SideFileEditor() = default;
     
 private:
-    view::CommandHandler* commandHandler_;
     view::ViewManager* viewManager_;
-    ctrl::ModelController* modelController_;
-    ctrl::ViewController* viewController_;
     ctrl::Controller* controller_;
 };
 

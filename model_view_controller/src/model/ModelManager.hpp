@@ -23,6 +23,7 @@ public:
     ModelManager();
 
     QString create();
+    QString read( const QString& bufferName );
 
     void textChanged( const QString& bufferName, const QString& text );
 

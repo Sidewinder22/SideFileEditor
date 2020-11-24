@@ -11,7 +11,6 @@
 #include <QMenu>
 #include <QAction>
 #include <QMenuBar>
-#include "CommandHandler.hpp"
 
 namespace view
 {
@@ -22,10 +21,15 @@ class Menu
     Q_OBJECT
 
 public:
-    Menu( CommandHandler* commandHandler );
+    Menu();
+
+signals:
+    void newFileNotif();
+    void quitNotif();
 
 private:
-    CommandHandler* commandHandler_;
+    void newActionTriggered();
+    void quitActionTriggered();
 
     QMenu* fileMenu_;
 

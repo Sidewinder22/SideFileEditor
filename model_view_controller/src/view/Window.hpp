@@ -16,7 +16,6 @@
 #include "StatusBar.hpp"
 #include "TextEdit.hpp"
 #include "ToolBar.hpp"
-#include "CommandHandler.hpp"
 
 namespace view
 {
@@ -27,14 +26,19 @@ class Window
     Q_OBJECT
 
 public:
-    Window( CommandHandler* commandHandler, Dock* dock, TextEdit* textEdit );
+    Window( Dock* dock,
+        TextEdit* textEdit,
+        Menu* menu,
+        ToolBar* toolBar,
+        StatusBar* statusBar );
 
 private:
     log::Logger log_;
+    Dock* dock_;
+    TextEdit* textEdit_;
     Menu* menu_;
     ToolBar* toolBar_;
     StatusBar* statusBar_;
-    TextEdit* textEdit_;
 };
 
 } // ::view

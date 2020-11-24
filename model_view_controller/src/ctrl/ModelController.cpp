@@ -27,4 +27,9 @@ void ModelController::textChanged( const QString& bufferName,
     modelManager_->textChanged( bufferName, text );
 }
 
+QString ModelController::read( const QString& bufferName )
+{
+    return modelManager_->read( bufferName );
+}
+
 } // ::ctrl

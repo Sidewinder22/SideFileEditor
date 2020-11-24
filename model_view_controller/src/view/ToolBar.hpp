@@ -10,7 +10,6 @@
 
 #include <QAction>
 #include <QToolBar>
-#include "CommandHandler.hpp"
 
 namespace view
 {
@@ -21,14 +20,15 @@ class ToolBar
     Q_OBJECT
 
 public:
-    ToolBar( CommandHandler* commandHandler );
+    ToolBar();
 
 public slots:
     void newFile();
 
-private:
-    CommandHandler* commandHandler_;
+signals:
+    void newFileNotif();
 
+private:
     QAction* newAction_;
 };
 

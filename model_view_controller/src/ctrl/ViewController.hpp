@@ -22,6 +22,11 @@ class ViewController
 public:
     ViewController( view::ViewManager* ViewManager );
 
+    void load( const QString& text );
+
+public slots:
+    void created( const QString& bufferName );
+
 private: 
     view::ViewManager* viewManager_;
 };

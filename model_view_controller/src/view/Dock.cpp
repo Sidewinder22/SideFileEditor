@@ -51,9 +51,10 @@ QString Dock::getCurrent()
     return fileName;
 }
     
-void Dock::rowChanged( int currentRow )
+void Dock::rowChanged( int row )
 {
-    log_ << MY_FUNC << "current row: " << currentRow << log::END;
+    log_ << MY_FUNC << "current row: " << row << log::END;
+    emit bufferSelectionChangedNotif( getCurrent() );
 }
 
 } // ::view
