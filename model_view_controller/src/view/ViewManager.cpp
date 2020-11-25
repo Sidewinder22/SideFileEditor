@@ -6,6 +6,7 @@
  */
 
 #include <QString>
+#include "common/Constants.hpp"
 #include "ViewManager.hpp"
 
 namespace view
@@ -41,6 +42,11 @@ ViewManager::ViewManager()
         &ViewManager::newFile );
 
     connect( menu_,
+        &Menu::aboutNotif,
+        this,
+        &ViewManager::about );
+
+    connect( menu_,
         &Menu::quitNotif,
         this,
         &ViewManager::quit );
@@ -64,11 +70,18 @@ void ViewManager::created( const QString& bufferName )
     dock_->addName( bufferName );
     textEdit_->clear();
     window_->setWindowTitle( bufferName );
+    statusBar_->showMessage("[New buffer created]: " + bufferName,
+        common::constants::STATUS_BAR_MSG_TIMEOUT);
 }
 
 void ViewManager::newFile()
 {
     emit newFileNotif();
+}
+
+void ViewManager::about()
+{
+    emit aboutNotif();
 }
 
 void ViewManager::quit()
@@ -91,6 +104,8 @@ void ViewManager::bufferSelectionChanged( const QString& bufferName )
     log_ << MY_FUNC << ": " << bufferName << log::END;
     emit bufferSelectionChangedNotif( bufferName );
     window_->setWindowTitle( bufferName );
+    statusBar_->showMessage("[Current buffer]: " + bufferName,
+        common::constants::STATUS_BAR_MSG_TIMEOUT);
 }
 
 } // ::view

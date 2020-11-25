@@ -14,6 +14,7 @@ QT              +=  widgets
 DEFINES         +=  "DEBUG=1"
 
 HEADERS         +=  ../src/*.hpp \
+                    ../src/common/*.hpp \
                     ../src/ctrl/*.hpp \
                     ../src/ctrl/cmd/*.hpp \
                     ../src/log/*.hpp \
@@ -29,8 +30,6 @@ SOURCES         +=  ../src/*.cpp \
                     ../src/model/buff/*.cpp \
                     ../src/view/*.cpp
 
-QMAKE_CXXFLAGS  +=  -std=c++20 \
-                    -Wall \
-                    -Wextra
+QMAKE_CXXFLAGS  +=  -std=c++20
 
 QMAKE_LIBS      +=  -lstdc++fs

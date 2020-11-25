@@ -25,15 +25,19 @@ public:
 
 signals:
     void newFileNotif();
+    void aboutNotif();
     void quitNotif();
 
 private:
     void newActionTriggered();
+    void aboutActionTriggered();
     void quitActionTriggered();
 
     QMenu* fileMenu_;
+    QMenu* helpMenu_;
 
 	QAction *newAction_;
+	QAction *aboutAction_;
     QAction *quitAction_;
 };
 

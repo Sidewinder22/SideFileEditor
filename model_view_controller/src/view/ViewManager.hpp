@@ -8,7 +8,7 @@
 #ifndef SRC_VIEW_VIEWMANAGER_HPP_
 #define SRC_VIEW_VIEWMANAGER_HPP_
 
-#include <QObject>
+#include <QWidget>
 #include <QString>
 #include "log/Logger.hpp"
 #include "view/Window.hpp"
@@ -19,7 +19,7 @@ namespace view
 {
 
 class ViewManager
-    : public QObject
+    : public QWidget
 {
     Q_OBJECT
 
@@ -32,12 +32,14 @@ public:
 
 public slots:
     void newFile();
+    void about();
     void quit();
     void textChanged();
     void bufferSelectionChanged( const QString& bufferName );
 
 signals:
     void newFileNotif();
+    void aboutNotif();
     void quitNotif();
     void textChangedNotif( const QString& bufferName, const QString& text );
     void bufferSelectionChangedNotif( const QString& bufferName );

@@ -8,6 +8,7 @@
 #ifndef SRC_CTRL_CMD_COMMANDFACTORY_HPP_
 #define SRC_CTRL_CMD_COMMANDFACTORY_HPP_
 
+#include <QWidget>
 #include "ctrl/ModelController.hpp"
 #include "ICommandFactory.hpp"
 
@@ -20,16 +21,18 @@ class CommandFactory
     : public ICommandFactory
 {
 public:
-    CommandFactory( ModelController* modelController );
+    CommandFactory( QWidget* parent, ModelController* modelController );
     virtual ~CommandFactory() = default;
 
     /**********************************************
      *              ICommandFactory
     **********************************************/
     ICommandHandler& getNewCommandHandler() override;
+    ICommandHandler& getAboutCommandHandler() override;
     ICommandHandler& getQuitCommandHandler() override;
 
 private:
+    QWidget* parent_;
     ModelController* modelController_;
 };
 
