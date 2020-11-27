@@ -26,11 +26,13 @@ public:
 signals:
     void newFileNotif();
     void aboutNotif();
+    void openNotif();
     void quitNotif();
 
 private:
     void newActionTriggered();
     void aboutActionTriggered();
+    void openActionTriggered();
     void quitActionTriggered();
 
     QMenu* fileMenu_;
@@ -38,6 +40,7 @@ private:
 
 	QAction *newAction_;
 	QAction *aboutAction_;
+	QAction *openAction_;
     QAction *quitAction_;
 };
 

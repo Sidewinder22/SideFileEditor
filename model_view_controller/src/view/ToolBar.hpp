@@ -24,12 +24,15 @@ public:
 
 public slots:
     void newFile();
+    void open();
 
 signals:
     void newFileNotif();
+    void openNotif();
 
 private:
     QAction* newAction_;
+    QAction* openAction_;
 };
 
 } // ::view

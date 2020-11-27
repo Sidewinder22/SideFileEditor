@@ -47,6 +47,11 @@ ViewManager::ViewManager()
         &ViewManager::about );
 
     connect( menu_,
+        &Menu::openNotif,
+        this,
+        &ViewManager::open );
+
+    connect( menu_,
         &Menu::quitNotif,
         this,
         &ViewManager::quit );
@@ -55,10 +60,17 @@ ViewManager::ViewManager()
         &ToolBar::newFileNotif,
         this,
         &ViewManager::newFile );
+
+    connect( toolBar_,
+        &ToolBar::openNotif,
+        this,
+        &ViewManager::open );
 }
 
 void ViewManager::load( const QString& text )
 {
+    log_ << MY_FUNC << log::END;
+
     textEdit_->clear();
     textEdit_->setText( text );
 }
@@ -84,6 +96,12 @@ void ViewManager::about()
     emit aboutNotif();
 }
 
+void ViewManager::open()
+{
+    log_ << MY_FUNC << log::END;
+//    emit openNotif();
+}
+
 void ViewManager::quit()
 {
     emit quitNotif();
@@ -102,6 +120,7 @@ void ViewManager::textChanged()
 void ViewManager::bufferSelectionChanged( const QString& bufferName )
 {
     log_ << MY_FUNC << ": " << bufferName << log::END;
+
     emit bufferSelectionChangedNotif( bufferName );
     window_->setWindowTitle( bufferName );
     statusBar_->showMessage("[Current buffer]: " + bufferName,
