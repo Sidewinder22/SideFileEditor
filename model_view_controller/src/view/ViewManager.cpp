@@ -99,7 +99,7 @@ void ViewManager::about()
 void ViewManager::open()
 {
     log_ << MY_FUNC << log::END;
-//    emit openNotif();
+    emit openNotif();
 }
 
 void ViewManager::quit()

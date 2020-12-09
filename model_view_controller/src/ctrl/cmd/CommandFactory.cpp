@@ -6,6 +6,7 @@
  */
 
 #include "NewCommandHandler.hpp"
+#include "OpenCommandHandler.hpp"
 #include "AboutCommandHandler.hpp"
 #include "QuitCommandHandler.hpp"
 #include "CommandFactory.hpp"
@@ -24,6 +25,12 @@ CommandFactory::CommandFactory(  QWidget* parent,
 ICommandHandler& CommandFactory::getNewCommandHandler()
 {
     static NewCommandHandler handler( modelController_ );
+    return handler;
+}
+
+ICommandHandler& CommandFactory::getOpenCommandHandler()
+{
+    static OpenCommandHandler handler;
     return handler;
 }
     

@@ -17,7 +17,7 @@ Controller::Controller( view::ViewManager* viewManager )
     : log_( "Controller" )
     , modelController_( new ModelController( ) )
     , viewController_( new ViewController( viewManager) )
-    , commandFactory_( std::make_unique< cmd::CommandFactory> (
+    , commandFactory_( std::make_unique< cmd::CommandFactory > (
         viewManager, modelController_ ) )
 {
     connect( modelController_,
@@ -31,6 +31,12 @@ void Controller::newFile()
     log_ << MY_FUNC << log::END;
 
     commandFactory_->getNewCommandHandler().execute();
+}
+
+void Controller::open()
+{
+    log_ << MY_FUNC << log::END;
+    commandFactory_->getOpenCommandHandler().execute();
 }
 
 void Controller::about()

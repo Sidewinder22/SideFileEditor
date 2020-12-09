@@ -28,6 +28,7 @@ public:
      *              ICommandFactory
     **********************************************/
     ICommandHandler& getNewCommandHandler() override;
+    ICommandHandler& getOpenCommandHandler() override;
     ICommandHandler& getAboutCommandHandler() override;
     ICommandHandler& getQuitCommandHandler() override;
 

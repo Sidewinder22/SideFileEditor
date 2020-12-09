@@ -40,8 +40,8 @@ public slots:
 
 signals:
     void newFileNotif();
-    void aboutNotif();
     void openNotif();
+    void aboutNotif();
     void quitNotif();
     void textChangedNotif( const QString& bufferName, const QString& text );
     void bufferSelectionChangedNotif( const QString& bufferName );

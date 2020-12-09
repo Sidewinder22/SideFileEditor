@@ -19,6 +19,11 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::newFile );
 
     connect( viewManager_,
+        &view::ViewManager::openNotif,
+        controller_,
+        &ctrl::Controller::open );
+
+    connect( viewManager_,
         &view::ViewManager::aboutNotif,
         controller_,
         &ctrl::Controller::about );
