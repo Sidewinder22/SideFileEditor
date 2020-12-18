@@ -20,7 +20,7 @@ Controller::Controller( view::ViewManager* viewManager )
     , modelController_( new ModelController( ) )
     , viewController_( new ViewController( viewManager) )
     , commandFactory_( std::make_unique< cmd::CommandFactory > (
-        viewManager, modelController_ ) )
+    	modelController_ ) )
 {
     connect( modelController_,
         &ctrl::ModelController::created,
@@ -42,15 +42,6 @@ void Controller::open()
     // TODO: Pass to the ViewController -> ViewManager -> RequestHandler
 
     commandFactory_->getOpenCommandHandler().execute();
-}
-
-void Controller::about()
-{
-    log_ << MY_FUNC << log::END;
-
-    // TODO: Pass to the ViewController -> ViewManager -> RequestHandler
-
-    commandFactory_->getAboutCommandHandler().execute();
 }
 
 void Controller::quit()

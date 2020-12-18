@@ -8,18 +8,19 @@
 #ifndef SRC_VIEW_VIEWMANAGER_HPP_
 #define SRC_VIEW_VIEWMANAGER_HPP_
 
-#include <QWidget>
-#include <QString>
 #include "log/Logger.hpp"
 #include "view/Window.hpp"
 #include "Dock.hpp"
 #include "TextEdit.hpp"
+#include "UserInteraction.hpp"
+#include <QObject>
+#include <QString>
 
 namespace view
 {
 
 class ViewManager
-    : public QWidget
+    : public QObject
 {
     Q_OBJECT
 
@@ -41,7 +42,6 @@ public slots:
 signals:
     void newFileNotif();
     void openNotif();
-    void aboutNotif();
     void quitNotif();
     void textChangedNotif( const QString& bufferName, const QString& text );
     void bufferSelectionChangedNotif( const QString& bufferName );
@@ -54,6 +54,7 @@ private:
     ToolBar* toolBar_;
     StatusBar* statusBar_;
     view::Window* window_;
+    UserInteraction* userInteraction_;
 };
 
 } // ::view

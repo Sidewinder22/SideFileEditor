@@ -22,7 +22,6 @@ public:
 
     virtual ICommandHandler& getNewCommandHandler() = 0;    
     virtual ICommandHandler& getOpenCommandHandler() = 0;
-    virtual ICommandHandler& getAboutCommandHandler() = 0;
     virtual ICommandHandler& getQuitCommandHandler() = 0;    
 };
 

@@ -10,7 +10,6 @@
 
 #include "ctrl/ModelController.hpp"
 #include "ICommandFactory.hpp"
-#include <QWidget>
 
 namespace ctrl
 {
@@ -21,7 +20,7 @@ class CommandFactory
     : public ICommandFactory
 {
 public:
-    CommandFactory( QWidget* parent, ModelController* modelController );
+    CommandFactory( ModelController* modelController );
     virtual ~CommandFactory() = default;
 
     /**********************************************
@@ -29,11 +28,9 @@ public:
     **********************************************/
     ICommandHandler& getNewCommandHandler() override;
     ICommandHandler& getOpenCommandHandler() override;
-    ICommandHandler& getAboutCommandHandler() override;
     ICommandHandler& getQuitCommandHandler() override;
 
 private:
-    QWidget* parent_;
     ModelController* modelController_;
 };
 

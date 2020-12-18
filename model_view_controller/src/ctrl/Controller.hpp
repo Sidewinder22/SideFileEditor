@@ -31,7 +31,6 @@ public:
 public slots:
     void newFile();
     void open();
-    void about();
     void quit();
     void textChanged( const QString& bufferName, const QString& text );
     void bufferSelectionChanged( const QString& bufferName );

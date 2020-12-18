@@ -7,7 +7,6 @@
 
 #include "NewCommandHandler.hpp"
 #include "OpenCommandHandler.hpp"
-#include "AboutCommandHandler.hpp"
 #include "QuitCommandHandler.hpp"
 #include "CommandFactory.hpp"
 
@@ -16,10 +15,8 @@ namespace ctrl
 namespace cmd
 {
 
-CommandFactory::CommandFactory(  QWidget* parent,
-        ModelController* modelController )
-    : parent_( parent )
-    , modelController_( modelController )
+CommandFactory::CommandFactory( ModelController* modelController )
+    : modelController_( modelController )
 { }
 
 ICommandHandler& CommandFactory::getNewCommandHandler()
@@ -34,12 +31,6 @@ ICommandHandler& CommandFactory::getOpenCommandHandler()
     return handler;
 }
     
-ICommandHandler& CommandFactory::getAboutCommandHandler()
-{
-    static AboutCommandHandler handler( parent_ );
-    return handler;
-}
-
 ICommandHandler& CommandFactory::getQuitCommandHandler()
 {
     static QuitCommandHandler handler;

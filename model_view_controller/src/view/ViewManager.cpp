@@ -19,12 +19,13 @@ ViewManager::ViewManager()
     , menu_( new Menu( ) )
     , toolBar_( new ToolBar( ) )
     , statusBar_( new StatusBar() )
-    , window_( new view::Window(
+    , window_( new Window(
          dock_,
          textEdit_,
          menu_,
          toolBar_,
          statusBar_ ) )
+	, userInteraction_( new UserInteraction( window_ ) )
 {
     connect( textEdit_,
         &QTextEdit::textChanged,
@@ -93,7 +94,7 @@ void ViewManager::newFile()
 
 void ViewManager::about()
 {
-    emit aboutNotif();
+	userInteraction_->showAboutInfo();
 }
 
 void ViewManager::open()
