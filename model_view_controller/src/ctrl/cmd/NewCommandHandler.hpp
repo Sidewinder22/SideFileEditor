@@ -20,7 +20,7 @@ class NewCommandHandler
     : public ICommandHandler
 {
 public:
-    NewCommandHandler( ctrl::ModelController* modelController );
+    explicit NewCommandHandler( ctrl::ModelController* modelController );
     virtual ~NewCommandHandler() = default;
 
     /**********************************************

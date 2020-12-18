@@ -30,7 +30,7 @@ ICommandHandler& CommandFactory::getNewCommandHandler()
 
 ICommandHandler& CommandFactory::getOpenCommandHandler()
 {
-    static OpenCommandHandler handler;
+    static OpenCommandHandler handler( modelController_ );
     return handler;
 }
     

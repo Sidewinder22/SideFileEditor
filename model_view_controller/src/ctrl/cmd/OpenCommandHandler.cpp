@@ -11,7 +11,8 @@ namespace ctrl
 {
 namespace cmd
 {
-OpenCommandHandler::OpenCommandHandler( )
+OpenCommandHandler::OpenCommandHandler( ctrl::ModelController* modelController )
+	: modelController_( modelController )
 { }
 
 void OpenCommandHandler::execute()

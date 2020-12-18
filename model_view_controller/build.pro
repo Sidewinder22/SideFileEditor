@@ -30,6 +30,6 @@ SOURCES         +=  ../src/*.cpp \
                     ../src/model/buff/*.cpp \
                     ../src/view/*.cpp
 
-QMAKE_CXXFLAGS  +=  -std=c++20
+QMAKE_CXXFLAGS  +=  -std=c++20 \
 
-QMAKE_LIBS      +=  -lstdc++fs
+QMAKE_LIBS      +=  -lstdc++fs -lrt

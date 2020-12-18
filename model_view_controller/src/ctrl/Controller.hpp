@@ -8,13 +8,13 @@
 #ifndef SRC_CTRL_CONTROLLER_HPP_
 #define SRC_CTRL_CONTROLLER_HPP_
 
-#include <memory>
-#include <QObject>
 #include "log/Logger.hpp"
 #include "cmd/ICommandFactory.hpp"
 #include "ModelController.hpp"
 #include "ViewController.hpp"
 #include "view/ViewManager.hpp"
+#include <memory>
+#include <QObject>
 
 namespace ctrl
 {
@@ -25,7 +25,7 @@ class Controller
     Q_OBJECT
 
 public:
-    Controller( view::ViewManager* viewManager );
+    explicit Controller( view::ViewManager* viewManager );
     virtual ~Controller() = default;
 
 public slots:

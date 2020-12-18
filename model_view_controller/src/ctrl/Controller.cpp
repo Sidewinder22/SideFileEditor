@@ -5,10 +5,12 @@
  * @brief   Main controller class.
  */
 
+#include "Controller.hpp"
 #include "ModelController.hpp"
 #include "ViewController.hpp"
 #include "cmd/CommandFactory.hpp"
-#include "Controller.hpp"
+
+#include <memory>
 
 namespace ctrl
 {
@@ -36,12 +38,17 @@ void Controller::newFile()
 void Controller::open()
 {
     log_ << MY_FUNC << log::END;
+
+    // TODO: Pass to the ViewController -> ViewManager -> RequestHandler
+
     commandFactory_->getOpenCommandHandler().execute();
 }
 
 void Controller::about()
 {
     log_ << MY_FUNC << log::END;
+
+    // TODO: Pass to the ViewController -> ViewManager -> RequestHandler
 
     commandFactory_->getAboutCommandHandler().execute();
 }

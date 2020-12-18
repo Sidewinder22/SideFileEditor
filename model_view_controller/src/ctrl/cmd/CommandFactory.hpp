@@ -8,9 +8,9 @@
 #ifndef SRC_CTRL_CMD_COMMANDFACTORY_HPP_
 #define SRC_CTRL_CMD_COMMANDFACTORY_HPP_
 
-#include <QWidget>
 #include "ctrl/ModelController.hpp"
 #include "ICommandFactory.hpp"
+#include <QWidget>
 
 namespace ctrl
 {

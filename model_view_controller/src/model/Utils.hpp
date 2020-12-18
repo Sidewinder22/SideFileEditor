@@ -9,8 +9,6 @@
 #define SRC_MODEL_UTILS_HPP_
 
 #include <algorithm>
-#include <memory>
-#include <vector>
 #include <QString>
 
 namespace model
