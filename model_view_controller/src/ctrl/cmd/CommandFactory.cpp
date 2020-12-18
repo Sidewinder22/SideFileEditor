@@ -15,8 +15,10 @@ namespace ctrl
 namespace cmd
 {
 
-CommandFactory::CommandFactory( ModelController* modelController )
+CommandFactory::CommandFactory( ctrl::ModelController* modelController,
+		ctrl::ViewController* viewController )
     : modelController_( modelController )
+	, viewController_( viewController )
 { }
 
 ICommandHandler& CommandFactory::getNewCommandHandler()
@@ -27,7 +29,7 @@ ICommandHandler& CommandFactory::getNewCommandHandler()
 
 ICommandHandler& CommandFactory::getOpenCommandHandler()
 {
-    static OpenCommandHandler handler( modelController_ );
+    static OpenCommandHandler handler( modelController_, viewController_ );
     return handler;
 }
     

@@ -24,4 +24,9 @@ void ViewController::load( const QString& text )
     viewManager_->load( text );
 }
 
+void ViewController::opened( const QString& fileName, const QString& text )
+{
+	viewManager_->fileOpened( fileName, text );
+}
+
 };

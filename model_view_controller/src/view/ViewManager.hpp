@@ -29,6 +29,7 @@ public:
     virtual ~ViewManager() = default;
 
     void created( const QString& bufferName );
+    void fileOpened( const QString& fileName, const QString& text );
     void load( const QString& text );
 
 public slots:
@@ -41,7 +42,7 @@ public slots:
 
 signals:
     void newFileNotif();
-    void openNotif();
+    void openNotif( const QString& fileName );
     void quitNotif();
     void textChangedNotif( const QString& bufferName, const QString& text );
     void bufferSelectionChangedNotif( const QString& bufferName );

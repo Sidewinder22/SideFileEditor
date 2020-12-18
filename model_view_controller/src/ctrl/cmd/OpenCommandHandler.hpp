@@ -9,6 +9,7 @@
 #define SRC_CTRL_CMD_OPENCOMMANDHANDLER_HPP_
 
 #include "ctrl/ModelController.hpp"
+#include "ctrl/ViewController.hpp"
 #include "ICommandHandler.hpp"
 
 namespace ctrl {
@@ -18,7 +19,8 @@ class OpenCommandHandler
     : public ICommandHandler
 {
 public:
-    explicit OpenCommandHandler( ctrl::ModelController* modelController );
+    OpenCommandHandler( ctrl::ModelController* modelController,
+    	ctrl::ViewController* viewController );
     virtual ~OpenCommandHandler() = default;
 
     /**********************************************
@@ -28,6 +30,7 @@ public:
 
 private:
     ctrl::ModelController* modelController_;
+    ctrl::ViewController* viewController_;
 };
 
 } // ::cmd

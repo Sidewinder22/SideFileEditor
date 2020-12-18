@@ -26,10 +26,12 @@ public:
 
     void create();
     QString read( const QString& bufferName );
+    void open( const QString& fileName );
     void textChanged( const QString& bufferName, const QString& text );
 
 signals:
     void created( const QString& bufferName );
+    void opened( const QString& fileName, const QString& text );
 
 private:
     log::Logger log_;

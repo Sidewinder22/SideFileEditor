@@ -87,6 +87,19 @@ void ViewManager::created( const QString& bufferName )
         common::constants::STATUS_BAR_MSG_TIMEOUT);
 }
 
+void ViewManager::fileOpened( const QString& fileName,
+	const QString& text )
+{
+    log_ << MY_FUNC << ": " << fileName << log::END;
+
+    dock_->addName( fileName );
+    textEdit_->clear();
+    textEdit_->setText( text );
+    window_->setWindowTitle( fileName );
+    statusBar_->showMessage("[File opened]: " + fileName,
+        common::constants::STATUS_BAR_MSG_TIMEOUT);
+}
+
 void ViewManager::newFile()
 {
     emit newFileNotif();
@@ -100,7 +113,13 @@ void ViewManager::about()
 void ViewManager::open()
 {
     log_ << MY_FUNC << log::END;
-    emit openNotif();
+
+    auto fileName = userInteraction_->getFileNameForOpen();
+
+    if ( !fileName.isEmpty() )
+    {
+    	emit openNotif( fileName );
+    }
 }
 
 void ViewManager::quit()

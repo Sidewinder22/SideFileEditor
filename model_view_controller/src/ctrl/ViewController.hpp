@@ -26,6 +26,7 @@ public:
 
 public slots:
     void created( const QString& bufferName );
+    void opened( const QString& fileName, const QString& text );
 
 private: 
     view::ViewManager* viewManager_;

@@ -6,7 +6,9 @@
  */
 
 #include "UserInteraction.hpp"
+#include <QFileDialog>
 #include <QMessageBox>
+#include <QTranslator>
 #include <QString>
 
 namespace view
@@ -24,6 +26,17 @@ void UserInteraction::showAboutInfo()
     description.append(AUTHOR);
 
     QMessageBox::about(parent_, ABOUT, description);
+}
+
+QString UserInteraction::getFileNameForOpen()
+{
+	return QFileDialog::getOpenFileName(
+		parent_,
+		QObject::tr( "Select file to open..." ),
+		QDir::homePath(),
+		QObject::tr( "Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py"
+			"*.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py"
+			"*.js *.ccs *.json)" ) );
 }
 
 }  // ::view

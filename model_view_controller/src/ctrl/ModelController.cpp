@@ -21,6 +21,12 @@ void ModelController::create()
     emit created( bufferName );
 }
 
+void ModelController::open( const QString& fileName )
+{
+	const QString exampleResponse( "Example text ;)" );
+    emit opened( fileName, exampleResponse );
+}
+
 void ModelController::textChanged( const QString& bufferName,
     const QString& text )
 {

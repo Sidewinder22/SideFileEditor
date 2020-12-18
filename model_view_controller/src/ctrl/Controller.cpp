@@ -20,12 +20,17 @@ Controller::Controller( view::ViewManager* viewManager )
     , modelController_( new ModelController( ) )
     , viewController_( new ViewController( viewManager) )
     , commandFactory_( std::make_unique< cmd::CommandFactory > (
-    	modelController_ ) )
+    	modelController_, viewController_ ) )
 {
     connect( modelController_,
         &ctrl::ModelController::created,
         viewController_,
         &ctrl::ViewController::created );
+
+    connect( modelController_,
+        &ctrl::ModelController::opened,
+        viewController_,
+        &ctrl::ViewController::opened );
 }
 
 void Controller::newFile()
@@ -35,13 +40,12 @@ void Controller::newFile()
     commandFactory_->getNewCommandHandler().execute();
 }
 
-void Controller::open()
+void Controller::open( const QString& fileName )
 {
-    log_ << MY_FUNC << log::END;
+    log_ << MY_FUNC << ": " << fileName << log::END;
 
-    // TODO: Pass to the ViewController -> ViewManager -> RequestHandler
-
-    commandFactory_->getOpenCommandHandler().execute();
+    modelController_->open( fileName );
+//    commandFactory_->getOpenCommandHandler().execute();
 }
 
 void Controller::quit()

@@ -17,7 +17,9 @@ class UserInteraction
 {
 public:
 	explicit UserInteraction( QWidget* parent );
+
 	void showAboutInfo();
+	QString getFileNameForOpen();
 
 private:
 	QWidget* parent_;
