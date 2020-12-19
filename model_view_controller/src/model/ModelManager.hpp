@@ -13,6 +13,7 @@
 #include <QString> 
 #include "log/Logger.hpp"
 #include "BufferManager.hpp"
+#include "FileManager.hpp"
 
 namespace model
 {
@@ -24,17 +25,22 @@ public:
 
     QString create();
     QString read( const QString& bufferName );
+    QString open( const QString& fileName );
 
     void textChanged( const QString& bufferName, const QString& text );
 
 private:
-    std::vector< std::shared_ptr< BufferManager > >::iterator getIterator(
+	void addBuffer( const QString& bufferName );
+    std::vector< std::shared_ptr< BufferManager > >::iterator getBufferIterator(
+    	const QString& name );
+    std::vector< std::shared_ptr< FileManager > >::iterator getFileIterator(
     	const QString& name );
 
     log::Logger log_;
     static int nextBufferNumber_;
 
     std::vector< std::shared_ptr< BufferManager > > buffers_;
+    std::vector< std::shared_ptr< FileManager > > files_;
 };
 
 } // ::model

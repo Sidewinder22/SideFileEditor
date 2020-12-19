@@ -21,7 +21,6 @@ public:
     virtual ~ICommandFactory() = default;
 
     virtual ICommandHandler& getNewCommandHandler() = 0;    
-    virtual ICommandHandler& getOpenCommandHandler() = 0;
     virtual ICommandHandler& getQuitCommandHandler() = 0;    
 };
 

@@ -45,7 +45,6 @@ void Controller::open( const QString& fileName )
     log_ << MY_FUNC << ": " << fileName << log::END;
 
     modelController_->open( fileName );
-//    commandFactory_->getOpenCommandHandler().execute();
 }
 
 void Controller::quit()

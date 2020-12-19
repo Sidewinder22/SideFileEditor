@@ -8,7 +8,6 @@
 #ifndef SRC_MODEL_BUFF_IBUFFER_HPP_
 #define SRC_MODEL_BUFF_IBUFFER_HPP_
 
-#include <vector>
 #include <QString>
 
 namespace model

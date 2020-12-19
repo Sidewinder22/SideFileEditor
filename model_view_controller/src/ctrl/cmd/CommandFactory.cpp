@@ -6,7 +6,6 @@
  */
 
 #include "NewCommandHandler.hpp"
-#include "OpenCommandHandler.hpp"
 #include "QuitCommandHandler.hpp"
 #include "CommandFactory.hpp"
 
@@ -27,12 +26,6 @@ ICommandHandler& CommandFactory::getNewCommandHandler()
     return handler;
 }
 
-ICommandHandler& CommandFactory::getOpenCommandHandler()
-{
-    static OpenCommandHandler handler( modelController_, viewController_ );
-    return handler;
-}
-    
 ICommandHandler& CommandFactory::getQuitCommandHandler()
 {
     static QuitCommandHandler handler;

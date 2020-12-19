@@ -20,6 +20,7 @@ HEADERS         +=  ../src/*.hpp \
                     ../src/log/*.hpp \
                     ../src/model/*.hpp \
                     ../src/model/buff/*.hpp \
+                    ../src/model/file/*.hpp \
                     ../src/view/*.hpp
 
 SOURCES         +=  ../src/*.cpp \
@@ -28,6 +29,7 @@ SOURCES         +=  ../src/*.cpp \
                     ../src/log/*.cpp \
                     ../src/model/*.cpp \
                     ../src/model/buff/*.cpp \
+                    ../src/model/file/*.cpp \
                     ../src/view/*.cpp
 
 QMAKE_CXXFLAGS  +=  -std=c++20 \

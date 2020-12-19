@@ -23,8 +23,8 @@ void ModelController::create()
 
 void ModelController::open( const QString& fileName )
 {
-	const QString exampleResponse( "Example text ;)" );
-    emit opened( fileName, exampleResponse );
+	const auto text = modelManager_->open( fileName );
+    emit opened( fileName, text );
 }
 
 void ModelController::textChanged( const QString& bufferName,
