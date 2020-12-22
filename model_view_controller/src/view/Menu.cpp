@@ -12,11 +12,12 @@ namespace view
 {
 
 Menu::Menu()
-    : fileMenu_( new QMenu("File"))
-    , helpMenu_( new QMenu("Help"))
+    : fileMenu_( new QMenu("&File"))
+    , helpMenu_( new QMenu("&Help"))
     , newAction_( new QAction( "&New", this ) )
     , aboutAction_( new QAction( "&About", this ) )
     , openAction_( new QAction( "&Open", this ) )
+    , saveAction_( new QAction( "&Save", this ) )
     , quitAction_( new QAction( "&Quit", this ) )
 {
     addMenu( fileMenu_ );
@@ -24,6 +25,7 @@ Menu::Menu()
 
     fileMenu_->addAction( newAction_ );
     fileMenu_->addAction( openAction_ );
+    fileMenu_->addAction( saveAction_ );
     fileMenu_->addSeparator();
     fileMenu_->addAction( quitAction_ );
 
@@ -31,6 +33,7 @@ Menu::Menu()
 
     newAction_->setShortcuts( QKeySequence::New );
     openAction_->setShortcuts( QKeySequence::Open );
+    saveAction_->setShortcuts( QKeySequence::Save );
     aboutAction_->setShortcuts( QKeySequence::WhatsThis );
     quitAction_->setShortcuts( QKeySequence::Quit );
 
@@ -48,6 +51,11 @@ Menu::Menu()
         &QAction::triggered,
         this,
         &Menu::openActionTriggered );
+
+    connect( saveAction_,
+        &QAction::triggered,
+        this,
+        &Menu::saveActionTriggered );
 
     connect( quitAction_,
         &QAction::triggered,
@@ -68,6 +76,11 @@ void Menu::aboutActionTriggered()
 void Menu::openActionTriggered()
 {
     emit openNotif();
+}
+
+void Menu::saveActionTriggered()
+{
+	emit saveNotif();
 }
 
 void Menu::quitActionTriggered()

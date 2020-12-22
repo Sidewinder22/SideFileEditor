@@ -13,9 +13,11 @@ namespace view
 ToolBar::ToolBar()
     : newAction_( addAction( QIcon( "../../icons/new.png" ), "New File" ) )
     , openAction_( addAction( QIcon( "../../icons/open.png" ), "Open File" ) )
+    , saveAction_( addAction( QIcon( "../../icons/save.png" ), "Save File" ) )
 {
     newAction_->setStatusTip( "New File" );
     openAction_->setStatusTip( "Open File" );
+    saveAction_->setStatusTip( "Save File" );
 
     connect( newAction_,
         &QAction::triggered,
@@ -26,6 +28,11 @@ ToolBar::ToolBar()
         &QAction::triggered,
         this,
         &ToolBar::open );
+
+    connect( saveAction_,
+        &QAction::triggered,
+        this,
+        &ToolBar::save );
 }
 
 void ToolBar::newFile()
@@ -36,6 +43,11 @@ void ToolBar::newFile()
 void ToolBar::open()
 {
     emit openNotif();
+}
+
+void ToolBar::save()
+{
+	emit saveNotif();
 }
 
 } // ::view

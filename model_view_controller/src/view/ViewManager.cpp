@@ -53,6 +53,11 @@ ViewManager::ViewManager()
         &ViewManager::open );
 
     connect( menu_,
+        &Menu::saveNotif,
+        this,
+        &ViewManager::save );
+
+    connect( menu_,
         &Menu::quitNotif,
         this,
         &ViewManager::quit );
@@ -66,6 +71,11 @@ ViewManager::ViewManager()
         &ToolBar::openNotif,
         this,
         &ViewManager::open );
+
+    connect( toolBar_,
+        &ToolBar::saveNotif,
+        this,
+        &ViewManager::save );
 }
 
 void ViewManager::load( const QString& text )
@@ -120,6 +130,16 @@ void ViewManager::open()
     {
     	emit openNotif( fileName );
     }
+}
+
+void ViewManager::save()
+{
+    log_ << MY_FUNC << log::END;
+
+    auto bufferName = dock_->getCurrent();
+    log_ << MY_FUNC << "Buff: " << bufferName << log::END;
+
+    emit saveNotif( bufferName );
 }
 
 void ViewManager::quit()

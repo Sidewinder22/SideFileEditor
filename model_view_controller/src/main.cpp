@@ -5,14 +5,14 @@
  * @brief   Main app file.
  */
 
-#include <QApplication>
 #include "SideFileEditor.hpp"
+#include <QApplication>
 
 int main( int argc, char *argv[] )
 {
     QApplication app( argc, argv );
 
-    SideFileEditor sfe;
+    const SideFileEditor sfe;
 
     return app.exec();
 }

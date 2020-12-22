@@ -47,6 +47,12 @@ void Controller::open( const QString& fileName )
     modelController_->open( fileName );
 }
 
+void Controller::save( const QString& fileName )
+{
+    log_ << MY_FUNC << ": " << fileName << log::END;
+
+}
+
 void Controller::quit()
 {
     log_ << MY_FUNC << log::END;
