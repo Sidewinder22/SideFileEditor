@@ -11,8 +11,12 @@
 
 SideFileEditor::SideFileEditor()
     : viewManager_( new view::ViewManager( ) )
-    , controller_( new ctrl::Controller( viewManager_ ) )
+//	, modelManager_( new model::ModelManager( ) )
+    , controller_( new ctrl::Controller( ) )
 {
+	/*****************************
+	 * ViewManager -> Controller
+	******************************/
     connect( viewManager_,
         &view::ViewManager::newFileNotif,
         controller_,
@@ -42,4 +46,31 @@ SideFileEditor::SideFileEditor()
         &view::ViewManager::bufferSelectionChangedNotif,
         controller_,
         &ctrl::Controller::bufferSelectionChanged );
+
+	/*****************************
+	 * ModelManager -> Controller
+	******************************/
+
+
+	/*****************************
+	 * Controller -> ViewManager
+	******************************/
+    connect( controller_,
+        &ctrl::Controller::createdNotif,
+		viewManager_,
+        &view::ViewManager::created );
+
+    connect( controller_,
+        &ctrl::Controller::openedNotif,
+		viewManager_,
+        &view::ViewManager::opened );
+
+    connect( controller_,
+        &ctrl::Controller::loadNotif,
+		viewManager_,
+        &view::ViewManager::load );
+
+	/*****************************
+	 * Controller -> ModelManager
+	******************************/
 }

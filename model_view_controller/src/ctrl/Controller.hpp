@@ -11,7 +11,6 @@
 #include "log/Logger.hpp"
 #include "cmd/ICommandFactory.hpp"
 #include "ModelController.hpp"
-#include "ViewController.hpp"
 #include "view/ViewManager.hpp"
 #include <memory>
 #include <QObject>
@@ -25,7 +24,7 @@ class Controller
     Q_OBJECT
 
 public:
-    explicit Controller( view::ViewManager* viewManager );
+    explicit Controller();
     virtual ~Controller() = default;
 
 public slots:
@@ -33,13 +32,20 @@ public slots:
     void quit();
     void open( const QString& fileName );
     void save( const QString& fileName );
+
+    void created( const QString& bufferName );
+    void opened( const QString& fileName, const QString& text );
     void textChanged( const QString& bufferName, const QString& text );
     void bufferSelectionChanged( const QString& bufferName );
+
+signals:
+    void createdNotif( const QString& bufferName );
+    void openedNotif( const QString& fileName, const QString& text );
+    void loadNotif( const QString& text );
 
 private:
     log::Logger log_;
     ModelController* modelController_;
-    ViewController* viewController_;
     std::unique_ptr< cmd::ICommandFactory > commandFactory_;
 };
 

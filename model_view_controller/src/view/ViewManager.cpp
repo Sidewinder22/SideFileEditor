@@ -97,8 +97,7 @@ void ViewManager::created( const QString& bufferName )
         common::constants::STATUS_BAR_MSG_TIMEOUT);
 }
 
-void ViewManager::fileOpened( const QString& fileName,
-	const QString& text )
+void ViewManager::opened( const QString& fileName, const QString& text )
 {
     log_ << MY_FUNC << ": " << fileName << log::END;
 

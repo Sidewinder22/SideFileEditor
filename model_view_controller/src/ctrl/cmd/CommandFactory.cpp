@@ -14,10 +14,8 @@ namespace ctrl
 namespace cmd
 {
 
-CommandFactory::CommandFactory( ctrl::ModelController* modelController,
-		ctrl::ViewController* viewController )
+CommandFactory::CommandFactory( ctrl::ModelController* modelController)
     : modelController_( modelController )
-	, viewController_( viewController )
 { }
 
 ICommandHandler& CommandFactory::getNewCommandHandler()

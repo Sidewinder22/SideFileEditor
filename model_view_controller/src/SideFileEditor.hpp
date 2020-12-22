@@ -10,8 +10,9 @@
 
 #include <QObject>
 #include <memory>
-#include "ctrl/Controller.hpp"
 #include "view/ViewManager.hpp"
+//#include "model/ModelManager.hpp"
+#include "ctrl/Controller.hpp"
 
 class SideFileEditor
     : public QObject
@@ -23,6 +24,7 @@ public:
     
 private:
     view::ViewManager* viewManager_;
+//    model::ModelManager* modelManager_;
     ctrl::Controller* controller_;
 };
 

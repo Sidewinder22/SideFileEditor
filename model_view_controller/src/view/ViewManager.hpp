@@ -28,9 +28,6 @@ public:
     ViewManager();
     virtual ~ViewManager() = default;
 
-    void created( const QString& bufferName );
-    void fileOpened( const QString& fileName, const QString& text );
-    void load( const QString& text );
 
 public slots:
     void newFile();
@@ -38,6 +35,11 @@ public slots:
     void open();
     void save();
     void quit();
+
+    void load( const QString& text );
+
+    void created( const QString& bufferName );
+    void opened( const QString& fileName, const QString& text );
     void textChanged();
     void bufferSelectionChanged( const QString& bufferName );
 

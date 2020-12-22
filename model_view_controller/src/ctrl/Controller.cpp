@@ -7,7 +7,6 @@
 
 #include "Controller.hpp"
 #include "ModelController.hpp"
-#include "ViewController.hpp"
 #include "cmd/CommandFactory.hpp"
 
 #include <memory>
@@ -15,22 +14,21 @@
 namespace ctrl
 {
 
-Controller::Controller( view::ViewManager* viewManager )
+Controller::Controller( )
     : log_( "Controller" )
     , modelController_( new ModelController( ) )
-    , viewController_( new ViewController( viewManager) )
     , commandFactory_( std::make_unique< cmd::CommandFactory > (
-    	modelController_, viewController_ ) )
+    	modelController_) )
 {
     connect( modelController_,
         &ctrl::ModelController::created,
-        viewController_,
-        &ctrl::ViewController::created );
+        this,
+        &Controller::created );
 
     connect( modelController_,
         &ctrl::ModelController::opened,
-        viewController_,
-        &ctrl::ViewController::opened );
+        this,
+        &Controller::opened );
 }
 
 void Controller::newFile()
@@ -59,6 +57,16 @@ void Controller::quit()
 
     commandFactory_->getQuitCommandHandler().execute();
 }
+
+void Controller::created( const QString& bufferName )
+{
+	emit createdNotif( bufferName );
+}
+
+void Controller::opened( const QString& fileName, const QString& text )
+{
+	emit openedNotif( fileName, text );
+}
     
 void Controller::textChanged( const QString& bufferName, const QString& text )
 {
@@ -71,7 +79,8 @@ void Controller::bufferSelectionChanged( const QString& bufferName )
     log_ << MY_FUNC << bufferName << log::END;
 
     auto text = modelController_->read( bufferName );
-    viewController_->load( text );
+    emit loadNotif( text );
+//    viewController_->load( text );
 }
     
 } // ::ctrl

@@ -9,7 +9,6 @@
 #define SRC_CTRL_CMD_COMMANDFACTORY_HPP_
 
 #include "ctrl/ModelController.hpp"
-#include "ctrl/ViewController.hpp"
 #include "ICommandFactory.hpp"
 
 namespace ctrl
@@ -21,8 +20,7 @@ class CommandFactory
     : public ICommandFactory
 {
 public:
-    CommandFactory( ctrl::ModelController* modelController,
-    	ctrl::ViewController* viewController );
+    CommandFactory( ctrl::ModelController* modelController);
     virtual ~CommandFactory() = default;
 
     /**********************************************
@@ -33,7 +31,6 @@ public:
 
 private:
     ctrl::ModelController* modelController_;
-    ctrl::ViewController* viewController_;
 };
 
 } // ::cmd
