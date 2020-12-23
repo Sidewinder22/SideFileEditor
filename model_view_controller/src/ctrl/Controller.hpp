@@ -10,7 +10,6 @@
 
 #include "log/Logger.hpp"
 #include "cmd/ICommandFactory.hpp"
-#include "ModelController.hpp"
 #include "view/ViewManager.hpp"
 #include <memory>
 #include <QObject>
@@ -28,24 +27,29 @@ public:
     virtual ~Controller() = default;
 
 public slots:
-    void newFile();
+    void create();
     void quit();
     void open( const QString& fileName );
     void save( const QString& fileName );
 
     void created( const QString& bufferName );
     void opened( const QString& fileName, const QString& text );
+    void read( const QString& text );
     void textChanged( const QString& bufferName, const QString& text );
     void bufferSelectionChanged( const QString& bufferName );
 
 signals:
+	void createRequest();
+	void openRequest( const QString& fileName );
+	void readRequest( const QString& fileName );
+
     void createdNotif( const QString& bufferName );
     void openedNotif( const QString& fileName, const QString& text );
     void loadNotif( const QString& text );
+    void textChangedNotif( const QString& bufferName, const QString& text );
 
 private:
     log::Logger log_;
-    ModelController* modelController_;
     std::unique_ptr< cmd::ICommandFactory > commandFactory_;
 };
 

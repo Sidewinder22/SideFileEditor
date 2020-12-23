@@ -30,12 +30,11 @@ public:
 
 
 public slots:
-    void newFile();
+    void create();
     void about();
     void open();
     void save();
     void quit();
-
     void load( const QString& text );
 
     void created( const QString& bufferName );
@@ -44,7 +43,7 @@ public slots:
     void bufferSelectionChanged( const QString& bufferName );
 
 signals:
-    void newFileNotif();
+    void createNotif();
     void openNotif( const QString& fileName );
     void saveNotif( const QString& fileName );
     void quitNotif();

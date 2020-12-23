@@ -24,14 +24,14 @@ public:
     Menu();
 
 signals:
-    void newFileNotif();
+    void createNotif();
     void aboutNotif();
     void openNotif();
     void saveNotif();
     void quitNotif();
 
 private:
-    void newActionTriggered();
+    void createActionTriggered();
     void aboutActionTriggered();
     void openActionTriggered();
     void saveActionTriggered();

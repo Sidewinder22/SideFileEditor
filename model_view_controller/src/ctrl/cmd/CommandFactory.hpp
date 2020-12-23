@@ -8,7 +8,6 @@
 #ifndef SRC_CTRL_CMD_COMMANDFACTORY_HPP_
 #define SRC_CTRL_CMD_COMMANDFACTORY_HPP_
 
-#include "ctrl/ModelController.hpp"
 #include "ICommandFactory.hpp"
 
 namespace ctrl
@@ -20,17 +19,13 @@ class CommandFactory
     : public ICommandFactory
 {
 public:
-    CommandFactory( ctrl::ModelController* modelController);
+    CommandFactory();
     virtual ~CommandFactory() = default;
 
     /**********************************************
      *              ICommandFactory
     **********************************************/
-    ICommandHandler& getNewCommandHandler() override;
     ICommandHandler& getQuitCommandHandler() override;
-
-private:
-    ctrl::ModelController* modelController_;
 };
 
 } // ::cmd

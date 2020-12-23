@@ -38,9 +38,9 @@ ViewManager::ViewManager()
         &ViewManager::bufferSelectionChanged );
 
     connect( menu_,
-        &Menu::newFileNotif,
+        &Menu::createNotif,
         this,
-        &ViewManager::newFile );
+        &ViewManager::create );
 
     connect( menu_,
         &Menu::aboutNotif,
@@ -63,9 +63,9 @@ ViewManager::ViewManager()
         &ViewManager::quit );
 
     connect( toolBar_,
-        &ToolBar::newFileNotif,
+        &ToolBar::createNotif,
         this,
-        &ViewManager::newFile );
+        &ViewManager::create );
 
     connect( toolBar_,
         &ToolBar::openNotif,
@@ -109,9 +109,9 @@ void ViewManager::opened( const QString& fileName, const QString& text )
         common::constants::STATUS_BAR_MSG_TIMEOUT);
 }
 
-void ViewManager::newFile()
+void ViewManager::create()
 {
-    emit newFileNotif();
+    emit createNotif();
 }
 
 void ViewManager::about()
@@ -123,8 +123,7 @@ void ViewManager::open()
 {
     log_ << MY_FUNC << log::END;
 
-    auto fileName = userInteraction_->getFileNameForOpen();
-
+    const auto fileName = userInteraction_->getFileNameForOpen();
     if ( !fileName.isEmpty() )
     {
     	emit openNotif( fileName );
@@ -135,7 +134,7 @@ void ViewManager::save()
 {
     log_ << MY_FUNC << log::END;
 
-    auto bufferName = dock_->getCurrent();
+    const auto bufferName = dock_->getCurrent();
     log_ << MY_FUNC << "Buff: " << bufferName << log::END;
 
     emit saveNotif( bufferName );
@@ -148,11 +147,11 @@ void ViewManager::quit()
 
 void ViewManager::textChanged()
 {
-    auto bufferName = dock_->getCurrent();
+    const auto bufferName = dock_->getCurrent();
 
     log_ << MY_FUNC << "Buff: " << bufferName << log::END;
 
-    auto text = textEdit_->text();
+    const auto text = textEdit_->text();
     emit textChangedNotif( bufferName, text );
 }
 

@@ -8,6 +8,7 @@
 #include "ModelManager.hpp"
 #include "BufferManager.hpp"
 #include "Utils.hpp"
+#include <memory>
 
 namespace model
 {
@@ -28,14 +29,14 @@ void ModelManager::addBuffer( const QString& bufferName)
 	buffers_.push_back(buffer);
 }
 
-QString ModelManager::create()
+void ModelManager::create()
 {
     auto bufferName = QString( "Buffer[" );
     bufferName.append( QString::number( nextBufferNumber_++ ) );
     bufferName.append( "]");
 
-	addBuffer(bufferName);
-    return bufferName;
+	addBuffer( bufferName );
+	emit createdNotif( bufferName );
 }
     
 void ModelManager::textChanged( const QString& bufferName,
@@ -50,31 +51,35 @@ void ModelManager::textChanged( const QString& bufferName,
     }
 }
     
-QString ModelManager::read( const QString& bufferName )
+void ModelManager::read( const QString& bufferName )
 {
     log_ << MY_FUNC << bufferName << log::END;
 
+    QString text;
     auto it = getBufferIterator( bufferName );
     if ( it != buffers_.end() )
     {
-        return (*it)->read();
+        text = (*it)->read();
+    }
+    else
+    {
+    	log_ << MY_FUNC << "Buffer not found!" << log::END;
     }
 
-    log_ << MY_FUNC << "Buffer not found!" << log::END;
-    return {};
+    emit readNotif( text );
 }
 
-QString ModelManager::open( const QString& fileName )
+void ModelManager::open( const QString& fileName )
 {
     log_ << MY_FUNC << fileName << log::END;
 
     auto file = std::make_shared< FileManager >( fileName );
-    auto text = file->read();
+    const auto text = file->read();
 
     addBuffer( fileName );
     textChanged( fileName, text );
 
-    return text;
+    emit openedNotif( fileName, text );
 }
 
 std::vector< std::shared_ptr< BufferManager > >::iterator 

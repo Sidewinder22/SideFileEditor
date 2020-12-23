@@ -11,16 +11,16 @@
 
 SideFileEditor::SideFileEditor()
     : viewManager_( new view::ViewManager( ) )
-//	, modelManager_( new model::ModelManager( ) )
+	, modelManager_( new model::ModelManager( ) )
     , controller_( new ctrl::Controller( ) )
 {
 	/*****************************
 	 * ViewManager -> Controller
 	******************************/
     connect( viewManager_,
-        &view::ViewManager::newFileNotif,
+        &view::ViewManager::createNotif,
         controller_,
-        &ctrl::Controller::newFile );
+        &ctrl::Controller::create );
 
     connect( viewManager_,
         &view::ViewManager::openNotif,
@@ -47,9 +47,24 @@ SideFileEditor::SideFileEditor()
         controller_,
         &ctrl::Controller::bufferSelectionChanged );
 
+
 	/*****************************
 	 * ModelManager -> Controller
 	******************************/
+    connect( modelManager_,
+        &model::ModelManager::createdNotif,
+		controller_,
+        &ctrl::Controller::created );
+
+    connect( modelManager_,
+        &model::ModelManager::openedNotif,
+		controller_,
+        &ctrl::Controller::opened );
+
+    connect( modelManager_,
+        &model::ModelManager::readNotif,
+		controller_,
+        &ctrl::Controller::read );
 
 
 	/*****************************
@@ -70,7 +85,27 @@ SideFileEditor::SideFileEditor()
 		viewManager_,
         &view::ViewManager::load );
 
+
 	/*****************************
 	 * Controller -> ModelManager
 	******************************/
+    connect( controller_,
+        &ctrl::Controller::createRequest,
+		modelManager_,
+        &model::ModelManager::create );
+
+    connect( controller_,
+        &ctrl::Controller::openRequest,
+		modelManager_,
+        &model::ModelManager::open );
+
+    connect( controller_,
+        &ctrl::Controller::readRequest,
+		modelManager_,
+        &model::ModelManager::read );
+
+    connect( controller_,
+        &ctrl::Controller::textChangedNotif,
+		modelManager_,
+        &model::ModelManager::textChanged );
 }

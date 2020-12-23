@@ -22,7 +22,7 @@ ToolBar::ToolBar()
     connect( newAction_,
         &QAction::triggered,
         this,
-        &ToolBar::newFile );
+        &ToolBar::create );
 
     connect( openAction_,
         &QAction::triggered,
@@ -35,9 +35,9 @@ ToolBar::ToolBar()
         &ToolBar::save );
 }
 
-void ToolBar::newFile()
+void ToolBar::create()
 {
-    emit newFileNotif();
+    emit createNotif();
 }
 
 void ToolBar::open()

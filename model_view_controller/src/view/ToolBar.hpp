@@ -23,12 +23,12 @@ public:
     ToolBar();
 
 public slots:
-    void newFile();
+    void create();
     void open();
     void save();
 
 signals:
-    void newFileNotif();
+    void createNotif();
     void openNotif();
     void saveNotif();
 

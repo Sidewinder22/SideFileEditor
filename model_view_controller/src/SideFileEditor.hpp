@@ -8,11 +8,10 @@
 #ifndef SRC_SIDEFILEEDITOR_HPP_
 #define SRC_SIDEFILEEDITOR_HPP_
 
-#include <QObject>
-#include <memory>
 #include "view/ViewManager.hpp"
-//#include "model/ModelManager.hpp"
+#include "model/ModelManager.hpp"
 #include "ctrl/Controller.hpp"
+#include <QObject>
 
 class SideFileEditor
     : public QObject
@@ -24,7 +23,7 @@ public:
     
 private:
     view::ViewManager* viewManager_;
-//    model::ModelManager* modelManager_;
+    model::ModelManager* modelManager_;
     ctrl::Controller* controller_;
 };
 

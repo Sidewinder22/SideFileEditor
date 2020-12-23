@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <vector>
+#include <QObject>
 #include <QString> 
 #include "log/Logger.hpp"
 #include "BufferManager.hpp"
@@ -19,15 +20,24 @@ namespace model
 {
 
 class ModelManager
+	: public QObject
 {
+	Q_OBJECT
+
 public:
     ModelManager();
+    virtual ~ModelManager() = default;
 
-    QString create();
-    QString read( const QString& bufferName );
-    QString open( const QString& fileName );
-
+public slots:
+    void create();
+    void open( const QString& fileName );
+    void read( const QString& bufferName );
     void textChanged( const QString& bufferName, const QString& text );
+
+signals:
+	void createdNotif( const QString& bufferName );
+	void openedNotif( const QString& fileName, const QString& text );
+	void readNotif( const QString& text );
 
 private:
 	void addBuffer( const QString& bufferName );

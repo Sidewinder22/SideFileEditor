@@ -40,7 +40,7 @@ Menu::Menu()
     connect( newAction_,
         &QAction::triggered,
         this,
-        &Menu::newActionTriggered );
+        &Menu::createActionTriggered );
 
     connect( aboutAction_,
         &QAction::triggered,
@@ -63,9 +63,9 @@ Menu::Menu()
         &Menu::quitActionTriggered );
 }
 
-void Menu::newActionTriggered()
+void Menu::createActionTriggered()
 {
-    emit newFileNotif();
+    emit createNotif();
 }
 
 void Menu::aboutActionTriggered()
