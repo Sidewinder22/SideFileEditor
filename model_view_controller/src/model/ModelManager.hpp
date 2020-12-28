@@ -8,13 +8,14 @@
 #ifndef SRC_MODEL_MODELMANAGER_HPP_
 #define SRC_MODEL_MODELMANAGER_HPP_
 
-#include <memory>
-#include <vector>
-#include <QObject>
-#include <QString> 
 #include "log/Logger.hpp"
 #include "BufferManager.hpp"
 #include "FileManager.hpp"
+#include <QObject>
+#include <QString>
+#include <memory>
+#include <vector>
+#include <string>
 
 namespace model
 {
@@ -32,11 +33,13 @@ public slots:
     void create();
     void open( const QString& fileName );
     void read( const QString& bufferName );
+    void save( const QString& bufferName, const QString& text );
     void textChanged( const QString& bufferName, const QString& text );
 
 signals:
 	void createdNotif( const QString& bufferName );
 	void openedNotif( const QString& fileName, const QString& text );
+	void savedNotif( const QString& bufferName, bool success );
 	void readNotif( const QString& text );
 
 private:
@@ -48,6 +51,7 @@ private:
 
     log::Logger log_;
     static int nextBufferNumber_;
+    static const QString BUFFER_STR;
 
     std::vector< std::shared_ptr< BufferManager > > buffers_;
     std::vector< std::shared_ptr< FileManager > > files_;

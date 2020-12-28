@@ -20,7 +20,7 @@ class File
 	: public IFile
 {
 public:
-	File( const QString& fileName );
+	explicit File( const QString& fileName );
 	~File() override;
 
     /**********************************************
@@ -28,6 +28,7 @@ public:
     **********************************************/
     QString name() override;
     QString read() override;
+    void save( const QString& text ) override;
 
 private:
     QFile file_;

@@ -7,6 +7,7 @@
 
 #include "File.hpp"
 #include <QTextStream>
+#include <stdexcept>
 
 namespace model
 {
@@ -46,6 +47,14 @@ QString File::read()
     file_.seek(0);
 
     return text;
+}
+
+void File::save( const QString& text )
+{
+	QTextStream out( &file_ );
+	out << text;
+
+	file_.flush();
 }
 
 }  // ::file

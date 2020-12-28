@@ -66,6 +66,11 @@ SideFileEditor::SideFileEditor()
 		controller_,
         &ctrl::Controller::read );
 
+    connect( modelManager_,
+        &model::ModelManager::savedNotif,
+		controller_,
+        &ctrl::Controller::saved );
+
 
 	/*****************************
 	 * Controller -> ViewManager
@@ -79,6 +84,11 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::openedNotif,
 		viewManager_,
         &view::ViewManager::opened );
+
+    connect( controller_,
+        &ctrl::Controller::savedNotif,
+		viewManager_,
+        &view::ViewManager::saved );
 
     connect( controller_,
         &ctrl::Controller::loadNotif,
@@ -103,6 +113,11 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::readRequest,
 		modelManager_,
         &model::ModelManager::read );
+
+    connect( controller_,
+        &ctrl::Controller::saveRequest,
+		modelManager_,
+        &model::ModelManager::save );
 
     connect( controller_,
         &ctrl::Controller::textChangedNotif,

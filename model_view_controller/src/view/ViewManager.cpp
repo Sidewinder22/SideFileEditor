@@ -109,6 +109,16 @@ void ViewManager::opened( const QString& fileName, const QString& text )
         common::constants::STATUS_BAR_MSG_TIMEOUT);
 }
 
+void ViewManager::saved( const QString& bufferName, bool success )
+{
+    log_ << MY_FUNC << ": " << bufferName << log::END;
+
+    statusBar_->showMessage("[File saved]: " + bufferName,
+        common::constants::STATUS_BAR_MSG_TIMEOUT);
+
+    window_->setWindowTitle( bufferName );
+}
+
 void ViewManager::create()
 {
     emit createNotif();
@@ -132,12 +142,12 @@ void ViewManager::open()
 
 void ViewManager::save()
 {
-    log_ << MY_FUNC << log::END;
-
     const auto bufferName = dock_->getCurrent();
     log_ << MY_FUNC << "Buff: " << bufferName << log::END;
 
-    emit saveNotif( bufferName );
+    const auto text = textEdit_->text();
+
+    emit saveNotif( bufferName, text );
 }
 
 void ViewManager::quit()
@@ -150,6 +160,9 @@ void ViewManager::textChanged()
     const auto bufferName = dock_->getCurrent();
 
     log_ << MY_FUNC << "Buff: " << bufferName << log::END;
+
+
+    window_->setWindowTitle( "* " + bufferName );
 
     const auto text = textEdit_->text();
     emit textChangedNotif( bufferName, text );

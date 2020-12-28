@@ -14,6 +14,7 @@ namespace model
 {
 
 int ModelManager::nextBufferNumber_ = 1;
+const QString ModelManager::BUFFER_STR = "Buffer";
 
 ModelManager::ModelManager()
     : log_( "ModelManager" )
@@ -74,12 +75,42 @@ void ModelManager::open( const QString& fileName )
     log_ << MY_FUNC << fileName << log::END;
 
     auto file = std::make_shared< FileManager >( fileName );
+    files_.push_back( file );
+
     const auto text = file->read();
 
     addBuffer( fileName );
     textChanged( fileName, text );
 
     emit openedNotif( fileName, text );
+}
+
+void ModelManager::save( const QString& bufferName, const QString& text )
+{
+    log_ << MY_FUNC << bufferName << log::END;
+
+    bool success = false;
+
+    auto it = getBufferIterator( bufferName );
+    if ( it != buffers_.end() )
+    {
+    	auto fileIt = getFileIterator( bufferName );
+    	if ( fileIt != files_.end() )
+    	{
+    		log_ << MY_FUNC << bufferName
+    			<< ", saving file: " << text << log::END;
+    		( *fileIt )->save( text );
+    	}
+    	else
+    	{
+    		// TODO: create new file and save content
+
+    		log_ << MY_FUNC << bufferName
+    			<< ", create new file and save" << log::END;
+    	}
+    }
+
+    emit savedNotif( bufferName, success );
 }
 
 std::vector< std::shared_ptr< BufferManager > >::iterator 

@@ -30,10 +30,11 @@ public slots:
     void create();
     void quit();
     void open( const QString& fileName );
-    void save( const QString& fileName );
+    void save( const QString& bufferName, const QString& text );
 
     void created( const QString& bufferName );
     void opened( const QString& fileName, const QString& text );
+    void saved( const QString& bufferName, bool success );
     void read( const QString& text );
     void textChanged( const QString& bufferName, const QString& text );
     void bufferSelectionChanged( const QString& bufferName );
@@ -41,10 +42,12 @@ public slots:
 signals:
 	void createRequest();
 	void openRequest( const QString& fileName );
-	void readRequest( const QString& fileName );
+	void readRequest( const QString& bufferName );
+	void saveRequest( const QString& bufferName, const QString& text );
 
     void createdNotif( const QString& bufferName );
     void openedNotif( const QString& fileName, const QString& text );
+    void savedNotif( const QString& bufferName, bool success );
     void loadNotif( const QString& text );
     void textChangedNotif( const QString& bufferName, const QString& text );
 

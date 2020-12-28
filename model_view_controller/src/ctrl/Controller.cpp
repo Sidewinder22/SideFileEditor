@@ -8,6 +8,8 @@
 #include "Controller.hpp"
 #include "cmd/CommandFactory.hpp"
 
+#include <ios>
+
 #include <memory>
 
 namespace ctrl
@@ -32,11 +34,9 @@ void Controller::open( const QString& fileName )
     emit openRequest( fileName );
 }
 
-void Controller::save( const QString& fileName )
+void Controller::save( const QString& bufferName, const QString& text )
 {
-    log_ << MY_FUNC << ": " << fileName << log::END;
-
-    // TODO: implement
+	emit saveRequest( bufferName, text );
 }
 
 void Controller::quit()
@@ -52,6 +52,14 @@ void Controller::created( const QString& bufferName )
 void Controller::opened( const QString& fileName, const QString& text )
 {
 	emit openedNotif( fileName, text );
+}
+
+void Controller::saved( const QString& bufferName, bool success )
+{
+    log_ << MY_FUNC << ": " << bufferName << ", success = "
+    	<< std::boolalpha << success << log::END;
+
+    emit savedNotif( bufferName, success );
 }
 
 void Controller::read( const QString& text )
