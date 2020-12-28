@@ -19,12 +19,12 @@ const QString ModelManager::BUFFER_STR = "Buffer";
 ModelManager::ModelManager()
     : log_( "ModelManager" )
 {
-    log_ << MY_FUNC << "Created." << log::END;
+    log_ << FUNC << "Created." << log::END;
 }
 
 void ModelManager::addBuffer( const QString& bufferName)
 {
-	log_ << MY_FUNC << ": " << bufferName << log::END;
+	log_ << FUNC << ": " << bufferName << log::END;
 
 	auto buffer = std::make_shared< BufferManager >( bufferName );
 	buffers_.push_back(buffer);
@@ -43,7 +43,7 @@ void ModelManager::create()
 void ModelManager::textChanged( const QString& bufferName,
     const QString& text )
 {
-    log_ << MY_FUNC << bufferName <<  ": " << text << log::END;
+    log_ << FUNC << bufferName <<  ": " << text << log::END;
 
     auto it = getBufferIterator( bufferName );
     if ( it != buffers_.end() )
@@ -54,7 +54,7 @@ void ModelManager::textChanged( const QString& bufferName,
     
 void ModelManager::read( const QString& bufferName )
 {
-    log_ << MY_FUNC << bufferName << log::END;
+    log_ << FUNC << bufferName << log::END;
 
     QString text;
     auto it = getBufferIterator( bufferName );
@@ -64,7 +64,7 @@ void ModelManager::read( const QString& bufferName )
     }
     else
     {
-    	log_ << MY_FUNC << "Buffer not found!" << log::END;
+    	log_ << FUNC << "Buffer not found!" << log::END;
     }
 
     emit readNotif( text );
@@ -72,7 +72,7 @@ void ModelManager::read( const QString& bufferName )
 
 void ModelManager::open( const QString& fileName )
 {
-    log_ << MY_FUNC << fileName << log::END;
+    log_ << FUNC << fileName << log::END;
 
     auto file = std::make_shared< FileManager >( fileName );
     files_.push_back( file );
@@ -87,29 +87,77 @@ void ModelManager::open( const QString& fileName )
 
 void ModelManager::save( const QString& bufferName, const QString& text )
 {
-    log_ << MY_FUNC << bufferName << log::END;
+    log_ << FUNC << bufferName << log::END;
 
-    bool success = false;
-
-    auto it = getBufferIterator( bufferName );
+    const auto it = getBufferIterator( bufferName );
     if ( it != buffers_.end() )
     {
     	auto fileIt = getFileIterator( bufferName );
     	if ( fileIt != files_.end() )
     	{
-    		log_ << MY_FUNC << bufferName
-    			<< ", saving file: " << text << log::END;
-    		( *fileIt )->save( text );
+    		log_ << FUNC << bufferName
+    			<< ", file exists in the files_ container, saving file: "
+				<< text << log::END;
+
+    		( *fileIt )->write( text );
+
+    		emit savedNotif( bufferName, true );
     	}
     	else
     	{
-    		// TODO: create new file and save content
-
-    		log_ << MY_FUNC << bufferName
-    			<< ", create new file and save" << log::END;
+    		log_ << FUNC << bufferName
+    			<< ", file doesn't exists, request new file path" << log::END;
+    		textsToSave_.insert( { bufferName, text } );
+    		emit getSavePathRequest( bufferName );
     	}
     }
+}
 
+void ModelManager::savePath( const QString& bufferName, const QString& path )
+{
+	log_ << FUNC << path << log::END;
+	bool success = true;
+
+	std::shared_ptr< FileManager > fileManager;
+	try
+	{
+		fileManager = std::make_shared< FileManager >( path );
+	}
+	catch ( const std::runtime_error& e )
+	{
+		success = false;
+		log_ << FUNC << "Can't create file, error: "
+			<< e.what() << log::END;
+	}
+
+	const auto textIt = textsToSave_.find( bufferName );
+	if ( textIt != textsToSave_.end() )
+	{
+		fileManager->write( textIt->second );
+		textsToSave_.erase( textIt );
+	}
+	else
+	{
+		success = false;
+		log_ << FUNC << "Can't find text for buffer: "
+			<< bufferName << log::END;
+	}
+
+	const auto bufferIt = getBufferIterator( bufferName );
+	if ( bufferIt != buffers_.end() )
+	{
+		( *bufferIt )->setName( path );
+	}
+	else
+	{
+		success = false;
+		log_ << FUNC << "Can't find buffer: "
+			<< bufferName << log::END;
+	}
+
+	files_.push_back( fileManager );
+
+	emit newBufferNameNotif( path );
     emit savedNotif( bufferName, success );
 }
 

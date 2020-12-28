@@ -22,7 +22,7 @@ public:
 
     virtual QString name() = 0;
     virtual QString read() = 0;
-    virtual void save( const QString& text ) = 0;
+    virtual void write( const QString& text ) = 0;
 };
 
 }  // ::file

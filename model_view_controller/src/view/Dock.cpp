@@ -39,6 +39,14 @@ void Dock::addName( const QString& bufferName )
     names_->setCurrentItem( item );
 }
 
+void Dock::setNewName( const QString& newName )
+{
+	const auto row = names_->currentRow();
+	names_->takeItem( row );
+
+	addName( newName );
+}
+
 QString Dock::getCurrent()
 {
     QString fileName;
@@ -53,7 +61,7 @@ QString Dock::getCurrent()
     
 void Dock::rowChanged( int row )
 {
-    log_ << MY_FUNC << "current row: " << row << log::END;
+    log_ << FUNC << "current row: " << row << log::END;
     emit bufferSelectionChangedNotif( getCurrent() );
 }
 

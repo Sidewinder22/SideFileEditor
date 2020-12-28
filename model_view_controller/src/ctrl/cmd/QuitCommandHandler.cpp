@@ -19,7 +19,7 @@ QuitCommandHandler::QuitCommandHandler()
 
 void QuitCommandHandler::execute()
 {
-    log_ << MY_FUNC << "Bye..." << log::END;
+    log_ << FUNC << "Bye..." << log::END;
 
     QApplication::quit();
 }

@@ -12,7 +12,7 @@
 #include <iostream>
 #include <QString>
 
-#define MY_FUNC std::string( __FUNCTION__ + std::string( "() " ) )
+#define FUNC std::string( __FUNCTION__ + std::string( "() " ) )
 
 namespace log
 {

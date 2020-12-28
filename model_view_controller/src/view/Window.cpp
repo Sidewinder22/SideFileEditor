@@ -43,7 +43,7 @@ Window::Window( Dock* dock,
 
     statusBar_->showMessage( "Ready!" );
 
-    log_ << MY_FUNC << "Window created" << log::END;
+    log_ << FUNC << "Window created" << log::END;
 }
 
 } // ::view

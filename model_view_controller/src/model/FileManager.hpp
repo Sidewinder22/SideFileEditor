@@ -22,7 +22,7 @@ public:
 	FileManager( const QString& fileName );
 	QString name();
 	QString read();
-    void save( const QString& text );
+    void write( const QString& text );
 
 private:
 	log::Logger log_;

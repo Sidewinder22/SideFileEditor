@@ -15,7 +15,7 @@
 #include <QString>
 #include <memory>
 #include <vector>
-#include <string>
+#include <map>
 
 namespace model
 {
@@ -35,12 +35,15 @@ public slots:
     void read( const QString& bufferName );
     void save( const QString& bufferName, const QString& text );
     void textChanged( const QString& bufferName, const QString& text );
+    void savePath( const QString& bufferName, const QString& path );
 
 signals:
 	void createdNotif( const QString& bufferName );
 	void openedNotif( const QString& fileName, const QString& text );
 	void savedNotif( const QString& bufferName, bool success );
 	void readNotif( const QString& text );
+	void getSavePathRequest( const QString& bufferName );
+	void newBufferNameNotif( const QString& newBufferName );
 
 private:
 	void addBuffer( const QString& bufferName );
@@ -55,6 +58,7 @@ private:
 
     std::vector< std::shared_ptr< BufferManager > > buffers_;
     std::vector< std::shared_ptr< FileManager > > files_;
+    std::map< QString, QString > textsToSave_;
 };
 
 } // ::model

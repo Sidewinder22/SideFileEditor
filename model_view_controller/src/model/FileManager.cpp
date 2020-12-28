@@ -35,9 +35,9 @@ QString FileManager::read()
 	return file_->read();
 }
 
-void FileManager::save( const QString& text )
+void FileManager::write( const QString& text )
 {
-	file_->save( text );
+	file_->write( text );
 }
 
 } // ::model

@@ -27,6 +27,7 @@ public:
     QString read();
     bool saved();
     void setSaved( bool saved );
+    void setName( const QString& name );
 
 private:
     log::Logger log_;

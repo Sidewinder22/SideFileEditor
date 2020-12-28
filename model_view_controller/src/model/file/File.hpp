@@ -28,7 +28,7 @@ public:
     **********************************************/
     QString name() override;
     QString read() override;
-    void save( const QString& text ) override;
+    void write( const QString& text ) override;
 
 private:
     QFile file_;

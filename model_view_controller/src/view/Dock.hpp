@@ -25,6 +25,7 @@ public:
     virtual ~Dock() = default;
 
     void addName( const QString& bufferName );
+    void setNewName( const QString& newName );
     QString getCurrent();
 
 public slots:

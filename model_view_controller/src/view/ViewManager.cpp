@@ -80,7 +80,7 @@ ViewManager::ViewManager()
 
 void ViewManager::load( const QString& text )
 {
-    log_ << MY_FUNC << log::END;
+    log_ << FUNC << log::END;
 
     textEdit_->clear();
     textEdit_->setText( text );
@@ -88,7 +88,7 @@ void ViewManager::load( const QString& text )
     
 void ViewManager::created( const QString& bufferName )
 {
-    log_ << MY_FUNC << ": " << bufferName << log::END;
+    log_ << FUNC << ": " << bufferName << log::END;
 
     dock_->addName( bufferName );
     textEdit_->clear();
@@ -99,7 +99,7 @@ void ViewManager::created( const QString& bufferName )
 
 void ViewManager::opened( const QString& fileName, const QString& text )
 {
-    log_ << MY_FUNC << ": " << fileName << log::END;
+    log_ << FUNC << ": " << fileName << log::END;
 
     dock_->addName( fileName );
     textEdit_->clear();
@@ -111,12 +111,20 @@ void ViewManager::opened( const QString& fileName, const QString& text )
 
 void ViewManager::saved( const QString& bufferName, bool success )
 {
-    log_ << MY_FUNC << ": " << bufferName << log::END;
+    log_ << FUNC << ": " << bufferName << log::END;
 
-    statusBar_->showMessage("[File saved]: " + bufferName,
-        common::constants::STATUS_BAR_MSG_TIMEOUT);
+    if ( success )
+    {
+		statusBar_->showMessage("[File saved]: " + bufferName,
+			common::constants::STATUS_BAR_MSG_TIMEOUT);
 
-    window_->setWindowTitle( bufferName );
+		window_->setWindowTitle( bufferName );
+    }
+    else
+    {
+    	statusBar_->showMessage("Can't save file!",
+    	    common::constants::STATUS_BAR_MSG_TIMEOUT);
+    }
 }
 
 void ViewManager::create()
@@ -131,7 +139,7 @@ void ViewManager::about()
 
 void ViewManager::open()
 {
-    log_ << MY_FUNC << log::END;
+    log_ << FUNC << log::END;
 
     const auto fileName = userInteraction_->getFileNameForOpen();
     if ( !fileName.isEmpty() )
@@ -143,7 +151,7 @@ void ViewManager::open()
 void ViewManager::save()
 {
     const auto bufferName = dock_->getCurrent();
-    log_ << MY_FUNC << "Buff: " << bufferName << log::END;
+    log_ << FUNC << "Buff: " << bufferName << log::END;
 
     const auto text = textEdit_->text();
 
@@ -159,10 +167,7 @@ void ViewManager::textChanged()
 {
     const auto bufferName = dock_->getCurrent();
 
-    log_ << MY_FUNC << "Buff: " << bufferName << log::END;
-
-
-    window_->setWindowTitle( "* " + bufferName );
+    log_ << FUNC << "Buff: " << bufferName << log::END;
 
     const auto text = textEdit_->text();
     emit textChangedNotif( bufferName, text );
@@ -170,12 +175,26 @@ void ViewManager::textChanged()
 
 void ViewManager::bufferSelectionChanged( const QString& bufferName )
 {
-    log_ << MY_FUNC << ": " << bufferName << log::END;
+    log_ << FUNC << ": " << bufferName << log::END;
 
     emit bufferSelectionChangedNotif( bufferName );
     window_->setWindowTitle( bufferName );
     statusBar_->showMessage("[Current buffer]: " + bufferName,
         common::constants::STATUS_BAR_MSG_TIMEOUT);
+}
+
+void ViewManager::getSavePath( const QString& bufferName )
+{
+	const auto path = userInteraction_->getFileNameForSave( bufferName );
+
+	emit savePathNotif( bufferName, path );
+}
+
+void ViewManager::newBufferName( const QString& newBufferName )
+{
+	log_ << FUNC << log::END;
+
+	dock_->setNewName( newBufferName );
 }
 
 } // ::view

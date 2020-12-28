@@ -18,7 +18,7 @@ BufferManager::BufferManager( QString name )
     , saved_( false )
     , buffer_( std::make_unique< buff::Buffer> () )
 {
-    log_ << MY_FUNC << log::END;
+    log_ << FUNC << log::END;
 }
 
 QString BufferManager::name()
@@ -28,7 +28,7 @@ QString BufferManager::name()
     
 void BufferManager::write( const QString& text )
 {
-    log_ << MY_FUNC << name_ << ": " << text << log::END;
+    log_ << FUNC << name_ << ": " << text << log::END;
     buffer_->write( text );
 }
 
@@ -44,6 +44,11 @@ bool BufferManager::saved()
 void BufferManager::setSaved( bool saved )
 {
     saved_ = saved;
+}
+
+void BufferManager::setName( const QString& name )
+{
+	name_ = name;
 }
 
 } // ::model

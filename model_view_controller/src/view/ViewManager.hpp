@@ -42,6 +42,8 @@ public slots:
     void saved( const QString& bufferName, bool success );
     void textChanged();
     void bufferSelectionChanged( const QString& bufferName );
+    void getSavePath( const QString& bufferName );
+	void newBufferName( const QString& newBufferName );
 
 signals:
     void createNotif();
@@ -50,6 +52,7 @@ signals:
     void quitNotif();
     void textChangedNotif( const QString& bufferName, const QString& text );
     void bufferSelectionChangedNotif( const QString& bufferName );
+    void savePathNotif( const QString& bufferName, const QString& path );
 
 private:
     log::Logger log_;

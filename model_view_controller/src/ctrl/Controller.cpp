@@ -22,14 +22,14 @@ Controller::Controller( )
 
 void Controller::create()
 {
-    log_ << MY_FUNC << log::END;
+    log_ << FUNC << log::END;
 
     emit createRequest();
 }
 
 void Controller::open( const QString& fileName )
 {
-    log_ << MY_FUNC << ": " << fileName << log::END;
+    log_ << FUNC << ": " << fileName << log::END;
 
     emit openRequest( fileName );
 }
@@ -56,7 +56,7 @@ void Controller::opened( const QString& fileName, const QString& text )
 
 void Controller::saved( const QString& bufferName, bool success )
 {
-    log_ << MY_FUNC << ": " << bufferName << ", success = "
+    log_ << FUNC << ": " << bufferName << ", success = "
     	<< std::boolalpha << success << log::END;
 
     emit savedNotif( bufferName, success );
@@ -64,21 +64,38 @@ void Controller::saved( const QString& bufferName, bool success )
 
 void Controller::read( const QString& text )
 {
+	log_ << FUNC << "text: " << text << log::END;
+
     emit loadNotif( text );
 }
     
 void Controller::textChanged( const QString& bufferName, const QString& text )
 {
-    log_ << MY_FUNC << log::END;
+    log_ << FUNC << log::END;
 
     emit textChangedNotif( bufferName, text );
 }
     
 void Controller::bufferSelectionChanged( const QString& bufferName )
 {
-    log_ << MY_FUNC << bufferName << log::END;
+    log_ << FUNC << bufferName << log::END;
 
     emit readRequest( bufferName );
+}
+
+void Controller::getSavePath( const QString& bufferName )
+{
+	emit getSavePathRequest( bufferName );
+}
+
+void Controller::savePath( const QString& bufferName, const QString& path )
+{
+	emit savePathNotif( bufferName, path );
+}
+
+void Controller::newBufferName( const QString& newBufferName )
+{
+	emit newBufferNameNotif( newBufferName );
 }
     
 } // ::ctrl

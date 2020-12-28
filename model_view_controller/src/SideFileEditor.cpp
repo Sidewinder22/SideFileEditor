@@ -47,6 +47,11 @@ SideFileEditor::SideFileEditor()
         controller_,
         &ctrl::Controller::bufferSelectionChanged );
 
+    connect( viewManager_,
+        &view::ViewManager::savePathNotif,
+        controller_,
+        &ctrl::Controller::savePath );
+
 
 	/*****************************
 	 * ModelManager -> Controller
@@ -71,6 +76,16 @@ SideFileEditor::SideFileEditor()
 		controller_,
         &ctrl::Controller::saved );
 
+    connect( modelManager_,
+        &model::ModelManager::getSavePathRequest,
+		controller_,
+        &ctrl::Controller::getSavePath );
+
+    connect( modelManager_,
+        &model::ModelManager::newBufferNameNotif,
+		controller_,
+        &ctrl::Controller::newBufferName );
+
 
 	/*****************************
 	 * Controller -> ViewManager
@@ -94,6 +109,16 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::loadNotif,
 		viewManager_,
         &view::ViewManager::load );
+
+    connect( controller_,
+        &ctrl::Controller::getSavePathRequest,
+		viewManager_,
+        &view::ViewManager::getSavePath );
+
+    connect( controller_,
+        &ctrl::Controller::newBufferNameNotif,
+		viewManager_,
+        &view::ViewManager::newBufferName );
 
 
 	/*****************************
@@ -123,4 +148,9 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::textChangedNotif,
 		modelManager_,
         &model::ModelManager::textChanged );
+
+    connect( controller_,
+        &ctrl::Controller::savePathNotif,
+		modelManager_,
+        &model::ModelManager::savePath );
 }

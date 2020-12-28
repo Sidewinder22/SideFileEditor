@@ -12,7 +12,7 @@ namespace view
 
 TextEdit::TextEdit()
 {
-    setStatusTip( "Text editor field" );
+//    setStatusTip( "Text editor field" );
 }
     
 QString TextEdit::text()

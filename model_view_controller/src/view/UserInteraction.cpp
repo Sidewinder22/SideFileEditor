@@ -18,25 +18,39 @@ UserInteraction::UserInteraction( QWidget* parent )
 	: parent_( parent )
 { }
 
-void UserInteraction::showAboutInfo()
+void UserInteraction::showAboutInfo() const
 {
     QString description;
-    description.append(APP);
-    description.append(BY);
-    description.append(AUTHOR);
+    description.append( APP );
+    description.append( BY );
+    description.append( AUTHOR );
 
-    QMessageBox::about(parent_, ABOUT, description);
+    QMessageBox::about( parent_, ABOUT, description );
+}
+
+void UserInteraction::showSaveWarning() const
+{
+	QMessageBox::warning( parent_, "WARN", SAVE_WARNING );
+}
+
+QString UserInteraction::getFileNameForSave( const QString& bufferName )
+{
+	QString label = SAVE_QUESTION + bufferName;
+
+	return QFileDialog::getSaveFileName(
+		parent_,
+		QObject::tr( label.toStdString().c_str() ),
+		QDir::homePath(),
+		QObject::tr( FILE_TYPES ) );
 }
 
 QString UserInteraction::getFileNameForOpen()
 {
 	return QFileDialog::getOpenFileName(
 		parent_,
-		QObject::tr( "Select file to open..." ),
+		QObject::tr( OPEN_QUESTION ),
 		QDir::homePath(),
-		QObject::tr( "Text files: *.txt *.h *.hpp *.c *.cc *.cpp *.py"
-			"*.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp *.py"
-			"*.js *.ccs *.json)" ) );
+		QObject::tr( FILE_TYPES ) );
 }
 
 }  // ::view

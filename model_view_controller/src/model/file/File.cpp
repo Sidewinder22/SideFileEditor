@@ -9,6 +9,9 @@
 #include <QTextStream>
 #include <stdexcept>
 
+
+#include <iostream>
+
 namespace model
 {
 namespace file
@@ -40,7 +43,10 @@ QString File::read()
 
     while (!in.atEnd())
     {
-        text.append( in.readLine() );
+    	const QString line = in.readLine();
+
+    	text += line;
+    	text += "\n";
     }
 
     // Set file ptr to the beginning of the file for the future readings
@@ -49,7 +55,7 @@ QString File::read()
     return text;
 }
 
-void File::save( const QString& text )
+void File::write( const QString& text )
 {
 	QTextStream out( &file_ );
 	out << text;
