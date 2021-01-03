@@ -28,6 +28,7 @@ signals:
     void aboutNotif();
     void openNotif();
     void saveNotif();
+    void closeNotif();
     void quitNotif();
 
 private:
@@ -35,6 +36,7 @@ private:
     void aboutActionTriggered();
     void openActionTriggered();
     void saveActionTriggered();
+	void closeActionTriggered();
     void quitActionTriggered();
 
     QMenu* fileMenu_;
@@ -44,6 +46,7 @@ private:
 	QAction *aboutAction_;
 	QAction *openAction_;
 	QAction *saveAction_;
+	QAction *closeAction_;
     QAction *quitAction_;
 };
 

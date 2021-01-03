@@ -31,6 +31,7 @@ public slots:
     void quit();
     void open( const QString& fileName );
     void save( const QString& bufferName, const QString& text );
+	void close( const QString& bufferName );
 
     void created( const QString& bufferName );
     void opened( const QString& fileName, const QString& text );

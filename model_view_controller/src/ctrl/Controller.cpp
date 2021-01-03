@@ -38,6 +38,11 @@ void Controller::save( const QString& bufferName, const QString& text )
 {
 	emit saveRequest( bufferName, text );
 }
+	
+void Controller::close( const QString& bufferName )
+{
+    log_ << FUNC << ": " << bufferName << log::END;
+}
 
 void Controller::quit()
 {

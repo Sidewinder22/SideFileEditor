@@ -18,6 +18,7 @@ Menu::Menu()
     , aboutAction_( new QAction( "&About", this ) )
     , openAction_( new QAction( "&Open", this ) )
     , saveAction_( new QAction( "&Save", this ) )
+	, closeAction_( new QAction( "&Close", this ))
     , quitAction_( new QAction( "&Quit", this ) )
 {
     addMenu( fileMenu_ );
@@ -26,6 +27,7 @@ Menu::Menu()
     fileMenu_->addAction( newAction_ );
     fileMenu_->addAction( openAction_ );
     fileMenu_->addAction( saveAction_ );
+    fileMenu_->addAction( closeAction_ );
     fileMenu_->addSeparator();
     fileMenu_->addAction( quitAction_ );
 
@@ -34,6 +36,7 @@ Menu::Menu()
     newAction_->setShortcuts( QKeySequence::New );
     openAction_->setShortcuts( QKeySequence::Open );
     saveAction_->setShortcuts( QKeySequence::Save );
+    closeAction_->setShortcut( QKeySequence::Close );
     aboutAction_->setShortcuts( QKeySequence::WhatsThis );
     quitAction_->setShortcuts( QKeySequence::Quit );
 
@@ -56,6 +59,11 @@ Menu::Menu()
         &QAction::triggered,
         this,
         &Menu::saveActionTriggered );
+
+    connect( closeAction_,
+        &QAction::triggered,
+        this,
+        &Menu::closeActionTriggered );
 
     connect( quitAction_,
         &QAction::triggered,
@@ -81,6 +89,11 @@ void Menu::openActionTriggered()
 void Menu::saveActionTriggered()
 {
 	emit saveNotif();
+}
+
+void Menu::closeActionTriggered()
+{
+	emit closeNotif();
 }
 
 void Menu::quitActionTriggered()

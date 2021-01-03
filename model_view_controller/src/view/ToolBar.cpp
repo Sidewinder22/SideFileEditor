@@ -14,10 +14,12 @@ ToolBar::ToolBar()
     : newAction_( addAction( QIcon( "../../icons/new.png" ), "New File" ) )
     , openAction_( addAction( QIcon( "../../icons/open.png" ), "Open File" ) )
     , saveAction_( addAction( QIcon( "../../icons/save.png" ), "Save File" ) )
+    , closeAction_( addAction( QIcon( "../../icons/close.png" ), "Close File" ) )
 {
     newAction_->setStatusTip( "New File" );
     openAction_->setStatusTip( "Open File" );
     saveAction_->setStatusTip( "Save File" );
+    closeAction_->setStatusTip( "Close File" );
 
     connect( newAction_,
         &QAction::triggered,
@@ -33,6 +35,11 @@ ToolBar::ToolBar()
         &QAction::triggered,
         this,
         &ToolBar::save );
+
+    connect( closeAction_,
+        &QAction::triggered,
+        this,
+        &ToolBar::close );
 }
 
 void ToolBar::create()
@@ -48,6 +55,11 @@ void ToolBar::open()
 void ToolBar::save()
 {
 	emit saveNotif();
+}
+
+void ToolBar::close()
+{
+	emit closeNOtif();
 }
 
 } // ::view

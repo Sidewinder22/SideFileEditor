@@ -34,6 +34,7 @@ public slots:
     void about();
     void open();
     void save();
+    void close();
     void quit();
     void load( const QString& text );
 
@@ -46,6 +47,8 @@ public slots:
 	void newBufferName( const QString& newBufferName );
 
 signals:
+    void closeRequest( const QString& bufferName );
+
     void createNotif();
     void openNotif( const QString& fileName );
     void saveNotif( const QString& fileName, const QString& text );

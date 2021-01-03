@@ -58,6 +58,11 @@ ViewManager::ViewManager()
         &ViewManager::save );
 
     connect( menu_,
+        &Menu::closeNotif,
+        this,
+        &ViewManager::close );
+
+    connect( menu_,
         &Menu::quitNotif,
         this,
         &ViewManager::quit );
@@ -76,6 +81,11 @@ ViewManager::ViewManager()
         &ToolBar::saveNotif,
         this,
         &ViewManager::save );
+
+    connect( toolBar_,
+        &ToolBar::closeNOtif,
+        this,
+        &ViewManager::close );
 }
 
 void ViewManager::load( const QString& text )
@@ -156,6 +166,14 @@ void ViewManager::save()
     const auto text = textEdit_->text();
 
     emit saveNotif( bufferName, text );
+}
+
+void ViewManager::close()
+{
+    const auto bufferName = dock_->getCurrent();
+    log_ << FUNC << "Buff: " << bufferName << log::END;
+
+    emit closeRequest( bufferName );
 }
 
 void ViewManager::quit()

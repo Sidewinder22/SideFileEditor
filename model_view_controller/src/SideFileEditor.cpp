@@ -33,6 +33,11 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::save );
 
     connect( viewManager_,
+        &view::ViewManager::closeRequest,
+        controller_,
+        &ctrl::Controller::close );
+
+    connect( viewManager_,
         &view::ViewManager::quitNotif,
         controller_,
         &ctrl::Controller::quit );

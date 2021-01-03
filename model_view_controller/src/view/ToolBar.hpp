@@ -26,16 +26,19 @@ public slots:
     void create();
     void open();
     void save();
+    void close();
 
 signals:
     void createNotif();
     void openNotif();
     void saveNotif();
+    void closeNOtif();
 
 private:
     QAction* newAction_;
     QAction* openAction_;
     QAction* saveAction_;
+    QAction* closeAction_;
 };
 
 } // ::view

@@ -17,7 +17,7 @@ Dock::Dock()
 {
     setStatusTip( "Open files list" );
     setFloating( false );
-    setMaximumHeight(60);
+    setMaximumHeight( 60 );
     setAllowedAreas( Qt::TopDockWidgetArea | Qt::BottomDockWidgetArea );
 
     names_->setFlow(QListView::LeftToRight);
