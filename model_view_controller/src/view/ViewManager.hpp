@@ -41,18 +41,19 @@ public slots:
     void created( const QString& bufferName );
     void opened( const QString& fileName, const QString& text );
     void saved( const QString& bufferName, bool success );
+    void closed( const QString& bufferName );
     void textChanged();
     void bufferSelectionChanged( const QString& bufferName );
     void getSavePath( const QString& bufferName );
 	void newBufferName( const QString& newBufferName );
 
 signals:
+    void createRequest();
+    void openRequest( const QString& fileName );
+    void saveRequest( const QString& fileName, const QString& text );
     void closeRequest( const QString& bufferName );
+    void quitRequest();
 
-    void createNotif();
-    void openNotif( const QString& fileName );
-    void saveNotif( const QString& fileName, const QString& text );
-    void quitNotif();
     void textChangedNotif( const QString& bufferName, const QString& text );
     void bufferSelectionChangedNotif( const QString& bufferName );
     void savePathNotif( const QString& bufferName, const QString& path );

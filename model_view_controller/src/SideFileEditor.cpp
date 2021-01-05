@@ -18,17 +18,17 @@ SideFileEditor::SideFileEditor()
 	 * ViewManager -> Controller
 	******************************/
     connect( viewManager_,
-        &view::ViewManager::createNotif,
+        &view::ViewManager::createRequest,
         controller_,
         &ctrl::Controller::create );
 
     connect( viewManager_,
-        &view::ViewManager::openNotif,
+        &view::ViewManager::openRequest,
         controller_,
         &ctrl::Controller::open );
 
     connect( viewManager_,
-        &view::ViewManager::saveNotif,
+        &view::ViewManager::saveRequest,
         controller_,
         &ctrl::Controller::save );
 
@@ -38,7 +38,7 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::close );
 
     connect( viewManager_,
-        &view::ViewManager::quitNotif,
+        &view::ViewManager::quitRequest,
         controller_,
         &ctrl::Controller::quit );
 
@@ -82,6 +82,11 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::saved );
 
     connect( modelManager_,
+        &model::ModelManager::closedNotif,
+		controller_,
+        &ctrl::Controller::closed );
+
+    connect( modelManager_,
         &model::ModelManager::getSavePathRequest,
 		controller_,
         &ctrl::Controller::getSavePath );
@@ -109,6 +114,11 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::savedNotif,
 		viewManager_,
         &view::ViewManager::saved );
+
+    connect( controller_,
+        &ctrl::Controller::closedNotif,
+		viewManager_,
+        &view::ViewManager::closed );
 
     connect( controller_,
         &ctrl::Controller::loadNotif,
@@ -158,4 +168,9 @@ SideFileEditor::SideFileEditor()
         &ctrl::Controller::savePathNotif,
 		modelManager_,
         &model::ModelManager::savePath );
+
+    connect( controller_,
+        &ctrl::Controller::closeRequest,
+		modelManager_,
+        &model::ModelManager::close );
 }

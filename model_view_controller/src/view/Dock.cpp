@@ -6,6 +6,8 @@
  */
 
 #include "Dock.hpp"
+#include <QEvent>
+#include <QMouseEvent>
 
 namespace view
 {
@@ -45,6 +47,12 @@ void Dock::setNewName( const QString& newName )
 	names_->takeItem( row );
 
 	addName( newName );
+}
+
+void Dock::removeCurrentFileName()
+{
+    const auto row = names_->currentRow();
+    names_->takeItem( row );
 }
 
 QString Dock::getCurrent()

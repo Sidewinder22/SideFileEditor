@@ -137,9 +137,18 @@ void ViewManager::saved( const QString& bufferName, bool success )
     }
 }
 
+void ViewManager::closed( const QString& bufferName )
+{
+    log_ << FUNC << ": " << bufferName << log::END;
+
+    dock_->removeCurrentFileName();
+    statusBar_->showMessage("[Buffer closed]: " + bufferName,
+        common::constants::STATUS_BAR_MSG_TIMEOUT);
+}
+
 void ViewManager::create()
 {
-    emit createNotif();
+    emit createRequest();
 }
 
 void ViewManager::about()
@@ -154,7 +163,7 @@ void ViewManager::open()
     const auto fileName = userInteraction_->getFileNameForOpen();
     if ( !fileName.isEmpty() )
     {
-    	emit openNotif( fileName );
+    	emit openRequest( fileName );
     }
 }
 
@@ -165,7 +174,7 @@ void ViewManager::save()
 
     const auto text = textEdit_->text();
 
-    emit saveNotif( bufferName, text );
+    emit saveRequest( bufferName, text );
 }
 
 void ViewManager::close()
@@ -178,7 +187,7 @@ void ViewManager::close()
 
 void ViewManager::quit()
 {
-    emit quitNotif();
+    emit quitRequest();
 }
 
 void ViewManager::textChanged()

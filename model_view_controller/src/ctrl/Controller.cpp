@@ -41,7 +41,7 @@ void Controller::save( const QString& bufferName, const QString& text )
 	
 void Controller::close( const QString& bufferName )
 {
-    log_ << FUNC << ": " << bufferName << log::END;
+    emit closeRequest( bufferName );
 }
 
 void Controller::quit()
@@ -65,6 +65,11 @@ void Controller::saved( const QString& bufferName, bool success )
     	<< std::boolalpha << success << log::END;
 
     emit savedNotif( bufferName, success );
+}
+
+void Controller::closed( const QString& bufferName )
+{
+    emit closedNotif( bufferName );
 }
 
 void Controller::read( const QString& text )

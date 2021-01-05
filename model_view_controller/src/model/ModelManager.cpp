@@ -113,6 +113,26 @@ void ModelManager::save( const QString& bufferName, const QString& text )
     }
 }
 
+void ModelManager::close( const QString& bufferName )
+{
+	log_ << FUNC << bufferName << log::END;
+
+    const auto it = getBufferIterator( bufferName );
+    if ( it != buffers_.end() )
+    {
+        (*it).reset();
+        buffers_.erase(it);
+    }
+    const auto fileIt = getFileIterator( bufferName );
+    if ( fileIt != files_.end() )
+    {
+        ( *fileIt ).reset();
+        files_.erase( fileIt );
+    }
+
+    emit closedNotif( bufferName );
+}
+
 void ModelManager::savePath( const QString& bufferName, const QString& path )
 {
 	log_ << FUNC << path << log::END;

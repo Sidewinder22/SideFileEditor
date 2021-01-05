@@ -26,6 +26,7 @@ public:
 
     void addName( const QString& bufferName );
     void setNewName( const QString& newName );
+    void removeCurrentFileName();
     QString getCurrent();
 
 public slots:
