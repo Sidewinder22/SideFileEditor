@@ -30,6 +30,11 @@ QString FileManager::name()
 	return file_->name();
 }
 
+bool FileManager::rename( const QString& newName )
+{
+    return file_->rename( newName );
+}
+
 QString FileManager::read()
 {
 	return file_->read();
@@ -38,6 +43,11 @@ QString FileManager::read()
 void FileManager::write( const QString& text )
 {
 	file_->write( text );
+}
+
+bool FileManager::remove()
+{
+    return file_->remove();
 }
 
 } // ::model

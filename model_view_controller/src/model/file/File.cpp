@@ -36,6 +36,11 @@ QString File::name()
 	return file_.fileName();
 }
 
+bool File::rename(const QString& newName)
+{
+    return file_.rename( newName );
+}
+
 QString File::read()
 {
 	QString text;
@@ -61,6 +66,11 @@ void File::write( const QString& text )
 	out << text;
 
 	file_.flush();
+}
+
+bool File::remove()
+{
+    return file_.remove();
 }
 
 }  // ::file

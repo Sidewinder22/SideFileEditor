@@ -29,7 +29,18 @@ QString BufferManager::name()
 void BufferManager::write( const QString& text )
 {
     log_ << FUNC << name_ << ": " << text << log::END;
+
+    const auto currentText = buffer_->read();
+
+    if ( text.isEmpty() &&
+         currentText.isEmpty() )
+    {
+        log_ << FUNC << name_ << ": empty buffer and empty text" << log::END;
+        return;
+    }
+
     buffer_->write( text );
+    saved_ = false;
 }
 
 QString BufferManager::read()

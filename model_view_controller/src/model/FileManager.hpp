@@ -21,8 +21,10 @@ class FileManager
 public:
 	FileManager( const QString& fileName );
 	QString name();
+    bool rename( const QString& newName );
 	QString read();
     void write( const QString& text );
+    bool remove();
 
 private:
 	log::Logger log_;

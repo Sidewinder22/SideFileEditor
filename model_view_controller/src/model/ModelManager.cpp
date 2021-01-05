@@ -99,7 +99,27 @@ void ModelManager::save( const QString& bufferName, const QString& text )
     			<< ", file exists in the files_ container, saving file: "
 				<< text << log::END;
 
-    		( *fileIt )->write( text );
+            const auto currentFileName = ( *fileIt )->name();
+            const auto tempFileMgr =
+                std::make_shared< FileManager >( currentFileName + ".bcp" );
+
+            tempFileMgr->write( text );
+
+            if ( ( *fileIt )->remove() )
+            {
+                ( *fileIt ).reset();
+                ( *fileIt ) = tempFileMgr;
+            }
+            else
+            {
+                log_ << FUNC << "Can't remove file: "
+                    << ( *fileIt )->name() << log::END;
+            }
+
+            if ( !( *fileIt )->rename( currentFileName) )
+            {
+                log_ << FUNC << "Cannot changed fileName!" << log::END;
+            }
 
     		emit savedNotif( bufferName, true );
     	}

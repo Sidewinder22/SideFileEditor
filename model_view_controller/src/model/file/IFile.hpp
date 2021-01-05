@@ -21,8 +21,10 @@ public:
 	virtual ~IFile() = default;
 
     virtual QString name() = 0;
+    virtual bool rename( const QString& newName ) = 0;
     virtual QString read() = 0;
     virtual void write( const QString& text ) = 0;
+    virtual bool remove() = 0;
 };
 
 }  // ::file

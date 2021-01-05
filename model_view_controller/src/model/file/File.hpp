@@ -27,8 +27,10 @@ public:
      *              	IFile
     **********************************************/
     QString name() override;
+    bool rename( const QString& newName ) override;
     QString read() override;
     void write( const QString& text ) override;
+    bool remove() override;
 
 private:
     QFile file_;
