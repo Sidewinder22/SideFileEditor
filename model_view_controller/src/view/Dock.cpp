@@ -29,9 +29,9 @@ Dock::Dock()
     setWidget( names_ );
 
     connect( names_,
-        &QListWidget::currentRowChanged,
+        &QListWidget::itemClicked,
         this,
-        &Dock::rowChanged );
+        &Dock::itemClicked );
 }
 
 void Dock::addName( const QString& bufferName )
@@ -67,10 +67,10 @@ QString Dock::getCurrent()
     return fileName;
 }
     
-void Dock::rowChanged( int row )
+void Dock::itemClicked( QListWidgetItem *item )
 {
-    log_ << FUNC << "current row: " << row << log::END;
-    emit bufferSelectionChangedNotif( getCurrent() );
+    log_ << FUNC << "item: " << item->text() << log::END;
+    emit bufferSelectionChangedNotif( item->text() );
 }
 
 } // ::view

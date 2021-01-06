@@ -30,7 +30,7 @@ public:
     QString getCurrent();
 
 public slots:
-    void rowChanged( int row );
+    void itemClicked( QListWidgetItem *item );
 
 signals:
     void bufferSelectionChangedNotif( const QString& bufferName );
