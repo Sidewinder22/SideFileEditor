@@ -96,6 +96,11 @@ SideFileEditor::SideFileEditor()
 		controller_,
         &ctrl::Controller::newBufferName );
 
+    connect( modelManager_,
+        &model::ModelManager::bufferNotSavedNotif,
+		controller_,
+        &ctrl::Controller::bufferNotSaved );
+
 
 	/*****************************
 	 * Controller -> ViewManager

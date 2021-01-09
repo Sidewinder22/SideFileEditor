@@ -46,6 +46,7 @@ signals:
 	void readNotif( const QString& text );
 	void getSavePathRequest( const QString& bufferName );
 	void newBufferNameNotif( const QString& newBufferName );
+    void bufferNotSavedNotif( const QString& bufferName );
 
 private:
 	void addBuffer( const QString& bufferName );

@@ -43,6 +43,7 @@ public slots:
     void getSavePath( const QString& bufferName );
     void savePath( const QString& bufferName, const QString& path );
 	void newBufferName( const QString& newBufferName );
+    void bufferNotSaved( const QString& bufferName );
 
 signals:
 	void createRequest();
@@ -60,6 +61,7 @@ signals:
     void getSavePathRequest( const QString& bufferName );
     void savePathNotif( const QString& bufferName, const QString& path );
 	void newBufferNameNotif( const QString& newBufferName );
+    void bufferNotSavedNotif( const QString& bufferName );
 
 private:
     log::Logger log_;
