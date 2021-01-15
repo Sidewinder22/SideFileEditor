@@ -15,7 +15,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: install dependencies
       run: sudo apt install qt5-qmake qt5-default
-    - name: mkdir build && cd build
+    - name: create build directory
+      run: mkdir build && cd build
     - name: qmake
       run: qmake
     - name: build
