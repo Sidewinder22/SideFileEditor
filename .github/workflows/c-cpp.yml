@@ -5,6 +5,10 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  
+defaults:
+  run:
+    working-directory: build
 
 jobs:
   build:
@@ -15,8 +19,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: install dependencies
       run: sudo apt install qt5-qmake qt5-default
-    - name: create build directory
-      run: mkdir build && cd build
     - name: qmake
       run: qmake ..
     - name: build
