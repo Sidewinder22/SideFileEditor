@@ -8,25 +8,22 @@
 #include <cstring>
 #include "Logger.hpp"
 
-//---------------------------------------------------------
-//                      Namespace
-//---------------------------------------------------------
 namespace log
 {
 
-Logger::Logger(std::string prefix)
-    : prefix_(prefix)
-    , beginLine_(true)
+Logger::Logger( std::string prefix )
+    : prefix_( prefix )
+    , beginLine_( true )
 { }
 
 template<>
-Logger& operator<<(Logger& log, std::string str)
+Logger& operator<<( Logger& log, std::string str )
 {
 	log.writeIndex();
 
 	std::cout << str;
 
-	if (str == "\n")
+	if ( str == "\n" )
 	{
 		log.beginLine_ = true;
 	}
@@ -35,14 +32,14 @@ Logger& operator<<(Logger& log, std::string str)
 }
 
 template<>
-Logger& operator<<(Logger& log, QString info)
+Logger& operator<<( Logger& log, QString info )
 {
     log.writeIndex();
 
     std::string str = info.toStdString();
     std::cout << str;
 
-    if (str == "\n")
+    if ( str == "\n" )
     {
         log.beginLine_ = true;
     }
@@ -51,14 +48,14 @@ Logger& operator<<(Logger& log, QString info)
 }
 
 template<>
-Logger& operator<<(Logger& log, const char* str)
+Logger& operator<<( Logger& log, const char* str )
 {
     log.writeIndex();
 
     std::cout << str;
 
-    int result = std::strcmp(str, "\n");
-    if (result == 0)
+    int result = std::strcmp( str, "\n" );
+    if ( result == 0 )
     {
         log.beginLine_ = true;
     }
@@ -68,7 +65,7 @@ Logger& operator<<(Logger& log, const char* str)
 
 void Logger::writeIndex()
 {
-    if (beginLine_)
+    if ( beginLine_ )
     {
         std::cout << "[" << prefix_ << "] ";
         beginLine_ = false;

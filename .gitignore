@@ -25,6 +25,7 @@
 
 # Executables
 SideFileEditor
+SFe
 *.exe
 *.out
 *.app
@@ -42,3 +43,5 @@ moc_*
 .files_for_cscope
 .vscode
 
+build
+.ccls-cache
