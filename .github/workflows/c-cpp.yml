@@ -18,6 +18,6 @@ jobs:
     - name: create build directory
       run: mkdir build && cd build
     - name: qmake
-      run: qmake
+      run: qmake ..
     - name: build
       run: make
