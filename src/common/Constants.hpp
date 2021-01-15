@@ -1,56 +1,20 @@
 /**
  * @author  {\_Sidewinder22_/}
- * @date    28 lip 2020
- * @file    CommonConstants.hpp
+ * @date    25.11.2020
  *
  * @brief   Common project contants
  */
+
+
 #ifndef SRC_COMMON_CONSTANTS_HPP_
 #define SRC_COMMON_CONSTANTS_HPP_
 
-//---------------------------------------------------------
-//                      Includes
-//---------------------------------------------------------
-
-//---------------------------------------------------------
-//                  Global context
-//---------------------------------------------------------
-
-//---------------------------------------------------------
-//                      Namespace
-//---------------------------------------------------------
-namespace common
-{
-namespace constants
-{
+namespace common {
+namespace constants {
 
 constexpr static const int STATUS_BAR_MSG_TIMEOUT = 2000;
 
-
-////---------------------------------------------------------
-////                  Class declaration
-////---------------------------------------------------------
-//class CommonConstants
-//{
-////---------------------------------------------------------
-////                  Public
-////---------------------------------------------------------
-//    public:
-//        CommonConstants() = default;
-//        virtual ~CommonConstants() = default;
-//
-////---------------------------------------------------------
-////                  Protected
-////---------------------------------------------------------
-//    protected:
-//
-////---------------------------------------------------------
-////                  Private
-////---------------------------------------------------------
-//    private:
-//};
-
-} // ::constants
-} // ::common
+}  // namespace constants
+}  // namespace common
 
 #endif /* SRC_COMMON_CONSTANTS_HPP_ */

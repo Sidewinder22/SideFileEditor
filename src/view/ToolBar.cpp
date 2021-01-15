@@ -11,10 +11,10 @@ namespace view
 {
 
 ToolBar::ToolBar()
-    : newAction_( addAction( QIcon( "../../icons/new.png" ), "New File" ) )
-    , openAction_( addAction( QIcon( "../../icons/open.png" ), "Open File" ) )
-    , saveAction_( addAction( QIcon( "../../icons/save.png" ), "Save File" ) )
-    , closeAction_( addAction( QIcon( "../../icons/close.png" ), "Close File" ) )
+    : newAction_( addAction( QIcon( "../icons/new.png" ), "New File" ) )
+    , openAction_( addAction( QIcon( "../icons/open.png" ), "Open File" ) )
+    , saveAction_( addAction( QIcon( "../icons/save.png" ), "Save File" ) )
+    , closeAction_( addAction( QIcon( "../icons/close.png" ), "Close File" ) )
 {
     newAction_->setStatusTip( "New File" );
     openAction_->setStatusTip( "Open File" );
