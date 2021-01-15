@@ -121,6 +121,7 @@ void ModelManager::save( const QString& bufferName, const QString& text )
                 log_ << FUNC << "Cannot changed fileName!" << log::END;
             }
 
+            log_ << FUNC << bufferName << ", file saved +" << log::END;
     		emit savedNotif( bufferName, true );
     	}
     	else
@@ -130,6 +131,12 @@ void ModelManager::save( const QString& bufferName, const QString& text )
     		textsToSave_.insert( { bufferName, text } );
     		emit getSavePathRequest( bufferName );
     	}
+    }
+    else
+    {
+        log_ << FUNC << bufferName
+            << " buffer doesn't exists!" << log::END;
+        // TODO: emit error
     }
 }
 

@@ -142,6 +142,7 @@ void ViewManager::closed( const QString& bufferName )
     log_ << FUNC << ": " << bufferName << log::END;
 
     dock_->removeCurrentFileName();
+    textEdit_->clear();
     statusBar_->showMessage("[Buffer closed]: " + bufferName,
         common::constants::STATUS_BAR_MSG_TIMEOUT);
 }
@@ -222,6 +223,7 @@ void ViewManager::newBufferName( const QString& newBufferName )
 	log_ << FUNC << log::END;
 
 	dock_->setNewName( newBufferName );
+	window_->setWindowTitle( newBufferName );
 }
 
 } // ::view

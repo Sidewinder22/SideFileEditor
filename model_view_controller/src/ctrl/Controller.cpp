@@ -108,10 +108,4 @@ void Controller::newBufferName( const QString& newBufferName )
 	emit newBufferNameNotif( newBufferName );
 }
 
-void Controller::bufferNotSaved( const QString& bufferName )
-{
-    log_ << FUNC << bufferName << log::END;
-    emit bufferNotSaved( bufferName );
-}
-    
 } // ::ctrl
