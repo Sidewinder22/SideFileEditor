@@ -13,12 +13,13 @@ I create this project to learn more about C++ (14/17/20) and QT5 library.
 ### Build instruction
 1. Build the source:  
     ```bash
-    $ qmake
-    $ make  
+    $ mkdir build && cd build
+    $ qmake ..
+    $ make -j
     ```
 2. Run project:
     ```bash
-    $ ./SideFileEditor
+    $ ./SFe
     ```
 
 ![Screenshot](images/screenshot_2.png)
