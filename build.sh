@@ -21,23 +21,20 @@ if [ "$1" == "-c" ] || [ "$1" == "--clean" ]; then
     rm -f *.o
 fi
 
-# if [ -d build ]; then
-#     echo -e "${LIGHT_MAGENDA}${BOLD}${REVERSE}-!- Build directory exists! -!-${NC}"
-#     cd build
-# else
-#     mkdir build && cd build
+ if [ -d build ]; then
+     echo -e "${LIGHT_MAGENDA}${BOLD}${REVERSE}-!- Build directory exists! -!-${NC}"
+     cd build
+ else
+     mkdir build && cd build
 
-#     echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}-+- Invoking qmake -+-${NC}"
-#     qmake ..
-# fi
-
-echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}-+- Invoking qmake -+-${NC}"
-qmake
+     echo -e "${LIGHT_YELLOW}${BOLD}${REVERSE}-+- Invoking qmake -+-${NC}"
+     qmake ..
+ fi
 
 echo -e "${CYAN}${BOLD}${REVERSE}-+- Build started... -+-${NC}"
-make
+make -j $(nproc)
 
-if [ -f SideFileEditor ]; then
+if [ -f SFe ]; then
     echo -e "${CYAN}${BOLD}${REVERSE}-<<<- Application SFE is ready. Bye! ->>>-${NC}"
 else
     echo -e "${RED}${BOLD}${REVERSE}${BLINK}-!!!- Error occured -!!!-${NC}"
