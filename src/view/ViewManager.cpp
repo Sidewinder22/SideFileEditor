@@ -86,6 +86,11 @@ ViewManager::ViewManager()
         &ToolBar::closeNOtif,
         this,
         &ViewManager::close );
+
+    connect( menu_,
+        &Menu::changeToolBarShowNotif,
+        this,
+        &ViewManager::changeToolBarShow );
 }
 
 void ViewManager::load( const QString& text )
@@ -224,6 +229,11 @@ void ViewManager::newBufferName( const QString& newBufferName )
 
 	dock_->setNewName( newBufferName );
 	window_->setWindowTitle( newBufferName );
+}
+
+void ViewManager::changeToolBarShow( bool visible )
+{
+    toolBar_->setVisible( visible );
 }
 
 } // ::view

@@ -30,6 +30,7 @@ signals:
     void saveNotif();
     void closeNotif();
     void quitNotif();
+    void changeToolBarShowNotif( bool checked );
 
 private:
     void createActionTriggered();
@@ -38,8 +39,10 @@ private:
     void saveActionTriggered();
 	void closeActionTriggered();
     void quitActionTriggered();
+    void changeToolBarShowTriggered( bool checked );
 
     QMenu* fileMenu_;
+    QMenu* viewMenu_;
     QMenu* helpMenu_;
 
 	QAction *newAction_;
@@ -48,6 +51,8 @@ private:
 	QAction *saveAction_;
 	QAction *closeAction_;
     QAction *quitAction_;
+
+    QAction *changeToolBarShowAction_;
 };
 
 } // ::view

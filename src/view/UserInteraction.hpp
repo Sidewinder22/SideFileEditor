@@ -26,16 +26,16 @@ public:
 private:
 	QWidget* parent_;
 
-    constexpr static const char* ABOUT = "     About     \n";
-    constexpr static const char* APP = "     SideFileEditor\n";
-    constexpr static const char* BY = "             by\n";
-    constexpr static const char* AUTHOR = "{\\_Sidewinder22_/}";
+    constexpr static auto ABOUT = "     About     \n";
+    constexpr static auto APP = "     SideFileEditor\n";
+    constexpr static auto BY = "             by\n";
+    constexpr static auto AUTHOR = "{\\_Sidewinder22_/}";
 
-    constexpr static const char* SAVE_QUESTION = "Select location for a buffer: ";
-    constexpr static const char* OPEN_QUESTION = "Select file to open...";
-    constexpr static const char* SAVE_WARNING = "Can't save file!";
+    constexpr static auto SAVE_QUESTION = "Select location for a buffer: ";
+    constexpr static auto OPEN_QUESTION = "Select file to open...";
+    constexpr static auto SAVE_WARNING = "Can't save file!";
 
-    constexpr static const char* FILE_TYPES = "Text files: *.txt *.h *.hpp *.c"
+    constexpr static auto FILE_TYPES = "Text files: *.txt *.h *.hpp *.c"
     	"*.cc *.cpp *.py *.js *.ccs *.json (*.txt *.h *.hpp *.c *.cc *.cpp"
     	"*.py *.js *.ccs *.json)";
 
