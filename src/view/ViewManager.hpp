@@ -47,6 +47,8 @@ public slots:
     void getSavePath( const QString& bufferName );
 	void newBufferName( const QString& newBufferName );
 
+	void changeToolBarShow( bool visible );
+
 signals:
     void createRequest();
     void openRequest( const QString& fileName );

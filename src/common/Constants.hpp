@@ -5,7 +5,6 @@
  * @brief   Common project contants
  */
 
-
 #ifndef SRC_COMMON_CONSTANTS_HPP_
 #define SRC_COMMON_CONSTANTS_HPP_
 
